@@ -1,0 +1,150 @@
+<odoo>
+    <data>
+
+        <record id="department_budget_view_form" model="ir.ui.view">
+            <field name="name">Department Budget Form View</field>
+            <field name="model">department.budget</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="submit" type="object" string="Submit" class="oe_highlight" states="draft"/>
+                        <button name="first_approve" type="object" string="Finance Approval" class="oe_highlight"
+                                states="waiting"/>
+                        <button name="cancel" type="object" string="Reject" class="oe_highlight"
+                                states="waiting,first_approve"/>
+                        <button name="reset" type="object" string="Reset to Draft" class="oe_highlight"
+                                states="cancel"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,waiting,first_approve"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group name="date_period" string="Period">
+                            <group>
+                                <field name="date_from"/>
+                            </group>
+                            <group>
+                                <field name="date_to"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="budget_lines" string="Budget Lines">
+                                <field name="budget_lines">
+                                    <tree editable="bottom">
+                                        <field name="budget_id" invisible="1"/>
+                                        <field name="department_id" width="30%%"/>
+                                        <field name="payslip_ids" width="30%%"/>
+                                        <field name="expected_value" width="20%%" attrs="{'required': [('department_id', '!=', False)]}"/>
+                                        <field name="remaining_value" width="25%%"/>
+                                        <field name="actual_value" width="25%%" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="department_budget_view_tree" model="ir.ui.view">
+            <field name="name">Department Budget Tree View</field>
+            <field name="model">department.budget</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_department_budget_window">
+            <field name="name">Department Budget</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">department.budget</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Department Budget" id="department_budget_menu"
+                  parent="hr_payroll_community.menu_hr_payroll_community_configuration"
+                  action="action_department_budget_window" sequence="13"/>
+
+        <record id="department_budget_lines_view_tree" model="ir.ui.view">
+            <field name="name">Department Budget Lines Tree View</field>
+            <field name="model">department.budget.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="budget_id"/>
+                    <field name="department_id"/>
+                    <field name="expected_value"/>
+                    <field name="remaining_value"/>
+                    <field name="actual_value"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_all_department_budget_window">
+            <field name="name">All Department Budget</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">department.budget.line</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="budget_master.department_budget_lines_view_tree"/>
+        </record>
+
+        <menuitem name="All Department Budget" id="all_department_budget_menu" parent="hr_payroll_community.menu_hr_payroll_community_configuration"
+                action="action_all_department_budget_window" sequence="14"/>
+
+        <record id="employee_budget_lines_view_tree" model="ir.ui.view">
+            <field name="name">Employee Budget Lines Tree View</field>
+            <field name="model">employee.budget.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="percentage" widget="percentage"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_budget_lines_view_search" model="ir.ui.view">
+            <field name="name">Employee Budget Lines Search View</field>
+            <field name="model">employee.budget.line</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="employee_id"/>
+                    <group string="Group by">
+                        <filter string="Department" name="department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Employee" name="employee" context="{'group_by': 'employee_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_all_employee_budget_window">
+            <field name="name">All Employee Budget</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.budget.line</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="budget_master.employee_budget_lines_view_tree"/>
+            <field name="search_view_id" ref="budget_master.employee_budget_lines_view_search"/>
+            <field name="context">
+                {
+                    'search_default_department': 1,
+                    'search_default_employee': 1,
+                }
+            </field>
+        </record>
+
+        <menuitem name="All Employee Budget" id="all_employee_budget_menu" parent="hr_payroll_community.menu_hr_payroll_community_configuration"
+                action="action_all_employee_budget_window" sequence="15"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,217 @@
+<odoo>
+    <data>
+        <record id="view_order_form_make_readonly_new" model="ir.ui.view">
+            <field name="name">sale.order.form.approval.rules</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name='attrs'>{'invisible': [('state', 'in', ['sale', 'done'])], 'readonly':
+                        [('approval_state', 'in', ['approved'])]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='require_signature']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='require_payment']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='sale_shipping']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='commitment_date']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='signed_by']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='signed_on']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='signature']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='utm_link']/field[@name='campaign_id']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='utm_link']/field[@name='medium_id']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='utm_link']/field[@name='source_id']" position="attributes">
+                    <attribute name='attrs'>{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <!--<xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>-->
+
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_order']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='currency_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='note']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='team_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='client_order_ref']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='fiscal_position_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="sale_revision_history_view_order_form_inherited" model="ir.ui.view">
+            <field name="name">sale.revision.history.order.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_revision_history.sale_order_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_order_form_approcal_rules_readonly" model="ir.ui.view">
+            <field name="name">sale.order.form.approval.rules</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="fnet_crm_tender.sale_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='delivery_term']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='bank_name']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='po_number']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='po_date']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', 'in', ['sale', 'done', 'cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='shipment_mode']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='exchange_rate']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='confirmation_date']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='validity']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='tax_notes']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='covering_notes']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amendment_notes']" position="attributes">
+                    <attribute name="attrs">{'required':[('state','in',['to approve','amendmend'])], 'readonly':
+                        [('approval_state', 'in', ['approved'])]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='tender_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='enquiry_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='quotation_notes']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_form_quote_readonly" model="ir.ui.view">
+            <field name="name">sale.order.form.payment</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_management.sale_order_form_quote"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_order_option_ids']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="pro_forma_view_sale_order_inherited_readonly" model="ir.ui.view">
+            <field name="name">fnet.crm.sale.order.form.approval</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="account_invoice_pro_forma_sequence.view_sale_order_form_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='generate_pro_forma']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|','|',('state', 'in', ['cancel', 'done']),('ready_for_so', '=', False),('pro_forma_generated', '!=', False)], 'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='pro_forma_generated']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="order_view_form_sale_costing_inherit_readonly" model="ir.ui.view">
+            <field name="name">order.view.form.sale.costing.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_costing.order_view_form_sale_costing_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='contact_name_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_state', 'in', ['approved'])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

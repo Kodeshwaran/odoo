@@ -1,0 +1,57 @@
+<odoo>
+    <data>
+
+        <record id="project_task_type_view_form" model="ir.ui.view">
+            <field name="name">Project Task Type Form View</field>
+            <field name="model">project.task.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h1>
+                            <div>
+                                <field name="name"/>
+                            </div>
+                        </h1>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_task_type" model="ir.actions.act_window">
+            <field name="name">Task Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">task.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_task_type" name="Task Type" action="action_task_type" parent="project.menu_project_config"
+                  sequence="20" groups="project.group_project_manager"/>
+
+        <record id="timesheet_remainder_field_added_hr_employee_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.view.form.inherit.timesheet.remainder</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_employee_view_form_inherit_timesheet"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='timesheet']" position="after">
+                    <field name="enable_timesheet_alert"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="timesheet_list_inherit" model="ir.ui.view">
+            <field name="name">Timesheet Inherited View List</field>
+            <field name="model">account.analytic.line</field>
+            <field name="inherit_id" ref="hr_timesheet.hr_timesheet_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='task_id']" position="after">
+                    <field name="task_type"/>
+                </xpath>
+                <xpath expr="//field[@name='unit_amount']" position="before">
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

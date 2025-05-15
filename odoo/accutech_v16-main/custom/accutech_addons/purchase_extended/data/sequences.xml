@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <!-- Define custom sequence for combined RFQs -->
+        <record id="seq_purchase_order_combined" model="ir.sequence">
+            <field name="name">Combined RFQ</field>
+            <field name="code">purchase.order.combined</field>
+            <field name="prefix">PRFQ</field>
+            <field name="padding">5</field>
+            <field name="number_next_actual">1</field>
+            <field name="implementation">no_gap</field>
+        </record>
+
+        <!-- Sequence for RFQ -->
+<!--        <record id="sequence_rfq" model="ir.sequence">-->
+<!--            <field name="name">Request for Quotation</field>-->
+<!--            <field name="code">purchase.order</field>-->
+<!--            <field name="prefix">RFQ</field>-->
+<!--            <field name="padding">5</field>-->
+<!--            <field name="next_number">1</field>-->
+<!--            <field name="use_date_range">False</field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

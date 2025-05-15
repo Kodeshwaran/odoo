@@ -1,0 +1,34 @@
+<odoo>
+    <data noupdate="1">
+        <record forcecreate="True" id="hr_shift_first" model="hr.shift">
+            <field name="name">First</field>
+            <field name="code">F</field>
+            <field name="start_time">6.0</field>
+            <field name="end_time">14.0</field>
+        </record>
+        <record forcecreate="True" id="hr_shift_second" model="hr.shift">
+            <field name="name">Second</field>
+            <field name="code">S</field>
+            <field name="start_time">14</field>
+            <field name="end_time">22</field>
+        </record>
+        <record forcecreate="True" id="hr_shift_night" model="hr.shift">
+            <field name="name">Night</field>
+            <field name="code">N</field>
+            <field name="start_time">22</field>
+            <field name="end_time">6</field>
+        </record>
+        <record forcecreate="True" id="hr_shift_general" model="hr.shift">
+            <field name="name">General</field>
+            <field name="code">G</field>
+            <field name="start_time">9</field>
+            <field name="end_time">18</field>
+        </record>
+        <record forcecreate="True" id="hr_shift_weekoff" model="hr.shift">
+            <field name="name">WeekOff</field>
+            <field name="code">WO</field>
+            <field name="start_time">0</field>
+            <field name="end_time">23.99</field>
+        </record>
+    </data>
+</odoo>

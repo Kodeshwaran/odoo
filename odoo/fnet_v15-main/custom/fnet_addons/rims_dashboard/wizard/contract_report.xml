@@ -1,0 +1,39 @@
+<odoo>
+    <record model="ir.ui.view" id="rims_contract_report_form_view">
+        <field name="name">Rims Contract Reporting</field>
+        <field name="model">rims.contract.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1 align="center">
+                        <span style="font-size:25px;"><b>RIMS Contract Report</b></span>
+                    </h1>
+                    <group col="5">
+<!--                        <field name="date_from"/>-->
+<!--                        <field name="date_to"/>-->
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_contract_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="rims_contract_report_action">
+        <field name="name">Contract Reporting</field>
+        <field name="res_model">rims.contract.report</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="rims_contract_report_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="Contract Report"
+          id="menu_rims_contract_report"
+          sequence="3"
+          action="rims_contract_report_action"
+          parent="rims_dashboard.menu_rims_reports"/>
+
+</odoo>

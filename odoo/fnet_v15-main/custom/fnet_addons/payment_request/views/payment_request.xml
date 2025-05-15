@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+        <record id="payment_request_form_view" model="ir.ui.view">
+            <field name="name">payment.request.form</field>
+            <field name="model">payment.request</field>
+            <field name="arch" type="xml">
+                <form string="Payment Request" create="false"  menu="false" >
+                    <header>
+                        <button name="print_account_details" type="object" class="btn-primary" string="Print Account Details"
+                        attrs="{'invisible':[('state', 'not in', ('approved','paid'))]}"/>
+                        <button id="button_finance_approval" name="action_state_draft" states="cancel"
+                                string="Reset to Draft"
+                                type="object" groups="payment_request.group_payment_request_admin,payment_request.group_payment_request_manager" />
+                        <button id="button_approved" name="action_finance_approval" states="finance_approval"
+                                string="Finance Approve" class="btn-primary"
+                                type="object" groups="payment_request.group_payment_request_manager"/>
+                        <button id="button_md_approval" name="action_md_approved" string="MD Approve" states="md_approval"
+                                class="btn-success"
+                                type="object" groups="payment_request.group_payment_request_admin" />
+                        <button id="button_cancel" name="action_cancel" string="Cancel" states="finance_approval,md_approval"
+                                type="object" groups="payment_request.group_payment_request_billing" />
+                        <button id="button_rejected" name="action_rejected" string="Reject"
+                                states="md_approval" class="btn-danger"
+                                type="object" groups="payment_request.group_payment_request_admin" />
+                        <button name="action_payment_request_email" string="Send Email" class="btn-primary"
+                                states="finance_approval" type="object" invisible="1"/>
+
+                        <button name="action_register_payment" type="object" string="Register Payments" states="approved"/>
+                        <button name="action_draft_payment_request" string="Reset to Draft" type="object" attrs="{'invisible': [('state', 'not in', ['approved'])]}"/>
+                        <button name="generate_invoice_details_report" string="Print Invoice Report" type="object"/>
+
+                        <field name="state" widget="statusbar" clickable="false"
+                               statusbar_visible="finance_approval,md_approval,approved,paid"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <!-- Invoice stat button -->
+                            <button name="action_open_payments" type="object" class="oe_stat_button" icon="fa-bars" >
+                                <span>Payments</span>
+                              </button>
+                            <button name="action_open_bills" type="object" class="oe_stat_button" icon="fa-bars" >
+                                <span>Bills</span>
+                              </button>
+                        </div>
+                        <!--                        <field name="name"/>-->
+                        <group>
+                            <group>
+                            <field name="request_number"/>
+                            </group>
+                            <group>
+                                <field name="file_data" string="Account Details"/>
+                                <field name="invoice_report_name" invisible="1"/>
+                                <field name="get_invoice_report" filename="invoice_report_name"/>
+                            </group>
+                        </group>
+
+                        <br></br>
+                        <field name="email" attrs="{'invisible': [('state', 'not in', ['finance_approval'])]}"/>
+                        <field name="account_move_ids" nolablel="1"
+                               domain ="[('move_type', '=', 'in_invoice')]"
+                               attrs="{'readonly': [('state', 'in', ['approved','reject','paid'])]}">
+                            <tree string="Invoices" js_class="account_tree" decoration-info="state == 'draft'"
+                                  decoration-muted="state == 'cancel'" sample="1" options="{ 'no_create': True}">
+                                <header>
+                                    <button name="action_register_payment" type="object" string="Register Payment"
+                                            groups="account.group_account_user"
+                                            invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund', 'out_receipt', 'in_invoice', 'in_refund','in_receipt')"/>
+                                </header>
+                                <field name="name" decoration-bf="1"/>
+                                <field name="partner_id" />
+                                <field name="invoice_source_email" invisible="1"/>
+                                <field name="invoice_partner_display_name"
+                                       invisible="context.get('default_move_type') not in ('in_invoice', 'in_refund','in_receipt')"
+                                       groups="base.group_user" string="Vendor"/>
+                                <field name="invoice_partner_display_name"
+                                       invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"
+                                       groups="base.group_user" string="Customer"/>
+                                <field name="invoice_date" optional="show"
+                                       invisible="context.get('default_move_type') not in ('in_invoice', 'in_refund','in_receipt')"
+                                       string="Bill Date"/>
+                                <field name="invoice_date" optional="show"
+                                       invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"
+                                       string="Invoice Date"/>
+                                <field name="date" optional="hide"
+                                       invisible="context.get('default_move_type') in ('out_invoice', 'out_refund', 'out_receipt')"
+                                       string="Accounting Date"/>
+                                <field name="invoice_date_due" widget="remaining_days" optional="show"
+                                       attrs="{'invisible': [['payment_state', 'in', ('paid', 'in_payment', 'reversed')]]}"/>
+                                <field name="invoice_origin" optional="hide" string="Source Document"/>
+                                <field name="payment_reference" optional="hide"
+                                       invisible="context.get('default_move_type') in ('out_invoice', 'out_refund','out_receipt')"/>
+                                <field name="ref" optional="hide"/>
+                                <field name="invoice_user_id" optional="hide"
+                                       invisible="context.get('default_move_type') not in ('out_invoice', 'out_refund','out_receipt')"
+                                       string="Salesperson" widget="many2one_avatar_user"/>
+                                <field name="activity_ids" widget="list_activity" optional="hide"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"
+                                       optional="hide"/>
+                                <field name="amount_untaxed_signed" string="Tax Excluded" sum="Total" optional="show"/>
+                                <field name="amount_tax_signed" string="Tax" sum="Total" optional="hide"/>
+                                <field name="amount_total_signed" string="Total" sum="Total" decoration-bf="1"
+                                       optional="show" />
+                                <field name="amount_total_in_currency_signed" string="Total in Currency"
+                                       groups="base.group_multi_currency" optional="show"/>
+                                <field name="amount_residual_signed" string="Amount Due" sum="Amount Due" class="btn-info"/>
+                                <field name="currency_id" groups="base.group_multi_currency" optional="hide"/>
+                                <field name="company_currency_id" invisible="1"/>
+                                <field name="to_check" optional="hide" widget="boolean_toggle"/>
+                                <field name="payment_state" widget="badge"
+                                       decoration-danger="payment_state == 'not_paid'"
+                                       decoration-warning="payment_state in ('partial', 'in_payment')"
+                                       decoration-success="payment_state in ('paid', 'reversed')"
+                                       attrs="{'invisible': [('payment_state', 'in', ('invoicing_legacy'))]}"
+                                       optional="show"/>
+                                <field name="state" widget="badge" decoration-success="state == 'posted'"
+                                       decoration-info="state == 'draft'" optional="show"/>
+                                <field name="move_type" invisible="context.get('default_move_type', True)"/>
+                                <field name="cust_invoice_partner_id"/>
+                                <field name="cust_invoice_name"/>
+                                <field name="reference_1"/>
+                                <field name="cust_invoice_amount_residual" string="Invoice Amount Due" sum="Total"/>
+                            </tree>
+                        </field>
+                        <field name="payment_ids" invisible="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="total_due_amount" widget='monetary' options="{'currency_field': 'company_currency'}" invisible="1"/>
+                    </sheet>
+                    <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="payment_request_tree_view" model="ir.ui.view">
+            <field name="name">payment.request.tree</field>
+            <field name="model">payment.request</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Request" create="false" >
+                    <!--                    <field name="name"/>-->
+                    <field name="request_number"/>
+                    <field name="payment_request_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="payment_request_search" model="ir.ui.view">
+            <field name="name">payment.request.Search</field>
+            <field name="model">payment.request</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_payment_request" model="ir.actions.act_window">
+            <field name="name">Payment Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">payment.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                id="menu_payment_request"
+                action="action_payment_request"
+                parent="account.menu_finance_payables"
+                sequence="10"/>
+
+</odoo>

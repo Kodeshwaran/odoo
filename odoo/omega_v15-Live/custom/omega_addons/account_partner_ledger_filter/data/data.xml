@@ -1,0 +1,16 @@
+<odoo>
+    <data noupdate="1">
+        <record model="ir.cron" id="ir_cron_partner_ledger_mail">
+            <field name="name">Partner Ledger Auto Mail Trigger</field>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">months</field>
+            <field name="active">false</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model_id" ref="model_account_report_partner_ledger"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_ledger_mail_sent()</field>
+        </record>
+    </data>
+</odoo>

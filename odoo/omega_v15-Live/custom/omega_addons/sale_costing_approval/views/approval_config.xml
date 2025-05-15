@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cost_apporval_role_tree_view" model="ir.ui.view">
+        <field name="name">cost.approval.role.tree</field>
+        <field name="model">cost.approval.role</field>
+        <field name="arch" type="xml">
+            <tree string="Approval Role" editable='bottom'>
+                <field name='name' />
+            </tree>
+        </field>
+    </record>
+    <record id="cost_approval_role_form_action" model="ir.actions.act_window">
+        <field name="name">Costing Approval Roles</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cost.approval.role</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new Approval Role.
+            </p>
+        </field>
+    </record>
+    <record id="cost_apporval_category_tree_view" model="ir.ui.view">
+        <field name="name">cost.approval.category.tree</field>
+        <field name="model">cost.approval.category</field>
+        <field name="arch" type="xml">
+            <tree string="Approval Category" editable='bottom'>
+                <field name='name' />
+            </tree>
+        </field>
+    </record>
+    <record id="cost_approval_category_form_action" model="ir.actions.act_window">
+        <field name="name">Costing Approval Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cost.approval.category</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new Approval Category.
+            </p>
+        </field>
+    </record>
+    <record id="view_employee_form_cost_approval_role" model="ir.ui.view">
+        <field name="name">hr.employee.form.cost.approval.role</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='active_group']" position="after">
+                <field name='sale_cost_approval_rule_id' invisible="1" />
+                <field name='sale_cost_approval' invisible="1" />
+                <group string="Costing Approval Role" name="cost_approval_role" attrs="{'invisible': ['|', ('sale_cost_approval', '=', False), ('sale_cost_approval_rule_id', '=', False)]}">
+                    <field name="cost_approval_role" class="oe_inline" widget="many2many_tags" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_template_form_view_cost_approval_category" model="ir.ui.view">
+        <field name="name">product.template.form.cost.approval.category</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="cost_approval_category" />
+            </xpath>
+        </field>
+    </record>
+    <menuitem id="menu_cost_approval_category_form_action" parent="sale_costing.menu_costing_config" sequence="99" action="cost_approval_category_form_action" />
+    <menuitem id="menu_cost_approval_role_form_action" parent="sale_costing.menu_costing_config" sequence="99" action="cost_approval_role_form_action" />
+</odoo>

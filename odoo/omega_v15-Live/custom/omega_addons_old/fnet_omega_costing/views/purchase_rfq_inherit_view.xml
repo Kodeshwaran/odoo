@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_purchase_requisition_form_inherit">
+            <field name="name">view.purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="customer_id"/>
+                    <field name="pricelist_id"/>
+                    <field name="oppor_id"/>
+                    <field name="currency_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_end']" position="replace">
+                    <field name="date_end"
+                           attrs="{'readonly': [('state','not in',('draft'))],'required':[('state','in',('draft'))]}"/>
+                </xpath>
+                <xpath expr="//field[@name='ordering_date']" position="replace">
+                    <field name="ordering_date"
+                           attrs="{'readonly': [('state','not in',('draft'))],'required':[('state','in',('draft'))]}"/>
+                </xpath>
+                <xpath expr="//field[@name='schedule_date']" position="replace">
+                    <field name="schedule_date"
+                           attrs="{'readonly': [('state','not in',('draft'))],'required':[('state','in',('draft'))]}"/>
+                </xpath>
+                <!--
+                                <xpath expr="//button[@name='action_done']" position="before">
+                                    <button name="so_quote" string="SO Quote" type="object" states="open" class="oe_highlight"/>
+                                    <button name="po_confirm" string="PO Confirm" type="object" states="open" class="oe_highlight"/>
+                                </xpath>
+                -->
+
+                <xpath expr="//form/sheet/notebook/page[1]" position="after">
+                    <page string="Sale Quote">
+                        <button name="validate" string="Validate" type="object" states="open" class="oe_highlight"/>
+                        <field name="sale_line">
+                            <tree string="Sale Quote" editable="bottom">
+                                <field name="valid_qoute"/>
+                                <field name="purchase_id"/>
+                                <field name="partner_id"/>
+                                <field name="offer"/>
+                                <field name="item_no"/>
+                                <field name="product_id"/>
+                                <field name="product_qty"/>
+                                <field name="unit_price"/>
+                                <field name="total_price" widget="monetary"/>
+                                <field name="margins" widget="selection"/>
+                                <field name="margin"/>
+                                <field name="margin_price"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//button[@name='action_done']" position="before">
+                    <button name="make_quotation" type="object"
+                            attrs="{'invisible':[('state','not in' ,['in_progress','open'])] }"
+                            string="Create Sale Quotation"
+                            class="oe_highlight"/>
+                    <button name="po_confirm" type="object"
+                            attrs="{'invisible':[('state','not in' ,['in_progress','open'])] }" string="Confrim PO"
+                            class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="open_quotation" type="object" class="oe_stat_button" icon="fa-list-alt"
+                            attrs="{'invisible': [('state', '=', 'draft')]}">
+                        <div class="o_stat_info">
+                            <field name="quote_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Quote(s)</span>
+                        </div>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <act_window
+                id="act_call_to_sale"
+                name="Sale Quote"
+                res_model="sale.order"
+                binding_model="purchase.requisition"
+                domain="[('tender_id', '=', active_id)]"
+                context="{'default_tender_id': active_id}"
+                />
+    </data>
+</odoo>

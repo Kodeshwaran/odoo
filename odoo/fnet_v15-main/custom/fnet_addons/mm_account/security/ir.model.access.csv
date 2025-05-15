@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_invoice_import_manager,invoice.import.manager,model_invoice_import,account.group_account_manager,1,1,1,1
+access_invoice_import_line_manager,invoice.import.line.manager,model_invoice_import_line,account.group_account_manager,1,1,1,1
+access_commitment_date_update_wizard,access_commitment_date_update_wizard,model_commitment_date_update_wizard,,1,1,1,1

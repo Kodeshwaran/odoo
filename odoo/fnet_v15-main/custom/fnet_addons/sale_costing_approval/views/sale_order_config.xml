@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_sale_cost_approval" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale.cost</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="25" />
+        <field name="inherit_id" ref="sale_approval.res_config_settings_view_form_sale_approval" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sale_order_approval']//..//.." position="after">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="sale_cost_approval"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Sale Costing Single Approval Rule</span>
+                        <div class="text-muted">
+                            Set Sale Costing Approval Rule
+                        </div>
+                        <div class="text-muted">
+                            <field name="sale_cost_single_approval_rule_id" attrs="{'invisible': [('sale_cost_approval', '!=', True)], 'required': [('sale_cost_approval', '=', True)]}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="sale_cost_double_approval"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <span class="o_form_label">Sale Costing double Approval Rule</span>
+                        <div class="text-muted">
+                            Set Sale Costing Approval Rule
+                        </div>
+                        <div class="text-muted">
+                            <field name="sale_cost_double_approval_rule_id" attrs="{'invisible': [('sale_cost_approval', '!=', True)], 'required': [('sale_cost_approval', '=', True)]}" />
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="sale_cost_apporval_rule_form_view" model="ir.ui.view">
+        <field name="name">sale.cost.approval.rule.form</field>
+        <field name="model">sale.cost.approval.rule</field>
+        <field name="arch" type="xml">
+            <form string="Approval Rule">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="is_single_hierarchy" />
+                    </group>
+                    <group string='Approval Rules'>
+                        <field name="approval_rule_ids" nolabel='1'>
+                            <tree editable='bottom'>
+                                <field name='sequence' />
+                                <field name='approval_role' />
+                                <field name='approval_category' />
+                                <field name='quotation_lower_limit' />
+                                <field name='quotation_upper_limit' />
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="sale_cost_approval_rule_form_action" model="ir.actions.act_window">
+        <field name="name">Costing Approval Rules</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.cost.approval.rule</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new Approval Rule.
+            </p>
+        </field>
+    </record>
+    <menuitem action="sale_cost_approval_rule_form_action" id="menu_sale_cost_approval_rule_form_action" parent="sale_costing.menu_costing_config" sequence="99" groups="base.group_no_one" />
+</odoo>

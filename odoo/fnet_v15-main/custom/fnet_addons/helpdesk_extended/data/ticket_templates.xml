@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="customer_mail_template" model="mail.template">
+            <field name="name">Create ticket</field>
+            <field name="model_id" ref="helpdesk_extended.model_helpdesk_ticket"/>
+            <field name="subject">Your Ticket Is Created</field>
+            <field name="email_to">{{object.partner_email}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse: separate;">
+                    <tr>
+                        <td valign="top" style="font-size: 13px;">
+                            <div>
+                                <h1>
+                                    <span style="font-size: 30px;">Your ticket create successfully</span>
+                                </h1>
+                                <br/>
+                                <div>
+                                    <strong>Reference:</strong>
+                                    <t t-out="object.manager_mail()"/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="development_mail_template" model="mail.template">
+            <field name="name">development mail template</field>
+            <field name="model_id" ref="helpdesk_extended.model_helpdesk_ticket"/>
+            <field name="subject">Your Ticket Is move to Development stage</field>
+            <field name="email_to">{{object.partner_email}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="min-width: 590px; background-color: white; padding: 8px 8px; border-collapse: separate;">
+                    <tr>
+                        <td valign="top" style="font-size: 13px;">
+                            <div>
+                                <h1>
+                                    <span style="style=background:#F0F0F0;color:#515166;padding:5px 5px;font-family:Arial,Helvetica,sans-serif;font-size:20px;">Your Ticket Is move to Development stage<br/>
+                                    Expected end date : <t t-out="object.expected_end_date"/>
+                                    </span>
+                                </h1>
+                                <br/>
+                                <div>
+                                    <strong>Reference:</strong>
+                                    <t t-out="object.manager_mail()"/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+         <record id="functional_testing_mail_template" model="mail.template">
+            <field name="name">functional testing mail</field>
+            <field name="model_id" ref="helpdesk_extended.model_helpdesk_ticket"/>
+            <field name="subject">Functional Testing</field>
+            <field name="email_from">{{object.assigned_mail()}}</field>
+            <field name="email_to">{{object.manager_mail()}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse: separate;">
+                    <tr>
+                        <td valign="top" style="font-size: 13px;">
+                            <div>
+                                <h1>
+                                    <span style="style=background:#F0F0F0;color:#515166;padding:5px 5px;font-family:Arial,Helvetica,sans-serif;font-size:20px;">
+                                        Move to Testing stage
+                                    </span>
+                                </h1>
+                                <br/>
+                                <div>
+                                    <strong>Reference:</strong>
+                                    <t t-out="object.partner_email"/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+
+        <record id="approval_mail_template" model="mail.template">
+            <field name="name">approval mail</field>
+            <field name="model_id" ref="helpdesk_extended.model_helpdesk_ticket"/>
+            <field name="subject">Ticket is Approval</field>
+            <field name="email_from">{{object.manager_mail()}}</field>
+            <field name="email_to">{{object.assigned_mail()}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse: separate;">
+                    <tr>
+                        <td valign="top" style="font-size: 13px;">
+                            <div>
+                                <h1>
+                                    <span style="style=background:#F0F0F0;color:#515166;padding:5px 5px;font-family:Arial,Helvetica,sans-serif;font-size:20px;">Push to Live!</span>
+                                </h1>
+                                <br/>
+                                <div>
+                                    <strong>Reference:</strong>
+                                    <t t-out="object.manager_mail()"/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="rejected_mail_template" model="mail.template">
+            <field name="name">rejected mail</field>
+            <field name="model_id" ref="helpdesk_extended.model_helpdesk_ticket"/>
+            <field name="subject">Ticket is Rejected</field>
+            <field name="email_from">{{object.manager_mail()}}</field>
+            <field name="email_to">{{object.assigned_mail()}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse: separate;">
+                    <tr>
+                        <td valign="top" style="font-size: 13px;">
+                            <div>
+                                <h1>
+                                    <span style="style=background:#F0F0F0;color:#515166;padding:5px 5px;font-family:Arial,Helvetica,sans-serif;font-size:20px;">
+                                        Ticket is Rejected!</span>
+                                </h1>
+                                <br/>
+                                <div>
+                                    <strong>Reference:</strong>
+                                    <t t-out="object.manager_mail()"/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="completed_mail_template" model="mail.template">
+            <field name="name">completed mail</field>
+            <field name="model_id" ref="helpdesk_extended.model_helpdesk_ticket"/>
+            <field name="subject">Ticket is Completed</field>
+            <field name="email_to">{{object.partner_email}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse: separate;">
+                    <tr>
+                        <td valign="top" style="font-size: 13px;">
+                            <div>
+                                <h1>
+                                    <span style="style=background:#F0F0F0;color:#515166;padding:5px 5px;font-family:Arial,Helvetica,sans-serif;font-size:20px;">
+                                        Ticket is Completed!
+                                    </span>
+                                </h1>
+                                <br/>
+                                <div>
+                                    <strong>Reference:</strong>
+                                    <t t-out="object.manager_mail()"/>
+                                    <br/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+    </data>
+</odoo>

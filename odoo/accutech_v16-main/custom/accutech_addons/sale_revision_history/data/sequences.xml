@@ -1,0 +1,18 @@
+<odoo noupdate="1">
+    <record id="sale_quotation_seq1" model="ir.sequence">
+        <field name="name">Sale Quotation Sequence</field>
+        <field name="code">sale.quotation</field>
+        <field name="prefix">sq31</field>
+        <field name="padding">8</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="sale_order_seq_new" model="ir.sequence">
+        <field name="name">Sale Order Sequence</field>
+        <field name="code">sale.order.seq.1</field>
+        <field name="prefix">32</field>
+        <field name="padding">8</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

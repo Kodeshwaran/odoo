@@ -1,0 +1,46 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="ir_cron_probation_review" model="ir.cron">
+            <field name="name">Automatic Probation Review for Employees</field>
+            <field name="model_id" ref="model_probation_review"/>
+            <field name="state">code</field>
+            <field name="code">model._probation_review_reminder()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="ir_cron_probation_review_end_date" model="ir.cron">
+            <field name="name">Automatic Probation End Date Alert Remainder</field>
+            <field name="model_id" ref="model_probation_review"/>
+            <field name="state">code</field>
+            <field name="code">model._probation_end_date_alert_remainder()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+        <record id="ir_cron_birthday_wedding_wishes" model="ir.cron">
+            <field name="name">Birthday and Wedding Wishes for Employee</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.employee_wishes_alert()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="ir_cron_probation_review_requested_delay_notify" model="ir.cron">
+            <field name="name">Requested Probation Review more than a month Notification</field>
+            <field name="model_id" ref="model_probation_review"/>
+            <field name="state">code</field>
+            <field name="code">model._probation_review_requested_reminder()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+</odoo>

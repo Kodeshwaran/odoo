@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="group_company_managing_director" model="res.groups">
+			<field name="name">Managing Director(MD)</field>
+			<field name="category_id" ref="base.module_category_usability"/>
+		</record>
+   
+	</data>
+</odoo>

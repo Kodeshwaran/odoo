@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_commitment_date_wizard,commitment_date_wizard,model_commitment_date_wizard,base.group_user,1,1,1,1
+access_scope_document_wizard,scope_document_wizard,model_scope_document_wizard,base.group_user,1,1,1,1
+access_reason_wizard,reason_wizard,model_reason_wizard,base.group_user,1,1,1,1
+access_task_type_manager,task_type_manager,model_task_type,project.group_project_manager,1,1,1,1
+access_task_type_user,task_type_user,model_task_type,base.group_user,1,0,0,0

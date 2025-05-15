@@ -1,0 +1,83 @@
+<odoo>
+    <data>
+        <template id="report_mail_batch_pay">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page" style="font-size:10px;font-family:Liberation Serif;padding-top:5px;">
+                        <style>tr {page-break-inside: avoid;} th,td {vertical-align:middle;width:auto;} th,td,tr
+                            {border-collapse:collapse;}
+                        </style>
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="text-align:center;padding:3px;font-size:14px;">
+                                    <b>Mail Sent Status</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center;font-size:16px;padding-top:10px;padding-bottom:10px;">
+                                    <b>
+                                        <span t-field="o.name"/>
+                                    </b>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%;">
+                            <thead>
+                                <tr style="text-align:center;">
+                                    <td style="width:10%;padding-top:3px;padding-bottom:3px;border-bottom:1px solid black;">
+                                        S.No
+                                    </td>
+                                    <td style="padding-top:3px;padding-bottom:3px;border-bottom:1px solid black;">
+                                        Successful
+                                    </td>
+                                    <td style="padding-top:3px;padding-bottom:3px;border-bottom:1px solid black;">
+                                        Unsuccessful
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="counter" t-value="1"/>
+                                <tr t-foreach="o.sent_status_mail(o)" t-as="a" style="text-align:center;">
+                                    <td style="padding:3px;">
+                                        <t t-esc="counter"/>
+                                        <t t-set="counter" t-value="counter+1"/>
+                                    </td>
+                                    <td style="padding:3px;">
+                                        <t t-if="a['s_emp']">
+                                            <span t-esc="a['s_emp']"/>
+                                        </t>
+                                    </td>
+                                    <td style="padding:3px;">
+                                        <t t-if="a['u_emp']">
+                                            <span t-esc="a['u_emp']"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="footer">
+                        <t t-if="o and 'company_id' in o">
+                            <t t-set="company" t-value="o.company_id"/>
+                        </t>
+                        <div style="border-top: 1px solid black;">
+                            <p style="text-align:center;font-size:10px;font-family:Liberation Serif;padding-top:3px;">
+                                Page
+                                <span class="page"/>
+                                of
+                                <span class="topage"/>
+                            </p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+        <template id="payslip_template_mail_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="hr_payroll_extended.report_mail_batch_pay"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

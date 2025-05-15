@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+<!--    MAIN PROFILE ACTION-->
+    <record model="ir.actions.server" id="action_open_profile">
+        <field name="name">My Profile</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="groups_id" eval="[(4,ref('base.group_user'))]"/>
+        <field name="state">code</field>
+        <field name="code">
+user = env.user
+action = user.action_open_my_profile()
+        </field>
+    </record>
+
+<!--MAIN MENU-->
+
+    <menuitem id="menu_self_employee_details_root"
+              name="Self Portal"
+              action='action_open_profile'
+              web_icon="hr_employee_portal,static/description/icon.png"
+              sequence="201"/>
+
+<!--PROFILE MENU-->
+
+    <menuitem id="emp_profile_menu_one"
+              name="Profile"
+              parent="menu_self_employee_details_root"
+              action="action_open_profile"
+              sequence="2"/>
+
+<!--    PAYSLIP MENU ACTION-->
+
+    <record model="ir.actions.act_window" id="employee_payslip_action_window">
+        <field name="name">My Payslips</field>
+        <field name="res_model">hr.payslip</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+<!--PAYSLIP MENU-->
+
+    <menuitem id="emp_payslip_menu_three"
+              name="Payslip"
+              parent="menu_self_employee_details_root"
+              action="employee_payslip_action_window"
+              sequence="4"/>
+
+<!--LEAVE ACTION -->
+
+    <record model="ir.actions.act_window" id="employee_leave_dashboard_action_window">
+        <field name="name">Leave</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">calendar,tree,form</field>
+        <field name="domain">[('user_id', '=', uid)]</field>
+        <field name="context">{}</field>
+    </record>
+
+<!--MY TIME OFF ACTION-->
+
+    <record model="ir.actions.act_window" id="employee_leave_time_off_action_window">
+        <field name="name">My Time Off</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id', '=', uid)]</field>
+        <field name="search_view_id" ref="hr_holidays.hr_leave_view_search_my"/>
+        <field name="context">{}</field>
+    </record>
+
+<!--LEAVE ALLOCATION ACTION-->
+
+    <record model="ir.actions.act_window" id="employee_leave_allocation_action_window">
+        <field name="name">My Allocations</field>
+        <field name="res_model">hr.leave.allocation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+        <field name="context">{}</field>
+    </record>
+
+<!--LEAVE CANCEL ACTION-->
+
+    <record model="ir.actions.act_window" id="employee_leave_cancel_action_window">
+        <field name="name">My Leave Cancel Requests</field>
+        <field name="res_model">hr.holidays.cancel</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+        <field name="context">{}</field>
+    </record>
+
+<!--ATTENDANCE ACTION-->
+
+    <record model="ir.actions.act_window" id="employee_attendance_action_window">
+        <field name="name">My Attendance</field>
+        <field name="res_model">hr.attendance</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+
+<!--TIMESHEET ACTION-->
+
+    <record model="ir.actions.act_window" id="employee_timesheet_action_window">
+        <field name="name">My Timesheets</field>
+        <field name="res_model">account.analytic.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+        <field name="context">{}</field>
+    </record>
+
+<!--    LEAVE APPROVAL ACTION -->
+
+    <record model="ir.actions.act_window" id="employee_leave_approval_action_window">
+        <field name="name">Time Off Approvals</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id.parent_id.user_id', '=', uid), ('state', '=', 'confirm')]</field>
+        <field name="context">{}</field>
+    </record>
+
+<!--    LEAVE CANCEL APPROVAL ACTION -->
+
+    <record model="ir.actions.act_window" id="employee_leave_cancel_approval_action_window">
+        <field name="name">Leave Cancel Approvals</field>
+        <field name="res_model">hr.holidays.cancel</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('employee_id.parent_id.user_id', '=', uid), ('state', '=', 'confirm')]</field>
+        <field name="context">{}</field>
+    </record>
+
+<!--RESIGNATION APPROVAL ACTION-->
+
+    <record model="ir.actions.act_window" id="employee_resignation_approval_action_window">
+        <field name="name">Resignation Approvals</field>
+        <field name="res_model">hr.resignation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('parent_id.user_id', '=', uid), ('state', 'in', ['submitted', 'manager_approve', 'done', 'withdraw', 'manager_cancel_approve'])]</field>
+    </record>
+
+<!--EXIT INTERVIEW APPROVAL ACTION-->
+
+    <record model="ir.actions.act_window" id="exit_interview_approval_action_window">
+        <field name="name">Exit Interview Approvals</field>
+        <field name="res_model">exit.interview</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('name.parent_id.user_id', '=', uid), ('state', '=', 'submitted')]</field>
+    </record>
+
+<!--NO DUE APPROVAL ACTION-->
+
+    <record model="ir.actions.act_window" id="no_due_approval_action_window">
+        <field name="name">No Due Approvals</field>
+        <field name="res_model">no.due</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('manager.user_id', '=', uid), ('state', '=', 'submitted')]</field>
+    </record>
+
+<!--PROBATION REVIEW APPROVAL ACTION-->
+
+    <record model="ir.actions.act_window" id="probation_review_approval_action_window">
+        <field name="name">Probation Review Approvals</field>
+        <field name="res_model">probation.review</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!--LEAVE MAIN MENU-->
+
+    <menuitem id="emp_leave_menu_four"
+              name="Leave"
+              parent="menu_self_employee_details_root"
+              sequence="5"/>
+
+    <!--    DASHBOARD LEAVE-->
+
+        <menuitem id="emp_leave_dashboard_sub_menu"
+                  name="Dashboard"
+                  parent="emp_leave_menu_four"
+                  action="hr_holidays.hr_leave_action_new_request"/>
+
+    <!--    MY TIME OFF LEAVE-->
+
+        <menuitem id="emp_leave_my_time_off_sub_menu"
+                  name="My Time Off"
+                  parent="emp_leave_menu_four"
+                  action="employee_leave_time_off_action_window"/>
+
+    <!--    MY ALLOCATION LEAVE-->
+
+        <menuitem id="emp_leave_my_allocation_sub_menu"
+                  name="My Allocation"
+                  parent="emp_leave_menu_four"
+                  action="employee_leave_allocation_action_window"/>
+
+    <!--    LEAVE CANCEL no_due_approval_action_windowREQS-->
+
+        <menuitem id="emp_leave_leave_cancel_sub_menu"
+                  name="Leave Cancel Requests"
+                  parent="emp_leave_menu_four"
+                  action="employee_leave_cancel_action_window"/>
+
+<!--ATTENDANCE MENU-->
+
+    <menuitem id="emp_attendance_menu_five"
+              name="Attendance"
+              parent="menu_self_employee_details_root"
+              groups="hr_attendance.group_hr_attendance"
+              sequence="6"/>
+
+    <!--    CHECK IN /OUT MENU-->
+
+        <menuitem id="check_in_out_sub_menu"
+                  name="Check IN / Check OUT"
+                  parent="emp_attendance_menu_five"
+                  groups="hr_attendance.group_hr_attendance"
+                  action="hr_attendance.hr_attendance_action_my_attendances"/>
+
+    <!--    ATTENDANCE LIST MENU-->
+
+        <menuitem id="attendance_sub_menu"
+                  name="Attendance"
+                  parent="emp_attendance_menu_five"
+                  groups="hr_attendance.group_hr_attendance"
+                  action="employee_attendance_action_window"/>
+
+<!--TIMESHEET MENU-->
+
+    <menuitem id="emp_timesheet_menu_six"
+              name="Timesheet"
+              parent="menu_self_employee_details_root"
+              action="employee_timesheet_action_window"
+              sequence="7"/>
+
+<!--APPROVALS MENU-->
+
+    <menuitem id="emp_approve_menu_seven"
+              name="Approvals"
+              parent="menu_self_employee_details_root"
+              groups="hr_holidays.group_hr_holidays_responsible"
+              sequence="7"/>
+
+    <!--    LEAVE APPROVAL-->
+
+    <menuitem id="leave_approval_sub_menu"
+              name="Time Off"
+              parent="emp_approve_menu_seven"
+              action="employee_leave_approval_action_window"
+              sequence="1"/>
+
+    <!--    LEAVE CANCEL APPROVAL-->
+
+    <menuitem id="leave_cancel_approval_sub_menu"
+          name="Time Off Cancel"
+          parent="emp_approve_menu_seven"
+          action="employee_leave_cancel_approval_action_window"
+          sequence="2"/>
+
+
+    <!--    RESIGNATION APPROVAL    -->
+
+    <menuitem id="resignation_approval_sub_menu"
+              name="Resignation"
+              parent="emp_approve_menu_seven"
+              action="employee_resignation_approval_action_window"
+              sequence="3"/>
+
+    <!--    EXIT INTERVIEW APPROVAL    -->
+
+    <menuitem id="exit_interview_approval_sub_menu"
+              name="Exit Interview"
+              parent="emp_approve_menu_seven"
+              action="exit_interview_approval_action_window"
+              sequence="4"/>
+
+    <!--    NO DUE APPROVAL    -->
+
+    <menuitem id="no_due_approval_sub_menu"
+              name="No Due"
+              parent="emp_approve_menu_seven"
+              action="no_due_approval_action_window"
+              sequence="5"/>
+
+    <!--    PROBATION REVIEW APPROVAL    -->
+
+    <menuitem id="probation_review_approval_sub_menu"
+              name="Probation Review"
+              parent="emp_approve_menu_seven"
+              action="probation_review_approval_action_window"
+              sequence="6"/>
+
+<!--    NO EMPLOYEE FORM VIEW-->
+
+    <record model="ir.ui.view" id="hr_payslip_inherit_for_group_change">
+        <field name="name">hr.payslip.form.grp.view.inherit</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll_extended.hr_payslip_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='payslip_mail']" position="attributes">
+                <attribute name="groups">hr_payroll_community.group_hr_payroll_community_user</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

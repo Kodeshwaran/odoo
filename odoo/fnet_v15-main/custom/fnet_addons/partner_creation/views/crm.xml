@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+
+        <record id="crm_lead_view_form_inherited" model="ir.ui.view">
+            <field name="name">CRM Lead form view Inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <button name="action_schedule_meeting" position="after">
+                    <button class="oe_stat_button" type="object" name="action_view_customer_request" icon="fa-pencil-square-o" attrs="{'invisible': ['|',('type', '=', 'lead'),('request_count', '=', 0)]}">
+                        <field name="request_count" widget="statinfo" string="Customer Request(s)"/>
+                    </button>
+                </button>
+                <xpath expr="//header/button[@name='action_set_lost']" position="after">
+                    <button name="action_create_partner" string="Request for New Customer" type="object"
+                            style="width:100px;font-size:12px;" class="oe_highlight" attrs="{'invisible': ['|','|',('partner_type', '!=', 'new'), ('partner_id', '!=', False), ('request_count', '>', 0)]}"/>
+                </xpath>
+                <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="before">
+                    <field name="partner_type" widget="radio" options="{'horizontal':True}" nolabel="1"/>
+                </xpath>
+                <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="attributes">
+                    <attribute name="attrs">{'required': [('type', '=', 'opportunity'),('partner_type', '=', 'existing')]}</attribute>
+                    <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+                <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="after">
+                    <field name="partner_name" attrs="{'invisible': ['|',('partner_type', '!=', 'new'),('partner_id', '!=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_lead_tree_view_inherited" model="ir.ui.view">
+            <field name="name">CRM Lead tree view Inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="mm_crm.crm_fnet_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="partner_name"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

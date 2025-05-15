@@ -1,0 +1,57 @@
+<odoo>
+    <data>
+
+        <record id="email_template_crm_pre_sales" model="mail.template">
+            <field name="name">Pre Sale Intimation Template</field>
+            <field name="model_id" ref="pre_sale.model_crm_lead"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Pre Sale for {{object.name}}</field>
+            <field name="email_to">{{ctx['email_to']}}</field>
+            <field name="email_cc">{{ctx['email_cc']}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                        table, th,tr, td {
+                        border: 2px solid black;
+                        border-collapse: collapse;
+                        }
+                        th,tr, td {
+                        padding: 5px;
+                        }
+                        p{
+                        text-align: left;
+                        font-size:15px;
+                        font-family:sans-serif;
+                        }
+                    </style>
+                </head>
+                <p>This message is to notify that the Opportunity <strong><t t-out="object.name"/></strong> is under pre sale.</p>
+                <br/>
+                <p>Kindly attach the needed commercial document in the respective Opportunity and mark it as submitted for pre Sales.</p>
+                <p>The following are the Opportunity Details:</p>
+                <br/>
+                <table style="width: 100%;" border="2px">
+                    <thead>
+                        <td style="text-align: center; font-weight: bold; background-color:#4472C4;
+                        color:#white; font-size:15px; font-family:verdana; color:white;">S.No</td>
+                        <td style="text-align: center; font-weight: bold; background-color:#4472C4;
+                        color:#white; font-size:15px; font-family:verdana; color:white;">Information</td>
+                        <td style="text-align: center; font-weight: bold; background-color:#4472C4;
+                        color:#white; font-size:15px; font-family:verdana; color:white;">Details</td>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="ctx['pre_sale_mail_details']" t-as="rec">
+                            <tr>
+                                <td style="text-align: center;width:10%;font-weight: bold;font-family:sans-serif;background-color:#4472C4;
+                        color:white;"><t t-out="rec['no']"/></td>
+                                <td style="text-align: left;width:40%;font-weight: bold; font-family:sans-serif;background-color:#A1B8E1;color:black;"><t t-out="rec['name']"/></td>
+                                <td style="text-align: center;width:50%;font-weight: bold; font-family:sans-serif;background-color:#A1B8E1;color:black;"><t t-out="rec['value']"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </field>
+        </record>
+
+    </data>
+</odoo>

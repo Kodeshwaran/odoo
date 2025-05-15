@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <template id="bank_check_template_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="mm_onscreen_report.bank_check_template_report_move" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
+   <template id="bank_check_template_report_move">
+    <t t-call="web.html_container">
+			<t t-foreach="docs" t-as="o">
+
+			<div style="padding-top:2px;padding-left:300px;">
+				<b style="width:67%;border-top:1px solid black;border-bottom:1px solid black;padding-right:20px;padding-left:20px;font-size:14px;">A/c Payee</b>
+				<b><span style="padding-left:400px;letter-spacing: 12px;font-size:14px;width:100%;" t-field="o.date" t-field-options='{"format": "ddMMyyyy"}'/></b>
+			</div>
+
+
+
+<!--
+				<div class="row">
+					<div style="width:95%;text-align:right;line-height: 70%;padding-right:80px;font-size:18px;letter-spacing: 12px;" t-field="o.date" t-field-options='{"format": "ddMMyyyy"}'/>
+				</div>
+-->
+				
+				<div class="row">
+					<t t-if="o.partner_id">
+						<div style="width:100%;padding-left:50px;"><b><span style="padding-left:10px;" t-field="o.partner_id.name"/></b></div>
+					</t>
+					<t t-if="o.to_self">
+						<div style="width:100%;padding-left:50px;"><b><span style="padding-left:10px;" t-field="o.to_self"/></b></div>
+					</t>
+				</div>
+
+
+				<div class="row">
+					<div style="width:100%;text-align:left;margin-top:-4px;padding-left:80px;padding-top:20px;height:75px;font-size:14px;"><b><span t-esc="o.get_tax_amt(o, o.amount_total_signed)"/></b></div>
+				</div>
+
+
+				<div class="row">
+					<div style="width:95%;text-align:right;line-height: 70%;padding-right:80px;font-size:18px;"><b>**<t t-esc="'{0:,.2f}'.format(o.amount_total_signed)"/></b></div>
+				</div>
+
+				<!--<div class="row" style="font-size: 12px;">
+					<div style="width:95%;text-align:right;padding-right:80px;margin-top:4px;">for <span style="letter-spacing: -1px;" t-field="o.company_id.name"/></div>
+				</div>
+
+				<br/>
+				<br/>
+
+				<div class="row" style="font-size:14px;margin-top:4px;">
+					<div style="width:95%;text-align:right;padding-right:220px;">Director</div>
+				</div>-->
+
+			</t>
+    </t>
+    </template>
+</data>
+</odoo>

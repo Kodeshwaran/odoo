@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+
+        <menuitem name="Shift Management" id="menu_hr_shift_root" sequence="5"
+                  web_icon="hr_shift,static/description/icon.png" groups="hr_shift.group_shift_user"/>
+
+        <menuitem name="Shift" id="menu_hr_shift_main" sequence="1" parent="menu_hr_shift_root" />
+        <menuitem name="Management" id="menu_hr_shift_management" sequence="2" parent="menu_hr_shift_root" groups="hr_shift.group_shift_administrator"/>
+        <menuitem name="Configuration" id="menu_hr_shift_config" sequence="5" parent="menu_hr_shift_root" groups="hr_shift.group_shift_administrator"/>
+
+        <record model="ir.ui.view" id="view_hr_shift_tree">
+            <field name="name">view.hr.shift.tree</field>
+            <field name="model">hr.shift</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="start_time" widget="float_time"/>
+                    <field name="end_time" widget="float_time"/>
+                    <field name="hours" widget="float_time"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_shift_form">
+            <field name="name">view.hr.shift.form</field>
+            <field name="model">hr.shift</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <label for="start_time" string="Shift Timing"/>
+                            <div>
+                                <field name="start_time" class="oe_inline" widget="float_time"/>
+                                <span class="fa fa-arrow-right" title="to"/>
+                                <field name="end_time" class="oe_inline" widget="float_time"/>
+                            </div>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="hours" widget="float_time"/>
+                                <field name="code"/>
+                                <field name ='allowance_request'/>
+
+<!--                                <field name="color"/>-->
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_shift">
+            <field name="name">Shift</field>
+            <field name="res_model">hr.shift</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Shift Types" id="menu_hr_shift" sequence="2" parent="menu_hr_shift_config"
+                  action="action_hr_shift"/>
+
+        <record model="ir.ui.view" id="hr_employee_shift_type_inherit">
+            <field name="name">hr_employee_shift_type_inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='active_group']" position="after">
+                    <group name="shift" string="Shift">
+                        <field name="employee_level"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

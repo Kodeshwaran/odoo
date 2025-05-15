@@ -1,0 +1,805 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="employee_details_list" name='Employee form'>
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure">
+                        <div class="container mt32">
+                            <form action="/confirmation" method="post" enctype="multipart/form-data"
+                                  class="s_website_form">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div class="form-group row form-field">
+                                    <div class="col-lg-4 col-md-4">
+                                        <img class="card-img-top" src="/employee_documents/static/src/img/logo.png"
+                                             alt="Company logo" style=" width: 90%;"/>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2"></div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 text-center"
+                                     style="background: #3d8d97;height: 55px;color:white;">
+                                    <h2 style="line-height: 1.5;font-weight: bolder;">Employee On-Boarding Form</h2>
+                                </div>
+                                <div class="form-group row form-field mt32">
+                                    <div class="col-lg-1 col-md-1 ">
+                                        <p class="oe_title">Date:</p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5">
+                                        <input maxlength="200" type="date"
+                                               class="form-control oe_border" required="1" id="date" name="date"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 text-center"
+                                     style="background: #3d8d97;height: 20px;color:white;">
+                                    <p>Personal Information</p>
+                                </div>
+                                <div class="form-group row form-field mt16">
+                                    <div class="col-lg-12 col-md-12 oe_gray">
+                                        <h5 class="oe_title">
+                                            Please fill the personal information, as accurately as possible.
+                                        </h5>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row form-field">
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Name of the Employee</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="name" required="1"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row form-field">
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Father's Name&#160;&#160;:</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="fathers_name"/>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Mother's Name&#160;&#160;:</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="mothers_name"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row form-field">
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Emails</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="email" class="form-control o_website_form_input oe_border"
+                                               name="email" required="1"/>
+                                    </div>
+                                    <label class="col-lg-2 col-md-2 oe_gray" for="student_blood_group">
+                                        Blood Group
+                                    </label>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+
+                                        <select name="blood_group"
+                                                t-attf-class="form-control o_website_form_input oe_border">
+                                            <option value="A+">A(+)</option>
+                                            <option value="A-">A(-)</option>
+                                            <option value="B+">B(+)</option>
+                                            <option value="B-">B(-)</option>
+                                            <option value="O+">O(+)</option>
+                                            <option value="O-">O(-)</option>
+                                            <option value="AB+">AB(+)</option>
+                                            <option value="AB-">AB(-)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row form-field">
+                                    <label class="col-lg-2 col-md-2 oe_gray" for="student_gender">
+                                        Gender
+                                    </label>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <select name="gender"
+                                                t-attf-class="form-control o_website_form_input oe_border">
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Date of Birth</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="date" class="form-control o_website_form_input oe_border"
+                                               name="date_of_birth" required="1"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row form-field">
+                                    <label class="col-lg-2 col-md-2 oe_gray" for="marital">
+                                        Martial Status
+                                    </label>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <select name="marital"
+                                                t-attf-class="form-control o_website_form_input oe_border">
+                                            <option value="single">Single</option>
+                                            <option value="married">Married</option>
+                                            <option value="cohabitant">Legal Cohabitant</option>
+                                            <option value="widower">Widower</option>
+                                            <option value="divorced">Divorced</option>
+                                        </select>
+                                    </div>
+
+                                    <label class="col-lg-2 col-md-2 oe_gray" for="marital">
+                                        Certificate
+                                    </label>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <select name="certificate"
+                                                t-attf-class="form-control o_website_form_input oe_border">
+                                            <option value="graduate">Graduate</option>
+                                            <option value="bachelor">Bachelor</option>
+                                            <option value="master">Master</option>
+                                            <option value="doctor">Doctor</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row form-field">
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Passport Number</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="passport_id"/>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Field Study</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="study_field" placeholder="Computer Science" required="1"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row form-field">
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Contact Number</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="tel" class="form-control o_website_form_input oe_border"
+                                               name="contact_number" pattern="[0-9]{2}[0-9]{10}" required="1"/>
+                                        <small>Example Format: 91xxxxxxxxxx</small>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Emergency Contact Number</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="tel" class="form-control o_website_form_input oe_border"
+                                               name="emg_contact_number" pattern="[0-9]{2}[0-9]{10}" required="1"/>
+                                        <small>Example Format: 91xxxxxxxxxx</small>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row form-field">
+<!--                                    <div class="col-lg-2 col-md-2 oe_gray">-->
+<!--                                        <p class="oe_title">Visa Number</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-lg-1 col-md-1 oe_gray">-->
+<!--                                        <p class="oe_title">:</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-lg-3 col-md-3 oe_gray">-->
+<!--                                        <input type="number" class="form-control o_website_form_input oe_border"-->
+<!--                                               name="visa_no"/>-->
+<!--                                    </div>-->
+
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Esi Number</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="esi_number"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row form-field">
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">PF Number</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="pf_number"/>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">UAN Number</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="uan_number"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row form-field">
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Pan Number</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="pan_number"/>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Aadhar Number</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="aadhar_number" required="1"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <!--                                    <div class="col-lg-2 col-md-2 oe_gray">-->
+                                    <!--                                        <p class="oe_title">Expected Joining Date</p>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="col-lg-1 col-md-1 oe_gray">-->
+                                    <!--                                        <p class="oe_title">:</p>-->
+                                    <!--                                    </div>-->
+                                    <!--                                    <div class="col-lg-3 col-md-3 oe_gray">-->
+                                    <!--                                        <input type="date" class="form-control o_website_form_input oe_border"-->
+                                    <!--                                               t-attf-value="#{single_employee.expected_joining_date}"-->
+                                    <!--                                               name="expected_joining_date" id="expected_joining_date" readonly="1"/>-->
+                                    <!--                                    </div>-->
+<!--                                    <div class="col-lg-2 col-md-2 oe_gray">-->
+<!--                                        <p class="oe_title">Joining Date Propose</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-lg-1 col-md-1 oe_gray">-->
+<!--                                        <p class="oe_title">:</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-lg-3 col-md-3 oe_gray">-->
+<!--                                        <input type="date" class="form-control o_website_form_input oe_border"-->
+<!--                                               t-attf-value="#{single_employee.joining_date_proposed}"-->
+<!--                                               name="joining_date_proposed" id="joining_date_proposed" required="1"/>-->
+<!--                                    </div>-->
+
+
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Joining Date Propose</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="date" class="form-control o_website_form_input oe_border"
+                                               name="joining_date_proposed" required="1"/>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">Consolidated Pay</p>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title">:</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="checkbox" id="checkbox_cgv" class="custom-control-input" name="consolidated_pay"/>
+                                        <label for="checkbox_cgv" class="custom-control-label">
+<!--                                                If yoy agreed for Consolidated pay Click this Button-->
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 text-center"
+                                     style="background: #3d8d97;height: 20px;color:white;">
+                                    <p>Present Address Details</p>
+                                </div>
+                                <br/>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="street" placeholder="Street" required="1"/>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="street2" placeholder="Street2" required="1"/>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="city" placeholder="City" required="1"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="zip" placeholder="Postal/Code" required="1"/>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="select_state" id="select_state"
+                                                class="form-control">
+                                            <option value="" selected="selected">Select State</option>
+                                            <t t-foreach="states or []" t-as="state">
+                                                <option t-att-value="state.id">
+                                                    <t t-esc="state.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select name="select_country" id="select_country"
+                                                class="form-control">
+                                            <option value="" selected="selected">Select Country</option>
+                                            <t t-foreach="countries or []" t-as="country">
+                                                <option t-att-value="country.id">
+                                                    <t t-esc="country.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 text-center"
+                                     style="background: #3d8d97;height: 20px;color:white;">
+                                    <p>Permanent Address Details</p>
+                                </div>
+                                <br/>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="p_street" placeholder="Street" required="1"/>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="p_street2" placeholder="Street2" required="1"/>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="p_city" placeholder="City" required="1"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="p_zip" placeholder="Postal/Code" required="1"/>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <select name="p_select_state" id="p_select_state"
+                                                class="form-control">
+                                            <option value="" selected="selected">Select State</option>
+                                            <t t-foreach="states or []" t-as="p_state">
+                                                <option t-att-value="p_state.id">
+                                                    <t t-esc="p_state.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select name="p_select_country" id="p_select_country"
+                                                class="form-control">
+                                            <option value="" selected="selected">Select Country</option>
+                                            <t t-foreach="countries or []" t-as="p_country">
+                                                <option t-att-value="p_country.id">
+                                                    <t t-esc="p_country.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row form-field">
+
+                                    <div class="col-lg-9 col-md-9 oe_gray">
+                                        <input type="hidden" class="form-control o_website_form_input oe_border"
+                                               name="employee_register_id" t-attf-value="#{single_employee.id}"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 text-center"
+                                     style="background: #3d8d97;height: 20px;color:white;">
+                                    <p>Educational Qualifications</p>
+                                </div>
+                                <br/>
+                                <div class="form-group row">
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <p class="oe_title">PG Degree :</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="pg_institute_name" placeholder="Institute Name"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="pg_course" placeholder="Course"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="pg_marks" placeholder="100%"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <p class="oe_title">UG Degree :</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="ug_institute_name" placeholder="Institute Name"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="ug_course" placeholder="Course"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="ug_marks" placeholder="100%"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <p class="oe_title">12 th Standard :</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="twelfth_institute_name" placeholder="Institute Name"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="twelfth_course" placeholder="Course"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="twelfth_marks" placeholder="100%"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <p class="oe_title">10 th Standard :</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="tenth_institute_name" placeholder="Institute Name"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="tenth_course" placeholder="Course"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="tenth_marks" placeholder="100%"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 text-center"
+                                     style="background: #3d8d97;height: 20px;color:white;">
+                                    <p>Technical Qualifications</p>
+                                </div>
+                                <br/>
+                                <div class="form-group row">
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <p class="oe_title">Technical Qualification 1</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="add_institute_name" placeholder="Institute Name"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="add_course" placeholder="Course"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="add_marks" placeholder="100%"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <p class="oe_title">Technical Qualification 2</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="add2_institute_name" placeholder="Institute Name"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="text" class="form-control o_website_form_input oe_border"
+                                               name="add2_course" placeholder="Course"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <input type="number" class="form-control o_website_form_input oe_border"
+                                               name="add2_marks" placeholder="100%"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row form-field mt32" style="color:#44929b">
+                                    <div class="col-lg-10 col-md-10 oe_gray">
+                                        <h5 class="oe_title">Please attach below relevant documents
+                                            that may be helpful to our evaluation. Thank you.
+                                        </h5>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg2 col-md-2 oe_gray col-form-label" for="select_aadhar"
+                                           style="font-weight: normal;">
+                                        Aadhar Card
+                                        <span style="color:red">*</span>
+                                    </label>
+
+                                    <div class="col-sm-4 col-md-4 oe_gray">
+                                        <input type="file" name="aadhar_card" accept="image/*,application/pdf"
+                                               class="oe_stat_button"
+                                               string="Upload" required="1"/>
+                                    </div>
+
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="select_pan"
+                                           style="font-weight: normal;">
+                                        Pan Card
+                                        <span style="color:red">*</span>
+                                    </label>
+
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="pan_card" accept="image/*,application/pdf"
+                                               class="oe_stat_button"
+                                               string="Upload"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="select_photo"
+                                           style="font-weight: normal;">
+                                        Photo
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="photo" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf" required="1"/>
+                                    </div>
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="employment_form"
+                                           style="font-weight: normal;">
+                                        Employment Form
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="employment_form" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf" required="0"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="tenth_marksheet"
+                                           style="font-weight: normal;">
+                                        10th Mark Sheet
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="tenth_marksheet" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf"/>
+                                    </div>
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="twelfth_marksheet"
+                                           style="font-weight: normal;">
+                                        12th Mark Sheet
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="twelfth_marksheet" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg2 col-md-2 oe_gray col-form-label" for="degree_certificate"
+                                           style="font-weight: normal;">
+                                        Degree Certificate
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="degree_certificate" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf"/>
+                                    </div>
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="consolidated_marksheet"
+                                           style="font-weight: normal;">
+                                        Degree - Consolidated Mark sheet
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="consolidated_marksheet" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="payslips"
+                                           style="font-weight: normal;">
+                                        Last 3 month Payslips
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="payslips" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf"/>
+                                    </div>
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="bank_statement"
+                                           style="font-weight: normal;">
+                                        Last 6 month Salary credited bank statement
+                                        <span style="color:red">*</span>
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="bank_statement" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf"/>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+
+                                    <label class="col-lg-2 col-md-2 oe_gray col-form-label" for="reliving_letter"
+                                           style="font-weight: normal;">
+                                        Previous Organization Reliving Letter
+                                    </label>
+                                    <div class="col-lg-4 col-md-4 oe_gray">
+                                        <input type="file" name="reliving_letter" class="oe_stat_button"
+                                               string="Upload" accept="image/*,application/pdf"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <p class="oe_title">No Of Year Experience</p>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <input type="float" class="form-control o_website_form_input oe_border"
+                                               name="experience"/>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <p class="oe_title" style="text-align: right;">CTC</p>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <input type="number"
+                                               name="total_previous_ctc"/>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 oe_gray">
+                                        <p class="oe_title" style="text-align: right;">Previous Designation</p>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 oe_gray">
+                                        <input type="text"
+                                               name="previous_designation"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row form-field mt32">
+                                    <div class="col-lg-8 col-md-8 oe_gray">
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <button class="btn pull-right btn_oe oe_border submit" type="submit">Submit!
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 oe_gray">
+                                        <input class="btn pull-right btn_oe oe_border" type="Reset" name="Name"
+                                               value="Reset"></input>
+                                    </div>
+                                    <br/>
+                                    <div class="form-group col-12 joining_date_wrong d-none">
+                                        <div class="alert alert-danger" role="alert">
+                                            Please select the joining date before the expected date.
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="confirmation">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="mt16 mb128">
+                        <div class="container" style="text-align:center">
+                            <div class="row">
+                                <div class="col-md-12 mt16 mb32">
+                                    <h2>
+                                        <span style="color:rgb(124, 123, 173);">
+                                            <strong>Thanks for Document Submission</strong>
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+        <template id="permission_denied">
+            <t t-call="website.layout">
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="mt16 mb128">
+                        <div class="container" style="text-align:center">
+                            <div class="row">
+                                <div class="col-md-12 mt16 mb32">
+                                    <h2>
+                                        <span style="color:rgb(124, 123, 173);">
+                                            <strong>Your date of document submission is expired, please you have any
+                                                queries please contact hr manager
+                                            </strong>
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </t>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Costing approval request -->
+<!--        <record id="email_template_costing_approval_request" model="mail.template">-->
+<!--            <field name="name">Costing approval request</field>-->
+<!--            <field name="model_id" ref="sale_costing.model_sale_costing"/>-->
+<!--            <field name="email_from">${user.email}</field>-->
+<!--            <field name="email_to">-->
+<!--                % for user in object.sale_cost_approval_rule_ids[0].users:-->
+<!--                ${user.login}-->
+<!--                %endfor-->
+<!--            </field>-->
+<!--            <field name="user_signature" eval="True"/>-->
+<!--            <field name="auto_delete" eval="False"/>-->
+<!--            <field name="subject">Costing Approval Request</field>-->
+<!--            <field name="body_html">-->
+<!--                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">-->
+<!--                    <div style="height:auto; text-align: center; font-size: 30px; color: #29408c;">-->
+<!--                        <strong style="border-bottom: 2px solid #29408c; padding-bottom: 1px; text-transform: uppercase;">-->
+<!--                            Costing approval request-->
+<!--                        </strong>-->
+<!--                    </div>-->
+<!--                    <div style="text-align: left; font-size: 20px; margin-top: 10px; color: #29408c;">-->
+<!--                        <p>Hello Approvers,</p>-->
+
+<!--                        <p>Costing approval ${object.name} has been raised by ${user.name}. Please review and-->
+<!--                            approve or-->
+<!--                            reject (with reason given) this costing.-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        &lt;!&ndash;                            Costing approved&ndash;&gt;-->
+<!--        <record id="email_template_sale_costing_approved" model="mail.template">-->
+<!--            <field name="name">Costing Approved</field>-->
+<!--            <field name="model_id" ref="sale_costing.model_sale_costing"/>-->
+<!--            <field name="email_from">${user.email}</field>-->
+<!--            <field name="email_to">${object.sale_cost_approval_history[-1].user.email}</field>-->
+<!--            <field name="user_signature" eval="True"/>-->
+<!--            <field name="auto_delete" eval="True"/>-->
+<!--            <field name="subject">Costing Approved</field>-->
+<!--            <field name="body_html">-->
+<!--                <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">-->
+<!--                    <div style="height:auto; text-align: center; font-size: 30px; color: #29408c;">-->
+<!--                        <strong style="border-bottom: 2px solid #29408c; padding-bottom: 1px; text-transform: uppercase;">-->
+<!--                            Costing Approved-->
+<!--                        </strong>-->
+<!--                    </div>-->
+<!--                    <div style="text-align: left; font-size: 20px; margin-top: 10px; color: #29408c;">-->
+<!--                        <p>Hello ${object.sale_cost_approval_history[-1].user.name},</p>-->
+
+<!--                        <p>Costing ${object.name} has been approved by ${object.env.user.name}. You may proceed-->
+<!--                            further.-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <!--Costing rejection-->
+        <record id="email_template_sale_costing_rejected" model="mail.template">
+            <field name="name">Costing Rejected</field>
+            <field name="model_id" ref="sale_costing.model_sale_costing"/>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${object.sale_cost_approval_history[-1].user.email}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Costing Rejected</field>
+            <field name="body_html" type="html">
+                <div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+                    <div style="height:auto; text-align: center; font-size: 30px; color: #29408c;">
+                        <strong style="border-bottom: 2px solid #29408c; padding-bottom: 1px; text-transform: uppercase;">
+                            Costing Rejected
+                        </strong>
+                    </div>
+                    <div style="text-align: left; font-size: 20px; margin-top: 10px; color: #29408c;">
+                        <p>Hello ${object.sale_cost_approval_history[-1].user.name},</p>
+
+                        <p>Costing ${object.name} has been rejected by ${object.user_id.name}. Please review this
+                            with
+                            the approver and make changes to the record, then re-send for approval.
+                        </p>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+
+        <!--        <record id="update_email_template_noupdate" model="ir.model.data">-->
+        <!--            <field name="noupdate">0</field>-->
+        <!--            <field name="name">email_template_sale_costing_rejected</field>-->
+        <!--            <field name="module">sale_costing_approval</field>-->
+        <!--        </record>-->
+
+
+        <!--        <record id="update_email_template_noupdate" model="ir.model.data">-->
+        <!--            <field name="name">email_template_sale_costing_rejected</field>-->
+        <!--            <field name="module">sale_costing_approval</field>-->
+        <!--            <field name="noupdate">1</field> &lt;!&ndash; Set noupdate to True &ndash;&gt;-->
+        <!--        </record>-->
+    </data>
+</odoo>

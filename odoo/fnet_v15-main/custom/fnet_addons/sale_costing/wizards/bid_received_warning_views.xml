@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+        <record id="view_sale_costing_warning_wizard" model="ir.ui.view">
+            <field name="name">view.sale.costing.warning.wizard</field>
+            <field name="model">sale.costing.warning</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div>
+                        <h2>You did not selected any product in bid received tab. Are you sure to proceed with all products in the products tab?</h2>
+                    </div>
+                    <group>
+                        <field name="requisition_id" readonly="1"/>
+                    </group>
+                    <footer>
+                        <button string='Proceed' name="action_confirm" type="object" class="btn-primary" />
+                        <button string="Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_sale_report_form" model="ir.ui.view">
+            <field name="name">sale.report.wizard.form</field>
+            <field name="model">sale.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Approve requests">
+                    <group>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                    </group>
+                    <footer>
+                        <button name="action_sale_report" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sale_report_action">
+            <field name="name">Sale Report</field>
+            <field name="res_model">sale.report.wizard</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sale_report_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
+

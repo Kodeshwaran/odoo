@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_rims_dashboard" model="ir.actions.client">
+        <field name="name">Rims Dashboard</field>
+        <field name="tag">dashboard_rims_tag</field>
+    </record>
+
+    <menuitem id="menu_rims_dashboard" name="Dashboard" sequence="1" parent="menu_rims_root"
+              action="action_rims_dashboard" groups="rims_dashboard.group_rims_user"/>
+
+</odoo>

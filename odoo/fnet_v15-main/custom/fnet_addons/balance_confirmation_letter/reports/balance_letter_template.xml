@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		 <template id="custom_header">
+			<t t-call="web.html_container">
+				<t style="font-size:18px;background: white;text-align:center;font-family: serif;">
+					<strong>Balance Confirmation Letter</strong>
+				</t>
+			</t>
+    	</template>
+        <template id="balance_confirmation_letter_view">
+            <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+<!--                    <t t-call="balance_confirmation_letter.custom_header"/>-->
+				<div class="page">
+				<table>
+					<tr>
+						<td style="font-size:18px;background: white;text-align:center;font-family: serif;">
+							<strong>Balance Confirmation Letter</strong>
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:16px;background: white;text-align:left;font-family: serif;">
+						<td><strong>Date : </strong><span t-esc="time.strftime('%d/%m/%Y')"/></td>
+					</tr>
+					<tr style="font-size:16px;background: white;text-align:left;font-family: serif;">
+						<td>
+							<strong>
+								To:
+							</strong>
+							<div><span t-esc="o.name"/></div>
+						</td>
+					</tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td><span t-esc="o.street"/><span t-esc="o.street2"/><br/>
+						<span t-esc="o.city"/><br/>
+						<span t-esc="o.state_id.name"/>-<span t-esc="o.zip"/><br/>
+						<span t-esc="o.country_id.name"/><br/>
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td><strong>Sub :</strong>	 Confirmation of Balance as on
+							<span t-esc="date.strftime('%d/%m/%Y')"/></td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td>As per our books, balance in your account as on
+							<strong><span t-esc="date.strftime('%d/%m/%Y')"/> </strong> is Rs.
+							<strong><span t-esc="'{:,.2f}'.format(balance)"/></strong>DR.
+						</td>
+					</tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td>
+							We request you to confirm the above balance by duly signing this letter.
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td>
+							<p>If balance mentioned above does not match with your books, please mention the Balance
+								as per your books and enclose the statement of account for the period ended for reconciliation.
+							</p>
+						</td>
+					</tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td>
+							<p>
+								If we do not receive above confirmation letter within 15 days, we will assume
+								the above balance is correct.
+							</p>
+						</td>
+					</tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td>
+							<p>
+								No dues apart from the amount confirmed Request your earliest response on the above
+							</p>
+						</td>
+					</tr>
+					<br/>
+					<br/>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td>
+							<p>
+								<strong>For Futurenet Technologies India Private Limited</strong>
+							</p>
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr><td><br/></td></tr>
+					<tr><td><br/></td></tr>
+					<tr><td style="border-top:1px solid black"><br/></td></tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;font-family: serif;">
+						<td style="line-height: 1.9;">(A) We confirm at the above balance is correct and matches with our books of account and
+							also confirming there is no other payment claimable from M/s Futurenet Technologies India
+							Private Limited, in the form of Overriding Commission, Back End, Turnover Discount, Cash
+							Discount, Freebies or claim in any form as on <span t-esc="date.strftime('%d/%m/%Y')"/></td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;font-family: serif;">
+						<td style="line-height: 1.9;">(B) Your balance do not agree with our books (Attach your statement and Discrepancy list) :-
+							Balance as per our books as on <span t-esc="date.strftime('%d/%m/%Y')"/>
+							is Rs.________________________________
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;font-family: serif;">
+						<td>
+							For
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr><td><br/></td></tr>
+					<tr>
+						<td>
+							<div style="text-align:center">Signature with Seal Date:</div>
+							<div style="text-align:center">(Please strike off whichever is not applicable)</div>
+						</td>
+					</tr>
+
+				</table>
+				</div>
+					<p style="page-break-after:always;"/>
+				<!--<div class="page">
+					<table>
+					<tr style="font-size:18px;background: white;text-align:center;font-family: serif;">
+						<td><strong>Balance Confirmation Letter to be Sent to Debtors Negative Form</strong></td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td><strong>Date : </strong><span t-esc="date.strftime('%d-%m-%Y')"/></td>
+					</tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td>
+							<strong>
+								<span t-esc="o.name"/>
+							</strong>
+						</td>
+					</tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td><span t-esc="o.street"/><span t-esc="o.street2"/><br/>
+						<span t-esc="o.city"/><br/>
+						<span t-esc="o.state_id.name"/>-<span t-esc="o.zip"/><br/>
+						<span t-esc="o.country_id.name"/><br/>
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td><strong>Dear Sir/Madam,</strong></td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;text-align:left;font-family: serif;">
+						<td>For audit purposes, kindly confirm directly to our auditors <span t-esc="name"/> that the balance of
+							Rs.<strong><span t-esc="balance"/></strong> due by you as on <strong><span t-esc="date"/></strong>
+							, as shown by our books, is correct.
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr><td><br/></td></tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;text-align:right;font-family: serif;">
+						<td>
+							<p>
+								Yours Faithfully,
+							</p>
+						</td>
+					</tr>
+					<tr><td><br/></td></tr>
+					<tr><td><br/></td></tr>
+					<tr><td><br/></td></tr>
+					<tr style="font-size:14px;background: white;font-family: serif;">
+						<td>(Signature of responsible official of the entity)</td>
+					</tr>
+				</table>
+				</div>-->
+                </t>
+                </t>
+            </t>
+       </template>
+
+        <template id="balance_confirm_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="balance_confirmation_letter.balance_confirmation_letter_view"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

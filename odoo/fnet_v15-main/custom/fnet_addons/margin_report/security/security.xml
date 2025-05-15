@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+
+        <record id="group_account_move_margin" model="res.groups">
+            <field name="name">View Margin in Invoices</field>
+        </record>
+
+    </data>
+</odoo>

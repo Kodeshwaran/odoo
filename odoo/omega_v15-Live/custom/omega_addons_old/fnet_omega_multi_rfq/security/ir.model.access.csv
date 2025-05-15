@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_muli_rfq_muli_rfq,muli_rfq.muli_rfq,model_muli_rfq_muli_rfq,,1,0,0,0

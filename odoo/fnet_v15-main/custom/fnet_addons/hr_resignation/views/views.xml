@@ -1,0 +1,164 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="hr_resignation_list">
+            <field name="name">Resignation Form</field>
+            <field name="model">hr.resignation</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee_id"/>
+                    <field name="job_title"/>
+                    <field name="department_id"/>
+                    <field name="leaving_reason"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_resignation_form">
+            <field name="name">Resignation Form</field>
+            <field name="model">hr.resignation</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_submit" type="object" string="Submit"
+                                attrs="{'invisible':[('state', '!=', 'draft')]}"
+                                class="oe_highlight"/>
+                        <button name="action_cancel" type="object" string="Cancel"
+                                attrs="{'invisible':['|', '|', ('state', '!=', 'draft'), ('is_manager', '!=', False), ('is_employee', '=', False)]}"/>
+                        <!--<button name="action_cancel" type="object" string="Cancel"
+                                attrs="{'invisible':['|', '|', ('state', '!=', 'submitted'), ('is_manager', '=', False), ('is_employee', '!=', False)]}"/>-->
+                        <button name="action_approve" type="object"
+                                attrs="{'invisible': ['|', ('is_manager', '=', False), ('state', 'not in', 'submitted')]}"
+                                string="Approve" class="oe_highlight"/>
+                        <button name="action_confirm" type="object"
+                                attrs="{'invisible': [('state', 'not in', ['hod_approve'])]}"
+                                string="Confirm" groups="hr.group_hr_user" class="oe_highlight"/>
+                        <button name="action_cancel_withdraw" type="object"
+                                attrs="{'invisible': ['|', '|',('is_employee', '=', False), ('state', 'in', ['withdraw', 'rejected', 'manager_cancel_approve', 'resignation_cancel']),  ('is_manager', '!=', False)]}"
+                                string="Withdraw Resignation" groups="hr.group_hr_user" class="oe_highlight"/>
+                        <!--<button name="action_create_no_due" type="object"
+                                attrs="{'invisible': ['|', ('state', 'not in', 'done'), ('no_due_count', '!=', 0)]}"
+                                string="Create No Due" groups="hr.group_hr_user" class="oe_highlight"/>
+                        <button name="action_create_exit_interview" type="object"
+                                attrs="{'invisible': ['|', ('state', 'not in', ['done']), ('exit_int_count', '!=', 0)]}"
+                                string="Create Exit Interview" groups="hr.group_hr_user" class="oe_highlight"/>-->
+                        <button name="action_manager_approve" type="object"
+                                attrs="{'invisible': ['|', '|', ('is_manager', '=', False), ('is_employee', '!=', False), ('state', 'not in', 'withdraw')]}"
+                                string="Manager Approve" class="oe_highlight"/>
+                        <button name="action_manager_refuse" type="object" string="Refuse"
+                            attrs="{'invisible': ['|', '|', ('is_employee', '!=', False), ('is_manager', '=', False), ('state', '!=', 'submitted')]}"
+                                class="oe_highlight"/>
+                        <button name="action_hod_approve" type="object"
+                                attrs="{'invisible': ['|', ('is_hod', '=', False),('state', 'not in', ['manager_approve'])]}"
+                                string="HOD Approve" class="oe_highlight"/>
+                        <button name="action_hod_refuse" type="object" string="Refuse"
+                            attrs="{'invisible': ['|','|', ('is_employee', '!=', False), ('is_hod', '=', False),  ('state', '!=', 'manager_approve')]}"
+                                class="oe_highlight"/>
+                        <button name="action_hr_approve" type="object"
+                                attrs="{'invisible': ['|', '|', ('is_manager', '!=', False), ('is_employee', '!=', False), ('state', 'not in', 'manager_cancel_approve')]}"
+                                string="HR Approve" class="oe_highlight"/>
+                        <button name="action_refuse_confirmation" type="object" string="Refuse"
+                                attrs="{'invisible': ['|', '|', ('is_manager', '=', False), ('is_employee', '!=', False), ('state', 'not in', 'withdraw')]}"/>
+
+                        <field name="state" widget="statusbar" clickable="0"
+                               statusbar_visible="draft,submitted,manager_approve,hod_approve,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_no_due" string="No Due" class="oe_stat_button" type="object" icon="fa-file-text"
+                                    attrs="{'invisible': [('no_due_count', '=', 0)]}">
+
+                                <field name="no_due_count" widget="statinfo" nolabel="1" invisible="1"/>
+                            </button>
+                            <button name="action_view_exit_int" string="Exit Interview" class="oe_stat_button"
+                                    type="object"
+                                    attrs="{'invisible': [('exit_int_count', '=', 0)]}"
+                                    icon="fa-file-text">
+                                <field name="exit_int_count" widget="statinfo" nolabel="1" invisible="1"/>
+                            </button>
+                        </div>
+                        <div class="col-lg-12">
+                            <h2 class="text-center">
+                                RESIGNATION FORM
+                            </h2>
+                        </div>
+                        <group col="4" colspan="2">
+                            <field name="employee_id" force_save="1"/>
+                            <field name="job_title"/>
+                            <field name="work_mobile"/>
+                            <field name="parent_id"/>
+                            <field name="work_email"/>
+                            <field name="department_id"/>
+                            <field name="date_join"/>
+                            <field name="leaving_date"
+                                   attrs="{'required': [('state', 'in', 'draft')], 'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="is_manager" invisible="1"/>
+                            <field name="is_hod" invisible="1"/>
+                            <field name="submitted_date"
+                                   attrs="{'invisible': [('state', '=', 'draft')], 'readonly': [('state', 'not in', 'draft')]}"/>
+                            <field name="is_employee" invisible="1"/>
+                            <field name="actual_date" on_change="1" groups="hr.group_hr_user"
+                                   attrs="{'required':[('is_manager', '=', False), ('state', 'in', 'manager_approve')], 'readonly': [('state', 'in', 'done')]}"/>
+                            <field name="leaving_reason"
+                                   attrs="{'readonly': [('state', 'not in', 'draft')], 'required': [('state', 'in', 'draft')]}"/>
+                            <field name="manager_remarks"
+                                   attrs="{'readonly': ['|', ('is_manager', '=', False), ('state', 'in', ['done'])], 'required': [('is_manager', '!=', False)]}"/>
+                            <field name="user_id" invisible="1"/>
+                            <field name="manager_cancel_remarks"
+                                   attrs="{'invisible': [('state', 'not in', ['withdraw', 'manager_cancel_approve', 'resignation_cancel'])], 'required': [('state', '=', 'withdraw')], 'readonly': [('state', 'in', ['manager_cancel_approve', 'resignation_cancel'])]}"/>
+                            <field name="exit_int_id" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="hr_resignation_action_window">
+            <field name="name">Resignation Form</field>
+            <field name="res_model">hr.resignation</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+                name="Resignation"
+                id="hr_resignation_menu"
+                parent="hr.menu_hr_employee_payroll"
+                action="hr_resignation_action_window"
+                sequence="5"/>
+
+        <record model="ir.ui.view" id="hr_no_due_inherit_list">
+            <field name="name">Resignation Form</field>
+            <field name="model">no.due</field>
+            <field name="inherit_id" ref="AG_final_settlement.no_due_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <field name="hr_resign_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_exit_interview_inherit_list">
+            <field name="name">Resignation Form</field>
+            <field name="model">exit.interview</field>
+            <field name="inherit_id" ref="AG_final_settlement.exit_interview_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <field name="hr_resign_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+
+
+    </data>
+</odoo>

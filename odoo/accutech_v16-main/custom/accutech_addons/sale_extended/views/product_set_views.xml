@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <record id="product_sets_tree_view" model="ir.ui.view">
+            <field name="name">product.sets.tree</field>
+            <field name="model">product.sets</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="number"/>
+                    <field name="description" nolabel="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_sets_form_view" model="ir.ui.view">
+            <field name="name">product.sets.form</field>
+            <field name="model">product.sets</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="number"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_product_sets_view" model="ir.actions.act_window">
+            <field name="name">Product Sets</field>
+            <field name="res_model">product.sets</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="product_sets_tree_view"/>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="menu_product_sets"
+                  name="Product Sets"
+                  parent="sale.menu_sale_config"
+                  action="action_product_sets_view"
+                  sequence="10"/>
+
+
+
+
+    </data>
+</odoo>

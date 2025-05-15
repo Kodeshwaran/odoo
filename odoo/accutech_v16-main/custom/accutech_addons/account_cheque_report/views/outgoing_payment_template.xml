@@ -1,0 +1,436 @@
+<odoo>
+    <template id="outgoing_template_id">
+        <t t-if="doc and 'company_id' in doc">
+            <t t-set="company" t-value="doc.company_id"/>
+        </t>
+        <t t-if="not doc or not 'company_id' in doc">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+        <div class="header">
+            <table style="border: 1px solid white; width: 100%; font-size: 15px; border-">
+                <tr style="vertical-align: top;">
+                    <td style="text-align: left; width: 50%; padding: 0;">
+                        <h2 style="font-size: 30px; margin: 0; font-weight: bold; font-family: 'Anton', serif;">
+                            <strong>
+                                <span t-esc="company.name"/>
+                            </strong>
+                        </h2>
+                        <t t-if="company.street">
+                            <span t-field="company.street"/>,
+                        </t>
+                        <t t-if="company.street2">
+                            <span t-field="company.street2"/>,
+                        </t>
+                        <br/>
+                        <t t-if="company.city">
+                            <span t-field="company.city"/>,
+                        </t>
+                        <t t-if="company.state_id">
+                            <span t-field="company.state_id.name"/>,
+                        </t>
+                        <t t-if="company.country_id">
+                            <span t-field="company.country_id.name"/>
+                        </t>
+                        <br/>
+                        <t t-if="company.phone">Phone:
+                            <span t-field="company.phone"/>
+                        </t>
+                        <br/>
+                        <t t-if="company.email">Email:
+                            <span t-field="company.email"/>
+                        </t>
+                    </td>
+                    <td style="text-align: right; width: 50%; padding: 3px;">
+                        <t t-if="company.logo">
+                            <img t-att-src="image_data_uri(company.logo)"
+                                 style="max-height: 150px; max-width: 150px;"
+                                 alt="Company Logo"/>
+                        </t>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="outgoing_payment_main">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-call="account_cheque_report.outgoing_template_id"/>
+                <div class="page">
+                    <table style="width: 100%; border: 2px solid white; font-size: 12px;">
+                        <thead>
+                            <tr>
+                                <hr style="width: 100%; border: 0; border-top: 3px solid #007CC3; margin: 5px 0;"/>
+                                <!--                                <br></br>-->
+                                <td style="width: 50%; text-align: left; text-align: left; border:2px solid white; vertical-align:top; font-size: 12px;">
+                                    <h3 style="margin: 0; border-left: 10px solid red; padding-top:3px; padding-left:8px; font-weight: bold;">
+                                        OUTGOING
+                                        PAYMENT
+                                    </h3>
+                                    <br/>
+                                    <strong style="font-size: 15px;">Vendor:</strong>
+                                    <br/>
+                                    <b>
+                                        <span t-esc="doc.partner_id.name"/>
+                                    </b>
+                                    <br/>
+                                    <span t-esc="doc.partner_id.contact_address"/>
+                                    <!--                                    <br/>-->
+                                    <!--                                    Phone:-->
+                                    <!--                                    <span t-esc="doc.partner_id.phone"/>-->
+                                    <!--                                    <br/>-->
+                                    <!--                                    Fax:-->
+                                    <!--                                    <span t-esc="doc.partner_id.phone"/>-->
+                                    <!--                                    <br/>-->
+
+                                </td>
+                                <td style="width: 100%; text-align: right; padding: 5px;">
+                                    <table style="border-bottom: 1px dotted #007CC3; width: 100%; margin-right: 30px;">
+                                        <tr>
+
+                                            <td style="width: 33%; padding: 5px;font-size: 12px;">
+                                                <div style="margin=-bottom:5px;">
+                                                    Document Number
+                                                </div>
+                                                <br/>
+                                                <strong style="width: 33%; padding: 5px;font-size: 11px;">
+                                                    <span t-esc="doc.name"/>
+                                                </strong>
+                                            </td>
+                                            <td style="width: 33%; padding: 5px;font-size: 12px;">
+                                                <div style="margin-bottom:5px;">
+                                                    Document Date
+                                                </div>
+                                                <br/>
+                                                <strong style="width: 33%; padding: 5px;font-size: 11px;">
+                                                    <span t-esc="doc.date.strftime('%d/%m/%Y')"/>
+                                                </strong>
+                                            </td>
+                                            <td style="width: 34%; padding: 5px;font-size: 12px;">
+                                                <div style="margin-bottom:5px; margin-right:60px;">
+                                                    Pages
+                                                </div>
+                                                <br/>
+                                                <strong style="width: 33%; padding: 5px;font-size: 11px; margin-right:60px;">
+                                                    <span t-set="current_page" t-value="currentPage"/>
+                                                    <span t-set="total_pages" t-value="totalPages"/>
+                                                    <span t-esc="current_page"/>
+                                                    /
+                                                    <span t-esc="total_pages"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!--                                    <hr style="border: 1px dotted #007CC3; margin-top: 3px; margin-bottom: 8px;"/>-->
+                                    <table style="border: 2px solid white; margin-left:30px; width:30%; ">
+                                        <tr style="width: 33%; padding: 5px;font-size: 12px; text-align:left;">
+                                            <td style=" text-align:left;">
+                                                Your Reference
+                                            </td>
+                                        </tr>
+                                        <tr style="width: 33%; padding: 5px;font-size: 12px; text-align:left;">
+                                            <td style=" text-align:left;">
+                                                <strong style="padding: 5px;font-size: 12px;">
+                                                    <span t-esc="doc.ref"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!--                                    <hr style="border: 1px dotted #007FDE; margin-top: 10px; margin-bottom: 10px;"/>-->
+                                </td>
+
+                            </tr>
+                        </thead>
+                    </table>
+                    <table style="width: 100%; border: 2px solid white; font-size: 12px; margin-top:15px; margin-bottom:10px;">
+                        <thead>
+                            <tr>
+                                <hr style="width: 100%; border: 0; border-top: 3px solid #007CC3; margin: 5px 0;"/>
+                                <!--                                <br></br>-->
+                                <td style="width: 50%; text-align: left; text-align: left; border:2px solid white; vertical-align:top; font-size: 16px;">
+                                    <h5 style="margin: 0; border-left: 5px solid red; padding-left:4px; padding-top:3px; font-weight: bold;">
+                                        Payments
+                                    </h5>
+                                </td>
+                                <td style="width: 50%; text-align: left; text-align: right; border:2px solid white; vertical-align:top; font-size: 11px;">
+                                    <div style="border:1 px solid black; margin-top:10px;">
+                                        Currency:
+                                        <b>
+                                            <span t-esc="doc.currency_id.symbol"/>
+                                        </b>
+                                    </div>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table style="width: 100%;font-size: 12px; border-bottom: 2px solid #007CC3; border-collapse: collapse;">
+                        <thead style="border-bottom: 1px solid #007CC3;">
+                            <tr style="height:35px; background-color: #F0F4F7;">
+                                <th>
+                                    <div style="text-align:center">
+                                        #
+                                    </div>
+                                </th>
+                                <th>
+                                    <div style="text-align:center">Paid Doc.</div>
+                                </th>
+                                <th>
+                                    <div style="text-align:center">Doc. No.</div>
+                                </th>
+                                <th>
+                                    <div style="text-align:center">Date</div>
+                                </th>
+                                <th>
+                                    <div style="text-align:center">Installment ID</div>
+                                </th>
+                                <th>
+                                    <div style="text-align:center">Reference Number</div>
+                                </th>
+                                <th>
+                                    <div style="text-align:center">Amount</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="counter" t-value="0"/>
+                            <t t-foreach="payments_dict" t-as="line">
+                                <tr style=" border-top: 1px dotted #007CC3;  height:30px; text-align: center;">
+                                    <td>
+                                        <span t-esc="counter +1"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.date.strftime(' %d/%m/%Y')"/>
+                                    </td>
+                                    <td><span t-esc="counter + 1"/>/1
+                                    </td>
+                                    <t t-set="counter" t-value="counter + 1"/>
+                                    <td>
+                                        <span t-esc="line.ref.split('(')[-1].split(')')[0]"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:.2f}'.format(line.amount)"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <table style="margin-top: 20px; float: right; margin-bottom: 0px; width: 40%; border-collapse: collapse;">
+                        <tr style="font-size:20px;">
+                            <td style="font-size: 12px; border-bottom:1px dotted #007CC3;">Document Amount Due:</td>
+                            <td style="text-align:right; font-size: 12px; border-bottom:1px dotted #007CC3;">
+                                <b>
+                                    <span t-esc="'{0:.2f}'.format(doc.amount_residual)"/>
+                                    <span t-esc="doc.currency_id.symbol"/>
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <br/>
+
+                    <!-- Second Table for Total Amount -->
+                    <table style="width: 40%; border-collapse: collapse; font-size: 12px; margin-top: 20px; float:right;">
+                        <tr style="font-size: 20px;">
+                            <td style="font-weight: bold;border-left: 3px solid red; width:5px;">
+                            </td>
+                            <td style="font-size: 12px; border-bottom: 3px solid #007CC3;">
+                                <b>Total Amount:</b>
+                            </td>
+                            <td style="border-bottom: 3px solid #007CC3; text-align:right; font-size: 12px;">
+                                <b>
+                                    <span t-esc="'{0:.2f}'.format(doc.amount_total)"/>
+                                    <span t-esc="doc.currency_id.symbol"/>
+                                </b>
+                            </td>
+                        </tr>
+                    </table>
+                    <t t-if="payments_dict">
+                        <t t-foreach="payments_dict" t-as="payment">
+                            <t t-if="payment.cheque_number">
+
+                                <table style="width: 100%; border: 2px solid white; font-size: 12px; margin-top:15px; margin-bottom:10px;">
+                                    <!--                        <hr style="width: 100%; border: 0; border-top: 3px solid #007CC3; margin: 5px 0;"/>-->
+                                    <thead>
+                                        <tr>
+                                            <td style="width: 50%; text-align: left; text-align: left; border:2px solid white; vertical-align:top; font-size: 16px;">
+                                                <h5 style="margin: 0; padding-left:4px; padding-top:3px; border-left: 5px solid red;  font-weight: bold;">
+                                                    Cheque
+                                                </h5>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </t>
+                        </t>
+                    </t>
+
+                    <table style="width: 100%; font-size: 12px; border-bottom:3px solid  #007CC3; border-collapse: collapse;">
+                        <thead style=" background-color: #F0F4F7; border-bottom: 1px solid #007CC3;">
+                            <t t-if="payments_dict">
+                                <t t-foreach="payments_dict" t-as="payment">
+                                    <t t-if="payment.cheque_number">
+
+                                        <tr style="height:35px;">
+                                            <th>
+                                                <div style="text-align:center;">Date</div>
+                                            </th>
+                                            <th>
+                                                <div style="text-align:center;">Cheque Num</div>
+                                            </th>
+                                            <th>
+                                                <div style="text-align:center;">Bank</div>
+                                            </th>
+                                            <th>
+                                                <div style="text-align:center;">Branch</div>
+                                            </th>
+                                            <th>
+                                                <div style="text-align:center;">Account</div>
+                                            </th>
+                                            <th>
+                                                <div style="text-align:center;">Amount</div>
+                                            </th>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </t>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="move">
+                                <t t-if="payments_dict">
+                                    <t t-foreach="payments_dict" t-as="payment">
+                                        <t t-if="payment.cheque_number">
+                                            <tr style=" border-bottom: 1px dotted #007CC3; height:30px;">
+                                                <!-- Date -->
+                                                <td style="text-align:center;">
+                                                    <span t-if="payment.cheque_date"
+                                                          t-esc="payment.cheque_date.strftime('%d/%m/%y')"/>
+                                                </td>
+
+                                                <!-- Cheque Number -->
+                                                <td style="text-align:center;">
+                                                    <span t-esc="payment.cheque_number"/>
+                                                </td>  <!-- Assuming cheque_number exists -->
+
+                                                <!-- Bank -->
+                                                <td style="text-align:center;">
+                                                    <span t-esc="payment.partner_bank_id.bank_id.name"/>
+                                                </td>  <!-- Assuming bank_id relation -->
+
+                                                <!-- Branch -->
+                                                <td style="text-align:center;">
+                                                    <span t-esc="payment.partner_bank_id.bank_id.branch"/>
+                                                </td>  <!-- Assuming branch_id relation -->
+
+                                                <!-- Account -->
+                                                <td style="text-align:center;">
+                                                    <span t-esc="payment.partner_bank_id.acc_number"/>
+                                                </td>  <!-- Assuming account_id relation -->
+
+                                                <!-- Amount -->
+                                                <td style="text-align:center;">
+                                                    <span t-esc="'{0:.2f}'.format(payment.amount)"/>
+                                                </td>  <!-- Payment Amount -->
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                    <!--                    <div>-->
+                    <!--                        <t t-set="total_amount" t-value="0.0"/>  &lt;!&ndash; Initialize the total amount variable &ndash;&gt;-->
+
+                    <!--                        <t t-foreach="payments_dict" t-as="payment">-->
+                    <!--                            <t t-if="payment.cheque_number">-->
+                    <!--                                <t t-set="total_amount" t-value="total_amount + payment.amount"/>-->
+
+                    <!--                                <div style="display:flex;">-->
+                    <!--                                    Cheque Total:-->
+                    <!--                                    <span t-esc="'{0:.2f}'.format(payment.amount)"/>-->
+                    <!--                                </div>-->
+
+                    <!--                            </t>-->
+                    <!--                        </t>-->
+                    <!--                        <div style="display:flex;">-->
+                    <!--                            Total Payment Amount:-->
+                    <!--                            <span t-esc="'{0:.2f}'.format(total_amount)"/>-->
+                    <!--                        </div>-->
+
+                    <!--                    </div>-->
+                    <t t-set="total_amount" t-value="0.0"/>
+                    <table style="width: 40%; border-collapse: collapse; font-size: 12px; margin-top: 20px; float:right; margin-top: 15px;">
+                        <t t-set="currency_symbol" t-value="payments_dict[0].partner_bank_id.currency_id.symbol"/>
+
+                        <t t-foreach="payments_dict" t-as="payment">
+                            <t t-if="payment.cheque_number">
+                                <t t-set="total_amount" t-value="total_amount + payment.amount"/>
+                                <tr style="height:20px;">
+                                    <td style="font-weight: bold;">
+                                        Cheque Total:
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <b>
+                                            <span t-esc="'{0:.2f}'.format(payment.amount)"/>
+                                            <span t-esc="currency_symbol"/>
+                                        </b>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+
+                        <!--                                                <tr style="height:20px;">-->
+                        <!--                                                    <td style="font-weight: bold;border-left: 3px solid red; border-bottom: 1px solid #007CC3;">-->
+                        <!--                                                        Total Payment Amount:-->
+                        <!--                                                    </td>-->
+                        <!--                                                    <td style="text-align: right; border-bottom: 1px solid #007CC3;">-->
+                        <!--                                                        <b>-->
+                        <!--                                                            <span t-esc="'{0:.2f}'.format(total_amount)"/>-->
+                        <!--                                                            <span t-esc="currency_symbol"/>-->
+                        <!--                                                        </b>-->
+                        <!--                                                    </td>-->
+                        <!--                                                </tr>-->
+                    </table>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <t t-if="payments_dict">
+                        <t t-if="total_amount">
+<!--                        <t t-foreach="payments_dict" t-as="payment">-->
+<!--                            <t t-if="payment.cheque_number">-->
+                                <table style="width: 33%; display:block; border-collapse: collapse; float:right; font-size: 11px; margin-top: 0px; margin-top: 15px;">
+                                    <tr style="height:20px;">
+                                        <td style="font-weight: bold;border-left: 3px solid red; width:5px;">
+                                        </td>
+                                        <td style="font-weight: bold; border-bottom: 3px solid #007CC3; padding-right:60px;">
+                                            Total Payment Amount:
+                                        </td>
+                                        <td style="text-align: right; border-bottom: 3px solid #007CC3;">
+                                            <b>
+                                                <span t-esc="'{0:.2f}'.format(total_amount)"/>
+                                                <span t-esc="currency_symbol"/>
+                                            </b>
+                                        </td>
+                                    </tr>
+                                </table>
+<!--                            </t>-->
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_outgoing_payment">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="account_cheque_report.outgoing_payment_main"/>
+            </t>
+        </t>
+    </template>
+</odoo>

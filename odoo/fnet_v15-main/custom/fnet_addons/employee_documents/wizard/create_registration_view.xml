@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_create_registration_form" model="ir.ui.view">
+        <field name="name">create.registration.wizard.form</field>
+        <field name="model">create.registration.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+
+                    <group>
+                        <field name="name" invisible="1"/>
+                        <field name="email" string="Email To:" readonly="1"/>
+                        <field name="subject" readonly="1" invisible="1"/>
+                        <field name="register_id" string="Register id:" invisible="1"/>
+                        <field name="body" class="oe-bordered-editor" options="{'style-inline': true}" force_save="1"
+                               invisible="1"/>
+                    </group>
+                    <footer>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        <button name="action_request_registration" type="object" string="Send" class="btn-primary" />
+                    </footer>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_request_registration" model="ir.actions.act_window">
+        <field name="name">Email</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">create.registration.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_create_registration_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

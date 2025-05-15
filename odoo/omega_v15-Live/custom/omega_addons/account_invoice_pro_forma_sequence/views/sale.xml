@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_form_inherited" model="ir.ui.view">
+        <field name="name">pro-forma sequence in sale order form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[last()]" position="after">
+                    <button name="generate_pro_forma" type="object" class="oe_highlight" string="Generate Pro-Forma"
+                            attrs="{'invisible': [('pro_forma_generated', '!=', False)]}"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_title')]" position="inside">
+                <label for="pro_forma_number" attrs="{'invisible': [('pro_forma_generated', '=', False)]}"/>
+                <h2>
+                    <field name="pro_forma_number" readonly="1"  attrs="{'invisible': [('pro_forma_generated', '=', False)]}"/>
+                </h2>
+            </xpath>
+            <xpath expr="//field[@name='fiscal_position_id']" position="after">
+                <field name="pro_forma_generated"/>
+            </xpath>
+            <field name="date_order" position="after">
+                <field name="pro_forma_date" attrs="{'invisible': [('pro_forma_generated', '!=', True)]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_inherited" model="ir.ui.view">
+        <field name="name">pro-forma sequence in sale quotation tree view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="pro_forma_number"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

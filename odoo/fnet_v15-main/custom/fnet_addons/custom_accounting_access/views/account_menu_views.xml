@@ -1,0 +1,55 @@
+<odoo>
+    <data>
+        <record id="account.menu_finance_reports" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6, 0, [ref('custom_accounting_access.group_custom_accounting_access')])]"/>
+        </record>
+
+        <record id="hr_contract_history_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.history.form.inherit</field>
+            <field name="model">hr.contract.history</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_history_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='contract_history']" position="attributes">
+                    <attribute name="groups">custom_accounting_access.group_custom_accounting_access</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_contract_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.form.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='information']" position="attributes">
+                    <attribute name="groups">custom_accounting_access.group_custom_accounting_access</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="hr_contract_form_add_salary_revisions_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.view.salary.division.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Restrict the Salary History page -->
+                <xpath expr="//page[@id='salary_history']" position="attributes">
+                    <attribute name="groups">custom_accounting_access.group_custom_accounting_access</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="menu_aged_reports" name="Aged Reports" parent="account_accountant.menu_accounting" groups="custom_accounting_access.group_aged_reports"/>
+        <menuitem id="menu_aged_reports_aged_receivable" name="Aged Receivable" action="account_reports.action_account_report_ar" sequence="1" parent="menu_aged_reports"/>
+        <menuitem id="menu_aged_report_aged_payable" name="Aged Payable" action="account_reports.action_account_report_ap" sequence="2" parent="menu_aged_reports"/>
+        <menuitem id="aged_report_wizard_menu"
+              name="Daily Report"
+              parent="menu_aged_reports"
+              action="sale_target.sales_daily_report_wizard_action"
+              sequence="3"/>
+        <menuitem id="aged_report_wizard_menu1"
+                  name="Daily Report New"
+                  parent="menu_aged_reports"
+                  action="sale_target_new.sales_daily_report_wizard_action1"
+                  sequence="4"/>
+    </data>
+</odoo>

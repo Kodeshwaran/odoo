@@ -1,0 +1,73 @@
+<odoo>
+    <data>
+
+<!--        <record id="group_hr_payroll_community_payslip_user" model="res.groups">-->
+<!--            <field name="name">See Own Payslips</field>-->
+<!--            <field name="category_id" ref="hr_payroll_community.module_category_hr_payroll_community"/>-->
+<!--            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+<!--        </record>-->
+
+        <record id="single_employee_payslip_user" model="ir.rule">
+            <field name="name">See only own Payslips</field>
+            <field name="model_id" ref="hr_payroll_community.model_hr_payslip"/>
+            <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+<!--        <record id="single_employee_payslip_line_user" model="ir.rule">-->
+<!--            <field name="name">See only own Payslips Line</field>-->
+<!--            <field name="model_id" ref="hr_payroll_community.model_hr_payslip_line"/>-->
+<!--            <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('base.group_user'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <record id="single_employee_payslip_input_user" model="ir.rule">-->
+<!--            <field name="name">See only own Payslips Input</field>-->
+<!--            <field name="model_id" ref="hr_payroll_community.model_hr_payslip_input"/>-->
+<!--            <field name="domain_force">[('contract_id.employee_id.user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('base.group_user'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <record id="single_employee_payslip_worked_days_user" model="ir.rule">-->
+<!--            <field name="name">See only own Payslips Worked Days</field>-->
+<!--            <field name="model_id" ref="hr_payroll_community.model_hr_payslip_worked_days"/>-->
+<!--            <field name="domain_force">[('payslip_id.employee_id.user_id', '=', user.id)]</field>-->
+<!--            <field name="groups" eval="[(4, ref('base.group_user'))]"/>-->
+<!--            <field name="perm_read" eval="True"/>-->
+<!--            <field name="perm_write" eval="False"/>-->
+<!--            <field name="perm_create" eval="False"/>-->
+<!--            <field name="perm_unlink" eval="False"/>-->
+<!--        </record>-->
+
+<!--        <function name = "write" model = "ir.model.data">-->
+<!--		   <function name = "search" model = "ir.model.data">-->
+<!--			   <value eval = "[('module', '=', 'hr_payroll_community'), ('name', '=', 'group_hr_payroll_community_user')]"/>-->
+<!--		   </function>-->
+<!--		   <value eval ="{'noupdate': False}"/>-->
+<!--		</function>-->
+
+<!--        <record id="hr_payroll_community.group_hr_payroll_community_user" model="res.groups">-->
+<!--            <field name="implied_ids" eval="[(4, ref('hr.group_hr_user')), (4, ref('hr_contract.group_hr_contract_manager')),(4, ref('hr_extended.group_hr_payroll_community_payslip_user'))]"/>-->
+<!--        </record>-->
+
+<!--        <function name = "write" model = "ir.model.data">-->
+<!--		   <function name = "search" model = "ir.model.data">-->
+<!--			   <value eval = "[('module', '=', 'hr_payroll_community'), ('name', '=', 'group_hr_payroll_community_user')]"/>-->
+<!--		   </function>-->
+<!--		   <value eval ="{'noupdate': True}"/>-->
+<!--		</function>-->
+
+    </data>
+</odoo>

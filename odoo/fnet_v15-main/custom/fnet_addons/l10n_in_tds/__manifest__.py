@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+{
+    'name' : 'Tax Deducted at Source (TDS)',
+    'version' : '13.0.1.0',
+    'summary': """TDS for Indian companies with G/L posting and report""",
+    'description' : """This app will help you in deducting tax at source (TDS) when processing an invoice.
+        * Preloaded TDS sections rate chart based on the nature of payment, company or individual.
+        * Define a TDS section for applicable Vendors.
+        * Deduct TDS on validation of Vendor and post TDS amount to a G/L account.
+        * TDS Register report, where the data that can be used for filing TDS.
+    """,
+    'category': 'Accounting',
+    'author' : 'S&V',
+    'website': 'http://www.sandv.biz',
+    'images' : ['static/description/banner.png'],
+    'depends' : [
+        'base', 'account','journal_voucher'
+    ],
+    'data' : [
+        'security/ir.model.access.csv',
+#        'data/sections_data.xml',
+        'views/account_move_view.xml',
+        'views/indian_tds_view.xml',
+        'views/res_partner.xml'
+    ],
+    'demo': [],
+    'qweb': [],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'license': 'OPL-1',
+    'price': 99,
+    'currency': 'EUR',
+    'support': 'odoo@sandv.biz'
+}

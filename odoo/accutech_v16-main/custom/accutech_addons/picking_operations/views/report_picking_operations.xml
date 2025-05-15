@@ -1,0 +1,185 @@
+<odoo>
+  <template id="custom_abdulla_sq_header">
+      <t t-foreach="docs" t-as="doc">
+          <t t-if="doc.company_id">
+              <div class="header">
+                  <table style="width: 100%; font-size: 15px; line-height: 1.2;">
+                      <tr style="vertical-align: top;">
+                          <td style="text-align: left; width: 50%; padding: 5px;">
+                              <h2 style="font-size: 20px; margin: 0; font-weight: bold;">
+                                  <span t-esc="doc.company_id.name"/>
+                              </h2>
+                              <t t-if="doc.company_id.street">
+                                  <span t-field="doc.company_id.street"/>,
+                              </t>
+                              <t t-if="doc.company_id.street2">
+                                  <span t-field="doc.company_id.street2"/>,
+                              </t>
+                              <br/>
+                              <t t-if="doc.company_id.city">
+                                  <span t-field="doc.company_id.city"/>,
+                              </t>
+                              <t t-if="doc.company_id.state_id">
+                                  <span t-field="doc.company_id.state_id.name"/>,
+                              </t>
+                              <t t-if="doc.company_id.country_id">
+                                  <span t-field="doc.company_id.country_id.name"/>
+                              </t>
+                              <br/>
+                              <t t-if="doc.company_id.phone">
+                                  Phone: <span t-field="doc.company_id.phone"/>
+                              </t>
+                              <br/>
+                              <t t-if="doc.company_id.email">
+                                  Email: <span t-field="doc.company_id.email"/>
+                              </t>
+                              <br/>
+                          </td>
+                          <td style="text-align: right; width: 50%; padding: 5px;">
+                              <img src="/custom_sales_report/static/description/logo.png"
+                                   style="height: 60px; max-width: 100%; object-fit: contain;" alt=""/>
+                          </td>
+                      </tr>
+                  </table>
+              </div>
+          </t>
+      </t>
+  </template>
+
+  <template id="report_picking_operations_main">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <!-- Custom Header for Picking Operations -->
+                <t t-call="picking_operations.custom_abdulla_sq_header"/>
+
+                <div class="page">
+                    <hr style="border: 1px solid black; margin-top: 10px; margin-bottom: 10px;"/>
+
+                    <div>
+                        <table style="width: 100%; font-size: 15px; line-height: 1.5;">
+                            <tr>
+                                <td style="width: 40%; padding: 10px;">
+                                    <h2 style="font-size: 30px; margin: 0 0 10px 0; font-weight: bold;">PICKING OPERATIONS</h2>
+                                    <br/>
+                                    <strong>Customer:</strong>
+                                    <br/>
+                                    <span t-esc="doc.partner_id.name"/>
+                                    <br/>
+                                    <span t-esc="doc.partner_id.contact_address"/>
+                                    <br/>
+                                    Phone: <span t-esc="doc.partner_id.phone"/>
+                                    <br/>
+                                    Fax: <span t-esc="doc.partner_id.phone"/>
+                                </td>
+
+                                <td style="width: 50%; text-align: right; padding: 10px;">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 20%; padding: 5px;">
+                                                Picking Operation Number
+                                                <br/>
+                                                <strong>
+                                                    <span t-esc="doc.name"/>
+                                                </strong>
+                                            </td>
+                                            <td style="width: 20%; padding: 5px;">
+                                                Deadline
+                                                <br/>
+                                                <strong>
+                                                    <span t-esc="doc.date_deadline"/>
+                                                </strong>
+                                            </td>
+                                            <td style="width: 20%; padding: 5px;">
+                                                Scheduled Date:
+                                                <br/>
+                                                <strong>
+                                                    <span t-esc="doc.scheduled_date"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <hr/>
+                                    <table>
+                                        <tr>
+                                            <td style="width: 14%; padding: 5px;">
+                                                Receive From:
+                                                <br/>
+                                                <strong>
+                                                    <span t-esc="doc.partner_id.name"/>
+                                                </strong>
+                                            </td>
+                                            <td style="width: 14%; padding: 5px;">
+                                                Source Document
+                                                <br/>
+                                                <strong>
+                                                    <span t-esc="doc.origin or '-'"/>
+                                                </strong>
+                                            </td>
+                                            <td style="width: 14%; padding: 5px;">
+                                                Company:
+                                                <br/>
+                                                <strong>
+                                                    <span t-esc="doc.company_id.name"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <hr style="border: 1px solid black; margin-top: 10px; margin-bottom: 10px;"/>
+
+                    <!-- Table Section for Picking Operations -->
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%; text-align: left;">Product</th>
+                                <th style="width: 20%; text-align: left;">Source Location</th>
+                                <th style="width: 20%; text-align: left;">Destination Location</th>
+                                <th style="width: 20%; text-align: left;">Done Quantity</th>
+                                <th style="width: 20%; text-align: left;">UoM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.move_ids_without_package" t-as="line">
+                                <tr>
+                                    <td style="text-align: left;">
+                                        <t t-esc="line.product_id.display_name"/>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <t t-esc="line.location_id.display_name"/>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <t t-esc="line.location_dest_id.display_name"/>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <t t-esc="line.quantity_done"/>
+                                    </td>
+                                    <td style="text-align: left;">
+                                        <t t-esc="line.product_uom.name"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_picking_operations">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="picking_operations.report_picking_operations_main"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="picking_operations.action_report_picking_operations" model="ir.actions.report">
+        <field name="groups_id" eval="[(4, ref('base.group_no_one'))]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,1121 @@
+<odoo>
+    <template id="custom_abdulla_pq_header">
+        <t t-if="doc and 'company_id' in doc">
+            <t t-set="company" t-value="doc.company_id"></t>
+        </t>
+        <t t-if="not doc or not 'company_id' in doc">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <div class="header" style="padding-bottom: 20px; font-size: 13px;">
+            <table style="border: 1px solid white; width: 100%; font-size: 15px; border-collapse: collapse">
+                <tr style="vertical-align: top;">
+                    <td style="text-align: left; width: 50%; padding: 0; padding-bottom: 20px;">
+                        <h2 style="font-size: 20px; margin: 0; font-weight: bold;">
+                            <strong>
+                                <span t-esc="doc.company_id.name"/>
+                            </strong>
+                        </h2>
+                        <t t-if="doc.company_id.street">
+                            <span t-field="doc.company_id.street"/>,
+                        </t>
+                        <t t-if="doc.company_id.street2">
+                            <span t-field="doc.company_id.street2"/>,
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.city">
+                            <span t-field="doc.company_id.city"/>,
+                        </t>
+                        <t t-if="doc.company_id.state_id">
+                            <span t-field="doc.company_id.state_id.name"/>,
+                        </t>
+                        <t t-if="doc.company_id.country_id">
+                            <span t-field="doc.company_id.country_id.name"/>
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.phone">Phone:
+                            <span t-field="doc.company_id.phone"/>
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.email">Email:
+                            <span t-field="doc.company_id.email"/>
+                        </t>
+                        <br/>
+                    </td>
+                    <td style=" max-width:20%; vertical-align:top;  text-align:right;padding:3px;">
+                        <t t-if="doc.company_id.logo">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="max-height: 100px; max-width:100px;"
+                                 alt="Logo"/>
+                        </t>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-top: 2px solid #4CA5E7;">PQ Number</td>
+                    <td style="padding: 10px; border-top: 2px solid #4CA5E7;">Document Date</td>
+                    <td style="padding: 10px; border-top: 2px solid #4CA5E7;">Pages</td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 2px solid #4CA5E7;">
+                        <strong>
+                            <span t-esc="doc.name"/>
+                        </strong>
+                    </td>
+                    <td style="padding: 10px; border-bottom: 2px solid #4CA5E7;">
+                        <strong><span t-esc="doc.date_order and doc.date_order.strftime('%d/%m/%Y')"/></strong>
+                    </td>
+                    <td style="padding: 10px; border-bottom: 2px solid #4CA5E7;">
+                        <strong>
+                            <span class="page"/>
+                            /
+                            <span class="topage"/>
+                        </strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+<!--        <div class="footer" style="width: 100%; height: 200px; font-size: 13px;">-->
+<!--            <table style="width: 100%; border-collapse: collapse; border-top: 2px solid #4CA5E7;">-->
+<!--                <tr>-->
+<!--                    <td style="padding-top: 5px;">-->
+<!--                        <table style="width:100%;">-->
+<!--                            <tr>-->
+<!--                                <td style="text-align: left; color: #afadad;">-->
+<!--                                    <span>-->
+<!--                                        Phone:-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td style="color: #afadad;">-->
+<!--                                    <t t-if="company.phone">-->
+<!--                                        <t t-esc="company.phone"/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td style="text-align: left; color: #afadad;">-->
+<!--                                    <span>-->
+<!--                                        Fax:-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td style="color: #afadad;">-->
+<!--                                    <t t-if="">-->
+<!--                                        <t t-esc=""/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td style="text-align: left; color: #afadad;">-->
+<!--                                    <span>-->
+<!--                                        E-Mail:-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td style="color: #afadad;">-->
+<!--                                    <t t-if="company.email">-->
+<!--                                        <t t-esc="company.email"/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td style="text-align: left; color: #afadad;">-->
+<!--                                    <span>-->
+<!--                                        Website:-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td style="color: #afadad;">-->
+<!--                                    <t t-if="company.website">-->
+<!--                                        <t t-esc="company.website"/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <table style="width: 100%;">-->
+<!--                            <tr>-->
+<!--                                <td style="text-align: right; color: #afadad;">-->
+<!--                                    <span>-->
+<!--                                        Bank Name:-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td style="text-align: right; color: #afadad;">-->
+<!--                                    <t t-if="">-->
+<!--                                        <t t-esc=""/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td style="text-align: right; color: #afadad;">-->
+<!--                                    <span>-->
+<!--                                        Bank Account:-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td style="text-align: right; color: #afadad;">-->
+<!--                                    <t t-if="">-->
+<!--                                        <t t-esc=""/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td style="text-align: right; color: #afadad;">-->
+<!--                                    <span>-->
+<!--                                        Swift/BIC:-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td style="text-align: right; color: #afadad;">-->
+<!--                                    <t t-if="">-->
+<!--                                        <t t-esc=""/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td style="text-align: right; color: #afadad;">-->
+<!--                                    <span>-->
+<!--                                        IBAN:-->
+<!--                                    </span>-->
+<!--                                </td>-->
+<!--                                <td style="text-align: right; color: #afadad;">-->
+<!--                                    <t t-if="">-->
+<!--                                        <t t-esc=""/>-->
+<!--                                    </t>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </div>-->
+        <t t-if="doc.state == 'draft'">
+            <div class="watermark"
+                 style="position:absolute;left:-105px;top:385px;text-align:center;opacity:0.25;z-index:1000;transform:rotate(310deg);-webkit-transform:rotate(310deg);width:130%;">
+                <p style="font-size:160px;color:black;">D R A F T</p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_main_purchase_quotation">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-call="custom_purchase_report.custom_abdulla_pq_header"/>
+                <t t-if="doc and 'company_id' in doc">
+                    <t t-set="company" t-value="doc.company_id"></t>
+                </t>
+                <t t-if="not doc or not 'company_id' in doc">
+                    <t t-set="company" t-value="res_company"></t>
+                </t>
+                <div style="line-height: 1.5; font-size: 13px;" class="page">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td coslpan="1"
+                                style="width:50%; padding-bottom: 10px; border-bottom: 1px solid #4CA5E7;">
+                                <span style="border-left: 10px solid #F0AB00; font-size: 20px;">
+                                    <strong style="margin-left: 5px;">PURCHASE QUOTATION</strong>
+                                </span>
+                            </td>
+                            <td style="width:0%; padding-bottom: 10px; border-bottom: 1px solid #4CA5E7;">
+
+                            </td>
+                            <td style="width:50%; padding-bottom: 10px; border-bottom: 1px solid #4CA5E7;">
+                                <strong style="font-size: 20px;">
+                                    TRN NO:
+                                    <t t-if="company.trn_no">
+                                        <span t-field="company.trn_no"/>
+                                    </t>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4" style=" width: 50%; test-align: left; padding: 5px;">
+                                Vendor:
+                                <br/>
+                                <span t-esc="doc.partner_id.contact_address"/>
+                                <br/>
+                                Phone:
+                                <span t-esc="doc.partner_id.phone"/>
+                                <br/>
+                                Fax:
+                                <span t-esc="doc.partner_id.phone"/>
+                                <br/>
+                                <b>Vendor TRN NO:
+                                    <span t-esc="doc.partner_id.trn_no if doc.partner_id.trn_no else ''"/>
+                                </b>
+                            </td>
+                            <td style=" width: 25%; padding: 5px; test-align: left;">
+                                PQ Number
+                            </td>
+                            <td style=" width: 25%; padding: 5px; test-align: left;">
+                                PQ Date
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; test-align: left; border-bottom: 1px solid #4CA5E7;">
+                                <strong>
+                                    <span t-esc="doc.name"/>
+                                </strong>
+                            </td>
+                            <td style="padding: 5px; test-align: left; border-bottom: 1px solid #4CA5E7;">
+                                <strong>
+                                    <span t-esc="doc.date_order and doc.date_order.strftime('%d/%m/%Y')"/>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; test-align: left;">
+                                Project/Vendor Reference
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; test-align: left; border-bottom: 1px solid #4CA5E7;">
+                                <strong>
+                                    <t t-if="doc.purchase_reference">
+                                        <span t-esc="doc.purchase_reference"/>
+                                    </t>
+                                </strong>
+                            </td>
+                            <td style="test-align: left; padding: 5px; border-bottom: 1px solid #4CA5E7;"></td>
+                        </tr>
+                        <tr>
+                            <td style="test-align: left; padding: 10px; border-bottom: 1px solid #4CA5E7;"></td>
+                            <td style="test-align: left; padding-bottom: 15px; padding: 5px; border-bottom: 1px solid #4CA5E7;">
+                                <span>
+                                    Contact Person:
+                                    <br/>
+                                    <strong>
+                                        <t t-if="doc.purchase_contact">
+                                            <span t-esc="doc.purchase_contact"/>
+                                        </t>
+                                    </strong>
+                                </span>
+                            </td>
+                            <td style="test-align: left; padding: 5px; border-bottom: 1px solid #4CA5E7;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; test-align: left;">Ship To</td>
+                            <td style="padding: 5px; test-align: left;">Ship To Contact</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; test-align: left; border-bottom: 1px solid #4CA5E7;">
+                                <h2 style="font-size: 13px; margin: 0; font-weight: bold;">
+                                    <strong>
+                                        <span t-esc="doc.ship_to.name"/>
+                                    </strong>
+                                </h2>
+                                <t t-if="doc.ship_to.street">
+                                    <span t-field="doc.ship_to.street"/>,
+                                </t>
+                                <t t-if="doc.ship_to.street2">
+                                    <span t-field="doc.ship_to.street2"/>,
+                                </t>
+                                <br/>
+                                <t t-if="doc.ship_to.city">
+                                    <span t-field="doc.ship_to.city"/>,
+                                </t>
+                                <t t-if="doc.ship_to.state_id">
+                                    <span t-field="doc.ship_to.state_id.name"/>,
+                                </t>
+                                <t t-if="doc.ship_to.country_id">
+                                    <span t-field="doc.ship_to.country_id.name"/>
+                                </t>
+                                <br/>
+                                <t t-if="doc.ship_to.phone">Phone:
+                                    <span t-field="doc.ship_to.phone"/>
+                                </t>
+                                <br/>
+                                <t t-if="doc.ship_to.email">Email:
+                                    <span t-field="doc.ship_to.email"/>
+                                </t>
+                            </td>
+                            <td style="padding: 5px; test-align: left; border-bottom: 1px solid #4CA5E7;">
+                                <t t-if="doc.ship_to_contact">
+                                    <strong>
+                                        <span t-esc="doc.ship_to_contact"/>
+                                    </strong>
+                                </t>
+                            </td>
+                            <td style="padding: 5px; border-bottom: 1px solid #4CA5E7;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; test-align: left;">Bill To</td>
+                            <td style="padding: 5px; test-align: left;">Bill to contact</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="test-align: left; padding: 5px; border-bottom: 1px solid #4CA5E7;">
+                                <h2 style="font-size: 13px; margin: 0; font-weight: bold;">
+                                    <strong>
+                                        <span t-esc="doc.bill_to.name"/>
+                                    </strong>
+                                </h2>
+                                <t t-if="doc.bill_to.street">
+                                    <span t-field="doc.bill_to.street"/>,
+                                </t>
+                                <t t-if="doc.bill_to.street2">
+                                    <span t-field="doc.bill_to.street2"/>,
+                                </t>
+                                <br/>
+                                <t t-if="doc.bill_to.city">
+                                    <span t-field="doc.bill_to.city"/>,
+                                </t>
+                                <t t-if="doc.bill_to.state_id">
+                                    <span t-field="doc.bill_to.state_id.name"/>,
+                                </t>
+                                <t t-if="doc.bill_to.country_id">
+                                    <span t-field="doc.bill_to.country_id.name"/>
+                                </t>
+                                <br/>
+                                <t t-if="doc.bill_to.phone">Phone:
+                                    <span t-field="doc.bill_to.phone"/>
+                                </t>
+                                <br/>
+                                <t t-if="doc.bill_to.email">Email:
+                                    <span t-field="doc.bill_to.email"/>
+                                </t>
+                            </td>
+                            <td style="test-align: left; padding: 5px; border-bottom: 1px solid #4CA5E7;">
+                                <t t-if="doc.bill_to_contact">
+                                    <strong>
+                                        <span t-esc="doc.bill_to_contact"/>
+                                    </strong>
+                                </t>
+                            </td>
+                            <td style="test-align: left; padding: 5px; border-bottom: 1px solid #4CA5E7;"></td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%; border-bottom: 2px solid #4CA5E7; border-collapse: collapse; font-size: 13px;">
+                        <tr style="background-color: rgb(240,244,247)">
+                            <th style="width: 4%; text-align: center; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                #
+                            </th>
+                            <th style="width: 40%; text-align: center; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                Description
+                            </th>
+                            <th style="width: 10%; text-align: center; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                Delivery Date(Estimate)
+                            </th>
+                            <th style="width: 10%; text-align: center; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                Quantity
+                            </th>
+                            <th style="width: 6%; text-align: center; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                UOM
+                            </th>
+                            <th style="width: 15%; text-align: center; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                Unit Price in
+                                <t t-esc="doc.currency_id.name"/>
+                            </th>
+                            <th style="width: 15%; text-align: center; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                Total Amount in
+                                <t t-esc="doc.currency_id.name"/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <t t-set="counter" t-value="1"/>
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <tr>
+                                    <td style="width: 4%; text-align: left; vertical-align: top; padding-top: 20px; padding-bottom: 5px;">
+                                        <span t-esc="counter"/>
+                                        <t t-set="counter" t-value="counter+1"/>
+                                    </td>
+                                    <td style="width: 40%; text-align: left; padding-top: 20px; padding-bottom: 5px;">
+                                        <strong>
+                                            <t t-if="line.product_id">
+                                                <t t-esc="line.product_id.name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="line.product_name or 'N/A'"/>
+                                            </t>
+                                        </strong>
+                                        <br/>
+                                        <t t-if="line.product_id.model">
+                                            <strong>Model:
+                                                <t t-esc="line.product_id.model"/>
+                                            </strong>
+                                            <br/>
+                                        </t>
+                                        <t t-if="line.product_id.make">
+                                            <strong>Make:
+                                                <t t-esc="line.product_id.make"/>
+                                            </strong>
+                                        </t>
+                                        <br/>
+                                        <t t-if="line.name">
+                                            <span t-field="line.name"/>
+                                            <br/>
+                                        </t>
+                                        <t t-if="line.product_id.hsn">
+                                            <strong>HS Code:</strong>
+                                            <t t-esc="line.hsn"/>
+                                            <br/>
+                                        </t>
+                                        <t t-if="line.product_id.origin_country_id">
+                                            <strong>Country/Origin:</strong>
+                                            <t t-esc="line.product_id.origin_country_id.name"/>
+                                        </t>
+                                        <t t-if="line.parameter_1">
+                                        <strong>
+                                            <span t-field="line.parameter_1"/>
+                                        </strong>
+                                        <br/>
+                                    </t>
+                                    </td>
+                                    <td style="width: 10%; text-align: right; vertical-align: bottom; padding-bottom: 5px; padding-top: 20px; padding-right: 5px; padding-left: 5px;">
+                                        <span t-esc="doc.date_order.strftime('%d/%m/%Y')"/>
+                                    </td>
+                                    <td style="width: 10%; text-align: right; vertical-align: bottom; padding-bottom: 5px; padding-top: 20px; padding-right: 5px; padding-left: 5px;">
+                                        <t t-esc="'{:.0f}'.format(line.product_uom_qty)"/>
+                                    </td>
+                                    <td style="width: 6%; text-align: right; vertical-align: bottom; padding-bottom: 5px; padding-top: 20px; padding-right: 5px; padding-left: 5px;">
+                                        <t t-esc="line.product_uom.name"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; vertical-align: bottom; padding-bottom: 5px; padding-top: 20px; padding-right: 5px; padding-left: 5px;">
+                                        <t t-esc="'{:.2f}'.format(line.price_unit)"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; vertical-align: bottom; padding-bottom: 5px; padding-top: 20px; padding-right: 5px; padding-left: 5px;">
+                                        <t t-esc="'{:.2f}'.format(line.price_subtotal)"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tr>
+                    </table>
+                    <table style="width: 100%; border: 1px solid white; font-size: 10px;">
+                        <tr>
+                            <td style="width: 40%; padding-right: 0px;">
+                            </td>
+                            <td style="width: 40%; text-align: left; padding-right: 0px;">
+                                <table style="width: 100%; text-align: left;">
+                                    <tr>
+                                        <td style="width: 50%;">Subtotal:</td>
+                                        <strong>
+                                            <td style="width: 50%; text-align: right;">
+                                                <strong>
+                                                    <t t-esc="doc.currency_id.name"/>
+                                                    <t t-esc="'{:.2f}'.format(doc.amount_untaxed)"/>
+                                                </strong>
+                                            </td>
+                                        </strong>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <hr style="border: 0; border-top: 1px solid #4CA5E7; margin: 0;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 50%;">VAT Amount:</td>
+                                        <strong>
+                                            <td style="width: 50%; text-align: right;">
+                                                <strong>
+                                                    <t t-esc="doc.currency_id.name"/>
+                                                    <t t-esc="'{:.2f}'.format(doc.amount_tax)"/>
+                                                </strong>
+                                            </td>
+                                        </strong>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <hr style="border: 0; border-top: 1px solid #4CA5E7; margin: 0;"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 50%; font-size: 20px;">
+                                            <span style="border-left: 10px solid #F0AB00; font-size: 15px;">
+                                                <strong style="margin-left: 5px;">Total Amount:</strong>
+                                            </span>
+                                        </td>
+                                        <td style="width: 50%; text-align: right; font-size: 13px;">
+                                            <strong>
+                                                <t t-esc="doc.currency_id.name"/>
+                                                <t t-esc="'{:.2f}'.format(doc.amount_total)"/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table style="width: 100%; margin-top: 10px; border-collapse: collapse; table-layout: fixed;">
+                        <tr>
+                            <td style="width: 50%; text-align: left;">
+                                <span style="border-left: 10px solid #F0AB00; font-size: 20px;">
+                                    <strong style="border-bottom: 2px solid #007FDE; padding-bottom: 4px; margin-left: 3px">
+                                        Amount in Words:
+                                    </strong>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%; padding-top : 7px;">
+                                <span>
+                                    <strong>
+                                        <span t-esc="doc.currency_id.name"/>
+                                        <t t-esc="doc.amount_total_in_words()"/> Only
+                                    </strong>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <span style="border-left: 10px solid #F0AB00; font-size: 20px;">
+                        <strong style="margin-left: 5px; padding-bottom: 3px; border-bottom: 2px solid #4CA5E7;">
+                            Terms &amp; Conditions:
+                        </strong>
+                    </span>
+                    <table style="width:100%;">
+                        <tr t-foreach="doc.terms_conditions_ids" t-as="t" style="width:100%;">
+                            <td style="width:20%;">
+                                <b>
+                                    <span t-esc="t.terms_conditions_id.name"/>
+                                </b>
+                            </td>
+                            <td style="width:2%;">:</td>
+                            <td style="width:60%;">
+                                <span t-esc="t.terms_conditions_value_ids.value"/>
+                                <!--                                <t t-else="">-->
+                                <!--                                    <span>No terms specified</span>-->
+                                <!--                                </t>-->
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="page-break-before:always; line-height: 2;">
+                        <span style="border-left: 10px solid #F0AB00; font-size: 15px;">
+                            <strong style="margin-left: 5px; vertical-align: baseline;">ACCOM General Terms and
+                                Conditions
+                            </strong>
+                        </span>
+                        <!--                        <span>-->
+                        <!--                            <h2 style="padding-left: 3px; vertical-align: baseline; border-left: 5px solid #FF0000;">-->
+                        <!--                                ACCOM General Terms and Conditions-->
+                        <!--                            </h2>-->
+                        <!--                        </span>-->
+                        <ol style="list-style-type: none;">
+                            <li>
+                                <strong>1.Definitions</strong>
+                                <br/>
+                                “
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                ”, means a legal entity belonging to the
+                                ACCOM Group providing Products and/or Services under the Contract.
+                                “Contract”, means the agreement (including these General Terms and Conditions) made in
+                                writing (e.g. via an offer, purchase order and order acknowledgement) between the
+                                Purchaser and
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                for the provision of Products and/or
+                                Services.
+                                “Contract Price”, means the Price for the Products and/or Services set forth in the
+                                Contract.
+                                “Intellectual Property Rights”, means all patents, copyrights, design rights,trademarks,
+                                trade names, service marks, logos, trade secrets, domain names, know-how and business
+                                processes and methods, confidential information and any other proprietary rights or form
+                                of
+                                intellectual property (whether registered or unregistered) capable of protection under
+                                the law,
+                                and including applications for the grant of any such rights.
+                                “Products”, means the products, equipment, parts or other goods (including software)
+                                that
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                has agreed to supply to the Purchaser under the
+                                Contract.
+                                “Purchaser”, means the entity to which
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                is
+                                providing Products and/or Services under the Contract.
+                                “Services” means the services that
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                has agreed to
+                                provide to the Purchaser under the Contract.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>2.Contract Price and Payment</strong>
+                                <br/>
+                                2.1. Unless otherwise agreed in the Contract, all prices shall be based upon
+                                FCA (ACCOM) Incoterms 2010.
+                                2.2. The Contract Price does not include, and the Purchaser shall be
+                                responsible for all, taxes, duties, fees or other charges of any nature
+                                including import, property, sales, stamp, turnover, use or value added taxes
+                                and duties. If the Purchaser deducts or withholds such taxes or duties, the
+                                Purchaser shall pay additional amounts in order for
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                to receive the full
+                                Contract Price.
+                                2.3. Payment shall be made in full, free and clear of all deductions,
+                                counterclaims, withholdings or offsets, within thirty (30) days from the date
+                                of invoice. The Purchaser shall pay a penalty on overdue payments from the
+                                maturity date until the actual date of payment at the rate of 1.5% per month
+                                or the maximum amount permitted by law, whichever is lower.
+                                2.4. All travel expenses incurred in the provision of the Services shall be for
+                                the account of the Purchaser. Travel expenses include:
+                                (a)fares for journey by rail, sea, air, and road;
+                                (b)carriage, freight and customs duties as well as insurance due in
+                                connection with personal effects, instruments and tools required for the
+                                Services, including necessary cost of overweight on air freight; and
+                                (c)all out of pocket expenses incurred by
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                for the
+                                Services ordered by the
+                                Purchaser, such as internet use, facsimile and telephone.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>3.Delivery, Risk, Title and Performance of the Services</strong>
+
+                                <br/>
+                                3.1. Unless otherwise provided in the Contract, the Products shall be
+                                delivered in accordance with FCA (ACCOM) Incoterms 2010. Partial
+                                deliveries are allowed. Any date for delivery stipulated or quoted shall be
+                                deemed to be an estimate only. If any Products cannot be delivered when
+                                ready,
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                may deliver the Products to a storage facility
+                                and the risk of loss
+                                to the Products shall immediately pass to the Purchaser. The Purchaser shall
+                                be liable to pay any direct and indirect cost in relation to the storage. The
+                                Products shall be deemed to have been delivered when placed in storage.
+                                3.2. The Purchaser shall be deemed to have accepted the Products and
+                                Services as being in compliance with the Contract, unless the Purchaser has
+                                notified
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                in writing of any shortages or damage within
+                                five (5) days from
+                                delivery of the Products or three (3) days from performance of the Services.
+                                3.3. Title to the Products shall transfer at the time of delivery.
+                                <span t-esc="doc.company_id.name"/>
+                                shall retain
+                                a security interest in and lien on the Products until the Contract Price has
+                                been paid in full. Subject to Clause 4, no return of Products is permitted.
+                                3.4. In respect of the Services to be performed by
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                ,
+                                the Purchaser shall be
+                                responsible for and shall provide at its own cost and risk the following:
+                                (a)free and safe access to the work site, including all necessary visas,
+                                permits, consents, licenses and exemptions necessary for
+                                <span t-esc="doc.company_id.name"/>
+                                (d)access to medical facilities and resources at the work site;
+                                (e)necessary fuel, lubricants, water, electricity, compressed air and cleaning
+                                facilities; and
+                                (f)air-conditioned facilities with potable water, including canteen facilities.
+                                3.5.If in
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                ’s opinion the health, safety or
+                                security of its personnel at the work site is at risk,
+                                <span t-esc="doc.company_id.name"/>
+                                may suspend the Services and evacuate its personnel from the
+                                work site. Any such event shall be considered an excusable event without any
+                                liability on
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                .
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>4.Warranty</strong>
+
+                                <br/>
+                                4.1.
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                warrants that the Products shall be free
+                                from defects in title, material and workmanship and that the Services shall be
+                                performed with due
+                                skill and care. A Product comprising software, will substantially conform to
+                                published specifications and the media upon which the software is provided
+                                will be free from defects in materials and workmanship.
+                                4.2.Unless otherwise agreed the following warranty periods shall apply:
+                                (a)Products (that are not software) - 12 months from date of delivery;
+                                (b)Products (that are software) - 90 days from delivery;
+                                (c)Services - 90 days from date of performance of the Services; and
+                                (d)Third Party Products - warranties are transferred from the third parties to
+                                the Purchaser to the extent
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                has the right
+                                to transfer them.
+                                4.3.If the Products or Services do not meet the warranties set forth in Clause
+                                4.1, the Purchaser shall without delay inform
+                                <span t-esc="doc.company_id.name"/>
+                                in writing prior to the expiration of the warranty period.
+                                <span t-esc="doc.company_id.name"/>
+                                shall at its option repair or replace the defective Product and/or
+                                re-perform the defective Services. The Purchaser agrees to bear all the cost of
+                                access, including, but not limited to
+                                the removal and replacement of systems, structures, dismantling,
+                                decontamination, reinstallation and transportation of Products to
+                                <span t-esc="doc.company_id.name"/>
+                                and back to the Purchaser. All warranties for any Products
+                                repaired or replaced or Services re-performed during the warranty period will expire
+                                at the same time as the original warranty period.
+                                4.4.
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                shall not be liable for any defect
+                                attributable to: (a) normal wear and tear, (b) any storage, use, service or operation
+                                of the Products which is not in conformity with manuals, instructions or
+                                specifications provided by
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                , (c) damage
+                                caused by any item or service not provided by ,
+                                <span t-esc="doc.company_id.name"/>
+                                and (d) any modification or alteration of a Product.
+                                4.5.Insofar as permissible by applicable law, clause 4 sets forth the only
+                                warranties applicable to the Products and Services and is in lieu of all other
+                                warranties, guarantees, obligations and liabilities, expressed or implied. The
+                                remedies in this Clause 4 are the Purchaser’s only remedies for breach of
+                                warranty and no warranty or condition of merchantability or fitness for a
+                                particular purpose applies.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>5.Confidentiality</strong>
+
+                                <br/>
+                                Each Party undertakes that it will keep strictly confidential all the other
+                                Party’s confidential and commercially sensitive information of which it
+                                becomes aware in the course of execution of the Contract. This
+                                confidentiality commitment shall not apply to information which (a) is
+                                already known to the recipient or is publicly available, (b) is legally disclosed
+                                to the recipient by a third party, (c) is required to be disclosed by law or
+                                public order, or (d) is permitted to be used or disclosed by the Contract.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>6.Limitation of liability</strong>
+
+                                <br/>
+                                6.1.In no event, whether as a result of breach of contract, breach of warranty,
+                                tort or otherwise shall
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                be liable for any
+                                indirect, contingent, special, consequential or incidental damages however caused
+                                or arising, nor for
+                                losses or damages caused by reason of unavailability of the Products or
+                                Services, shutdowns, loss of use, loss of profit or revenue, loss of reputation,
+                                loss of data, cost of purchased or replacement power, cost of substituted
+                                equipment, pollution remediation cost, claims from the Purchaser’s
+                                customers and stakeholders, damage to any equipment and property other
+                                than the Products and cost for additional tests.
+                                6.2.Notwithstanding any other provision of the Contract, in no event shall
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                ’s aggregate liability to the Purchaser under
+                                this Contract, whether in contract, tort or otherwise exceed fifty percent (50%) of
+                                the Contract Price.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>7.</strong>
+                                <br/>
+                                effect of transferring any Intellectual Property Rights from
+                                <span t-esc="doc.company_id.name"/>
+                                to the Purchaser or any third party. All new Intellectual Property Rights
+                                created or conceived by
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                in the performance of the
+                                Contract shall be owned exclusively by
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                .
+                                7.2.Any Intellectual Property Rights in software that comprise Products or a
+                                part of a Product is licensed and not sold to the Purchaser.
+                                7.3.Subject to the terms of any end user licence agreement entered into with
+                                the Purchaser by
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                in respect of relevant Products,
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                grants to the Purchaser a non-exclusive,
+                                non-transferable licence to use Intellectual Property Rights in software owned by
+                                <span t-esc="doc.company_id.name"/>
+                                that comprise Products or a part of a Product for the Purchaser’s
+                                own use.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>8.Variations and Change of Law</strong>
+                                <br/>
+                                8.1.Each party may at any time propose changes in the schedule or the scope
+                                of Products or Services.
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                is not obliged to proceed
+                                with any changes until such changes have been agreed upon in writing, including an
+                                adjustment to the Contract Price. Any changes to the Contract shall be agreed upon in
+                                writing by the authorised representatives of the parties.
+                                8.2.In the event of a change in any applicable laws, rules, codes, regulations,
+                                sanctions, site specific requirements or procedures which comes into effect
+                                after the date of the last submission of
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                ’s offer, and
+                                such change has an impact on
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                ’s performance under
+                                the Contract,
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                shall inform the Purchaser in writing of
+                                such impact and the scope, Contract Price, schedule or other provisions of the Contract
+                                will
+                                be adjusted in order to reflect the additional cost and obligations incurred by<span
+                                    t-esc="doc.company_id.name"/>.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>9.Export Control</strong>
+                                <br/>
+                                9.1.The Purchaser shall comply with all applicable import, export control and
+                                economic sanctions laws and regulations. The Purchaser shall not, directly or
+                                indirectly, sell, provide, export, re-export, transfer, divert, loan, lease,
+                                consign, or otherwise dispose of any Product, Services, material, software
+                                including source code, or technology to or via any person, entity, or
+                                destination, specifically to any denied or restricted party, or for any activity
+                                or end-use restricted by any applicable laws or regulations or to any
+                                activities in relation to nuclear or military. The Purchaser shall undertake
+                                that all third parties receiving such supply from the Purchaser comply with
+                                this requirement.
+                                9.2.If requested, the Purchaser shall provide
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                with a
+                                certificate signed by the Purchaser’s authorised representative confirming that the
+                                end-user
+                                shall
+                                comply with Clause 9.
+                                9.3.Any breach by the Purchaser or any other party for whom the Purchaser
+                                is liable (which shall, without limitation, include an end-user) of any of the
+                                provisions in Clause 9, shall be deemed a material breach of the Contract by
+                                the Purchaser, and shall entitle
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                to terminate the
+                                Contract, without the need to obtain a court order or arbitration award forthwith by
+                                notice to
+                                the Purchaser. In the event of such termination or otherwise, the Purchaser shall
+                                compensate
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                for any damage and loss sustained as a
+                                result of such breach of the Contract and shall keep
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                ,
+                                and all of its affiliates, and their respective officers, directors, and employees
+                                indemnified
+                                against any claims and liabilities arising out of such breach.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>10.Integrity</strong>
+                                <br/>
+                                10.1.The Purchaser hereby warrants that it will comply with all applicable
+                                laws and that it will not make any payment or commitment contrary to any
+                                applicable laws (including the US Foreign Corrupt Practices Act).
+                                10.2.
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                has established the following reporting channel
+                                whereby the
+                                Purchaser and its employees may report suspected violations of the
+                                <span t-esc="doc.company_id.name"/>
+                                Code of Conduct .
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>11.Force Majeure</strong>
+                                <br/>
+                                11.1.Neither party shall be responsible for any failure to perform its
+                                obligations under the Contract to the extent such failure is caused by or
+                                arising from an event beyond its reasonable control, including but not
+                                limited to acts of God, fires, severe weather conditions, earthquakes, strikes
+                                or labor disturbances, sanctions, terrorism and severe threat of terrorism,
+                                epidemics, floods, war, civil unrest, acts of governmental authorities,
+                                accidents, acts of military authorities, embargoes and public disorder.
+                            </li>
+                            <li>
+                                <strong>12.Suspension and Termination</strong>
+                                <br/>
+                                12.1.
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                shall have the right to suspend for such
+                                period as it considers
+                                appropriate and/or immediately terminate the Contract, without the need to
+                                obtain a court order or arbitration award, by notice to the Purchaser if, in the
+                                reasonable opinion of
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                , any of the following
+                                events arise:
+                                (a)in the event the Purchaser fails to comply with any material obligation
+                                under the Contract (including failure to pay the Contract Price when due);
+                                (b)if the Purchaser becomes insolvent, commences proceedings for winding
+                                up or bankruptcy, enters into an arrangement with its creditors or files for
+                                the protection of creditors under any bankruptcy or insolvency laws;
+                                (c)if the control or ownership of the Purchaser materially changes (a material
+                                change being a change of at least twenty-five per cent (25%));
+                                (d)if a Force Majeure event is continuing for more than three (3) months; or
+                                (e)if any representation or warranty made by the Purchaser herein or in any
+                                document provided to
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                proves to be incorrect.
+                                12.2.In the event
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                suspends performance
+                                under the Contract in
+                                accordance with Clause 12.1, the Purchaser shall be liable to reimburse
+                                <span t-esc="doc.company_id.name"/>
+                                for any cost and expense incurred by
+                                <span t-esc="doc.company_id.name"/>
+                                as a result of the suspension (including demobilisation and
+                                remobilisation cost) and the delivery dates
+                                and contractual milestones shall be equally extended.
+                                12.3.In the event
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                terminates the Contract in
+                                accordance with clause 12.1.the Purchaser shall pay
+                                <span t-esc="doc.company_id.name"/>
+                                for all Products and Services completed or partially completed before
+                                the date of the termination. The Purchaser shall further be liable to reimburse
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                for all costs, expenses and losses reasonably
+                                incurred as a result of the termination.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>13.Indemnity</strong>
+                                <br/>
+                                13.1.The Purchaser shall indemnify and hold harmless
+                                <span t-esc="doc.company_id.name"/>
+                                against any and all losses, claims, expenses liabilities and damages
+                                for:
+                                (a)personal injury or death to any employee of the Purchaser or any third
+                                party; and
+                                (b)loss or damage to any property of the Purchaser or any third party, except
+                                in the event such personal injury, death, loss or damage is a direct result of
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                ’s gross negligence.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>14.Governing Law and Dispute Resolution</strong>
+                                <br/>
+                                14.1.The Contract shall be governed by and interpreted in accordance with
+                                the laws in force in the principal place of business of the
+                                <span t-esc="doc.company_id.name"/>
+                                entity
+                                supplying the Products or providing the Service
+                                14.2.In the event of a dispute arising out of or relating to this Contract,
+                                including any question regarding its existence, validity or termination, the
+                                parties shall first seek settlement of that dispute by mediation in
+                                accordance with the Mediation Rules of the DIFC-LCIA Arbitration Centre,
+                                which Rules are deemed to be incorporated by reference into this clause.
+                                14.3.If the dispute is not settled by mediation within sixty (60) days of the
+                                commencement of the mediation, or such further period as the parties shall
+                                agree in writing, the dispute shall be referred to and finally resolved by
+                                arbitration under the Arbitration Rules of the DIFC-LCIA Arbitration Centre,
+                                which Rules are deemed to be incorporated by reference into this clause.
+                                14.4.The language to be used in the mediation and in the arbitration shall be
+                                English. In any arbitration commenced pursuant to this clause, the number of
+                                arbitrators shall be one and the seat, or legal place, of arbitration shall be
+                                Dubai, United Arab Emirates.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>15.Miscellaneous</strong>
+                                <br/>
+                                15.1.All notices under the Contract shall be made in writing in English
+                                language.
+                                15.2.The Purchaser shall immediately notify
+                                <t t-if="doc.company_id.name">
+                                    <span t-field="doc.company_id.name"/>
+                                </t>
+                                of any change in the ownership or control of the Purchaser.
+                                15.3.The Contract constitutes the entire agreement between the parties and
+                                supersedes all prior agreements and understandings between the parties in
+                                relation thereto.
+                                15.4.The Purchaser shall not be entitled to assign or novate its rights and
+                                obligations under the Contract without the prior written consent of<span
+                                    t-esc="doc.company_id.name"/>.
+                            </li>
+                            <br/>
+                        </ol>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_report_purchase_quotation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="custom_purchase_report.report_main_purchase_quotation"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="groups_id" eval="[(4, ref('base.group_no_one'))]"/>
+    </record>
+</odoo>

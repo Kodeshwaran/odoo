@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="hr_employee_view_form_inherit">
+            <field name="name">hr.employee.form.view.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='contract_id']" position="after">
+                    <field name="is_admin"/>
+                    <field name="entry_account_id" attrs="{'invisible': [('is_admin', '=', False)]}"/>
+                    <field name="is_canteen"/>
+                    <field name="debit_entry_account_id" attrs="{'invisible': [('is_canteen', '=', False)]}"/>
+                    <field name="credit_entry_account_id" attrs="{'invisible': [('is_canteen', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

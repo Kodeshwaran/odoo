@@ -1,0 +1,40 @@
+<odoo>
+    <template id="report_sales_quotation_styles" inherit_id="web.external_layout">
+        <xpath expr="." position="inside">
+            <style>
+                .header {
+                    padding-top: 20px; /* Add space above the header */
+                }
+                .header img {
+                    float: left;
+                }
+                .header div {
+                    float: right;
+                    text-align: right;
+                    margin-right: 20px;
+                }
+                .customer-details div {
+                    width: 50%;
+                    display: inline-block;
+                    vertical-align: top;
+                }
+                .customer-details p {
+                    margin: 0;
+                    line-height: 1.5;
+                }
+            </style>
+        </xpath>
+    </template>
+    <record id="action_report_delivery_note" model="ir.actions.report">
+        <field name="name">Delivery Note</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">delivery_note.report_delivery_note</field>
+        <field name="report_file">delivery_note.report_delivery_note</field>
+        <field name="print_report_name">'Delivery Note - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="delivery_note.custom_paperformat_delivery_note"/>
+    </record>
+</odoo>
+

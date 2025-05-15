@@ -1,0 +1,10 @@
+<odoo>
+    <data noupdate="0">
+        <record id="seq_proforma_invoice_sale" model="ir.sequence">
+            <field name="name">Proforma Sequence</field>
+            <field name="code">proforma.sale.invoice</field>
+            <field name="prefix">PRO-</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+</odoo>

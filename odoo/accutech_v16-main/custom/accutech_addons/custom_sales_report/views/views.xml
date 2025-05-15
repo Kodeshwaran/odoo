@@ -1,0 +1,660 @@
+<odoo>
+
+    <template id="custom_abdulla_sq_header">
+        <t t-if="doc and 'company_id' in doc">
+            <t t-set="company" t-value="doc.company_id"></t>
+        </t>
+        <t t-if="not doc or not 'company_id' in doc">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <div class="header" style="line-height: 2; padding-bottom: 20px;">
+            <table style="width: 100%; font-size: 15px; line-height: 2; border-collapse: collapse; padding-bottom: 20px;">
+                <tr style="vertical-align: top;">
+                    <td style="text-align: left; width: 50%;">
+                        <h2 style="font-size: 25px; margin: 0; font-weight: bold;">
+                            <span t-esc="doc.company_id.name"/>
+                        </h2>
+                        <t t-if="doc.company_id.street">
+                            <span t-field="doc.company_id.street"/>,
+                        </t>
+                        <t t-if="doc.company_id.street2">
+                            <span t-field="doc.company_id.street2"/>,
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.city">
+                            <span t-field="doc.company_id.city"/>,
+                        </t>
+                        <t t-if="doc.company_id.state_id">
+                            <span t-field="doc.company_id.state_id.name"/>,
+                        </t>
+                        <t t-if="doc.company_id.country_id">
+                            <span t-field="doc.company_id.country_id.name"/>
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.phone">Phone:
+                            <span t-field="doc.company_id.phone"/>
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.email">Email:
+                            <span t-field="doc.company_id.email"/>
+                        </t>
+                        <br/>
+                    </td>
+                    <td colspan="2" style="max-width:100%; text-align:right;">
+                        <t t-if="doc.company_id.logo">
+                            <center style="margin-left: 30px;">
+                                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                     style="width:150px;"
+                                     alt="Logo"/>
+                            </center>
+                        </t>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px; border-top: 2px solid #007FDE;">Quotation Number</td>
+                    <td style="padding: 5px; border-top: 2px solid #007FDE;">Document Date</td>
+                    <td style="padding: 5px; border-top: 2px solid #007FDE;">Page</td>
+                </tr>
+                <tr>
+                    <td style="padding: 5px; border-bottom: 2px solid #007FDE;">
+                        <b>
+                            <span t-esc="doc.quotation_name"/>
+                        </b>
+                    </td>
+                    <td style="padding: 5px; border-bottom: 2px solid #007FDE;">
+                        <b>
+                            <span t-esc="doc.date_order and doc.date_order.strftime('%d/%m/%Y')"/>
+                        </b>
+                    </td>
+                    <td style="padding: 5px; border-bottom: 2px solid #007FDE;">
+                        <strong>
+                            <span class="page"/>
+                            /
+                            <span class="topage"/>
+                        </strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!--            <t t-if="not doc.draft_so">-->
+        <!--                <div class="watermark" style="position:absolute;left:-105px;top:385px;text-align:center;opacity:0.25;z-index:1000;transform:rotate(310deg);-webkit-transform:rotate(310deg);width:130%;">-->
+        <!--                    <p style="font-size:160px;color:black;">D R A F T</p>-->
+        <!--                </div>-->
+        <!--            </t>-->
+
+        <!--            <div class="footer">-->
+        <!--                <table style="width:100%;">-->
+        <!--                    <tr style="width:100%;">-->
+        <!--                        <td style="align:center;text-align:center;font-size:15px;">Page <span class="page"/> of <span class="topage"/></td>-->
+        <!--                    </tr>-->
+        <!--                </table>-->
+        <!--            </div>-->
+    </template>
+
+    <template id="report_sales_quotation_main">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-call="custom_sales_report.custom_abdulla_sq_header"/>
+                <div class="page" style="font-size: 12px; line-height: 2;">
+                    <span t-set="current_page" t-value="currentPage"/>
+                    <span t-set="total_pages" t-value="totalPages"/>
+                    <table style="width:100%; border-collapse: collapse;">
+                        <tr>
+                            <td rowspan="2" style="vertical-align: top; width: 40%; padding-top: 12px;">
+                                <span style="border-left: 5px solid #FF0000; font-size: 20px;">
+                                    <strong style="margin-left: 3px">SALES QUOTATION</strong>
+                                </span>
+                            </td>
+                            <td style="padding: 10px;">Quotation Number</td>
+                            <td style="padding: 10px;">Document Date</td>
+                            <td style="padding: 10px;"></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 2px solid #007FDE;">
+                                <strong>
+                                    <span t-esc="doc.quotation_name"/>
+                                </strong>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 2px solid #007FDE;">
+                                <strong>
+                                    <span t-esc="doc.date_order and doc.date_order.strftime('%d/%m/%Y')"/>
+                                </strong>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 2px solid #007FDE;">
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"
+                                style="font-size: 13px; vertical-align: top; padding: 5px; width: 40%; border-bottom: 2px solid #007FDE;">
+                                <strong>
+                                    Customer:
+                                    <br/>
+                                    <span t-esc="doc.partner_id.name"/>
+                                </strong>
+                                <br/>
+                                <t t-if="doc.partner_id.contact_address">
+                                    <span t-esc="doc.partner_id.contact_address"/>
+                                    <br/>
+                                </t>
+                                <t t-if="doc.partner_id.phone">
+                                    Phone:
+                                    <span t-esc="doc.partner_id.phone"/>
+                                    <br/>
+                                </t>
+                                <t t-if="doc.partner_id.phone">
+                                    Fax:
+                                    <span t-esc="doc.partner_id.phone"/>
+                                </t>
+                            </td>
+                            <td colspan="3" style="padding: 10px; border-bottom: 2px solid #007FDE;">Project/Customer
+                                Reference
+                                <br/>
+                                <br/>
+                                <strong>
+                                    <span t-esc="doc.opportunity_id.name"/>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"
+                                style="padding-top: 0px; padding-bottom: 0px; border-bottom: 2px solid #007FDE; padding: 10px; ">
+                                Reference
+                                No
+                                <br/>
+                                <br/>
+                                <span style="padding-bottom: 5px;">
+                                    <strong>
+                                        <span t-esc="doc.opportunity_no1"/>
+                                    </strong>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; width: 40%;">
+                                <strong>Contact Person:</strong>
+                                <br/>
+                                <strong>
+                                    <t t-if="doc.contact_person_id.name">
+                                        <span t-esc="doc.contact_person_id.name"/>
+                                    </t>
+                                </strong>
+                                <br/>
+                                <t t-if="doc.contact_person_id.mobile">
+                                    Direct No:
+                                    <span t-esc="doc.contact_person_id.mobile"/>
+                                </t>
+                                <br/>
+                                <t t-if="doc.contact_person_id.email">
+                                    E-Mail:
+                                    <span t-esc="doc.contact_person_id.email"/>
+                                </t>
+                            </td>
+                            <td style="padding: 10px;">
+                                Sale Contact
+                                <br/>
+                                <br/>
+                                <strong>
+                                    <span t-esc="doc.user_id.name or '-No Sales Employee-'"/>
+                                </strong>
+                            </td>
+                            <td style="padding: 10px;">
+                                <t t-if="doc.user_id.email">
+                                    E-mail
+                                    <br/>
+                                    <br/>
+                                    <strong>
+                                        <span t-esc="doc.user_id.email"/>
+                                    </strong>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%; border-bottom: 2px solid #007FDE; border-collapse: collapse;">
+                        <tr style="background-color: rgb(240,244,247)">
+                            <th style="padding: 10px; width: 5%; text-align: left;">#</th>
+                            <th style="padding: 10px; text-align: left;">Description</th>
+                            <th style="padding: 10px; width: 10%; text-align: right;">Quantity</th>
+                            <th style="padding: 10px; width: 10%; text-align: right;">UOM</th>
+                            <th style="padding: 10px; width: 10%; text-align: right;">Unit Price</th>
+                            <th style="padding: 10px; width: 15%; text-align: right;">Discount (%)</th>
+                            <th style="padding: 10px; width: 10%; text-align: right;">Total Amount</th>
+                        </tr>
+                        <t t-set="counter" t-value="1"/>
+                        <t t-if="doc.group_set_string() != False">
+                            <t t-foreach="doc.group_set_string().items()" t-as="quote">
+                                <tr>
+                                    <td style="width: 5%; text-align:center; vertical-align: top;">
+                                        <span t-esc="counter"/>
+                                        <t t-set="counter" t-value="counter+1"/>
+                                    </td>
+                                    <td style="width: 45%; text-align: left; vertical-align: bottom;">
+                                        <t t-if="quote[1]['header_text']">
+                                            <strong style="letter-spacing: 2px; color: #FF0000;">
+                                                <t t-esc="quote[1]['header_text']"/>
+                                            </strong>
+                                            <br/>
+                                        </t>
+                                        <strong>
+                                            <t t-esc="quote[1]['products']"/>
+                                        </strong>
+                                        <br/>
+                                        <strong>
+                                            Model:
+                                            <t t-esc="quote[1]['model']"/>
+                                            <br/>
+                                        </strong>
+                                        <strong>
+                                            Make:
+                                            <t t-esc="quote[1]['make']"/>
+                                            <br/>
+                                        </strong>
+                                        <t t-if="quote[1]['description_short']">
+                                            <t t-esc="quote[1]['description_short']"/>
+                                            <br/>
+                                        </t>
+                                        <t t-if="quote[1]['hsn']">
+                                            <strong>HS Code:</strong>
+                                            <t t-esc="quote[1]['hsn']"/>
+                                            <br/>
+                                        </t>
+                                        <t t-if="quote[1]['country_id']">
+                                            <strong>Country/Origin:</strong>
+                                            <t t-esc="quote[1]['country_id']"/>
+                                            <br/>
+                                        </t>
+                                        <t t-if="quote[1]['parameter_1']">
+                                            <strong>
+                                                <t t-esc="quote[1]['parameter_1']"/>
+                                            </strong>
+                                            <br/>
+                                        </t>
+                                        <t t-if="quote[1]['delivery_period']">
+                                            <strong style="letter-spacing: 2px; color: #FF0000;">
+                                                Delivery Period:
+                                                <t t-esc="quote[1]['delivery_period']"/>
+                                            </strong>
+                                            <br/>
+                                        </t>
+                                        <t t-if="quote[1]['spec_remarks']">
+                                            <strong style="letter-spacing: 2px;">
+                                                Spec Remarks:
+                                                <t t-esc="quote[1]['spec_remarks']"/>
+                                            </strong>
+                                        </t>
+                                    </td>
+                                    <td style="width: 10%; text-align: right; vertical-align: bottom;">
+                                        <t t-esc="quote[1]['total_qty']"/>
+                                    </td>
+                                    <td style="width: 10%; text-align: right; vertical-align: bottom;">
+                                        <t t-esc="quote[1]['uom']"/>
+                                    </td>
+                                    <td style="width: 10%; text-align: right; vertical-align: bottom;">
+                                        <t t-esc="quote[1]['price_unit']"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; vertical-align: bottom;">
+                                        <t t-esc="quote[1]['total_discount']"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; vertical-align: bottom;">
+                                        <t t-esc="quote[1]['total_subtotal']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <t t-foreach="doc.order_line" t-as="line">
+                                <tr>
+                                    <td style="width: 4%; text-align: left; vertical-align: top; padding: 10px;">
+                                        <span t-esc="counter"/>
+                                        <t t-set="counter" t-value="counter+1"/>
+                                    </td>
+                                    <td style="width: 45%; text-align: left; padding: 10px; vertical-align: top;">
+                                        <t t-if="line.header_text">
+                                            <strong style="letter-spacing: 2px; color: #FF0000;">
+                                                <span t-field="line.header_text"/>
+                                            </strong>
+                                            <br/>
+                                        </t>
+                                        <strong>
+                                            <t t-if="line.product_id">
+                                                <b>
+                                                    <t t-esc="line.product_id.name"/>
+                                                </b>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="line.product_name or 'N/A'"/>
+                                            </t>
+                                        </strong>
+                                        <br/>
+                                        <strong>
+                                            <t t-if="line.model">
+                                                <strong>Model:</strong>
+                                                <t t-esc="line.model"/>
+                                                <br/>
+                                            </t>
+                                            <t t-if="line.make">
+                                                <strong>Make:</strong>
+                                                <t t-esc="line.make"/>
+                                                <br/>
+                                            </t>
+                                        </strong>
+                                        <t t-if="line.description_short">
+                                            <span t-field="line.description_short"/>
+                                            <br/>
+                                        </t>
+                                        <t t-if="line.product_id.hsn">
+                                            <strong>HS Code:</strong>
+                                            <t t-esc="line.hsn"/>
+                                            <br/>
+                                        </t>
+                                        <t t-if="line.product_id.origin_country_id">
+                                            <strong>Country/Origin:</strong>
+                                            <t t-esc="line.product_id.origin_country_id.name"/>
+                                            <br/>
+                                        </t>
+                                        <t t-if="line.parameter_1">
+                                            <strong>
+                                                <span t-field="line.parameter_1"/>
+                                            </strong>
+                                            <br/>
+                                        </t>
+                                        <t t-if="line.delivery_period">
+                                            <strong style="letter-spacing: 2px; color: #FF0000;">
+                                                <span t-field="line.delivery_period"/>
+                                            </strong>
+                                            <br/>
+                                        </t>
+                                        <t t-if="line.spec_remarks">
+                                            <strong style="letter-spacing: 2px;">
+                                                <span t-field="line.spec_remarks"/>
+                                            </strong>
+                                        </t>
+                                    </td>
+                                    <td style="width: 10%; text-align: right; vertical-align: bottom; padding: 10px;">
+                                        <t t-esc="'{:.0f}'.format(line.product_uom_qty)"/>
+                                    </td>
+                                    <td style="width: 10%; text-align: right; vertical-align: bottom; padding: 10px;">
+                                        <t t-esc="line.product_uom.name"/>
+                                    </td>
+                                    <td style="width: 10%; text-align: right; vertical-align: bottom; padding: 10px;">
+                                        <t t-esc="'{:.2f}'.format(line.price_unit)"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; vertical-align: bottom; padding: 10px; ">
+                                        <t t-esc="'{:.0f}'.format(line.discount)"/>
+                                    </td>
+                                    <td style="width: 15%; text-align: right; vertical-align: bottom; padding: 10px;">
+                                        <t t-esc="'{:.2f}'.format(line.price_subtotal)"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </table>
+                    <br/>
+                    <table style="width: 50%; margin-left: 50%; border-bottom: 2px solid #007FDE; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 5px; border-bottom: 2px solid #007FDE;">Subtotal</td>
+                            <td style="padding: 5px; border-bottom: 2px solid #007FDE;">:</td>
+                            <td style="padding: 5px; border-bottom: 2px solid #007FDE; text-align: right;">
+                                <strong>
+                                    <t t-esc="doc.currency_id.name"/>
+                                    <t t-esc="'{:.2f}'.format(doc.amount_untaxed)"/>
+                                    <!--                                                    <t t-esc="doc.amount_untaxed"/>-->
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px; border-bottom: 2px solid #007FDE;">VAT Amount</td>
+                            <td style="padding: 5px; border-bottom: 2px solid #007FDE;">:</td>
+                            <td style="padding: 5px; border-bottom: 2px solid #007FDE; text-align: right;">
+                                <strong>
+                                    <t t-esc="doc.currency_id.name"/>
+                                    <t t-esc="'{:.2f}'.format(doc.amount_tax)"/>
+                                    <!--                                                    <t t-esc="doc.amount_tax"/>-->
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;">
+                                <span style="border-left: 5px solid #FF0000;">
+                                    <strong style="margin-left: 5px;">
+                                        Total Amount
+                                    </strong>
+                                </span>
+                            </td>
+                            <td style="padding: 5px;">:</td>
+                            <td style="padding: 5px; text-align: right;">
+                                <strong>
+                                    <t t-esc="doc.currency_id.name"/>
+                                    <t t-esc="'{:.2f}'.format(doc.amount_total)"/>
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 50%; text-align: left;">
+                                <span style="border-left: 5px solid #FF0000; font-size: 20px;">
+                                    <strong style="border-bottom: 2px solid #007FDE; padding-bottom: 4px; margin-left: 3px">
+                                        Amount in Words:
+                                    </strong>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 30%; padding-top : 7px;">
+                                <span>
+                                    <strong>
+                                        <span t-esc="doc.currency_id.name"/>
+                                        <t t-esc="doc.amount_total_in_words()"/>
+                                        Only
+                                    </strong>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <div style="width:100%;">
+                        <span style="border-left: 5px solid #FF0000; font-size: 20px;">
+                            <strong style="margin-left: 5px; padding-bottom: 3px; border-bottom: 2px solid #007FDE;">
+                                Terms &amp; Conditions:
+                            </strong>
+                        </span>
+                        <table style="width:100%; border-collapse: collapse;">
+                            <tr t-foreach="doc.terms_conditions_ids" t-as="t" style="width:100%;">
+                                <td style="width:20%;">
+                                    <b>
+                                        <span t-esc="t.terms_conditions_id.name"/>
+                                    </b>
+                                </td>
+                                <td style="width:2%;">:</td>
+                                <td style="width:60%;">
+                                    <span t-esc="t.terms_conditions_value_ids.value"/>
+                                    <!--                                <t t-else="">-->
+                                    <!--                                    <span>No terms specified</span>-->
+                                    <!--                                </t>-->
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <span style="color: #007FDE;">
+                            <b>NOTE:</b>
+                        </span>
+                        <br/>
+                        <span style="color: #007FDE;">Purchase Orders should be sent by E-Mail to the concerned Sales
+                            Engineer keeping a copy to supplychain@accutech.ae
+                        </span>
+                    </div>
+                    <div style="page-break-before:always;">
+                        <span style="border-left: 5px solid #FF0000; font-size: 20px;">
+                            <strong style="margin-left: 5px; padding-bottom: 5px; border-bottom: 2px solid #007FDE;">
+                                General Terms and Condition for Sale of Products and
+                                Services :
+                            </strong>
+                        </span>
+                        <br/>
+                        <ul style="list-style-type: none;">
+                            <li>
+                                <strong>
+                                    DELIVERY :
+                                </strong>
+                                <br/>
+                                Delivery is considered from technically /commercially clear purchase order or from the
+                                approval of Drawings &amp; Documents, if applicable.
+                                <br/>
+                                All products will be delivered EXW
+                                <span t-esc="doc.company_id.name"/>
+                                Warehouse unless
+                                otherwise indicated in shipping terms. Partial delivery is allowed
+                                and in such event
+                                <span t-esc="doc.company_id.name"/>
+                                may issue invoices for partial
+                                deliveries.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>
+                                    DOCUMENTATION :
+                                </strong>
+                                <br/>
+                                As detailed in offer. If any additional/other documentation &amp; testing is required,
+                                please advice and the extra price adder for the same will be informed.
+                                If no documentation &amp; testing are ordered only Instruction Manual will be provided
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>
+                                    LIQUIDATED DAMAGES :
+                                </strong>
+                                <br/>
+                                Not applicable unless mutually agreed in writing before placement of order.We reserve
+                                the right to change price and delivery on acceptance of LD.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>
+                                    VALIDITY OF QUOTATION AND PRICES :
+                                </strong>
+                                <br/>
+                                Unless previously withdrawn, Seller's quotation is open for acceptance within the period
+                                stated therein or, when no period is so stated, within thirty
+                                days after its date. Prices are firm for delivery within the period stated in Seller's
+                                quotation and are exclusive of (a) Value Added Tax and (b) any similar
+                                and other taxes, duties, levies or other like charges arising outside the
+                                <span t-esc="doc.company_id.name"/>
+                                warehouse in connection with the
+                                performance of the Contract.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>
+                                    FORCE MAJEURE :
+                                </strong>
+                                <br/>
+                                <span t-esc="doc.company_id.name"/>
+                                shall not be liable for any loss, damage, detention, failure or delay in performing its
+                                obligations under the Purchase
+                                Order to the extent directly or indirectly caused by or arising from an event of Force
+                                Majeure, which shall include but not be limited to acts of God, acts
+                                (or failures to act) of governmental authorities, fires, severe weather conditions,
+                                earthquakes, strikes or other labor disturbances, floods, war
+                                (declared or undeclared), terrorists acts or acts of terrorism, epidemics, civil unrest,
+                                riots, acts or omissions by sub-contractors caused by any
+                                circumstances referred to in this provision, delay due to any actions or omissions by
+                                any state authorities, sanctions, blockage,embargo, prohibition on
+                                exportation or importation of material or equipment or services or other causes beyond
+                                its reasonable control.
+                                <br/>
+                                The delivery date shall be extended for a period equal to the time lost by reason of
+                                delay plus such additional time as may be reasonably necessary to
+                                overcome the effect of the delay including time required for demobilization
+                                /remobilization
+                                <span t-esc="doc.company_id.name"/>
+                                shall be entitled to adjust
+                                the Purchase Order Price and to be reimbursed by Purchaser for all costs reasonably
+                                incurred due to Force Majeure, including but not limited to costs
+                                for securing, protecting and storing the Products and costs for mobilization and
+                                demobilization of personnel and equipment.
+                                <br/>
+                                If a Force Majeure situation exceeds in aggregate 90 days, then
+                                <span t-esc="doc.company_id.name"/>
+                                shall be entitled to terminate the Purchase Order
+                                with respect to the undelivered Products to which title has not passed yet and/or
+                                Services which have not been performed yet, where upon Purchaser
+                                shall promptly pay
+                                <span t-esc="doc.company_id.name"/>
+                                its termination charges determined in
+                                accordance with
+                                <span t-esc="doc.company_id.name"/>
+                                standard accounting practices upon submission of
+                                <span t-esc="doc.company_id.name"/>
+                                invoices therefore.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>
+                                    CANCELLATION :
+                                </strong>
+                                <br/>
+                                Customer Purchase order is binding only after written confirmation from<span
+                                    t-esc="doc.company_id.name"/>.
+                                After receipt of a formal PO there may be a cancellation fee.
+                                <br/>
+                                Milestones will be as follows:
+                                <br/>
+                                2 weeks after receipt of order 25% of PO value.
+                                <br/>
+                                3 weeks after receipt of order 50% of PO value.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>MATERIAL SUITABILITY :</strong>
+                                <br/>
+                                We do not accept responsibility for process compatibility. Customer is responsible for
+                                material suitability to meet their process conditions.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>RETURNS :</strong>
+                                All returns MUST be pre-approved by
+                                <span t-esc="doc.company_id.name"/>
+                                Sales staff and
+                                accompanied by a Product Return Form.
+                            </li>
+                            <br/>
+                            <li>
+                                <strong>
+                                    DELIVERY RESPONSIBILITY :
+                                </strong>
+                                The shipment is deemed accepted in good condition by the common carrier and title and
+                                all risk of loss or damage pass to customer upon that
+                                acceptance by the carrier. The customer is responsible for inspecting the merchandise
+                                upon receipt. The customer shall insist that visible damage be
+                                noted on its copy of the freight bill. If the product has been lost or damaged in
+                                transit, the customer must file the claim with the carrier, as
+                                <span t-esc="doc.company_id.name"/>
+                                bears no responsibility for any such loss or damage.
+                                <br/>
+                                Any rejection due to damage or short supply to be reported within 1 week from the
+                                receipt of material.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_sales_quotation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="custom_sales_report.report_sales_quotation_main"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="sale.action_report_saleorder" model="ir.actions.report">
+        <field name="groups_id" eval="[(4, ref('base.group_no_one'))]"/>
+    </record>
+</odoo>

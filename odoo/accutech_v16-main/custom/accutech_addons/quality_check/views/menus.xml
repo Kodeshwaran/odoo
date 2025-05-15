@@ -1,0 +1,8 @@
+<odoo>
+    <!-- Menu Item for Quality Checks -->
+    <menuitem id="menu_quality_check_root" name="Quality Checks" sequence="10"/>
+
+    <!-- Action for Quality Checks -->
+    <menuitem id="menu_quality_check" name="Quality Checks" parent="menu_quality_check_root" action="action_quality_check" sequence="10"/>
+
+</odoo>

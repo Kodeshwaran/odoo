@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="menu_company_root"
+              name="Company"
+              web_icon="company,static/description/logo.png"
+              sequence="0"/>
+    <menuitem id="menu_employee_master"
+              name="Employee_details"
+              parent="menu_company_root"
+              sequence="0"/>
+
+     <menuitem id="menu_employee_meeting"
+              name="Meetings"
+              parent="menu_company_root"
+              sequence="0"/>
+
+    <menuitem id="menu_employee_tags"
+              name="configuration"
+              parent="menu_company_root"
+              sequence="20"/>
+
+    <menuitem id="menu_cancel_meeting"
+              name="cancellation"
+              parent="menu_company_root"
+              sequence="100"
+ />
+<!-- action="action_cancel_meeting"-->
+</odoo>

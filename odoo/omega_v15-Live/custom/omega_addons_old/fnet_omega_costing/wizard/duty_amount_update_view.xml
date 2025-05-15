@@ -1,0 +1,30 @@
+<openerp>
+    <data>
+
+        <record id="view_amount_duty" model="ir.ui.view">
+            <field name="name">view.amount.duty</field>
+            <field name="model">duty.amount</field>
+            <field name="arch" type="xml">
+                <form string="Duty Amount">
+                    <group>
+                        <field name="amount"/>
+                    </group>
+                    <footer>
+                        <button name="change_amount" string="Change Duty Amount" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_amount_duty" model="ir.actions.act_window">
+            <field name="name">Duty Amount</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">duty.amount</field>
+            <field name="view_mode">form</field>
+            <field name="context">{'record_id' : active_id}</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>

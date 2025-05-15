@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+        <record id="account.menu_action_account_payments_receivable" model="ir.ui.menu">
+            <field name="name">Receipts</field>
+            </record>
+
+        <record id="account.menu_action_move_in_refund_type" model="ir.ui.menu">
+            <field name="name">Vendor Debit Note</field>
+            </record>
+
+        <record id="account.action_account_payments" model="ir.actions.act_window">
+            <field name="name">Receipts</field>
+            </record>
+
+
+        <record id="account.action_move_in_refund_type" model="ir.actions.act_window">
+            <field name="name">Vendor Debit Note</field>
+            </record>
+    
+
+    </data>
+
+</odoo>

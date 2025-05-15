@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <h3>
+                        <br/>
+                        <field name="customer_code" readonly="1"/>
+                    </h3>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="trn_no"/>
+                </xpath>
+                <xpath expr="//group[@name='sale']" position="inside">
+                     <field name="admin_user" widget="many2one_avatar_user"/>
+                </xpath>
+                <xpath expr="//field[@name='acc_number']" position="after">
+            <field name="aed_account" string="AED Account"/>
+            <field name="usd_account" string="USD Account"/>
+            <field name="euro_account" string="Euro Account"/>
+        </xpath>
+            </field>
+        </record>
+       <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+            <field name="name">res.partner.filter.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+           <field name="arch" type="xml">
+                <search>
+                    <!-- Adding a Filter to Show Only Parent Customers -->
+                    <filter string="Contacts" name="parent_customers"
+                            domain="['|', ('child_ids', '!=', False), ('parent_id', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_res_partner_bank_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.bank.tree.inherit</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_tree"/>
+            <field name="arch" type="xml">
+                <!-- Add new fields after 'acc_number' -->
+                <xpath expr="//field[@name='acc_number']" position="after">
+                    <field name="aed_account" string="AED Account"/>
+                    <field name="usd_account" string="USD Account"/>
+                    <field name="euro_account" string="Euro Account"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="contacts.action_contacts" model="ir.actions.act_window">
+            <field name="context">{'search_default_parent_customers': 1}</field>
+        </record>
+
+    </data>
+</odoo>

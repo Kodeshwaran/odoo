@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <odoo>
+        <data>
+            <record id="email_delivery_data_update" model="mail.template">
+                <field name="name">Product Delivery Date Changed</field>
+                <field name="model_id" ref="mm_sale.model_sale_order_line_wizard"/>
+                <field name="email_from">{{object.sale_order_line_id.order_id.user_id.login}}</field>
+                <field name="email_to">{{object.sale_order_line_id.order_id.team_id.user_id.login}}</field>
+                <field name="auto_delete" eval="False"/>
+                <field name="subject">Product Delivery Date Changed</field>
+                <field name="body_html" type="html">
+                    <p><h3>Hi Team...., </h3></p>
+                    <pre>
+                        <div style="font-size: 12px; font-style:normal;">
+                        <p>Please find the order Number  <b><t t-out="object.sale_order_line_id.order_id.name"/></b> of the product <b> <t t-out="object.sale_order_line_id.product_id.name"/></b> delivery date has been changed to <t t-if="object.order_delivery_date"><b> <t t-out="object.order_delivery_date"/>  ----> <t t-out="object.delivery_date"/></b></t><t t-else=""><b><t t-out="object.delivery_date"/></b></t>
+                        </p> </div></pre>
+                </field>
+            </record>
+        </data>
+    </odoo>
+
+
+</odoo>

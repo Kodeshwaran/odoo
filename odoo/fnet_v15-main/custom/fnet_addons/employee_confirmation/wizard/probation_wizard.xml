@@ -1,0 +1,37 @@
+<odoo>
+
+    <record model="ir.ui.view" id="probation_review_refusal_form">
+            <field name="name">Probation Review Form</field>
+            <field name="model">probation.review.refusal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="probation_id" invisible="1"/>
+                            <field name="probation_review_action" invisible="1"/>
+                            <group string="Why do you want to confirm this employee?" attrs="{'invisible': [('probation_review_action', '!=', 'me')]}">
+                                <field name="refusal_reason" nolabel="1"/>
+                            </group>
+                            <group string="Why do you think this employee doesn't meet the expectations?" attrs="{'invisible': [('probation_review_action', '!=', 'dm')]}">
+                                <field name="refusal_reason" nolabel="1"/>
+                            </group>
+                            <group string="Why do you think this employee requires improvement?" attrs="{'invisible': [('probation_review_action', '!=', 'ri')]}">
+                                <field name="refusal_reason" nolabel="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="generate_message_post" string="Submit" type="object" class="oe_highlight"/>
+                        <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="probation_manager_refusal_action_window">
+            <field name="name">Probation Review Form</field>
+            <field name="res_model">probation.review.refusal</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">form</field>
+        </record>
+</odoo>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="email_template_employee_request_document" model="mail.template">
+        <field name="name">Employee Document</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="subject">Require Documents - Futurenet Technologies</field>
+        <field name="email_to">{{object.email_from}}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="900"
+                   style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            <strong>Dear <t t-out="object.partner_name"/>,
+                                <br/>
+                                <br/>
+                                <p><b>Greetings from Futurenet Technologies!!</b></p>
+                            </strong>
+                            <br/>
+                            Based on our discussion, we are pleased to offer you the position of
+                            <strong>“<t t-out="object.job_id.name"/>"
+                            </strong>
+                            with an
+                            annual compensation of
+                            <strong>Rs.<span t-esc="'{:,.2f}'.format(object.salary_proposed)"/>/-.
+                            </strong>
+                            Apart from this compensation you will be covered under
+                            the Personal Accident Insurance of 3,00,000.00/- and Medical Insurance of Rs.1,50,000.00/- .
+                            <br/>
+                            <br/>
+                            As part of your onboarding process please upload the following documents in the given link
+                            below before
+                            <t t-out="object.docu_url_expire"/>
+                            <br/>
+                            <br/>
+                            <strong>Kindly refer the Annexure for your terms of employment.</strong>
+                            <br/>
+                            <br/>
+                            Please keep the following documents ready to upload.
+                            <div class="row">
+                                <br/>
+                                <div class="col-1"></div>
+                                <div class="col-11">
+                                    1. Passport size Photograph-Soft Copy
+                                    <br/>
+                                    2. Aadhar Card
+                                    <br/>
+                                    3. Pan Card
+                                    <br/>
+                                    4. Educational / Professional qualifications and Experience certificates
+                                    <br/>
+                                    5. Payslip/Salary certificate - Latest
+                                </div>
+                            </div>
+
+                            <div style="padding: 16px 8px 16px 8px;">
+                                <a t-att-href="object.website_url"
+                                   style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">
+                                    Accept Offer
+                                </a>
+                            </div>
+
+                            <br/>
+                            We are quite excited to on board you and work with you towards building your career and
+                            better of our organization.
+                            <br/>
+                            We are happy to welcome you to our Futurenet family.
+                            <br/>
+                            <br/>
+                            <br/>
+                            Thanks and Regards,
+                            <br/>
+                            Hr Manager
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+    <record id="email_template_employee_internship_request_document" model="mail.template">
+        <field name="name">Employee Internship</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="subject">Internship - Futurenet Technologies</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="900"
+                   style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            <strong>Dear <t t-out="object.partner_name"/>,
+                                <br/>
+                                <br/>
+                                <p>Greetings from Futurenet Technologies!!</p>
+                            </strong>
+                            <br/>
+
+                            In accordance to our recent discussion this letter will confirm the following terms and
+                            conditions with Futurenet Technologies (India) Private Limited.
+
+                            <br/>
+                            We offer you the position of “Internship” for Trainee Engineer with stipend of <strong>Rs.<span t-esc="'{:,.2f}'.format(object.ctc_stripend)"/>/-.</strong>
+                            per month effective from <strong><t t-out="object.effective_date"/></strong> Upon her successful completion of Internship after
+                            Internship Period, based on evaluation he may be eligible for statutory part.
+                            <br/>
+                            The period of training may be extended at the discretion of the organization, by another period of 3 months.
+                            <br/>
+                            <br/>
+                            We are happy to welcome you to our Futurenet family.
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            Thanks and Regards,<br/><br/>
+                            <br/>
+                            L Ashok
+                            <br/>
+                            Managing Director
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+    <record id="email_template_employee_offer_letter" model="mail.template">
+        <field name="name">Employee Offer Letter</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="subject">Offer Letter - Futurenet Technologies</field>
+        <field name="email_to">{{ (object.email_from or '') }}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="800"
+                   style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            <strong>Dear<t t-out="object.partner_name"/>,
+                                <p>Greetings from Futurenet Technologies!!</p>
+                            </strong>
+                            <br/>
+                            Based on our discussion, we are pleased to offer you the position of
+                            <strong>
+                                <t t-out="object.job_id.name"/>
+                            </strong>
+                            with CTC of
+                            <strong>Rs.
+                                <t t-out="object.ctc_amount"/>
+                                /-
+                            </strong>
+                            per month.
+                            We expect you to accept this offer &amp; join us on
+                            <strong>
+                                <t t-out="object.joining_date"/>
+                            </strong>
+                            . Kindly acknowledge the same.
+                            <br/>
+                            The Following Documents (Original + Photocopies) should be submitted on the Date of Joining.
+                            Original Documents will be given back.
+                            <br></br>
+
+                            1. Passport size Photograph-Soft
+                            <br/>
+                            2. Original and Copies of Educational (10,12 &amp; UG/PG/Diploma) / Professional
+                            qualifications and Experience certificate
+                            <br/>
+                            3. Relieving letter from the Employer
+                            <br/>
+                            4. Salary Proof (Previous Company Payslips)
+                            <br/>
+                            5. Copy and original of Aadhar &amp; PAN
+
+                            <br/>
+                            <br/>
+                            We are happy to welcome you to our Futurenet family.
+                            <br/>
+                            <br/>
+                            <br/>
+                            Thanks and Regards,
+                            <br/>
+                            Hr Manager
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+    <record id="email_template_employee_internship_letter" model="mail.template">
+        <field name="name">Employee Offer Letter</field>
+        <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+        <field name="subject">Internship Letter - Futurenet Technologies</field>
+<!--        <field name="email_to">{{ (not object.partner_id and object.email_from or '') }}</field>-->
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="800"
+                   style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            <strong>Dear<t t-out="object.partner_name"/>,
+                                <p>Greetings from Futurenet Technologies!!</p>
+                            </strong>
+                            <br/>
+                            Based on our discussion, we are pleased to offer you the position of
+                            <strong>
+                                <t t-out="object.job_id.name"/>
+                            </strong>
+                            with CTC of
+                            <strong>Rs.
+                                <t t-out="object.ctc_amount"/>
+                                /-
+                            </strong>
+                            per month.
+                            We expect you to accept this internship offer &amp; join us on
+                            <strong>
+                                <t t-out="object.joining_date"/>
+                            </strong>
+                            . Kindly acknowledge the same.
+                            <br/>
+                            The Following Documents (Original + Photocopies) should be submitted on the Date of Joining.
+                            Original Documents will be given back.
+                            <br></br>
+
+                            1. Passport size Photograph-Soft
+                            <br/>
+                            2. Original and Copies of Educational (10,12 &amp; UG/PG/Diploma) / Professional
+                            qualifications and Experience certificate
+                            <br/>
+                            3. Relieving letter from the Employer
+                            <br/>
+                            4. Salary Proof (Previous Company Payslips)
+                            <br/>
+                            5. Copy and original of Aadhar &amp; PAN
+
+                            <br/>
+                            <br/>
+                            We are happy to welcome you to our Futurenet family.
+                            <br/>
+                            <br/>
+                            <br/>
+                            Thanks and Regards,
+                            <br/>
+                            Hr Manager
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+    <record id="email_template_request_citrix_login" model="mail.template">
+        <field name="name">Employee Citrix Login</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="subject">Create Citrix Login</field>
+        <field name="auto_delete" eval="False"/>
+        <!--        <field name="email_to">{{ (not object.partner_id and object.email_from or '') }}</field>-->
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                   style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            Dear Rims Team,
+                            <br/>
+                            <br/>
+                            Kindly create a Citrix login for the newly joined <t t-out="object.employee_categ"/> <strong><t t-out="object.name"/></strong>
+                            for the department of <strong><t t-out="object.department_id.name"/></strong>. For any clarification kindly contact us.
+
+                            <br/>
+                            <br/>
+                            Regards,
+                            <br/>
+                            Hr
+                            <br/>
+                            9566003012
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+    <record id="email_template_request_odoo_login" model="mail.template">
+        <field name="name">Employee Odoo Login</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="subject">Create Odoo Login</field>
+        <field name="auto_delete" eval="False"/>
+        <!--        <field name="email_to">{{ (not object.partner_id and object.email_from or '') }}</field>-->
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                   style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            Dear Odoo Team,
+                            <br/>
+                            <br/>
+                            Kindly create an Odoo login for the newly joined <t t-out="object.employee_categ"/> <strong><t t-out="object.name"/></strong>
+                            for the department of <strong><t t-out="object.department_id.name"/></strong>. For any clarification kindly contact us.
+
+                            <br/>
+                            <br/>
+                            Regards,
+                            <br/>
+                            Hr
+                            <br/>
+                            9566003012
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+
+    <record id="email_template_employee_welcome_email" model="mail.template">
+        <field name="name">Employee Welcome Email</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="subject">Organizational announcement!!!</field>
+        <field name="auto_delete" eval="False"/>
+        <!--        <field name="email_to">{{ (not object.partner_id and object.email_from or '') }}</field>-->
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="800"
+                   style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            Hello,
+                            <br/>
+                            <br/>
+                            We take immense pleasure in announcing the appointment of Mr/Ms.
+                            <strong>
+                                <t t-out="object.name"/>
+                            </strong>
+                            as
+                            <strong>
+                                <t t-out="object.job_title"/>
+                            </strong>
+                            under
+                            <strong>
+                                <t t-out="object.department_id.name"/>
+                            </strong>
+                            .
+                            <br/>
+                            He has completed
+                            <strong>
+                                <t t-out="object.certificate"/>
+                            </strong>
+                            of
+                            <strong>
+                                <t t-out="object.study_field"/>
+                            </strong>
+                            .
+                            <t t-if="object.experience_previous_company">He has an overall experience of
+                                <strong>
+                                    <t t-out="object.experience_previous_company"/>
+                                    year
+                                </strong>
+                                as a
+                                <strong>
+                                    <t t-out="object.previous_organization_designation"/>
+                                </strong>
+                            </t>
+                            <br/>
+                            We take this opportunity to welcome Mr/Ms.
+                            <strong>
+                                <t t-out="object.name"/>
+                            </strong>
+                            to our Futurenet family and wish him all the best in his new assignment with us.
+                            <br/>
+                            <br/>
+                            <br/>
+                            Thanks and regards,
+                            <br/>
+                            Hr Manager
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+    <record id="email_template_create_accounts_alert" model="mail.template">
+        <field name="name">Accounts PF alert</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="subject">Create PEF Number</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="590"
+                   style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            Dear Accounts Team,
+                            <br/>
+                            <br/>
+                            Kindly create a PF login for the newly joined <t t-out="object.employee_categ"/> <strong><t t-out="object.name"/></strong>
+                            for the department of <strong><t t-out="object.department_id.name"/></strong>. For any clarification kindly contact us.
+
+                            <br/>
+                            <br/>
+                            Regards,
+                            <br/>
+                            Hr
+                            <br/>
+                            9566003012
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+
+<!--    <record id="offer_letter_mail_template" model="mail.template">-->
+<!--            <field name="name">offer_letter_mail_template</field>-->
+<!--            <field name="model_id" ref="hr.model_hr_employee"/>-->
+<!--            <field name="subject">Offer Letter</field>-->
+<!--&lt;!&ndash;            <field name="email_to">{{ (not object.partner_id and object.email_from or '') }}</field>&ndash;&gt;-->
+<!--            <field name="auto_delete" eval="False"/>-->
+<!--            <field name="body_html" type="xml">-->
+<!--                <div>-->
+
+<!--                    <body>-->
+<!--                        <p>Dear Candidate,-->
+<!--                        </p>-->
+<!--                        <p>-->
+<!--                            Greetings from Futurenet Technologies!!!-->
+<!--                        </p>-->
+<!--                        <br></br>-->
+<!--                        <p>-->
+<!--&lt;!&ndash;                            Based on our discussion, we are pleased to offer you the position "<b><t t-out="object.job_id.name"></t></b>" and your CTC  will be Rs. "<b><t t-out="object.company_ctc"></t></b>"- per month. We expect you to accept this offer and join on&ndash;&gt;-->
+<!--&lt;!&ndash;                            "<b><t t-out="object.joining_date_proposed"></t></b>". Kindly acknowledge the same by today.&ndash;&gt;-->
+
+<!--                           <p> The Following Documents should be submitted on the Date of Joining &amp; kindly send the soft copies of the below documents in the acknowledgment mail.</p>-->
+
+
+
+<!--                          <p>  1.Passport size Photograph-Soft Copy-->
+<!--                              <br></br>-->
+<!--                            2.Original and Copies of Educational / Professional qualifications and Experience certificates-->
+<!--                              <br></br>-->
+<!--                            3.Copy and original of Aadhar &amp; PAN-->
+<!--                              <br></br>-->
+<!--                            4.Relieving Letter of Previous Organization &amp; last 3 Months payslip.-->
+<!--                              <br></br>-->
+<!--                            We are happy to welcome you to our Futurenet family.</p>-->
+
+
+<!--                        </p>-->
+<!--                    </body>-->
+<!--                </div>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="offer_letter_extra_mail_template" model="mail.template">
+            <field name="name">Employee Offer Accept Letter</field>
+            <field name="model_id" ref="hr_recruitment.model_hr_applicant"/>
+            <field name="subject">Offer Letter With Additional Info</field>
+<!--            <field name="email_to">{{ (not object.partner_id and object.email_from or '') }}</field>-->
+           <field name="email_to">{{ (object.email_from or '') }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                    <body>
+                        <p><strong>To</strong>
+                        </p>
+                        <p>
+                            The HR Manager
+                            <br></br>
+                            Futurenet Technologies (India) Pvt.Ltd
+                            <br></br>
+                            No 37, 1st Street, Singaravelan Nagar, Maduravoyal,
+                            <br></br>
+                            Chennai-600095                        </p>
+                        <br></br>
+                        <p>
+                           I, <b><t t-out="object.name"></t></b>, hereby declare and confirm that it is not mandatory for me
+                            to contribute and as such do not wish to join the Employees Provident Fund
+                            scheme. </p>
+                          <p>
+                            I wish.to inform youaction_hr that I was not a member of EPF Scheme anywhere before
+                            joining this establishment. I am aware of the consequences in giving this
+                              declaration.</p>
+
+
+                          <p> Name:
+                              <br></br>
+                              Signature:
+                              <br></br>
+                              Date:
+                              <br></br>
+                              Place:
+                           </p>
+
+
+                    </body>
+            </field>
+        </record>
+
+</odoo>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="sale_subscription_salesman_user" model="ir.rule">
+			<field name="name">See only own Subscriptions</field>
+			<field name="model_id" ref="sale_subscription.model_sale_subscription"/>
+			<field name="domain_force">[('user_id', '=', user.id)]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+			<field name="perm_read" eval="True"/>
+			<field name="perm_write" eval="False"/>
+			<field name="perm_create" eval="False"/>
+			<field name="perm_unlink" eval="False"/>
+		</record>
+
+		<record id="sale_subscription_administrator" model="ir.rule">
+			<field name="name">See All Subscriptions</field>
+			<field name="model_id" ref="sale_subscription.model_sale_subscription"/>
+			<field name="domain_force">[(1, '=', 1)]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
+			<field name="perm_read" eval="True"/>
+			<field name="perm_write" eval="False"/>
+			<field name="perm_create" eval="False"/>
+			<field name="perm_unlink" eval="False"/>
+		</record>
+
+		<function name = "write" model = "ir.model.data">
+		   <function name = "search" model = "ir.model.data">
+			   <value eval = "[('module', '=', 'sale'), ('name', '=', 'sale_order_personal_rule')]"/>
+		   </function>
+		   <value eval ="{'noupdate': False}"/>
+		</function>
+		<record id="sale.sale_order_personal_rule" model="ir.rule">
+		   <field name="name">Personal Orders</field>
+		   <field ref="sale.model_sale_order" name="model_id"/>
+		   <field name="domain_force">['|','|', ('user_id', '=', user.id), ('user_id', '=', False), ('user_id.incharge_id', '=', user.id)]</field>
+		   <field name="groups" eval="[(4, ref ('sales_team.group_sale_salesman'))]"/>
+		</record>
+		<function name="write" model="ir.model.data">
+		   <function name="search" model="ir.model.data">
+			   <value eval="[('module', '=', 'sale'), ('name', '=', 'sale_order_personal_rule')]"/>
+		   </function>
+		   <value eval="{'noupdate':True}"/>
+		</function>
+
+		<function name="write" model="ir.model.data">
+		   <function name="search" model="ir.model.data">
+			   <value eval = "[('module', '=', 'sale'), ('name', '=', 'sale_order_line_personal_rule')]"/>
+		   </function>
+		   <value eval ="{'noupdate': False}"/>
+		</function>
+		<record id="sale.sale_order_line_personal_rule" model="ir.rule">
+			<field name="name">Personal Order Lines</field>
+			<field ref="sale.model_sale_order_line" name="model_id"/>
+			<field name="domain_force">['|','|',('salesman_id','=',user.id),('salesman_id','=',False),('salesman_id.incharge_id','=',user.id)]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+		</record>
+		<function name="write" model="ir.model.data">
+		   <function name="search" model="ir.model.data">
+			   <value eval="[('module', '=', 'sale'), ('name', '=', 'sale_order_line_personal_rule')]"/>
+		   </function>
+		   <value eval="{'noupdate':True}"/>
+		</function>
+
+		<function name = "write" model = "ir.model.data">
+		   <function name = "search" model = "ir.model.data">
+			   <value eval = "[('module', '=', 'crm'), ('name', '=', 'crm_rule_personal_lead')]"/>
+		   </function>
+		   <value eval ="{'noupdate': False}"/>
+		</function>
+		<record id="crm.crm_rule_personal_lead" model="ir.rule">
+			<field name="name">Personal Leads</field>
+			<field ref="crm.model_crm_lead" name="model_id"/>
+			<field name="domain_force">['|','|',('user_id','=',user.id),('user_id','=',False),('user_id.incharge_id', '=', user.id)]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+		</record>
+		<function name="write" model="ir.model.data">
+		   <function name="search" model="ir.model.data">
+			   <value eval="[('module', '=', 'crm'), ('name', '=', 'crm_rule_personal_lead')]"/>
+		   </function>
+		   <value eval="{'noupdate':True}"/>
+		</function>
+
+		<function name = "write" model = "ir.model.data">
+		   <function name = "search" model = "ir.model.data">
+			   <value eval = "[('module', '=', 'sale'), ('name', '=', 'account_invoice_rule_see_personal')]"/>
+		   </function>
+		   <value eval ="{'noupdate': False}"/>
+		</function>
+		<record id="sale.account_invoice_rule_see_personal" model="ir.rule">
+			<field name="name">Personal Invoices</field>
+			<field name="model_id" ref="account.model_account_move"/>
+			<field name="domain_force">[('move_type', 'in', ('out_invoice', 'out_refund')), '|','|', ('invoice_user_id', '=', user.id), ('invoice_user_id', '=', False), ('invoice_user_id.incharge_id', '=', user.id)]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+		</record>
+		<function name="write" model="ir.model.data">
+		   <function name="search" model="ir.model.data">
+			   <value eval="[('module', '=', 'sale'), ('name', '=', 'account_invoice_rule_see_personal')]"/>
+		   </function>
+		   <value eval="{'noupdate':True}"/>
+		</function>
+
+		<function name = "write" model = "ir.model.data">
+		   <function name = "search" model = "ir.model.data">
+			   <value eval = "[('module', '=', 'sale'), ('name', '=', 'account_invoice_line_rule_see_personal')]"/>
+		   </function>
+		   <value eval ="{'noupdate': False}"/>
+		</function>
+		<record id="sale.account_invoice_line_rule_see_personal" model="ir.rule">
+			<field name="name">Personal Invoice Lines</field>
+			<field name="model_id" ref="account.model_account_move_line"/>
+			<field name="domain_force">[('move_id.move_type', 'in', ('out_invoice', 'out_refund')), '|','|',('move_id.invoice_user_id', '=', user.id), ('move_id.invoice_user_id', '=', False), ('move_id.invoice_user_id.incharge_id', '=', user.id)]</field>
+			<field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+		</record>
+		<function name="write" model="ir.model.data">
+		   <function name="search" model="ir.model.data">
+			   <value eval="[('module', '=', 'sale'), ('name', '=', 'account_invoice_line_rule_see_personal')]"/>
+		   </function>
+		   <value eval="{'noupdate':True}"/>
+		</function>
+
+		<record id="group_sale_direct_creation" model="res.groups">
+            <field name="name">Direct Sale Creation</field>
+        </record>
+
+	</data>
+</odoo>

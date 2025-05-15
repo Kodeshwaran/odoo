@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+
+        <record id="group_read_only" model="res.groups">
+            <field name="name">Read Only Access</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Action for generating the report -->
+    <record id="crm_excel_report_action" model="ir.actions.server">
+        <field name="name">Download Daily CRM Report</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_generate_daily_report()</field>
+    </record>
+
+    <!-- Menu Item under CRM -> Reporting -->
+    <menuitem id="crm_excel_report_menu"
+              name="Daily CRM Excel Report"
+              parent="crm.crm_menu_report"
+              action="crm_excel_report_action"
+              sequence="10"/>
+
+    <record id="crm_monthly_report_action" model="ir.actions.server">
+        <field name="name">Download Monthly CRM Report</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_generate_monthly_report()</field>
+    </record>
+
+    <!-- Menu Item under CRM -> Reporting -->
+    <menuitem id="crm_monthly_report_menu"
+              name="Monthly CRM Excel Report"
+              parent="crm.crm_menu_report"
+              action="crm_monthly_report_action"
+              sequence="20"/>
+
+
+</odoo>

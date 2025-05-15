@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record id="sale_order_apporval_rule_form_view" model="ir.ui.view">
+            <field name="name">sale.order.approval.rule.form</field>
+            <field name="model">sale.order.approval.rule</field>
+            <field name="arch" type="xml">
+                <form string="Approval Rule">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                        </group>
+                        <group string='Approval Rules'>
+                            <field name="approval_rule_ids" nolabel='1'>
+                                <tree editable='bottom'>
+                                    <field name='sequence' />
+                                    <field name='approval_role' />
+                                    <field name='approval_category' />
+                                    <field name='quotation_lower_limit' />
+                                    <field name='quotation_upper_limit' />
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

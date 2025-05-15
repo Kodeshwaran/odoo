@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="crm_stage_form_inherit" model="ir.ui.view">
+        <field name="name">crm.stage.form.inherit</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <field name="fold" position="after">
+                <field name="sequence"/>
+            </field>
+        </field>
+    </record>
+
+<record model="ir.ui.view" id="crm_case_form_view_oppo_in">
+<field name="name">Opportunities</field>
+<field name="model">crm.lead</field>
+<field name="priority">20</field>
+<field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+<field name="arch" type="xml">
+    <xpath expr="//field[@name='stage_id']"  position="replace">
+    <field name="stage_id" widget="statusbar" clickable="True"
+        options="{'fold_field': 'fold'}"
+        domain="['|', ('team_id', '=', team_id), ('team_id', '=', False)]"
+        attrs="{'invisible': ['|',('active', '=', False), ('stages', '=', 'lost')]}"/>
+  </xpath>
+  <xpath expr="//field[@name='partner_id']"  position="replace">
+          <field name="partner_id" domain="[('is_company','=',True)]"/>
+    </xpath>
+    <xpath expr="//field[@name='date_action']"  position="replace">
+      <field name="date_action" attrs="{'invisible': [('next_activity_id', '=', False)]}" placeholder="Choose a date..."/>
+    </xpath>
+  <button name="action_set_won" position="before">
+    <button name="action_send_mail" string="Send Mail" type="object" class="oe_highlight o_wow" attrs="{'invisible': ['|','|','|',('probability', '=', 100), ('stages', '=', 'lost'), ('stages', '=', 'drop'), ('active','=',False)]}"/>      
+    <button name="action_set_losts" string="Lost" type="object" class="oe_highlight o_wow" attrs="{'invisible': ['|','|','|',('probability', '=', 100), ('stages', '=', 'lost'), ('stages', '=', 'drop'), ('active','=',False)]}"/>
+    <button name="action_set_hold" string="Hold" type="object" class="oe_highlight o_wow" attrs="{'invisible': ['|','|','|',('probability', '=', 100), ('stages', '=', 'lost'), ('stages', '=', 'drop'), ('active','=',False)]}"/>
+  </button>
+               <xpath expr="//header/button[@name='action_set_won']" position="replace">
+                        <button name="action_set_won" string="Approve"
+                                 type="object" class="oe_highlight o_wow"
+                                 attrs="{'invisible': ['|','|','|', ('active','=',False), ('probability', '=', 100),('state','=',False), ('stages', '=', 'lost')]}"/>
+               </xpath>
+               <xpath expr="//button[@name='action_schedule_meeting']" position="replace">
+                 <button class="oe_stat_button" type="object"
+                     context="{'partner_id': partner_id}"
+                     name="action_schedule_meeting" icon="fa-calendar">
+                     <div class="o_stat_info">
+                         <field name="meeting_count" class="o_stat_value"/>
+                         <span class="o_stat_text" attrs="{'invisible': [('meeting_count', '&lt;', 2)]}"> Meetings</span>
+                         <span class="o_stat_text" attrs="{'invisible': [('meeting_count', '&gt;', 1)]}"> Meeting</span>
+                     </div>
+                 </button>
+               </xpath>
+               <xpath expr="//header/button[@name='%(crm.crm_lead_lost_action)d']" position="replace">
+                        <button name="%(crm.crm_lead_lost_action)d" string="Drop"
+                                type="action" class="oe_highlight"
+                                context="{'default_lead_id': active_id}" attrs="{'invisible': ['|','|','|',('probability', '=', 100), ('stages', '=', 'lost'), ('stages', '=', 'drop'), ('active','=',False)]}" groups='base.group_team_managers'/>
+
+               </xpath>
+               <!-- <sheet><div class="label label-danger pull-right" domain="[('states', '=', 'drop')]">Drop</div></sheet>
+               <sheet><div class="label label-danger pull-right" domain="[('states', '=', 'drop')]">W</div></sheet> -->
+    <xpath expr="//header/button[@name='%(crm.crm_activity_log_action)d']" position="replace">
+                 <button name="%(crm.crm_activity_log_action)d" string="Log Activity" type="action" class="btn-link"
+                   attrs="{'invisible': ['|',('active', '=', False),('stages', '=', 'lost')]}"/>
+                 </xpath>
+
+                   <div class="oe_button_box" name="button_box">
+               <div class="label label-danger pull-right" style="margin-top:100px;margin-right:10px" attrs="{'invisible': ['|','|', ('stages','!=','hold'), ('stages', '=', 'lost')]}">Hold</div>
+               <div class="label label-danger pull-right" style="margin-top:100px;margin-right:10px" attrs="{'invisible': ['|','|', ('stages','=','hold'), ('stages', '!=', 'lost')]}">Lost</div>
+
+             </div>
+               <xpath expr="//notebook/page[last()]"  position="after">
+                    <page string="Manager Notes">
+                                   <group>
+                                    <field name='managernotes'  attrs="{'invisible': ['|', ('active', '=', False), ('state','=',False)]}"/>
+                                    </group>
+                    </page>
+                </xpath>
+</field>
+</record>
+
+
+ <record model="ir.ui.view" id="crm_omega_stage_inherit">
+ <field name="name">Regrets</field>
+  <field name="model">crm.lead</field>
+   <field name="priority">20</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[last()]" position="after">
+                <page string="Regrets">		
+					<group>			
+                 <field name="regrets"/>
+					</group>
+                 </page>
+                    </xpath>
+        </field>
+          </record>
+ <record model="ir.ui.view" id="crm_omega_inherit_stage">
+ <field name="name">Regrets</field>
+  <field name="model">crm.lead</field>
+   <field name="priority">20</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+            <field name="arch" type="xml">
+             <xpath expr="//field[@name='phone']"  position="replace">
+                                <field name="phone" widget="phone"/>
+                 </xpath>
+
+        </field>
+          </record>
+    <record model="ir.ui.view" id="crm_leads_omega_inheritss">
+      <field name="name">crm lead</field>
+      <field name="model">crm.lead</field>
+      <field name="context">{"readonly_by_pass": ["contact"]}</field>
+      <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+      <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="before">
+                <field name="state" invisible="1" />
+                <field name="sel" invisible="1" />
+                 <field name="child_ids" mode="kanban"  context="{'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang,}">
+                                <kanban>
+                                    <field name="color"/>
+                                    <field name="name"/>
+                                    <field name="title"/>
+                                    <field name="type"/>
+                                    <field name="email"/>
+                                    <field name="parent_id"/>
+                                    <field name="is_company"/>
+                                    <field name="function"/>
+                                    <field name="phone"/>
+                                    <field name="street"/>
+                                    <field name="street2"/>
+                                    <field name="zip"/>
+                                    <field name="city"/>
+                                    <field name="country_id"/>
+                                    <field name="mobile"/>
+                                    <field name="fax"/>
+                                    <field name="state_id"/>
+                                    <field name="image"/>
+                                    <field name="lang"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                            <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                                <a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+                                                <div class="o_kanban_image">
+                                                    <img t-if="record.image.raw_value" t-att-src="'data:image/png;base64,'+record.image.raw_value"/>
+                                                    <t t-if="!record.image.raw_value">
+                                                        <img t-if="record.type.raw_value === 'delivery'" t-att-src='_s + "/base/static/src/img/truck.png"'/>
+                                                        <img t-if="record.type.raw_value === 'invoice'" t-att-src='_s + "/base/static/src/img/money.png"'/>
+                                                        <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
+                                                            <img t-if="record.is_company.raw_value === true" t-att-src='_s + "/base/static/src/img/company_image.png"'/>
+                                                            <img t-if="record.is_company.raw_value === false" t-att-src='_s + "/base/static/src/img/avatar.png"'/>
+                                                        </t>
+                                                    </t>
+                                                </div>
+                                                <div class="oe_kanban_details">
+                                                    <field name="name"/>
+                                                    <div t-if="record.function.raw_value"><field name="function"/></div>
+                                                    <div t-if="record.email.raw_value"><field name="email"/></div>
+                                                    <div t-if="record.type.raw_value != 'contact'">
+                                                        <div>
+                                                            <field name="zip"/>
+                                                            <field name="city"/>
+                                                        </div>
+                                                        <field t-if="record.state_id.raw_value" name="state_id"/>
+                                                        <field name="country_id"/>
+                                                    </div>
+                                                    <div t-if="record.phone.raw_value">Phone: <field name="phone"/></div>
+                                                    <div t-if="record.mobile.raw_value">Mobile: <field name="mobile"/></div>
+                                                    <div t-if="record.fax.raw_value">Fax: <field name="fax"/></div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form string="Contact / Address">
+                                    <sheet>
+
+                                        <group>
+
+                                            <group>
+                                                <field name="name" string="Contact Name" />
+                                                <field name="title" placeholder="e.g. Mr." />
+                                                <field name="function" placeholder="e.g. Sales Director" />
+                                                <field name="email"/>
+                                                <field name="phone" widget="phone"/>
+                                                <field name="mobile" widget="phone"/>
+                                                <field name="comment" placeholder="internal note..."/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                </field>
+
+                               <field name="contact" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='team_id']" position="after">
+                        <field name="ded"  invisible="1"/>
+                        <field name="stage_ids1"  invisible="1"/>
+                       <field name="manager_decision"    attrs="{'readonly' : [('stage_ids1','>',3)],'invisible': [('ded','=',False)]}"   widget="radio"  options="{'horizontal': true}"/>
+
+                </xpath>
+        <xpath expr="//field[@name='team_id']" position="before">
+             <field name="stages" invisible="1"/>
+          <field name="vam"/>
+        </xpath>
+
+                </field>
+          </record>
+
+          <record model="ir.ui.view" id="crm_case_kanban_view_leads_inherits">
+            <field name="name">CRM - Leads Kanban Inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <data>
+                    <kanban default_group_by="stage_id" position="attributes" >
+                        <attribute name="quick_create">false</attribute>
+                    </kanban>
+                </data>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_calendar_customer_work_calendar">
+            <field name="name">Service Works Calendar</field>
+            <field name="model">crm.lead</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <calendar string="Service Works" date_start="date_order" color="name">
+                    <field name="partner_id"/>
+                    <field name="next_activity_id"/>
+                    <field name="title_action"/>
+                    <field name="date_deadline"/>
+                    <field name="probability"/>
+                </calendar>
+            </field>
+        </record>
+
+<!--
+        <record id="view_create_opportunity_simplified_partner" model="ir.ui.view">
+            <field name="name">crm.lead.form.simple</field>
+            <field name="model">crm.lead</field>
+            <field name="priority">1000</field>
+            <field name="inherit_id" ref="crm.view_create_opportunity_simplified"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="replace">
+
+                </xpath>
+            </field>
+        </record>
+-->
+
+
+        <record model="ir.ui.view" id="filer_crm_lead">
+        <field name="name">Opportunities</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+          <xpath expr="//search" position="inside">
+          <filter string="Archived" domain="[('active', '=', False)]"/>
+        </xpath>
+      </field>
+    </record>
+</odoo>

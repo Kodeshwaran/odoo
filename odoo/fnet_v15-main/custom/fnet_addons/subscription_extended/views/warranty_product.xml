@@ -1,0 +1,141 @@
+<odoo>
+    <data>
+
+        <record id="product_normal_form_view_extended" model="ir.ui.view">
+            <field name="name">product_normal_view_form_extended</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="warranty_product"/>
+                    <label for="warranty_period" string="Warranty Period" attrs="{'invisible':[('warranty_product', '!=', True)]}"/>
+                    <div class="o_row" attrs="{'invisible':[('warranty_product', '!=', True)]}">
+                        <field name="warranty_period"/><span>months</span>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_move_form_view_inherit" model="ir.ui.view">
+            <field name="name">account_move_view_form_inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_create_warranty" string="Create Warranty/License"
+                            type="object" class="oe_highlight" groups="account.group_account_manager"
+                            attrs="{'invisible': ['|','|','|',('state', 'in', ['draft','cancel']),('move_type', '!=', 'out_invoice'),
+                            ('warranty_created', '=', True),('warranty_product', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='tpt_name_id']" position="after">
+                    <field name="warranty_created" attrs="{'invisible': [('warranty_product', '=', False)]}"/>
+                    <field name="warranty_product" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']//field[@name='price_subtotal']" position="after">
+                    <field name="warranty_product" invisible="1"/>
+                </xpath>
+                <xpath expr="//page[@name='other_info']" position="after">
+                    <page name="warranty_lines" string="Warranty">
+                        <button name="action_create_warranty" string="Create Warranty/License"
+                            type="object" class="oe_highlight" />
+                        <br/><br/>
+                        <field name="warranty_lines">
+                            <tree editable="bottom" create="false">
+                                <field name="renewal_type"/>
+                                <field name="product_id"/>
+                                <field name="serial_number"/>
+                                <field name="start_date"/>
+                                <field name="period"/>
+                                <field name="end_date"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="warranty_lines_tree_view" model="ir.ui.view">
+            <field name="name">warranty_lines_view_tree</field>
+            <field name="model">warranty.lines</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="move_id" invisible="1"/>
+                    <field name="product_id"/>
+                    <field name="start_date"/>
+                    <field name="period"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="warranty_lines_tree_view_menu" model="ir.ui.view">
+            <field name="name">warranty_lines_view_menu_tree</field>
+            <field name="model">warranty.lines</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" create="false">
+                    <field name="move_id" string="Invoice" invisible="1"/>
+                    <field name="invoice_id"/>
+                    <field name="invoice_date"/>
+                    <field name="partner_id"/>
+                    <field name="renewal_type"/>
+                    <field name="product_id"/>
+                    <field name="serial_number"/>
+                    <field name="start_date"/>
+                    <field name="period"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_warranty_lines" model="ir.actions.act_window">
+            <field name="name">Warranty Invoices</field>
+            <field name="res_model">warranty.lines</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'create': False,'edit': False,'delete': False}</field>
+        </record>
+
+        <menuitem id="menu_warranty_lines"
+                  name="Renewals"
+                  action="action_warranty_lines"
+                  parent="account.menu_finance_receivables"
+                  sequence="200"/>
+
+        <record id="invoice_renewal_type_form_view_menu" model="ir.ui.view">
+            <field name="name">invoice_renewal_type_view_form</field>
+            <field name="model">invoice.renewal.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="invoice_renewal_type_tree_view_menu" model="ir.ui.view">
+            <field name="name">invoice_renewal_type_view_tree</field>
+            <field name="model">invoice.renewal.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_invoice_renewal_type" model="ir.actions.act_window">
+            <field name="name">Renewal Type</field>
+            <field name="res_model">invoice.renewal.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_invoice_renewal_type"
+                  name="Renewals"
+                  action="action_invoice_renewal_type"
+                  parent="account.menu_finance_configuration"
+                  sequence="200"/>
+
+
+    </data>
+</odoo>

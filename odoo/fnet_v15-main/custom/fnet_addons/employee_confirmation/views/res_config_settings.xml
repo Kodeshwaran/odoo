@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_config_settings_email_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.base.setup</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="0"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Probation Review" string="Probation Review Settings"
+                     data-key="hr" groups="hr.group_hr_manager">
+                    <h2 groups="hr.group_hr_manager">Probation Reminder Mail Settings</h2>
+                    <div groups="hr.group_hr_manager" class="row mt16 o_settings_container" name="probation_email_configure">
+                        <div class="col-2 o_setting_box" id="probation_mail">
+                            <label for="probation_hr_mail"/>
+                        </div>
+                        <div class="col-3 o_setting_box">
+                            <field name="probation_hr_mail"/>
+                        </div>
+                    </div>
+                    <h2 groups="hr.group_hr_manager">Birthdays and Wedding Mail Settings</h2>
+                    <div groups="hr.group_hr_manager" class="row mt16 o_settings_container" name="employee_wishes_email_configure">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="birthday_wedding_wishes"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <span groups="hr_attendance.group_hr_attendance_manager"/>
+                                <label for="birthday_wedding_wishes" class="o_form_label">Wishes for Employees</label>
+                                <div class="text-muted">
+                                    Birthday and Wedding Anniversary wishes for employee through mail
+                                </div>
+                                <div class="mt16" attrs="{'invisible': [('birthday_wedding_wishes', '=', False)]}">
+                                    <div class="mt16 row">
+                                        <label for="wishes_mail_cc" class="col-5 col-lg-5 o_light_label"/>
+                                        <field name="wishes_mail_cc" class="col-lg-5 p-0"/>
+                                    </div>
+                                </div>
+                                <div class="mt16" attrs="{'invisible': [('birthday_wedding_wishes', '=', False)],'required': [('birthday_wedding_wishes', '=', True)]}">
+                                    <div class="mt16 row">
+                                        <label for="birthday_message" class="col-5 col-lg-5 o_light_label"/>
+                                        <field name="birthday_message" class="col-lg-5 p-0" attrs="{'required': [('birthday_wedding_wishes', '=', True)]}"/>
+                                    </div>
+                                </div>
+                                <div class="mt16" attrs="{'invisible': [('birthday_wedding_wishes', '=', False)]}">
+                                    <div class="mt16 row">
+                                        <label for="birthday_image" class="col-5 col-lg-5 o_light_label"/>
+                                        <field name="birthday_image" class="col-lg-5 p-0" filename="birthday_filename"/>
+                                        <field name="birthday_filename" class="col-lg-5 p-0" invisible="1"/>
+                                    </div>
+                                </div>
+                                <div class="mt16" attrs="{'invisible': [('birthday_wedding_wishes', '=', False)],'required': [('birthday_wedding_wishes', '=', True)]}">
+                                    <div class="mt16 row">
+                                        <label for="wedding_message" class="col-5 col-lg-5 o_light_label"/>
+                                        <field name="wedding_message" class="col-lg-5 p-0" attrs="{'required': [('birthday_wedding_wishes', '=', True)]}"/>
+                                    </div>
+                                </div>
+                                <div class="mt16" attrs="{'invisible': [('birthday_wedding_wishes', '=', False)]}">
+                                    <div class="mt16 row">
+                                        <label for="wedding_image" class="col-5 col-lg-5 o_light_label"/>
+                                        <field name="wedding_image" class="col-lg-5 p-0" filename="wedding_filename"/>
+                                        <field name="wedding_filename" class="col-lg-5 p-0" invisible="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,112 @@
+<odoo>
+    <data>
+
+        <record id="crm_stage_form_inherited" model="ir.ui.view">
+            <field name="name">CRM Stage view form inherited</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="is_pre_sale"/>
+                    <field name="pre_sale_alert"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_lead_view_form_inh" model="ir.ui.view">
+            <field name="name">CRM - Opportnity</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('o_row_readonly')][2]" position="after">
+                    <field name="pre_sale"/>
+                    <field name="pre_sale_request_date"/>
+                                <field name="pre_sale_submit_date"/>
+                    <!--                    <field name="check_attachment"/>-->
+                    <field name="pre_sale_users" widget="many2many_tags" invisible="1"/>
+                </xpath>
+                <xpath expr="//page[@name='lead']/group/group[hasclass('mt48')]/field[@name='function']" position="after">
+                    <field name="opportunity_type" readonly="1"/>
+                </xpath>
+                <xpath expr="//page[@name='closing_date_track']" position="after">
+                    <page name="attachment_tracking" string="Technical Document Tracking">
+                        <field name="attachment_tracking_ids" readonly="1">
+                            <form>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="document_attachment" widget="many2many_binary"/>
+                                </group>
+                            </form>
+                            <tree create="false" delete="false" >
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="document_attachment" widget="many2many_binary"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            <xpath expr="//group[hasclass('mt48')]/field[@name='function']" position="before">
+                <field name="reason_for_reject"/>
+            </xpath>
+            </field>
+        </record>
+        <record id="crm_search_view_inherited" model="ir.ui.view">
+            <field name="name">CRM search view inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='unassigned']" position="after">
+                    <filter string="My Pre Sales" name="pre_sales_assigned_to_me"
+                            domain="['&amp;',('pre_sale', '=', True), ('pre_sale_users', 'ilike', uid)]" help="Opportunities that are assigned to me for pre sales"/>
+                    <filter string="Pre Sales" name="pre_sales"
+                            domain="[('pre_sale', '=', True)]" help="Opportunities that are assigned for pre sales"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_type_from_view_inherited" model="ir.ui.view">
+            <field name="name">Sale Type View form Inherited</field>
+            <field name="model">sale.type</field>
+            <field name="inherit_id" ref="mm_master.view_sale_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="pre_sale_users" widget="many2many_tags"/>
+                    <field name="email_to"/>
+                    <field name="email_cc"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="res_config_settings_view_form_inherited" model="ir.ui.view">
+            <field name="name">Res Config Settings Form Inherited</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="crm.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@data-key='crm']" position="inside">
+                    <h2>Pre Sale Mail Configuration</h2>
+                    <div class="row mt16 o_settings_container" name="pre_sale_mail_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="pre_sale_mail_options">
+                            <div class="o_row">
+                                <label for="pre_sales_mail"/><field name="pre_sales_mail" force_save="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="attachment_tracking" model="ir.ui.view">
+            <field name="name">Document Attachment Tree</field>
+            <field name="model">attachment.tracking</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="document_attachment" widget="many2many_binary"/>
+                </tree>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,191 @@
+.custom_form_view {
+    background-image: -webkit-linear-gradient(left, #09203F, #537895);
+    padding: 30px;
+}
+
+.custom_form_dashboard_view {
+    background-image: -webkit-linear-gradient(left, #09203F, #09203F);
+    padding: 30px;
+    border: 0;
+}
+
+.custom_rims_menu {
+    background-image: -webkit-linear-gradient(left, #FF512F, #DD2476);
+}
+
+.rims_app_view {
+    width: 75px;
+    height:75px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px black;
+}
+
+.rims_button_custom {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, transform 0.3s;
+}
+
+
+.rims_button_custom:hover {
+    color: black;
+}
+
+.download-text {
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.rims_app_view:hover {
+    box-shadow: 0 5px 15px black;
+}
+
+.label_format {
+font-size: x-large;
+    color: red;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}
+
+.rims_address_view {
+    font-weight: bold;
+    width:125px;
+    animation: fadeInAnimation ease 1s;
+    font-size: 15px;
+    text-align: center;
+    white-space: normal;
+    text-transform: none;
+    border: 1px solid black;
+    padding: 5px;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(.25,.25,.25,1);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 6px;
+    background-image: -webkit-linear-gradient(left, #abbaab, #ffffff);
+    color: black;
+    text-overflow: none;
+}
+
+
+.rims_box_view {
+    font-weight: bold;
+    width:125px;
+    animation: fadeInAnimation ease 1s;
+    font-size: 15px;
+    text-align: center;
+    white-space: normal;
+    text-transform: none;
+    border: 1px solid black;
+    padding: 5px;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(.25,.25,.25,1);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    background-color: white;
+    border-radius: 6px;
+    color: black;
+    text-overflow: none;
+}
+
+.rims_box_view2 {
+    font-weight: bold;
+    min-width:125px;
+    animation: fadeInAnimation ease 1s;
+    font-size: 15px;
+    text-align: left;
+    white-space: normal;
+    text-transform: none;
+    border: 1px solid black;
+    padding: 5px;
+    padding-left: 10px;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(.25,.25,.25,1);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    display: inline-block;
+}
+
+.rims_box_view3 {
+    font-weight: bold;
+    width:500px;
+    animation: fadeInAnimation ease 1s;
+    font-size: 15px;
+    font-family: Verdana;
+    text-align: left;
+    white-space: normal;
+    text-transform: none;
+    border: 1px solid black;
+    padding: 5px;
+    padding-left: 10px;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(.25,.25,.25,1);
+    box-shadow: 0 2px 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 6px;
+    background-color: white;
+    color: black;
+    overflow: hidden;
+    align-items: center;
+    display: inline-block;
+}
+
+.my-custom-module-notebook{
+  border: none;
+  flex-grow: 1;
+  border-radius: 10px;
+  flex-direction: column;
+  background-image: -webkit-linear-gradient(top, #62a193, #5e638f);
+  transition: 1s;
+
+}.rims_list_view {
+  border: none;
+  flex-grow: 1;
+  border-radius: 10px;
+  flex-direction: column;
+  background-image: -webkit-linear-gradient(top, #185a9d, #5e638f);
+  transition: 1s;
+}
+
+.rims_list_view2 {
+  border: none;
+  flex-grow: 1;
+  border-radius: 10px;
+  flex-direction: column;
+  background-image: -webkit-linear-gradient(top,  #62a193, #5e638f);
+  transition: 1s;
+}
+
+.rims_list_view3 {
+  border: none;
+  flex-grow: 1;
+  border-radius: 10px;
+  flex-direction: column;
+  background-image: -webkit-linear-gradient(bottom, #43cea2, #185a9d);
+  transition: 1s;
+}
+
+.bold-page-label label {
+  font-weight: bold;
+}
+
+.rims_list_view:hover {
+    color: black;
+    box-shadow: 0 5px 15px black;
+}
+
+.rims_page_color {
+    color:white;
+}

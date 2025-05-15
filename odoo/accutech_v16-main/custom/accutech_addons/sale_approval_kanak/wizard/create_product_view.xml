@@ -1,0 +1,38 @@
+<odoo>
+    <record id="create_product_view" model="ir.ui.view">
+        <field name="name">Create OTI</field>
+        <field name="model">create.oti</field>
+        <field name="arch" type="xml">
+            <form string="Warning">
+                <h3>Below are the OTI names that need to be created in stock before confirming the sale quotation.<br/>
+                    Click the 'Create' button to proceed.</h3>
+                <field name="order_id" invisible="1"/>
+                <br/>
+                <h5>
+                    <notebook>
+                        <page name="oti" string="OTI List">
+                            <field name="one_time_items">
+                                <tree editable="bottom" delete="false" create="false">
+                                    <field name="int_id" invisible="1"/>
+                                    <field name="sale_oti_id" invisible="1"/>
+                                    <field name="product_name" readonly="1" force_save="1"/>
+                                    <field name="description_short" readonly="1" force_save="1"/>
+                                    <field name="product_categ" required="1"/>
+                                    <field name="sale_line_id" invisible="1"/>
+                                    <field name="product_uom" required="1"/>
+                                    <!-- Display tax names -->
+                                    <field name="tax_id" widget="many2many_tags" string="Tax Name"/>
+                                    <field name="price_unit"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </h5>
+                <footer>
+                    <button string='Create' name="action_create" type="object" class="btn-primary" />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

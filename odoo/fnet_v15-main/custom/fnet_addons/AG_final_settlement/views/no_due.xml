@@ -1,0 +1,387 @@
+<odoo>
+    <data>
+
+    <!-- No Due View-->
+    <record model="ir.ui.view" id="no_due_tree_view">
+        <field name="model">no.due</field>
+        <field name="arch" type="xml">
+            <tree string="No Due Form">
+                <field name="name" string="Employee Name"/>
+                <field name="state" string="Status"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="no_due_form_view">
+        <field name="model">no.due</field>
+        <field name="arch" type="xml">
+            <form string="No Due Form">
+                <header>
+                    <button string="Submit" name="action_submit" type="object" groups="base.group_user"
+                            class="oe_highlight" states="draft"/>
+                    <button string="Validate" name="action_validate" type="object"
+                            class="oe_highlight"
+                            groups="AG_final_settlement.group_admin, AG_final_settlement.group_hr, AG_final_settlement.group_finance, AG_final_settlement.group_it_department"
+                            attrs="{'invisible': ['|', ('is_employee', '!=', False), ('state', 'not in', ['submitted'])]}"/>
+                    <button string="Refuse" name="action_refuse" type="object"
+                            class="oe_highlight"
+                            groups="AG_final_settlement.group_admin, AG_final_settlement.group_hr, AG_final_settlement.group_finance, AG_final_settlement.group_it_department"
+                            attrs="{'invisible': ['|', ('is_employee', '!=', False), ('state', 'not in', ['submitted'])]}"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,validated"
+                           nolabel="1" clickable="1"/>
+                </header>
+                <sheet>
+                    <div class="col-lg-12">
+                        <h2 class="text-center">
+                            NO DUE FORM
+                        </h2>
+                    </div>
+                    <group col="4" colspan="6">
+                        <field name="name"/>
+<!--                        <field name="hr_resign_id" invisible="1"/>-->
+                        <field name="manager"/>
+                        <field name="employeeid"/>
+                        <field name="select_department"/>
+                        <field name="date_of_resignation"/>
+                        <field name="date_join"/>
+                        <field name="is_finance" invisible="0"/>
+                        <field name="is_hr" invisible="0"/>
+                        <field name="is_finance_approved" invisible="0"/>
+                        <field name="is_hr_approved" invisible="0"/>
+                        <field name="is_admin" invisible="0"/>
+                        <field name="is_manager" invisible="0"/>
+                        <field name="is_admin_approved" invisible="0"/>
+                        <field name="is_manager_approved" invisible="0"/>
+                        <field name="is_it" invisible="0"/>
+                        <field name="settlement_id" invisible="0"/>
+                        <field name="is_it_approved" invisible="0"/>
+                        <field name="is_employee" invisible="0"/>
+                    </group>
+                    <group col="6">
+                        <group>
+                            <div>
+                                <h4 class="text-left">
+                                    DEPARTMENT
+                                </h4>
+                            </div>
+                        </group>
+                        <group>
+                            <h4>Description</h4>
+                        </group>
+                        <group>
+                            <br/>
+                            <h4>Clearance Status</h4>
+                        </group>
+                        <group>
+                            <br/>
+                            <h4>Remarks</h4>
+                        </group>
+                        <group>
+                        </group>
+                        <group>
+                            <br/>
+                            <h4>Authorised Signatory</h4>
+                        </group>
+                    </group>
+                    <group>
+                        <h5>FINANCE</h5>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="salary_adv_taken" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="salary_adv_taken_remarks"
+                                   attrs="{'readonly': [('is_finance', '=', False)]}" placeholder="Type Here"
+                                   nolabel="1"/>
+                            <br/>
+                            <field name="salary_adv_taken_signature"
+                                   attrs="{'readonly': [('is_finance', '=', False)]}" nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="travel_settlement" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="travel_settlement_remarks"
+                                   attrs="{'readonly': [('is_finance', '=', False)]}" placeholder="Type Here"
+                                   nolabel="1"/>
+                            <br/>
+                            <field name="travel_settlement_signature"
+                                   attrs="{'readonly': [('is_finance', '=', False)]}" nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="loan_amount" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="loan_amount_remarks" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="loan_amount_signature" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="income_tax_details" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="income_tax_details_remarks"
+                                   attrs="{'readonly': [('is_finance', '=', False)]}" placeholder="Type Here"
+                                   nolabel="1"/>
+                            <br/>
+                            <field name="income_tax_details_signature"
+                                   attrs="{'readonly': [('is_finance', '=', False)]}" nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="pt_deduct" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="pt_deduct_remarks" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="pt_deduct_signature" attrs="{'readonly': [('is_finance', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <h5>IT DEPARTMENT</h5>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="ad_login_details" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="ad_login_details_remarks" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="ad_login_details_signature" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="erp_login_details" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="erp_login_details_remarks" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="erp_login_details_signature" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="email_disable" attrs="{'readonly': [('is_it', '=', False)]}" widget="radio"
+                                   options="{'horizontal': true}"/>
+                            <field name="email_disable_remarks" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="email_disable_signature" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="materials_handed" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="materials_handed_remarks" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="materials_handed_signature" attrs="{'readonly': [('is_it', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <h5>MANAGER</h5>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="kt_done" attrs="{'readonly': [('is_manager', '=', False)]}" widget="radio"
+                                   options="{'horizontal': true}"/>
+                            <field name="kt_done_remarks" attrs="{'readonly': [('is_manager', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="kt_done_signature" attrs="{'readonly': [('is_manager', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="related_data" attrs="{'readonly': [('is_manager', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="related_data_remarks" attrs="{'readonly': [('is_manager', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="related_data_signature" attrs="{'readonly': [('is_manager', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="completed_tenure" attrs="{'readonly': [('is_manager', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="completed_tenure_remarks"
+                                   attrs="{'readonly': [('is_manager', '=', False)]}" placeholder="Type Here"
+                                   nolabel="1"/>
+                            <br/>
+                            <field name="completed_tenure_signature"
+                                   attrs="{'readonly': [('is_manager', '=', False)]}" nolabel="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <h5>ADMIN</h5>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="badge_and_card" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="badge_and_card_remarks" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="badge_and_card_signature" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="keys_handed_over" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="keys_handed_over_remarks" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="keys_handed_over_signature"
+                                   attrs="{'readonly': [('is_admin', '=', False)]}" nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="mobile_and_sim" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="mobile_and_sim_remarks" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="mobile_and_sim_signature" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="insurance_card" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="insurance_card_remarks" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="insurance_card_signature" attrs="{'readonly': [('is_admin', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <h5>HR</h5>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="update_records" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="update_records_remarks" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="update_records_signature" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="remove_insurance" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="remove_insurance_remarks" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="remove_insurance_signature" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="biometric_removal" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="biometric_removal_remarks" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="biometric_removal_signature" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="sim_deactivation" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="sim_deactivation_remarks" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="sim_deactivation_signature" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="remove_number_whatsapp" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="remove_number_whatsapp_remarks"
+                                   attrs="{'readonly': [('is_hr', '=', False)]}" placeholder="Type Here"
+                                   nolabel="1"/>
+                            <br/>
+                            <field name="remove_number_whatsapp_signature"
+                                   attrs="{'readonly': [('is_hr', '=', False)]}" nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="google_sheet" attrs="{'readonly': [('is_hr', '=', False)]}" widget="radio"
+                                   options="{'horizontal': true}"/>
+                            <field name="google_sheet_remarks" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="google_sheet_signature" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                        <group col="6" colspan="10">
+                            <br/>
+                            <field name="closed_contract" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   widget="radio" options="{'horizontal': true}"/>
+                            <field name="closed_contract_remarks" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   placeholder="Type Here" nolabel="1"/>
+                            <br/>
+                            <field name="closed_contract_signature" attrs="{'readonly': [('is_hr', '=', False)]}"
+                                   nolabel="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- No Due Action-->
+    <record model="ir.actions.act_window" id="no_due_creation_action">
+        <field name="name">No Due From</field>
+        <field name="res_model">no.due</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--No Due Menu-->
+    <menuitem
+            id="menu_no_due_creation"
+            name="No Due"
+            parent="hr.menu_hr_employee_payroll"
+            action="no_due_creation_action"
+            sequence="8"/>
+
+    <record model="ir.ui.view" id="no_due_validate_form_view">
+        <field name="model">no.due.validate</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="user_approval" nolabel="1" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="validate_no_due" string="Validate" type="object" class="oe_highlight"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="no_due_validate_form_action_window">
+        <field name="name">No Due Validation</field>
+        <field name="res_model">no.due.validate</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">form</field>
+    </record>
+
+    </data>
+</odoo>

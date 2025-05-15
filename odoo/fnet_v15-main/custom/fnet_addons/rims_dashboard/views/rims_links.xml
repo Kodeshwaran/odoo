@@ -1,0 +1,76 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="rims_links_view_form">
+            <field name="name">Rims Links Form View</field>
+            <field name="model">rims.links</field>
+            <field name="arch" type="xml">
+                <form string="RIMS Links">
+                    <sheet>
+                        <table style="width:100%;">
+                            <tr style="width:100%;">
+                                <td float="left">
+                                    <h1>
+                                        <field name="name" required="1"/>
+                                    </h1>
+                                </td>
+                                <td float="right">
+                                    <field name="app_icon" widget="image" options="{'size': [80, 80]}" required="1"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <group style="width:50%;">
+                            <field name="show_in_dashboard" widget="boolean_toggle"/>
+                            <field name="url" widget="url"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="rims_links_view_tree">
+            <field name="name">Rims Links Tree View</field>
+            <field name="model">rims.links</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="show_in_dashboard" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_open_rims_links">
+            <field name="name">Rims Links</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rims.links</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="menu_rims_root"
+                  name="RIMS"
+                  groups="rims_dashboard.group_rims_user"/>
+
+
+        <menuitem id="menu_rims_configuration"
+                  name="Configuration"
+                  parent="menu_rims_root"
+                  sequence="6"
+                  groups="rims_dashboard.group_rims_administrator"
+        />
+
+        <menuitem id="menu_rims_links"
+                  name="Links"
+                  action='action_open_rims_links'
+                  parent="menu_rims_configuration"
+                  sequence="1"/>
+
+        <menuitem id="menu_rims_reports"
+                  name="Reports"
+                  parent="menu_rims_root"
+                  sequence="5"
+                  groups="rims_dashboard.group_rims_administrator"
+        />
+
+    </data>
+</odoo>

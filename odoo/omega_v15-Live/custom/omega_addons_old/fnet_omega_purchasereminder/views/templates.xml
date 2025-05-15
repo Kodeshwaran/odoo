@@ -1,0 +1,27 @@
+<openerp>
+    <data>
+       
+       <record model="ir.cron" id="ir_cron_purchase_order_remind">
+            <field name="name">Purchaseorder Reminder Alert Msg</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">24</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'purchase.order'"/>
+            <field name="function" eval="'send_purchase_order_reminder_mail'"/>
+      </record>
+      
+     <record model="ir.cron" id="ir_cron_purchase_order_remind_purchaseamendment">
+            <field name="name">Purchaseamendment order Reminder Alert Msg</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">24</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'purchase.order'"/>
+            <field name="function" eval="'send_purchase_order_reminder_mail_purchaseamend'"/>
+      </record>
+    
+    </data>
+</openerp>

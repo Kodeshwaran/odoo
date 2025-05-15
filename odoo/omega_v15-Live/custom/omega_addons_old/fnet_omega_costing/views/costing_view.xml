@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="purchase_costing_form" model="ir.ui.view">
+            <field name="name">purchase.costing.form</field>
+            <field name="model">purchase.costing</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Costing">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="purchase_costing_tree" model="ir.ui.view">
+            <field name="name">purchase.costing.tree</field>
+            <field name="model">purchase.costing</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Costing">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_costing_action" model="ir.actions.act_window">
+            <field name="name">Purchase Costing</field>
+            <field name="res_model">purchase.costing</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="purchase_costing_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to define a Purchase Costing.
+                </p>
+                <p>
+                    Create Costing
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_purchase_costing_menu"
+                  name="Costing"
+                  parent="purchase.menu_purchase_config"
+                  sequence="60"/>
+
+        <menuitem action="purchase_costing_action"
+                  id="menu_purchase_costing"
+                  parent="menu_purchase_costing_menu"
+                  name=" Purchase Costing"
+                  sequence="1"/>
+
+        <record id="costing_duty_form" model="ir.ui.view">
+            <field name="name">costing.duty.form</field>
+            <field name="model">costing.duty</field>
+            <field name="arch" type="xml">
+                <form string="Costing Duty">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="amount"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="costing_duty_tree" model="ir.ui.view">
+            <field name="name">costing.duty.tree</field>
+            <field name="model">costing.duty</field>
+            <field name="arch" type="xml">
+                <tree string="Costing Duty">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="costing_duty_action" model="ir.actions.act_window">
+            <field name="name">Costing Duty</field>
+            <field name="res_model">costing.duty</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="costing_duty_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to define a Purchase Costing Duty.
+                </p>
+                <p>
+                    Create Costing Duty
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="costing_duty_action"
+                  id="menu_costing_duty"
+                  parent="menu_purchase_costing_menu"
+                  name="Costing Duty"
+                  sequence="2"/>
+
+        <record id="costing_margin_form" model="ir.ui.view">
+            <field name="name">costing.margin.form</field>
+            <field name="model">costing.margin</field>
+            <field name="arch" type="xml">
+                <form string="Costing Margin">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="amount"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="costing_margin_tree" model="ir.ui.view">
+            <field name="name">costing.margin.tree</field>
+            <field name="model">costing.margin</field>
+            <field name="arch" type="xml">
+                <tree string="Costing Margin">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="costing_margin_action" model="ir.actions.act_window">
+            <field name="name">Costing Margin</field>
+            <field name="res_model">costing.margin</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="costing_margin_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to define a Purchase Costing Margin.
+                </p>
+                <p>
+                    Create Costing Margin
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="costing_margin_action"
+                  id="menu_costing_margin"
+                  parent="menu_purchase_costing_menu"
+                  name="Costing Margin"
+                  sequence="3"/>
+
+    </data>
+</odoo>

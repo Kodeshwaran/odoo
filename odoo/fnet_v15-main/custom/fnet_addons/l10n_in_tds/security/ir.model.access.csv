@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tds_account_accountant,section.tds,model_section_tds,account.group_account_user,1,1,1,0
+access_tds_account_financial_manager,section.tds,model_section_tds,account.group_account_manager,1,1,1,1
+access_tds_account_hr_employee,section.tds,model_section_tds,base.group_user,1,0,0,0
+access_tcs_account_accountant,access_tcs_account_accountant,model_section_tcs,account.group_account_user,1,1,1,0
+access_tcs_account_financial_manager,access_tcs_account_financial_manager,model_section_tcs,account.group_account_manager,1,1,1,1
+access_tcs_account_hr_employee,access_tcs_account_hr_employee,model_section_tcs,base.group_user,1,0,0,0
+access_tds_line_account_accountant,section.tds.line,model_section_tds_line,account.group_account_user,1,1,1,0
+access_tds_line_account_financial_manager,section.tds.line,model_section_tds_line,account.group_account_manager,1,1,1,1
+access_tds_line_account_hr_employee,section.tds.line,model_section_tds_line,base.group_user,1,0,0,0
+access_tcs_line_account_accountant,section.tcs.line,model_section_tcs_line,account.group_account_user,1,1,1,0
+access_tcs_line_account_financial_manager,section.tcs.line,model_section_tcs_line,account.group_account_manager,1,1,1,1
+access_tcs_line_account_hr_employee,section.tcs.line,model_section_tcs_line,base.group_user,1,0,0,0

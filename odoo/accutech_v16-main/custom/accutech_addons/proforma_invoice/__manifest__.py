@@ -1,0 +1,22 @@
+{
+    'name': 'Proforma Invoice',
+    'version': '1.0',
+    'author': 'Sasidharan K',
+    'category': 'Sales',
+    'summary': 'Proforma Invoice functionality for Sale Orders',
+    'depends': ['sale', 'base', 'mail', 'sale_approval_kanak'],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/data.xml',
+        'data/report_proforma_invoice.xml',
+        'data/mail_template_proforma_invoice.xml',
+        'views/sale_order_views.xml',
+        'views/wizard_proforma_views.xml',
+        'views/proforma_invoice_views.xml',
+        'views/report_proforma_invoice_templates.xml',
+        # 'views/report_proforma_invoice.xml',
+        'views/menu.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

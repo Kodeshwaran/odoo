@@ -1,0 +1,42 @@
+<odoo>
+    <record model="ir.ui.view" id="hr_shift_change_req_wizard_form_view">
+        <field name="name">Shift Change Request Wizard</field>
+        <field name="model">shift.change.request.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h2>
+                        <group>
+                            <field name="desired_shift" options="{'no_create': True}"/>
+                            <field name="desired_emp_swap" options="{'no_open': True, 'no_create': True}"/>
+                        </group>
+                    </h2>
+                    <group col="4">
+                        <field name="assigned_emp_level" invisible="1"/>
+                        <field name="desired_emp_level" invisible="1"/>
+                        <field name="assigned_emp_shift_date" invisible="1"/>
+                        <field name="desired_emp_shift_date" invisible="1"/>
+                        <field name="assigned_emp_id" invisible="1"/>
+                        <field name="desired_emp_id" invisible="1"/>
+                        <field name="assigned_emp_shift" invisible="1"/>
+                        <field name="desired_emp_shift" invisible="1"/>
+                        <field name="assigned_emp" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_wizard" string="Confirm" type="object" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="hr_shift_reporting_action">
+        <field name="name">Shift Reporting</field>
+        <field name="res_model">hr.shift.reporting</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_shift_reporting_wizard_form_view"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

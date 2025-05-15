@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="crm.action_mark_as_lost" model="ir.actions.server">
+            <field name="name">Mark as Drop/Hold</field>
+            <field name="model_id" ref="model_crm_lead"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action_values = env.ref('crm.crm_lead_lost_action').read()[0]
+                    action_values.update({'context': context})
+                    action = action_values
+            </field>
+        </record>
+        
+        <record id="crm_lead_lost_view_form" model="ir.ui.view">
+            <field name="name">crm.lead.lost.form</field>
+            <field name="model">crm.lead.lost</field>
+            <field name="arch" type="xml">
+                <form string="Lost Reason">
+                    <group class="oe_title">
+                        <field name="reason_val"/>
+                        <field name="drop_reason_val" attrs="{'invisible': [('reason_val', '!=', 'lost')],'required': [('reason_val', '=', 'lost')]}"/>
+                        <field name="hold_reason_val" attrs="{'invisible': [('reason_val', '!=', 'hold')],'required': [('reason_val', '=', 'hold')]}"/>
+                    </group>
+                    <footer>
+                        <button name="action_drop_reason_apply" string="Submit" type="object" class="btn btn-sm btn-primary"  attrs="{'invisible': [('reason_val', '!=', 'lost')]}"/>
+                        <button name="action_hold_reason_apply" string="Submit" type="object" class="btn btn-sm btn-primary"  attrs="{'invisible': [('reason_val', '!=', 'hold')]}"/>
+                        <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+ 
+        <record id="crm.crm_lead_lost_action" model="ir.actions.act_window">
+            <field name="name">Lost/Hold Reason</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lead.lost</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm_lead_lost_view_form"/>
+            <field name="target">new</field>
+        </record>
+        
+        <record id="crm_phonecall_inherit1_view" model="ir.ui.view">
+            <field name="name">crm.phonecall.inherit1.view</field>
+            <field name="model">crm.phonecall</field>
+            <field name="inherit_id" ref="crm_voip.crm_phonecall_tree_view"/>
+            <field name="arch" type="xml">
+          <xpath expr="//field[@name='name']" position="replace">
+            <field name="name"/>
+          </xpath>
+          <xpath expr="//field[@name='partner_mobile']" position="replace">
+            <field name="partner_mobile" invisible='1'/>
+          </xpath>
+          <xpath expr="//field[@name='duration']" position="after">
+            <field name="lead_id" domain="[('type', '=', 'lead')]"/>
+          </xpath>
+          <xpath expr="//field[@name='opportunity_id']" position="replace">
+            <field name="opportunity_id" domain="[('type', '=', 'opportunity')]"/>
+          </xpath>
+            </field>
+        </record>
+        
+        <record id="opportunity_orderline_tree1" model="ir.ui.view">
+            <field name="name">opportunity.orderline.tree1</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+        </record>
+         
+        <record id="opportunity_orderline_form1" model="ir.ui.view">
+            <field name="name">opportunity.orderline.form1</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                </xpath>
+            </field>
+         </record>
+         
+         <record id="crm_case_tree_view_inher" model="ir.ui.view">
+            <field name="name">crm.case.tree.view.inher</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree string="Leads" decoration-bf="message_needaction==True" decoration-muted="probability == 100" colors="coral:hold_reason!=False">
+                    <field name="date_deadline" invisible="1"/>
+                    <field name="create_date"/>
+                    <field name="name" string="Lead"/>
+                    <field name="partner_id"/>
+                    <field name="contact_name"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                    <field name="email_from"/>
+                    <field name="phone"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="partner_id" invisible="1"/>
+                    <field name="team_id"/>
+                    <field name="active" invisible="1"/>
+                    <field name="probability" invisible="1"/>
+                    <field name="campaign_id" invisible="1"/>
+                    <field name="referred" invisible="1"/>
+                    <field name="medium_id" invisible="1"/>
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="hold_reason" invisible="1"/>
+                </tree>
+                </xpath>
+            </field>
+         </record>  
+        
+    </data>
+</odoo>

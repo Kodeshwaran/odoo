@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <!-- Server Action for Combine RFQs -->
+        <record id="action_combine_rfqs" model="ir.actions.server">
+            <field name="name">Combine RFQs</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="state">code</field>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/> <!-- Binds the action to the model -->
+            <field name="code">
+                <![CDATA[
+                env['purchase.order'].combine_rfqs()
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

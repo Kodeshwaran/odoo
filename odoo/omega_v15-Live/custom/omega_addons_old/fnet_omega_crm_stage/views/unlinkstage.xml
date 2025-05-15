@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="crm_stage_view">
+        <field name="name">crm.stage.tree</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence']" position = "replace">
+                <field name="sequence"/>
+                </xpath>
+        </field>
+    </record>
+ </odoo>

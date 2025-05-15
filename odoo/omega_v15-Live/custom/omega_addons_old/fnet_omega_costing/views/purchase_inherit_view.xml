@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_purchase_order_inherit" model="ir.ui.view">
+            <field name="name">view.purchase.order.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[4]" position="after">
+                    <button name="bid_received" string="Bid Received" type="object" states="sent"
+                            class="oe_highlight" groups="purchase.group_purchase_user,purchase.group_purchase_manager"/>
+                </xpath>
+                <xpath expr="//button[@name='print_quotation'][@states='draft']" position="after">
+                    <button name="send_rfq" states="draft" type="object" string="Confirm RFQ"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase,done" readonly="1"/>
+                </xpath>
+                <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//button[@id='bid_confirm']" position="after">
+                    <button name="button_confirm" type="object" states="bid received" string="Confirm Order"
+                            class="oe_highlight" id="bid_confirm"/>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="replace">
+                    <button name="button_cancel" states="bid received" string="Cancel" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_view_invoice']" position="replace">
+                    <button type="object" name="action_view_invoice" class="oe_stat_button" icon="fa-pencil-square-o">
+                        <field name="invoice_count" widget="statinfo" string="Bills"/>
+                    </button>
+                </xpath>
+
+                <field name="requisition_id" position="after">
+                    <field name="lead_id"/>
+                </field>
+                <!--
+                                <field name="origin" position="after">
+                                    <field name="po_sale_ids" widget="many2many_tags"/>
+                                </field>
+                -->
+                <field name="partner_ref" position="after">
+                    <field name="user_id"/>
+                </field>
+                <!--
+                                <field name="shipped" position="after">
+                                    <field name="contact_name"/>
+                                    <field name="function"/>
+                                    <field name="title_id"/>
+                                </field>
+                -->
+
+                <!--
+                                <field name="minimum_planned_date" position="attributes">
+                                    <attribute name="string">Scheduled Date</attribute>
+                                </field>
+                -->
+                <xpath expr="//form/sheet/notebook/page/field/tree/field[@name='product_id']" position="before">
+                    <field name="item_no"/>
+                </xpath>
+                <!--
+                                <xpath expr="//form/sheet/notebook/page/field/tree/field[@name='product_qty']" position="after">
+                                    <field name="margin_amt"/>
+                                </xpath>
+                -->
+                <xpath expr="//form//field[@name='picking_type_id']" position="after">
+                    <field name='delivery_period'/>
+                    <field name='delivery_term'/>
+                    <field name="shipping_method"/>
+                    <!--
+                                        <field name="vendor_payment_term"/>
+                    -->
+                    <field name="validity"/>
+                    <!--
+                                        <field name="duty_exempted"/>
+                                        <field name="is_merged_po" invisible="1"/>
+                    -->
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[1]" position="after">
+                    <page string="History">
+                        <field name='history_line'>
+                            <tree string="History" editable="bottom">
+                                <field name="item_no"/>
+                                <field name="product_id"/>
+                                <field name="uom_id"/>
+                                <field name="product_qty"/>
+                                <field name="margin_amt"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//page[1]" position="after">
+                    <page string="Costing">
+                        <header>
+                            <button name="load_currency" string="Get Product" type="object" class="oe_highlight"
+                                    attrs="{'invisible': [('cost_status','in', ['done', 'progress', 'convertion'])]}"/>
+                            <button name="calculate_conversion" string="Costing calculation" type="object"
+                                    class="oe_highlight"
+                                    attrs="{'invisible': [('cost_status','in', ['done', 'draft', 'convertion'])]}"/>
+                            <button name="gen_process" string="Convertion" type="object" class="oe_highlight"
+                                    attrs="{'invisible': [('cost_status','in', ['done', 'draft', 'progress'])]}"/>
+                            <button name="done" string="Done" type="object" class="oe_highlight"
+                                    attrs="{'invisible': [('cost_status','in', ['done', 'draft', 'progress'])]}"/>
+                            <button name="cal_confirm" string="Confirm" type="object" class="oe_highlight"
+                                    attrs="{'invisible': [('cost_status','in', ['done', 'draft', 'convertion'])]}"/>
+                            <button name="draft" string="Reset Draft" type="object" class="oe_highlight"
+                                    attrs="{'invisible': [('cost_status','=', 'draft')]}"/>
+                            <field name="cost_status" widget="statusbar" statusbar_visible="draft,progress,done,"
+                                   class='pull-right control-group'/>
+                        </header>
+                        <group>
+                            <group>
+                                <field name='currency_cost_id'/>
+                                <!--
+                                                                    <field name='margins'  style="width: 40%%" attrs="{'invisible': [('cost_status','in',['draft', 'progress'])], 'readonly': [('cost_status','=', 'done')]}"/>
+                                -->
+                            </group>
+                            <group>
+                                <field name='exchange_rate' attrs="{'readonly': [('cost_status','=', 'done')]}"/>
+                                <field name='duty_id' widget="selection" style="width: 40%%"
+                                       attrs="{'invisible': [('cost_status','in',['draft', 'convertion'])], 'readonly': [('cost_status','=', 'done')]}"/>
+                            </group>
+                        </group>
+                        <field name="product_line"
+                               attrs="{'invisible': [('cost_status','=', 'draft')], 'readonly': [('cost_status','=', 'done')]}">
+                            <tree string="Product" editable="bottom">
+                                <field name="item_no"/>
+                                <field name="product_id"/>
+                                <field name="product_qty"/>
+                                <field name="margin_amt"/>
+                                <field name="ot_unit_price"/>
+                                <field name="ot_total_price" sum="Total amount"/>
+                                <field name="unit_price"/>
+                                <field name="total_price" sum="Total AED amount"/>
+                                <field name="margin"/>
+                                <field name="freight_price"/>
+                                <field name="margin_price" sum="Total Margin amount"/>
+                            </tree>
+                        </field>
+                        <field name='costing_line'
+                               attrs="{'invisible': [('cost_status','=', 'convertion')], 'readonly': [('cost_status','=', 'done')]}">
+                            <tree string="Costing" editable="bottom">
+                                <field name="costing_id"/>
+                                <field name="duty_applicable"/>
+                                <field name="percentage"/>
+                                <field name="amount" sum="Total amount"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="duty_amount" widget="monetary"
+                                   options="{'currency_field': 'currency_cost_id'}"/>
+                            <label for="duty_amount"/>
+                            <button name="%(action_view_amount_duty)d" string="(update)" type="action"
+                                    attrs="{'invisible': [('cost_status','in',['convertion', 'done'])]}"
+                                    class="oe_edit_only oe_link"/>
+                            <field name="cnf_amount" widget="monetary"
+                                   options="{'currency_field': 'currency_cost_id'}"/>
+                            <field name="cost_amount" widget="monetary"
+                                   options="{'currency_field': 'currency_cost_id'}"/>
+                        </group>
+                        <div class="oe_clear"/>
+                    </page>
+                    <page string="Costing History">
+                        <field name="cost_history_line">
+                            <tree string="History">
+                                <field name="offer"/>
+                            </tree>
+                            <form string="Costing History">
+                                <group>
+                                    <group>
+                                        <field name='currency_cost_id'/>
+                                        <!--
+                                                                            <field name='margins'  style="width: 40%%"/>
+                                        -->
+                                        <field name='exchange_rate'/>
+                                        <field name='duty_id' widget="selection" style="width: 40%%"/>
+                                    </group>
+                                    <group>
+                                        <field name="duty_amount" widget="monetary"
+                                               options="{'currency_field': 'currency_cost_id'}"/>
+                                        <field name="cnf_amount" widget="monetary"
+                                               options="{'currency_field': 'currency_cost_id'}"/>
+                                        <field name="cost_amount" widget="monetary"
+                                               options="{'currency_field': 'currency_cost_id'}"/>
+                                    </group>
+                                </group>
+                                <notebook>
+                                    <page string="Product">
+                                        <field name="tab_product_line">
+                                            <tree string="Product" editable="bottom">
+                                                <field name="item_no"/>
+                                                <field name="product_id"/>
+                                                <field name="product_qty"/>
+                                                <field name="margin_amt"/>
+                                                <field name="ot_unit_price"/>
+                                                <field name="ot_total_price" sum="Total amount"/>
+                                                <field name="unit_price"/>
+                                                <field name="total_price" sum="Total AED amount"/>
+                                                <field name="margin"/>
+                                                <field name="margin_price" sum="Total Margin amount"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                    <page string="Charges">
+                                        <field name="tab_costing_line">
+                                            <tree string="Charges" editable="bottom">
+                                                <field name="costing_id"/>
+                                                <field name="duty_applicable"/>
+                                                <field name="amount" sum="Total amount"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="seq_purchase_confirm" model="ir.sequence">
+            <field name="name">Purchase Confirm</field>
+            <field name="code">purchase.confirm</field>
+            <field name="prefix">PO</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+
+            <field name="domain">[('state','in',('purchase', 'purchase_amend', 'done'))]</field>
+
+        </record>
+        <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+            <field name="domain">[('state','in',('draft', 'sent', 'bid received', 'cancel', 'to approve'))]</field>
+        </record>
+
+    </data>
+</odoo>

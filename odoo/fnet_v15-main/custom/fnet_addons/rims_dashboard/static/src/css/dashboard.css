@@ -1,0 +1,137 @@
+/*main*/
+canvas
+{
+    background-color: #ffffff;
+}
+.hr_dash {
+    background-color: white;
+}
+
+.rims_sidebar {
+  background-image: -webkit-linear-gradient(left, #777, #753a88);
+  border-right: 1px solid black;
+  position: absolute;
+  top: 47px; /* Adjust this value to match your header height */
+  bottom: 0;
+  width: 250px;
+}
+
+.rims_sidebar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 10px;
+}
+
+.rims_sidebar ul li:last-child {
+  border-bottom: none;
+}
+
+.rims_sidebar ul li  {
+  color: white;
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  font-family: Montserrat Bold;
+  border-bottom: 1px solid white;
+}
+
+.rims_sidebar ul li :hover {
+  color: lightgreen;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: fadeInAnimation ease 1s;
+  padding:10px;
+}
+
+.o_control_panel .o_cp_left > .breadcrumb > li:last-child {
+    font-weight: bold;
+}       
+
+.dashboard_menu_div {
+  border: none;
+  border-radius:10px;
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  flex-direction: column;
+  background-image: -webkit-linear-gradient(bottom, #DC1C13, #EA4C46);
+  transition: 0.5s;
+  color:white;
+  width: 50%;
+  height:50px;
+  margin-top:10px;
+  margin-bottom:10px;
+  text-align:center;
+  vertical-align: middle;
+  font-family:Montserrat;
+}
+
+.dashboard_menu_div:hover {
+
+    color: black;
+    box-shadow: 0 5px 15px black;
+    cursor: pointer;
+}
+
+.app_div {
+    text-align: center;
+    font-size: 13px;
+    width: auto;
+    color: white;
+    overflow: hidden;
+}
+
+.rims_app_text {
+    white-space: nowrap;
+    animation: bounceIn 0.3s ease running;
+    text-align: left;
+    font-size: 13px;
+    width: auto;
+    color: white;
+    text-overflow: hidden;
+}
+
+.rims_dash {
+    background-image: -webkit-linear-gradient(bottom, #71639e, #b0adba);
+    overflow: hidden;
+}
+
+#generate_payroll_pdf, #generate_attendance_pdf {
+    background-color: #ffffff;
+    border: 0;
+}
+i.fa.fa-2x.fa-file-pdf-o {
+    color: red;
+}
+.rims_dash.col-xs-12.col-md-12.col-lg-12.col-sm-8 {
+    width: 78%;
+}
+/*User Head*/
+.media {
+    /*box-shadow:0px 0px 4px -2px #000;*/
+    margin: 20px 0;
+    padding:30px;
+    padding-left: 0px;
+}
+
+.my-custom-module-notebook:hover {
+    color: black;
+    box-shadow: 0 5px 15px black;
+}
+
+
+/* Change the color of the active tab */
+.my-custom-module-notebook .nav-tabs > li.active > a {
+    background-color: #BFF098;
+    color: black;
+}
+
+/* Change the font size of the tab labels */
+.my-custom-module-notebook .nav-tabs > li > a {
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+

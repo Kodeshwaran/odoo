@@ -1,0 +1,41 @@
+<odoo>
+    <record id="vendor_list_register_wizard_views" model="ir.ui.view">
+        <field name="name">vendor list Register</field>
+        <field name="model">vendor.list.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Report Options">
+                <separator/>
+                <group>
+					<p>Helps you to print the Report of Vendor Invoice Due details.</p>
+                        <newline/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/> or 
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_generate_vendor_list" model="ir.actions.server">
+        <field name="name">Generate Customer / Vendor Invoice Due List</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="account.model_account_move" />
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="state">code</field>
+        <field name="code">action = {
+                'name': 'Generate Customer / Vendor Invoice Due List',
+                'type': 'ir.actions.act_window',
+                'res_model': 'vendor.list.wizard',
+                'view_mode': 'form',
+                'target': 'new',
+            }</field>
+    </record>
+
+	<!--<act_window id="action_generate_vendor_list"
+		key2="client_print_multi"
+		name="Generate Customer / Vendor Invoice Due List"
+		res_model="vendor.list.wizard"
+		src_model="account.invoice"
+		view_mode="form" target="new" view_type="form"/>-->
+</odoo>

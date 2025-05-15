@@ -1,0 +1,203 @@
+<odoo>
+    <data>
+
+        <!-- Exit Interview View-->
+        <record model="ir.ui.view" id="exit_interview_tree_view">
+            <field name="model">exit.interview</field>
+            <field name="arch" type="xml">
+                <tree string="Exit Interview Form">
+                    <field name="name" string="Employee Name"/>
+                    <field name="date_of_resignation"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="exit_interview_form_view">
+            <field name="model">exit.interview</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Submit" name="action_submit" type="object" groups="base.group_user" class="oe_highlight" states="draft"/>
+                        <button string="Approve" name="action_approve" type="object" groups="hr.group_hr_user" class="oe_highlight" states="submitted"/>
+<!--                        <button string="Set to Draft" name="action_reset" type="object" states="approved"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="submitted,approved" nolabel="1"/>
+                    </header>
+                    <sheet>
+                        <div class="col-lg-12">
+                            <h2 class="text-center">
+                                EXIT INTERVIEW FORM
+                            </h2>
+                        </div>
+                        <group col="4" colspan="6">
+                            <field name="name" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="date_of_resignation" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="settlement_id" invisible="1"/>
+                            <field name="employeeid" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="date_of_ei" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="department" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="reporting_manager" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+<!--                            <field name="hr_resign_id" invisible="0"/>-->
+                        </group>
+                        <group string="1. What are your reasons for joining FUTURENET? (Check all that apply)">
+                            <field name="section1_1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section1_2" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section1_3" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section1_4" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section1_5" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section1_6" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section1_7" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section1_8" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="2. What are your reasons for leaving the Company? (Check all that apply)">
+                            <field name="section2_1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_2" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_3" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_4" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_5" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_6" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_7" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_8" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_9" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_10" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_11" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_12" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                            <field name="section2_13" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="3. Job was Challenging">
+                            <field name="section3" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="4. Skills were Effectively Used">
+                            <field name="section4" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="5. Job Orientation was Effective">
+                            <field name="section5" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="6. Work Load was Reasonable">
+                            <field name="section6" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="7. Sufficient Resource Futurenet were Available">
+                            <field name="section7" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="8. Work Environment was Safe, Comfortable and Appropriately Equipped">
+                            <field name="section8" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="9. What do you think can be improved about the Job?">
+                            <field name="section9" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <div class="col-lg-12">
+                            <h3 class="text-left">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                HEAD OF DEPARTMENT:
+                            </h3>
+                        </div>
+                        <group string="10. Had Knowledge of Job">
+                            <field name="section10" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="11. Had knowledge of Supervision">
+                            <field name="section11" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="12. Was open to Suggestion">
+                            <field name="section12" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="13. Recognized Employees Contribution">
+                            <field name="section13" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="14. What are your comments and suggestions about your supervisor/Project Manager?">
+                            <field name="section14" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <div class="col-lg-12">
+                            <h3 class="text-left">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                DEPARTMENT:
+                            </h3>
+                        </div>
+                        <group string="15. Had Good Synergy">
+                            <field name="section15" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="16. Had Adequate Equipment" >
+                            <field name="section16" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="17. Was adequately staffed">
+                            <field name="section17" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="18. Was Efficient ">
+                            <field name="section18" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="19. What do you think can be improved about the Department?">
+                            <field name="section19" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <div class="col-lg-12">
+                            <h3 class="text-left">
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                MANAGEMENT:
+                            </h3>
+                        </div>
+                        <group string="20. Gave fair and Equal Treatment">
+                            <field name="section20" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="21. Was Available to Discuss Job Related Issues">
+                            <field name="section21" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="22. Welcomed Suggestions and Encouraged Feedback">
+                            <field name="section22" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="23. Maintained Consistent Policies and Practice Futurenet">
+                            <field name="section23" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="24. Provided Recognition for Achievements">
+                            <field name="section24" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="25. Encouraged Cooperation/Collegiality">
+                            <field name="section25" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="26. Provided Development Opportunities ">
+                            <field name="section25" widget="radio" options="{'horizontal': true}" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="27. What are your Suggestions to Management?">
+                            <field name="section27" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="28. What was the Best Part Working with FUTURENET Ltd?">
+                            <field name="section28" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group string="29. What was the Worst Part Working with FUTURENET Ltd?">
+                            <field name="section29" nolabel="1" attrs="{'readonly': [('state', '=', 'approved')]}"/>
+                        </group>
+                        <group col="4" colspan="6">
+                            <field name="signature_hr_manager"/>
+                            <field name="date1"/>
+                            <field name="employee_signature"/>
+                            <field name="date2"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Exit Interview Action-->
+        <record model="ir.actions.act_window" id="exit_interview_creation_action">
+            <field name="name">Exit Interview From</field>
+            <field name="res_model">exit.interview</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--  Exit Interview Menu-->
+        <menuitem
+                id="menu_exit_interview_creation"
+                name="Exit Interview"
+                parent="hr.menu_hr_employee_payroll"
+                action="exit_interview_creation_action"
+                sequence="6"/>
+
+
+    </data>
+</odoo>

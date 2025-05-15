@@ -1,0 +1,8 @@
+<odoo>
+    <template id="UnreconcileReasonForm">
+        <div>
+            <label for="reconcill_reason">Unreconcile Reason:</label>
+            <textarea name="reconcill_reason" style="width: 100%;"></textarea>
+        </div>
+    </template>
+</odoo>

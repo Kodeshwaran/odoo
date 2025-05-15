@@ -1,0 +1,32 @@
+<odoo>
+    <record id="delivery_mail_trigger_form_view" model="ir.ui.view">
+        <field name="name">delivery.mail.trigger.form.view</field>
+        <field name="model">delivery.mail</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="2">
+                        <field name="delivery_id" invisible="1"/>
+                        <field name="project_head"/>
+                        <field name="sales_person" readonly="0"/>
+                        <field name="doc_name" invisible="1"/>
+                        <field name="sale_id" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="generate_email" string="Submit" type="object" class="oe_highlight"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="delivery_mail_trigger_action">
+        <field name="name">Delivery Mail</field>
+        <field name="res_model">delivery.mail</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">form</field>
+    </record>
+
+
+</odoo>

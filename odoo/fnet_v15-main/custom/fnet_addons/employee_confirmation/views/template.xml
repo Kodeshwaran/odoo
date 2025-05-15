@@ -1,0 +1,219 @@
+<odoo>
+    <data>
+
+        <record id="email_template_probation_review_alert_manager" model="mail.template">
+            <field name="name">Probation Review</field>
+            <field name="model_id" ref="employee_confirmation.model_probation_review"/>
+            <field name="subject">Probation Review Reminder for {{object.employee_id.name}}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_to">{{object.employee_id.parent_id.work_email}}</field>
+            <field name="email_cc">{{ctx['records'][0]['email_cc']}}</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                    <tr>
+                        <td valign="top" style="padding: 0px 10px;">
+                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                                Hi
+                                <strong>
+                                    <t t-out="object.employee_id.parent_id.name"/>
+                                </strong>
+                                ,
+                                <br/>
+                                <br/>
+                                Kindly review the performance of the employee
+                                <strong>
+                                    <t t-out="object.employee_id.name"/>
+                                </strong>
+                                for the department of
+                                <strong>
+                                    <t t-out="object.employee_id.department_id.name"/>
+                                </strong>
+                                through the Probation Review Form.Click the button to view the Review Form.
+                                <br/>
+                                <br/>
+                            </div>
+                        </td>
+                    </tr>
+                    <t t-foreach="ctx['records']" t-as="rec">
+                        <tr>
+                            <td valign="top"
+                                style="text-align: center;width:50%; font-family:sans-serif;padding: 0px 10px;">
+                                <a t-att-href="rec.get('url')"
+                                   style="background-color:#875A7B; padding: 4px 8px 4px 8px; text-decoration: none; color: #fff; border-radius: 5px;">
+                                    View Form
+                                </a>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+            </field>
+        </record>
+
+        <record id="email_template_probation_review_requested" model="mail.template">
+            <field name="name">Requested Probation Review</field>
+            <field name="model_id" ref="employee_confirmation.model_probation_review"/>
+            <field name="subject">Requested Probation Review Pending</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_from">{{ctx['email_from']}}</field>
+            <field name="email_to">{{ctx['email_to']}}</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                    <tr>
+                        <td valign="top" style="padding: 0px 10px;">
+                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                                <br/>
+                                <p>
+                                The Requested Probation Review forms has been on hold by respective team managers for more than
+                                a month. Kindly look into the requested forms in order to proceed further. Thank You.</p>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width=600px; margin:5px; border: 1px solid black;">
+                    <tr t-foreach="ctx['records']" t-as="rec" style="border: 1px solid black;">
+                        <td style="border: 1px solid black;"><br/><t t-out="rec.employee_id.name"/></td>
+                        <td style="border: 1px solid black;">
+                            <a t-att-href="ctx['url'] + str(rec.id)" style="tex-align: center; background-color:#875A7B; padding: 3px 7px 3px 7px; padding-top: 10px;color: #fff; border-radius: 9px;">View Form</a>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="email_template_probation_confirmation" model="mail.template">
+            <field name="name">Employment Confirmation</field>
+            <field name="model_id" ref="employee_confirmation.model_probation_review"/>
+            <field name="subject">Employment Confirmation</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_to">{{object.employee_id.work_email}}</field>
+            <field name="email_cc">{{ctx['records'][0]['email_cc']}}</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                    <tr>
+                        <td valign="top" style="padding: 0px 10px;">
+                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                                Hi
+                                <strong>
+                                    <t t-out="object.employee_id.name"/>
+                                </strong>
+                                ,
+                                <br/>
+                                <strong><p>Manager Remarks:</p></strong>
+                                <br/>
+                                <t t-out="object.manager_comments"/>
+                                <br/>
+                                <strong><p>MD Remarks:</p></strong>
+                                <br/>
+                                <t t-out="object.md_comments"/>
+                                <br/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="email_template_probation_extension" model="mail.template">
+            <field name="name">Confirmation Extension</field>
+            <field name="model_id" ref="employee_confirmation.model_probation_review"/>
+            <field name="subject">Probation Period Extension</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_to">{{object.employee_id.work_email}}</field>
+            <field name="email_cc">{{ctx['records'][0]['email_cc']}}</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                    <tr>
+                        <td valign="top" style="padding: 0px 10px;">
+                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                                Hi
+                                <strong>
+                                    <t t-out="object.employee_id.name"/>
+                                </strong>
+                                ,
+                                <br/>
+                                <br/>
+                                <strong><p>Manager Remarks:</p></strong>
+                                <br/>
+                                <t t-out="object.manager_comments"/>
+                                <br/>
+                                <strong><p>MD Remarks:</p></strong>
+                                <br/>
+                                <t t-out="object.md_comments"/>
+                                <br/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="email_template_employee_birthday_wishes" model="mail.template">
+            <field name="name">Birthday Wishes</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="subject">Birthday</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_to">{{object.work_email}}</field>
+            <field name="email_cc">{{ctx['records'][0]['email_cc']}}</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                    <tr>
+                        <td valign="top" style="padding: 0px 10px;">
+                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                                Hi <strong><t t-out="object.name"/></strong>,
+                                <br/>
+                                <br/>
+                                <t t-out="ctx.get('records')[0]['birthday_message']"/>
+                                <br/>
+                                <br/>
+                                <t t-if="object.birthday_image">
+                                    <img t-attf-src="data:image/*;base64,{{object.birthday_image}}"/>
+                                </t>
+                                <t t-else="">
+                                    <img t-attf-src="data:image/*;base64,{{object.company_id.birthday_image}}"/>
+                                </t>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="email_template_employee_wedding_wishes" model="mail.template">
+            <field name="name">Wedding Anniversary Wishes</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="subject">Wedding Anniversary</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="email_to">{{object.work_email}}</field>
+            <field name="email_cc">{{ctx['records'][0]['email_cc']}}</field>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                    <tr>
+                        <td valign="top" style="padding: 0px 10px;">
+                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                                Hi <strong><t t-out="object.name"/></strong>,
+                                <br/>
+                                <br/>
+                                <t t-out="ctx.get('records')[0]['wedding_message']"/>
+                                <br/>
+                                <br/>
+                                <t t-if="object.wedding_image">
+                                    <img t-attf-src="data:image/*;base64,{{object.wedding_image}}"/>
+                                </t>
+                                <t t-else="">
+                                    <img t-attf-src="data:image/*;base64,{{object.company_id.wedding_image}}"/>
+                                </t>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+    </data>
+</odoo>

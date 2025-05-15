@@ -1,0 +1,45 @@
+<odoo>
+
+    <template id="amount_due_layout">
+        <!-- Multicompany -->
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"/>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+
+        <div class="header">
+            <div class="col-xs-12">
+                <div>
+<!--
+                    <span><center><img t-if="company.logo" width="100px" height="40px" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="float:left"/></center></span>
+-->
+<!--
+                    <span style="font-size:35px;font-family:Liberation Serif"><center><b><span t-field="o.company_id.name"/></b></center></span>
+-->
+                    <span style="font-size:18px;font-family:Liberation Serif;"><center><b><span t-field="company.name"/></b></center></span>
+                    <span style="padding-left:10%"><center><span t-field ="company.street"/> <span t-field ="company.street2"/></center></span>
+                    <span style="padding-left:10%"><center><span t-field ="company.city"/> <span t-field= "company.zip"/></center></span>
+                            <t t-if="data.get('domain') == 'out_invoice'">
+                                <span style="font-size:18px;padding-left:10%"><center><b>CUSTOMER INVOICE DUE REPORT</b></center></span></t>
+                            <t t-if="data.get('domain') == 'in_invoice'">
+                                <span style="font-size:18px;padding-left:10%"><center><b>VENDOR INVOICE DUE REPORT</b></center></span>
+                            </t>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div style="border-top: 1px solid black;">
+                <p style="text-align:center;font-family:Liberation Serif;font-size:20px;">
+                    <b>Page:
+                        <span class="page"/>
+                    </b>
+                </p>
+            </div>
+        </div>
+        <div class="article">
+            <t t-raw="0"/>
+        </div>
+    </template>
+</odoo>

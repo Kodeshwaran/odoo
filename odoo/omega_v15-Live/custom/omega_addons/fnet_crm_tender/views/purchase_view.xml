@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[4]" position="after">
+                    <button name="bid_received" string="Bid Received" type="object" states="sent"
+                            class="oe_highlight" groups="purchase.group_purchase_user,purchase.group_purchase_manager"/>
+                </xpath>
+                <xpath expr="//button[@name='print_quotation'][@states='draft']" position="after">
+                    <button name="send_rfq" states="draft" type="object" string="Confirm RFQ"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase,done" readonly="1"/>
+                </xpath>
+                <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Amendments">
+                        <field name="is_amend" invisible="1"/>
+                        <field name="old_amendment_ids" readonly="1">
+                            <tree string="Order Amendments">
+                                <field name="name" string="Order Ref"/>
+                                <field name='create_date' string="Quotation Date" />
+                                <field name='state' invisible='1' />
+                                <field name='create_uid' string="Superseeded by" />
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <button name='button_draft' position='attributes'>
+                    <attribute name='states'>amendment</attribute>
+                </button>
+                <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="replace">
+                    <button name="button_cancel" states="bid received" string="Cancel" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="before">
+
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="before">
+                    <button name="action_send_for_approval" type="object" string="Send For Approval"
+                            groups="base.group_user"
+                            attrs="{'invisible': ['|', '|', '|', '|', '&amp;', ('state','not in',['bid received']), ('send_for_approval','=',True), '&amp;', ('state','in',['bid received']), ('send_for_approval','=',True), '&amp;', ('state','not in',['bid received']), ('send_for_approval','!=',True), '|', ('purchase_order_approval', '=', False), ('purchase_order_approval_rule_id', '=', False), ('purchase_order_approval_rule_ids', '=', [])]}"/>
+                    <button name="action_button_approve" string="Approve Quotation" type="object" groups="base.group_user"
+                        attrs="{'invisible': ['|', ('state', 'not in', ['bid received']), ('approve_button', '!=', True)]}"/>
+                    <button name="reject_quotation" type="object" string="Reject Quotation" groups="base.group_user"
+                            attrs="{'invisible': ['|', ('state', 'not in', ['bid received']), ('approve_button', '!=', True)]}"/>
+                    <field name='approve_button' invisible="1"/>
+                    <field name='ready_for_po' invisible="1"/>
+                    <field name='send_for_approval' invisible="1"/>
+                    <field name='is_rejected' invisible="1"/>
+                    <field name='dummy_compute' invisible="1"/>
+                    <field name='purchase_order_approval_rule_id' invisible="1"/>
+                    <field name='purchase_order_approval' invisible="1"/>
+                    <button name="button_amend" string="Amendment" type="object" states="draft,sent,bid received,to approve, purchase,done,cancel" groups="base.group_user"/>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', 'in', ['purchase', 'done', 'cancelfn'])]}</attribute>
+                </xpath>
+                <xpath expr="//button[@id='bid_confirm']" position="after">
+                    <button name="button_confirm" type="object" attrs="{'invisible': ['|', '|', ('state','!=','bid received'),('ready_for_po', '=', False), ('is_amend', '=', True)]}" string="Confirm Order"
+                            class="oe_highlight" id="bid_confirm"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="omega_trn_no"/>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="expected_closing"/>
+                    <field name="delivery_date"/>
+                    <field name="order_reference"/>
+                    <field name="delivery_term"/>
+                    <field name="enquiry_id"/>
+                </xpath>
+                <xpath expr="//notebook//page[@name='purchase_delivery_invoice']" position="after">
+                    <page string='Approval Hierarchy'
+                          attrs="{'invisible': ['|', ('purchase_order_approval', '=', False), ('purchase_order_approval_rule_id', '=', False)]}">
+                        <field name='purchase_order_approval_rule_ids' nolabel="1">
+                            <tree editable='bottom'>
+                                <field name='sequence'/>
+                                <field name='approval_role'/>
+                                <field name='users' widget="many2many_tags"/>
+                                <field name='date'/>
+                                <field name='is_approved' invisible="1"/>
+                                <field name="user_id"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Approval History'
+                          attrs="{'invisible': ['|', ('purchase_order_approval', '=', False), ('purchase_order_approval_rule_id', '=', False)]}">
+                        <field name='purchase_order_approval_history' nolabel="1">
+                            <tree>
+                                <field name='user'/>
+                                <field name='date'/>
+                                <field name="state"/>
+                                <field name="rejection_reason"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                    <field name="item_no"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='name' ]" position="attributes">
+                    <attribute name="widget">Html</attribute>
+                    <attribute name="options">{'plugins': ['fullscreen', 'paste', 'media']}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="editable"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group" position="inside">
+                    <field name="item_no"/>
+                    <field name="price_subtotal"/>
+                    <field name="name"/>
+                </xpath>
+                <xpath expr="//field[@name='propagate_cancel']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='invoices_incoming_shiptments']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!--<xpath expr="//button[@name='action_view_invoice']" position="replace">
+                    <button type="object" name="action_view_invoice" class="oe_stat_button" icon="fa-pencil-square-o">
+                        <field name="invoice_count" widget="statinfo" string="Bills"/>
+                    </button>
+                </xpath>-->
+                <xpath expr="//page[1]" position="after">
+                    <page name="costing" string="Costing"
+                          groups="purchase.group_purchase_user,purchase.group_purchase_manager" invisible="1">
+                        <form>
+                            <header>
+                                <button name="get_purchase_quote" string="Get Order" type="object" class="oe_highlight"
+                                        attrs="{'invisible':[('states','!=','load')]}"/>
+                                <button name="set_margin_price" string="Margin Calculate" type="object"
+                                        class="oe_highlight"
+                                        attrs="{'invisible':[('states','!=','in_progress')]}"/>
+                                <button name="bids_confirm" string="Confirm" type="object" class="oe_highlight"
+                                        attrs="{'invisible':[('states','!=','in_progress')]}"/>
+                                <button name="return_draft" string="Return To Load" type="object" class="oe_highlight"
+                                        attrs="{'invisible':[('states','!=','done')]}"/>
+                                <field name="states" widget="statusbar" statusbar_visible="load,in_progress,done"/>
+                            </header>
+
+                            <field name="margin_line">
+                                <tree editable="bottom" create="0" edit="0" delete="0">
+                                    <field name="product_id"/>
+                                    <field name="quantity" sum="Total Quantity"/>
+                                    <field name="purchase_unit_price" sum="Purchase Price" widget="monetary"/>
+                                    <field name="purchase_total_price" invisible="1"/>
+                                    <field name="transfort_charge" sum="Total" widget="monetary"/>
+                                    <field name="finance_cost" sum="Total" widget="monetary"/>
+                                    <field name="margin_percentage"/>
+                                    <field name="margin_unit_price" sum="Total Unit Price" widget="monetary"/>
+                                    <field name="customer_price" sum="Total customer Price" widget="monetary"/>
+                                </tree>
+                            </field>
+                        </form>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='costing']" position="after">
+                    <page string="Costing History" groups="purchase.group_purchase_user,purchase.group_purchase_manager" invisible="1">
+                        <field name="history_line" readonly="True">
+                            <tree>
+                                <field name="offer"/>
+                            </tree>
+                            <form>
+                                <field name="costing_history_line">
+                                    <tree>
+                                        <field name="product_id"/>
+                                        <field name="quantity" sum="Total Quantity"/>
+                                        <field name="unit_measure"/>
+                                        <field name="purchase_unit_price" sum="Purchase Price" widget="monetary"/>
+                                        <field name="transfort_charge" sum="Total" widget="monetary"/>
+                                        <field name="finance_cost" sum="Total" widget="monetary"/>
+                                        <field name="margin_percentage"/>
+                                        <field name="margin_unit_price" sum="Total Unit Price" widget="monetary"/>
+                                        <field name="customer_price" sum="Total customer Price" widget="monetary"/>
+                                    </tree>
+                                </field>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_margin_tree" model="ir.ui.view">
+            <field name="name">margin.tree</field>
+            <field name="model">margin.rate</field>
+            <field name="arch" type="xml">
+                <tree string="Margin Rate">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="sale_margin_form" model="ir.ui.view">
+            <field name="name">margin.rate.form</field>
+            <field name="model">margin.rate</field>
+            <field name="arch" type="xml">
+                <form string="Sales Order Margin">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="values"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                        </group>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="margin_rate_form_action" model="ir.actions.act_window">
+            <field name="name">Sale Margin Rate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">margin.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="sale_margin_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create for set the margin rate for product price.
+                </p>
+            </field>
+        </record>
+        <menuitem action="margin_rate_form_action" id="menu_margin_rate_form_action" name="Margin Percentage"
+                  parent="purchase.menu_purchase_config" sequence="4"/>
+        <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+            <field name="domain">[('state','in',('purchase', 'purchase_amend', 'done'))]</field>
+        </record>
+        <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+            <field name="domain">[('state','in',('draft', 'sent', 'bid received', 'cancel', 'to approve'))]</field>
+        </record>
+        <record id="view_rfq_rejection_reason_form" model="ir.ui.view">
+            <field name="name">rfq.rejection.reason.form</field>
+            <field name="model">rfq.rejection.reason</field>
+            <field name="arch" type="xml">
+                <form string="Rejection Reason">
+                    <group>
+                        <field name="reason"/>
+                    </group>
+                    <footer>
+                        <button string='Reject' name="button_reject" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>				

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="account_term_inherit_id" model="ir.ui.view">
+    <field name="name">account.term.inherit</field>
+    <field name="model">account.payment.term</field>
+    <field name="inherit_id" ref="account.view_payment_term_form"/>
+    <field name="arch" type="xml">
+      <field name="active" position="after">
+        <field name="code"/>
+      </field>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,69 @@
+<odoo>
+    <data>
+
+        <record id="view_sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">view.sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="tax_totals_json" position="after">
+                    <field name="amount_paid" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                    <field name="amount_residual" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </field>
+                <button name="action_cancel" position="after">
+                    <button name="run_compute_manually" type="object" string="Compute Due" groups="base.group_no_one"/>
+                </button>
+            </field>
+        </record>
+
+        <record id="view_order_tree_inherit1" model="ir.ui.view">
+            <field name="name">view.sale.order.tree.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="amount_total" position="before">
+                    <field name="amount_paid" sum="Paid Amount" widget="monetary" optional="show"/>
+                    <field name="amount_residual" sum="Due Amount" widget="monetary" optional="show"/>
+                </field>
+            </field>
+        </record>
+
+<!--        Product template inherit view-->
+        <record id="view_order_tree_inherit" model="ir.ui.view">
+            <field name="name">view.product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="detailed_type" position="after">
+                    <field name="is_service"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="view_partners_form_crm2" model="ir.ui.view">
+            <field name="name">view.res.partner.form.crm.inherited2</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="crm.view_partners_form_crm1"/>
+            <field name="arch" type="xml">
+                <field name="phone" position="after">
+                    <field name="customer_name"/>
+<!--                    <field name="customer_name1"/>-->
+<!--                    <field name="customer_name2"/>-->
+                </field>
+            </field>
+        </record>
+
+<!--        <record id="sale_order_view_pivot_inherited" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.view.pivot.inherited</field>-->
+<!--            <field name="model">sale.report</field>-->
+<!--            <field name="inherit_id" ref="sale.view_order_product_pivot"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//pivot/field[@name='price_subtotal']" position="after">-->
+<!--                    <field name="amount_residual" type="measure"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,46 @@
+<odoo>
+    <record model="ir.ui.view" id="purchase_order_form_inh">
+        <field name="name">purchase.order.form.inh</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="sale_approval" invisible="1"/>
+                <field name="send_for_approval" invisible="1"/>
+                <field name="approve_button" invisible="1"/>
+                <field name='ready_for_po' invisible="1"/>
+                <field name='is_finance_users' invisible="1"/>
+                <field name='is_po_approval' invisible="1"/>
+                <field name='approval_required' invisible="1"/>
+                <field name='show_confirm' invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='button_approve']" position="attributes">
+                <attribute name="string">Approve Order</attribute>
+                <attribute name="groups">account.group_account_manager, purchase_approval.group_po_type_approval_sales, purchase_approval.group_po_type_approval_regular</attribute>
+            </xpath>
+            <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="purchase_order_form_inh_change_view">
+        <field name="name">purchase.order.form.inh</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="mm_purchase.purchase_order_form_inh"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="po_type" attrs="{'readonly': [('state', 'in', ['to approve', 'purchase', 'done', 'cancel'])]}"/>
+            </xpath>
+            <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                <attribute name="states"></attribute>
+                <attribute name="attrs">{'invisible': ['|', ('state', 'not in', ['draft', 'sent', 'validate']), ('show_confirm', '=', False)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_rfq_send']" position="before">
+                <button name="action_send_for_approval" type="object" string="Send for Approval" class="oe_highlight"
+                        attrs="{'invisible': ['|', ('state', 'not in', ['draft', 'sent']), ('approval_required', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

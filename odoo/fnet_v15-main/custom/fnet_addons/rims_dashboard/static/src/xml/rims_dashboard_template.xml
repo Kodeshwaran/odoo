@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="DashboardRims">
+        <div class="rims_dash" style="width: 100%; height:100%;">
+            <div class="rims_sidebar" style="width:20%;">
+                <ul>
+                    <li class="customer_report"><span>CUSTOMER INFORMATION</span></li>
+                    <li class="email_templates"><span>EMAIL TEMPLATES</span></li>
+                    <li class="sop_documents"><span>SOP DOCUMENTS</span></li>
+                    <li class="epo_change_request"><span>EPO CHANGE REQUEST</span></li>
+                    <li class="mt_change_request"><span>MONITORING THRESHOLDS CHANGE REQUEST</span></li>
+                </ul>
+            </div>
+            <div class="o_row" style="width:80%;float:right;padding-left:100px;">
+                <div class="media">
+                    <div t-foreach="widget.links" t-as="app">
+                        <div class="rims_app_text">
+                            <a t-att-href="app.url" target="_blank" style="padding-right:50px;">
+                                <img t-attf-src="data:image/*;base64,{{ app.app_icon }}"
+                                     class="rims_app_view" t-att-alt="app.name"/>
+                            </a>
+                        </div>
+                        <div class="rims_app_text">
+                            <span t-esc="app.name"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </t>
+</templates>

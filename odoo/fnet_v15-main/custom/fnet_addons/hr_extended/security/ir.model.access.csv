@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_allowance,employee.allowance,model_employee_allowance,base.group_user,1,1,1,1
+access_employee_details,employee.details,model_employee_details,base.group_user,1,1,1,1
+access_hr_payslip,hr.payslip,hr_payroll_community.model_hr_payslip,base.group_user,1,0,0,0
+access_hr_payslip_line,hr.payslip.line,hr_payroll_community.model_hr_payslip_line,base.group_user,1,0,0,0
+access_hr_payslip_input,hr.payslip.input,hr_payroll_community.model_hr_payslip_input,base.group_user,1,0,0,0
+access_hr_payslip_worked_days,hr.payslip.worked_days,hr_payroll_community.model_hr_payslip_worked_days,base.group_user,1,0,0,0
+access_res_partner_bank_hr_manager,res_partner_bank_hr_manager,base.model_res_partner_bank,hr.group_hr_manager,1,1,1,1

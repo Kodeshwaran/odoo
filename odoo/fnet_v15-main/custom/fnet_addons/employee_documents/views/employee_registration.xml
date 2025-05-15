@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="form_employee_registration-form" model="ir.ui.view">
+        <field name="name">employee.registration.form</field>
+        <field name="model">employee.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_draft_document" string="Draft" class="btn-primary" type="object"
+                            states="cancel"/>
+                    <button name="action_approve_document" string="Approve" class="btn-primary" type="object"
+                            states="draft"/>
+                    <button name="action_cancel_document" string="Cancel" class="btn-primary" type="object"
+                            states="draft,approved"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,cancel" clickable="0"/>
+                    <button name="print_offer_letter" string="Print Appointment Letter" type="object" states="approved"
+                            class="btn-danger"/>
+                    <button name="action_create_new_employment" string="Create Employee" class="btn-success"
+                            type="object"
+                            attrs="{'invisible': ['|', ('employee_id', '!=', False), ('state', '!=', 'approved')]}"/>
+                    <button name="%(employee_documents.action_request_registration)d" string="Send by Mail"
+                            class="btn-primary"
+                            type="action"
+                            context="{'default_email' : email,'default_name' : name,'default_register_id' : active_id}"
+                            attrs="{'invisible':['|',('send01','!=',False), ('state','!=','approved')]}"/>
+                    <button name="%(employee_documents.action_request_registration)d" string="Send by Mail"
+                            context="{'default_email' : email,'default_name' : name,'default_register_id' : active_id}"
+                            type="action" attrs="{'invisible':['|',('send01','!=',True), ('state','!=','approved')]}"/>
+<!--                    <button name="action_asset_request" string="Asset request Mail" class="btn-primary" type="object"-->
+<!--                            attrs="{'invisible':['|',('asset_email_boolean','=',True), ('state','!=','approved'), ('state','!=','draft')]}"/>-->
+<!--                    <button name="action_asset_request_return" string="Asset request Mail"  type="object"-->
+<!--                            attrs="{'invisible':['|',('asset_email_boolean','=',False), ('state','!=','approved')]}"/>-->
+<!--                    <button name="action_asset_retrieve" string="Asset Retrieve Mail" class="btn-primary" type="object"-->
+<!--                            attrs="{'invisible':['|',('asset_email_retrieve_boolean','=',True), ('state','!=','approved'), ('state','!=','draft')]}"/>-->
+
+                    <field name="employee_id" invisible="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_employee_recruitment" class="oe_stat_button" icon="fa-bars"
+                                type="object" string="Recruitment"/>
+                        <button name="action_open_employee" class="oe_stat_button" icon="fa-bars" type="object"
+                                string="Employee" attrs="{'invisible': [('employee_id', '=', False)]}">
+                        </button>
+                    </div>
+                    <p>
+                        <strong>
+                            <center>
+                                <h1 style="background-color: rgb(113, 184, 140); width: 50%;">
+                                    <center>PERSONAL INFORMATION</center>
+                                </h1>
+                            </center>
+                        </strong>
+                    </p>
+                    <br/>
+                    <group>
+                        <group>
+                            <label for="name" string="Name" id="name_first"/>
+                            <div>
+                                <div class="o_row o_row_readonly">
+                                    <field name="name" class="oe_inline" nolabel="1" placeholder="First Name"/>
+                                    <field name="last_name" class="oe_inline" nolabel="1" placeholder="Last Name"/>
+                                </div>
+                            </div>
+                            <field name="send01" invisible="1"/>
+                            <field name="fathers_name"/>
+                            <field name="mothers_name"/>
+                            <field name="blood_group"/>
+                            <field name="contact_number"/>
+                            <field name="emergency_contact_number"/>
+                            <field name="date" string="Document Submitted Date"/>
+                            <field name="email" invisible="0"/>
+                            <field name="hr_application_id" invisible="1"/>
+                            <field name="gender"/>
+                            <field name="date_of_birth"/>
+                            <field name="marital"/>
+                            <field name="certificate"/>
+                            <field name="study_field"/>
+                            <!-- <field name="visa_no"/>-->
+                            <field name="passport_id"/>
+                            <field name="pf_number"/>
+                            <field name="uan_number"/>
+                            <field name="aadhar_number"/>
+                            <field name="pan_number"/>
+                            <field name="esi_number"/>
+                        </group>
+                        <group>
+                            <span>
+                                <b>Present Address</b>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="zip" placeholder="ZIP" options="{'format': 0}" class="o_address_zip"/><br/>
+                                <field name="state_id" class="o_address_state" placeholder="State"/><br/>
+                                <field name="country_id" placeholder="Country" class="o_address_country"/>
+                            </div>
+                            <span>
+                                <b>Permanent Address</b>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="p_street" placeholder="Street..." class="o_address_street"/>
+                                <field name="p_street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="p_city" placeholder="City" class="o_address_city"/>
+                                <field name="p_zip" placeholder="ZIP" options="{'format': 0}" class="o_address_zip"/><br/>
+                                <field name="p_state_id" class="o_address_state" placeholder="State"/><br/>
+                                <field name="p_country_id" placeholder="Country" class="o_address_country"/>
+                            </div>
+                            <field name="no_of_year_experience"/>
+                            <field name="total_previous_ctc" string="Previous Organization CTC"/>
+                            <field name="previous_designation"/>
+                            <field name="joining_date_proposed"/>
+                            <!-- <field name="expected_joining_date" invisible="0"/>-->
+                            <field name="company_ctc"/>
+                            <field name="job_id" string="Current Designation"/>
+                            <field name="department_id" string="Department"/>
+                            <field name="employee_categ"/>
+                            <field name="joining_date"/>
+                            <field name="employee_id" groups="base.group_no_one" invisible="1"/>
+                            <field name="date_probation"/>
+                            <field name="onroll_employment_date"/>
+                            <field name="consolidated_pay"/>
+                        </group>
+                        <group string="Asset Details" invisible="1">
+                            <field name="required_sim"/>
+                            <field name="sim" attrs="{'invisible':[('required_sim','!=',True)]}"/>
+                            <field name="official_mail"/>
+                            <field name="citrix_user"/>
+                            <field name="asset"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="citrix_email" invisible="1"/>
+                            <field name="asset_email_boolean" invisible="1"/>
+                            <field name="asset_email_retrieve_boolean"/>
+                        </group>
+                        <group invisible="1">
+                            <field name="mail_server"/>
+                            <field name="citrix_login"/>
+                            <field name="dl"/>
+                            <field name="erp_login"/>
+                            <field name="assest_required"/>
+                            <field name="file_server_access"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Educational Certification">
+                            <field name="educational_ids" context="{'default_type': 'educational'}">
+                                <tree editable="bottom" context="{'default_type': 'educational'}">
+                                    <field name="type" invisible="1"/>
+                                    <field name="course_type"/>
+                                    <field name="name_of_the_institute"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="dept_name"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="marks"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="passing_year"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="course_details"
+                                           attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>
+                                    <field name="global_certification"
+                                           attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>
+                                    <field name="certification_no"
+                                           attrs="{'readonly': ['|', ('course_type', 'in', ('ug', 'pg', 'other_course')), ('global_certification', '!=', 'yes')], 'required': [('global_certification', '=', 'yes')]}"/>
+                                    <field name="others"
+                                           attrs="{'readonly': [('course_type', '!=', 'other_course')]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Technical Certification">
+                            <field name="technical_ids" context="{'default_type': 'technical'}">
+                                <tree editable="bottom">
+                                    <field name="type" invisible="1"/>
+                                    <field name="course_type"/>
+                                    <field name="name_of_the_institute"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="dept_name"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="marks"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="passing_year"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="course_details"
+                                           attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>
+                                    <field name="global_certification"
+                                           attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>
+                                    <field name="certification_no"
+                                           attrs="{'readonly': ['|', ('course_type', 'in', ('ug', 'pg', 'other_course')), ('global_certification', '!=', 'yes')], 'required': [('global_certification', '=', 'yes')]}"/>
+                                    <field name="others"
+                                           attrs="{'readonly': [('course_type', '!=', 'other_course')]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Other Certification" groups="base.group_no_one">
+                            <field name="education_qualif_ids">
+                                <tree editable="bottom">
+                                    <field name="type" invisible="0"/>
+                                    <field name="course_type"/>
+                                    <field name="name_of_the_institute"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="dept_name"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="marks"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="passing_year"
+                                           attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>
+                                    <field name="course_details"
+                                           attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>
+                                    <field name="global_certification"
+                                           attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>
+                                    <field name="certification_no"
+                                           attrs="{'readonly': ['|', ('course_type', 'in', ('ug', 'pg', 'other_course')), ('global_certification', '!=', 'yes')], 'required': [('global_certification', '=', 'yes')]}"/>
+                                    <field name="others"
+                                           attrs="{'readonly': [('course_type', '!=', 'other_course')]}"/>
+                                </tree>
+<!--                                <form>-->
+<!--                                    <group>-->
+<!--                                        <group>-->
+<!--                                            <field name="type" invisible="1"/>-->
+<!--                                            <field name="course_type"/>-->
+<!--                                            <field name="name_of_the_institute"-->
+<!--                                                   attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>-->
+<!--                                            <field name="dept_name"-->
+<!--                                                   attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>-->
+<!--                                            <field name="marks"-->
+<!--                                                   attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>-->
+<!--                                            <field name="passing_year"-->
+<!--                                                   attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>-->
+<!--                                        </group>-->
+<!--                                        <group>-->
+<!--                                            <field name="course_details"-->
+<!--                                                   attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>-->
+<!--                                            <field name="global_certification"-->
+<!--                                                   attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>-->
+<!--                                            <field name="certification_no"-->
+<!--                                                   attrs="{'readonly': ['|', ('course_type', 'in', ('ug', 'pg', 'other_course')), ('global_certification', '!=', 'yes')], 'required': [('global_certification', '=', 'yes')]}"/>-->
+<!--                                            <field name="others"-->
+<!--                                                   attrs="{'readonly': [('course_type', '!=', 'other_course')]}"/>-->
+<!--                                        </group>-->
+<!--                                    </group>-->
+<!--                                </form>-->
+                            </field>
+                        </page>
+                        <!--                                <field name="education_qualif_ids" style="width: 1230px !important;">-->
+                        <!--                                    <tree editable="bottom">-->
+                        <!--                                        <field name="course_type"/>-->
+                        <!--                                        <field name="name_of_the_institute"-->
+                        <!--                                               attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>-->
+                        <!--                                        <field name="dept_name"-->
+                        <!--                                               attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>-->
+                        <!--                                        <field name="marks"-->
+                        <!--                                               attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>-->
+                        <!--                                        <field name="passing_year"-->
+                        <!--                                               attrs="{'readonly': [('course_type', 'in', ('technical', 'other_course'))]}"/>-->
+                        <!--                                        <field name="course_details"-->
+                        <!--                                               attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>-->
+                        <!--                                        <field name="global_certification"-->
+                        <!--                                               attrs="{'readonly': [('course_type', 'in', ('ug', 'pg', 'other_course'))]}"/>-->
+                        <!--                                        <field name="certification_no"-->
+                        <!--                                               attrs="{'readonly': ['|', ('course_type', 'in', ('ug', 'pg', 'other_course')), ('global_certification', '!=', 'yes')], 'required': [('global_certification', '=', 'yes')]}"/>-->
+                        <!--                                        <field name="others"-->
+                        <!--                                               attrs="{'readonly': [('course_type', '!=', 'other_course')]}"/>-->
+
+                        <!--                                    </tree>-->
+                        <!--                                </field>-->
+                        <page name="documents" string="Documents">
+                            <field name="line_ids" widget="one2many">
+                                    <tree editable="bottom" >
+                                        <field name="document_name"/>
+                                        <field name="file" filename="file_name"/>
+                                    </tree>
+                                </field>
+                        </page>
+                        <page name="checklist" string="Checklist">
+                            <field name="checklist_ids">
+                                <tree editable="top">
+                                    <field name="checklist2"/>
+                                    <field name="verify"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="form_employee_registration_tree" model="ir.ui.view">
+        <field name="name">employee.registration.tree</field>
+        <field name="model">employee.registration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" invisible="0"/>
+                <field name="joining_date"/>
+                <field name="email" invisible="0"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_employee_registration" model="ir.actions.act_window">
+        <field name="name">Onboard</field>
+        <field name="res_model">employee.registration</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a new hostel entry</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_employees_onboard_root" name="Onboard" parent="hr_recruitment.menu_crm_case_categ0_act_job"
+              action="action_employee_registration" sequence="5"/>
+    <menuitem id="menu_employee_onboard_root" name="Onboard" parent="hr.menu_hr_employee_payroll"
+              action="action_employee_registration" sequence="20"/>
+
+    <data>
+        <record id="onboarding_mail_template" model="mail.template">
+            <field name="name">employee_mail_template</field>
+            <field name="model_id" ref="employee_documents.model_employee_registration"/>
+            <field name="subject">Appointment Letter - Futurenet Technologies</field>
+            <field name="email_to">%(object.email)s</field>
+            <!--            <field name="report_name">employee_{{object.name}}_name</field>-->
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="xml">
+                <div>
+                    <head>
+                        <title>Welcome to Our Team</title>
+                    </head>
+                    <body>
+                        <p>Dear
+                            <t t-out="object.name">,</t>
+                            ,
+                        </p>
+
+                        <p>We are pleased to extend an offer of employment for the position of
+                            <t t-out="object.job_id.name"></t>
+                            at Futurenet Technologies (India) Private Limited.
+                            We were greatly impressed by your qualifications and the skills you demonstrated during the
+                            interview process.
+                        </p>
+
+                        <p>Please find the attached offer letter as a PDF document. If you have any questions or need
+                            further information,
+                            please do not hesitate to contact HR at hr@futurenet.in.
+                        </p>
+
+                        <p>We look forward to your positive response.
+                        </p>
+
+                        <p>Best regards,
+                            <br/>
+                            HR,
+                            <br/>
+                            Futurenet Technologies (India) Private Limited
+                        </p>
+                    </body>
+                </div>
+
+            </field>
+            <!--            <field name="report_template" ref="action_report_regular_employment_letter"/>-->
+            <!--            <field name="report_name">{{ (object.name or '').replace('/','_') }}</field>-->
+            <!--            <field name="lang">{{ object.partner_id.lang }}</field>-->
+            <!--            <field name="auto_delete" eval="True"/>-->
+        </record>
+
+
+        <record id="asset_request_mail_template" model="mail.template">
+            <field name="name">asset_request_mail_template</field>
+            <field name="model_id" ref="employee_documents.model_employee_registration"/>
+            <field name="subject">Asset Request</field>
+            <field name="email_to">{{ (object.citrix_email)}}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="xml">
+                <div class="header" style="padding-top:10px;width:60%;">
+                    <tr width="60%"
+                            style="text-align:center;font-size:11px">
+                       <center><h2><u>Employee Information</u></h2></center>
+                    </tr>
+                </div>
+                <div>
+                                <table class="table table-bordered"
+                                       style="width:60%;"
+                                       >
+                                    <thead>
+
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Employee Name</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.name"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Last Name</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.last_name"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>DOJ</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.joining_date"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Team</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.department_id"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Designation</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.job_id"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Reporting Manager</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.department_id.manager_id"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Mobile No.</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.contact_number"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Official Email ID</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.official_mail"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Personal Email ID</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.email"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Mail Server</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.mail_server"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Citrix Login</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.mail_server"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Citrix External Access</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.citrix_login"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>DL</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.dl"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>ERP Login</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.erp_login"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>Asset Required</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.assest_required"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>File server access</strong>
+                                            </td>
+                                            <td width="50%"
+                                                style="text-align:center;font-size:11px">
+                                                <strong>
+                                                <span t-field="object.file_server_access"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+
+
+                                    </thead>
+                                </table>
+                            </div>
+<!--                <div>-->
+
+<!--                    <body>-->
+<!--                        <p>Dear Team,-->
+<!--                        </p>-->
+
+<!--                        <p>Kindly create official Mail id, System, Citrix login-->
+<!--                            <t t-if="object.required_sim">-->
+<!--                               and Sim Card-->
+<!--                            </t>-->
+<!--                            for the following Employee,-->
+<!--                        </p>-->
+
+<!--                        <p>First Name :-->
+<!--                            <t t-out="object.name"></t>-->
+<!--                            <br/>-->
+<!--                            Last Name :-->
+<!--                            <t t-out="object.last_name"></t>-->
+<!--                            <br/>-->
+<!--                            Date Of Birth :-->
+<!--                            <t t-out="object.date_of_birth"></t>-->
+<!--                            <br/>-->
+<!--                            Team :-->
+<!--                            <t t-out="object.department_id.name"></t>-->
+<!--                            <br/>-->
+<!--                            Designation :-->
+<!--                            <t t-out="object.job_id.name"></t>-->
+<!--                            <br/>-->
+<!--                            Reporting Manager :-->
+<!--                            <t t-out="object.department_id.manager_id.name"></t>-->
+<!--                            <br/>-->
+<!--                            Mobile No :-->
+<!--                            <t t-out="object.contact_number"></t>-->
+<!--                        </p>-->
+<!--                    </body>-->
+<!--                </div>-->
+
+            </field>
+
+        </record>
+
+
+        <record id="asset_retrieve_mail_template" model="mail.template">
+            <field name="name">asset_retrieve_mail_template</field>
+            <field name="model_id" ref="employee_documents.model_employee_registration"/>
+            <field name="subject">Asset Retrieve</field>
+            <field name="email_to">{{ (object.citrix_email)}}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="xml">
+                <div>
+
+                    <body>
+                        <p>Dear Team,
+                        </p>
+                        <p>
+                            This is a retrieve mail for the employee:
+                        </p>
+
+                        <p>First Name :
+                            <t t-out="object.name"></t>
+                            <br/>
+                            Last Name :
+                            <t t-out="object.last_name"></t>
+                            <br/>
+                            Date Of Birth :
+                            <t t-out="object.date_of_birth"></t>
+                            <br/>
+                            Team :
+                            <t t-out="object.department_id.name"></t>
+                            <br/>
+                            Designation :
+                            <t t-out="object.job_id.name"></t>
+                            <br/>
+                            Reporting Manager :
+                            <t t-out="object.department_id.manager_id.name"></t>
+                            <br/>
+                            Mobile No :
+                            <t t-out="object.contact_number"></t>
+                        </p>
+                    </body>
+                </div>
+            </field>
+        </record>
+
+<!--        <record id="offer_letter_mail_template" model="mail.template">-->
+<!--            <field name="name">offer_letter_mail_template</field>-->
+<!--            <field name="model_id" ref="employee_documents.model_employee_registration"/>-->
+<!--            <field name="subject">Offer Letter</field>-->
+<!--            <field name="email_to">{{ (object.citrix_email)}}</field>-->
+<!--            <field name="auto_delete" eval="False"/>-->
+<!--            <field name="body_html" type="xml">-->
+<!--                <div>-->
+
+<!--                    <body>-->
+<!--                        <p>Dear Candidate,-->
+<!--                        </p>-->
+<!--                        <p>-->
+<!--                            Greetings from Futurenet Technologies!!!-->
+<!--                        </p>-->
+<!--                        <br></br>-->
+<!--                        <p>-->
+<!--                            Based on our discussion, we are pleased to offer you the position "<b><t t-out="object.job_id.name"></t></b>" and your CTC  will be Rs. "<b><t t-out="object.company_ctc"></t></b>"- per month. We expect you to accept this offer and join on-->
+<!--                            "<b><t t-out="object.joining_date_proposed"></t></b>". Kindly acknowledge the same by today.-->
+
+<!--                           <p> The Following Documents should be submitted on the Date of Joining &amp; kindly send the soft copies of the below documents in the acknowledgment mail.</p>-->
+
+
+
+<!--                          <p>  1.Passport size Photograph-Soft Copy-->
+<!--                              <br></br>-->
+<!--                            2.Original and Copies of Educational / Professional qualifications and Experience certificates-->
+<!--                              <br></br>-->
+<!--                            3.Copy and original of Aadhar &amp; PAN-->
+<!--                              <br></br>-->
+<!--                            4.Relieving Letter of Previous Organization &amp; last 3 Months payslip.-->
+<!--                              <br></br>-->
+<!--                            We are happy to welcome you to our Futurenet family.</p>-->
+
+
+<!--                        </p>-->
+<!--                    </body>-->
+<!--                </div>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="offer_letter_extra_mail_template" model="mail.template">-->
+<!--            <field name="name">offer_extra_letter_mail_template</field>-->
+<!--            <field name="model_id" ref="employee_documents.model_employee_registration"/>-->
+<!--            <field name="subject">Offer Letter With Additional Info</field>-->
+<!--            <field name="email_to">{{ (object.citrix_email)}}</field>-->
+<!--            <field name="auto_delete" eval="False"/>-->
+<!--            <field name="body_html" type="xml">-->
+<!--                <div>-->
+
+<!--                    <body>-->
+<!--                        <p><strong>To</strong>-->
+<!--                        </p>-->
+<!--                        <p>-->
+<!--                            The HR Manager-->
+<!--                            <br></br>-->
+<!--                            Futurenet Technologies (India) Pvt.Ltd-->
+<!--                            <br></br>-->
+<!--                            No 37, 1st Street, Singaravelan Nagar, Maduravoyal,-->
+<!--                            <br></br>-->
+<!--                            Chennai-600095                        </p>-->
+<!--                        <br></br>-->
+<!--                        <p>-->
+<!--                           I, <b><t t-out="object.name"></t></b>, hereby declare and confirm that it is not mandatory for me-->
+<!--                            to contribute and as such do not wish to join the Employees Provident Fund-->
+<!--                            scheme. </p>-->
+<!--                          <p>-->
+<!--                            I wish.to inform youaction_hr that I was not a member of EPF Scheme anywhere before-->
+<!--                            joining this establishment. I am aware of the consequences in giving this-->
+<!--                              declaration.</p>-->
+
+
+<!--                          <p> Name:-->
+<!--                              <br></br>-->
+<!--                              Signature:-->
+<!--                              <br></br>-->
+<!--                              Date:-->
+<!--                              <br></br>-->
+<!--                              Place:-->
+<!--                           </p>-->
+
+
+<!--                    </body>-->
+<!--                </div>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

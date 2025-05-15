@@ -1,0 +1,157 @@
+<odoo>
+    <record id="view_hr_late_approval_form" model="ir.ui.view">
+        <field name="name">hr.late.approval.form</field>
+        <field name="model">hr.late.approval</field>
+        <field name="arch" type="xml">
+            <form string="Late Arrival Approval">
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state', '!=', 'draft'),('is_hide_manager', '=', True)]}"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" groups="hr.group_hr_user"
+                            attrs="{'invisible': ['|','|',('state', '!=', 'draft'),('is_hide_manager', '=', False),('is_manager', '=', False)]}"/>
+
+                    <button name="action_reject" type="object" string="Reject"
+                        attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="is_manager"/>
+                        <field name="is_hide_manager"/>
+                        <field name="date_created"/>
+                        <div>
+                            <field name="late_ids" widget="one2many">
+                                <tree editable="bottom">
+                                    <field name="employee_id"/>
+                                    <field name="is_approved"/>
+                                    <field name="late_count"/>
+                                    <field name="leave_days"/>
+                                    <button name="action_view_late_attendance" type="object" string="View Late Attendance" class="oe_highlight"/>
+                                </tree>
+                            </field>
+                        </div>
+<!--                        <field name="late_count"/>-->
+<!--                        <field name="leave_days"/>-->
+                    </group>
+                    <group>
+                        <button name="generate_late_arrival_report" type="object" string="Generate Report"/>
+                        <field name="late_arrival_report" filename="late_arrival_report_name" widget="binary" string="Late Arrival Report" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_late_approval_tree" model="ir.ui.view">
+        <field name="name">hr.late.approval.tree</field>
+        <field name="model">hr.late.approval</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="date_created"/>
+<!--                <field name="late_count"/>-->
+<!--                <field name="leave_days"/>-->
+                <field name="state"/>
+                <field name="late_arrival_report" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="late_arrival_approval" model="ir.actions.act_window">
+        <field name="name">Late Arrival Approval</field>
+        <field name="res_model">hr.late.approval</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to create a new leave cancellation request.
+          </p>
+        </field>
+    </record>
+
+    <record id="view_hr_late_approval_search" model="ir.ui.view">
+        <field name="name">hr.late.approval.search</field>
+        <field name="model">hr.late.approval</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="date_created"/>
+                <field name="state"/>
+
+<!--                <filter name="filter_manager" string="Manager" domain="[('employee_id.parent_id', '=', user.partner_id)]"/>-->
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_attendance_late_tree_view" model="ir.ui.view">
+        <field name="name">hr.attendance.late.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="priority">10000</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="Late Attendance Records">
+                <field name="employee_id" readonly="1"/>
+                <field name="check_in" readonly="1"/>
+                <field name="check_out" readonly="1"/>
+                <field name="is_regularised"/>
+                <field name="reason"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_view_late_attendance" model="ir.actions.act_window">
+        <field name="name">Late Attendance Records</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.attendance</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="fnet_late.hr_attendance_late_tree_view"/>
+        <!-- REMOVE is_late_period -->
+        <field name="domain">[('is_late_period', '=', True)]</field>
+    </record>
+
+
+
+
+
+
+
+
+
+
+    <menuitem
+            id="menu_late_arrival_approval"
+            parent="hr_holidays.menu_hr_holidays_approvals"
+            sequence="5"
+            action="late_arrival_approval"
+            groups="hr_holidays.group_hr_holidays_responsible"/>
+
+
+
+    <record id="hr_shift_late_tree_view" model="ir.ui.view">
+        <field name="name">hr.employee.shift.tree</field>
+        <field name="model">hr.employee.shift</field>
+        <field name="priority">10000</field>
+        <field name="arch" type="xml">
+            <tree editable="top" string="Late Attendance Records">
+                <field name="employee_id"/>
+                <field name="date_start" />
+                <field name="actual_date_start" />
+                <field name="is_regularised"/>
+                <field name="reason"/>
+            </tree>
+        </field>
+    </record>
+
+     <record id="hr_employee_form_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.inherit.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_email']" position="after">
+                    <field name="show_manager"/>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

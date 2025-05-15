@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+		
+		<record id="res_config_settings_view_form_inh" model="ir.ui.view">
+			<field name="name">res.config.settings.inh.view.form.inherit.sale</field>
+			<field name="model">res.config.settings</field>
+			<field name="priority" eval="10"/>
+			<field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@data-key='sale_management']/h2" position="before">
+                    <h2>Default Margin Level(%s)</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="use_quotation_margin_level" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="use_quotation_margin_level" />
+                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company" />
+                                <div class="text-muted">
+                                    Quote Validate based on margin %.
+                                </div>
+                                <div class="content-group" attrs="{'invisible': [('use_quotation_margin_level','=',False)]}">
+                                    <div class="mt16">
+                                        <field name="quotation_margin_level"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Pro-Forma Invoice</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="allow_pro_forma" />
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="allow_pro_forma" />
+                                <div class="text-muted">
+                                    Click to allow Pro Forma Invoices
+                                </div>
+                                <div class="content-group" attrs="{'invisible': [('allow_pro_forma','=',False)]}">
+                                    <div class="mt16">
+                                        <label for="pro_forma_sequence"/>
+                                        <field name="pro_forma_sequence"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </xpath>
+			</field>
+		</record>
+		
+		
+		<record model="ir.ui.view" id="view_order_form_inh">
+            <field name="name">view.order.form.inh</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fiscal_position_id']" position="after">
+                    <field name="pro_forma_generated" invisible="1"/>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]/h1" position="inside">
+                    <field name="quotation_name" attrs="{'invisible':[('state', 'not in', ['draft','sent', 'po_receive'])]}" readonly="1"/><br/>
+                    <label for="pro_forma_number" attrs="{'invisible':[('pro_forma_generated', '=', False)]}"/><br/>
+                    <field name="pro_forma_number" attrs="{'invisible':[('pro_forma_generated', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_quotation_send']" position="after">
+                    <button name="generate_pro_forma" type="object" class="oe_highlight" string="Generate Pro-Forma"
+                            attrs="{'invisible': [('pro_forma_generated', '!=', False)]}"/>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]/h1/field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('state', 'not in', ['sale', 'done'])]}</attribute>
+                </xpath>
+               <xpath expr="//sheet/group/group/field[@name='partner_id']" position="attributes">
+				   <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+				   <attribute name="domain">[('customer_rank','>=',1)]</attribute>
+                </xpath>
+               <xpath expr="//button[@name='action_quotation_send']" position="after">
+				   <button name="%(mm_sale.action_sale_po)d" string="Create PO" type="action" states="sale" class="btn-primary"/>
+                </xpath>
+               <xpath expr="//sheet/group/group/field[@name='partner_invoice_id']" position="attributes">
+				   <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+				   <attribute name="domain">[]</attribute>
+                </xpath>
+               <xpath expr="//sheet/group/group/field[@name='partner_shipping_id']" position="attributes">
+				   <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+				   <attribute name="domain">[]</attribute>
+                </xpath>
+               <xpath expr="//page[@name='other_information']//group/group/field[@name='user_id']" position="attributes">
+				   <attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+                </xpath>
+               <xpath expr="//div[@name='button_box']" position="inside">
+				   <button name="action_view_purchase"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o">
+                            <field name="purchase_count" widget="statinfo" string="Purchase"/>
+                        </button>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="sale_type_id" required="1" options="{'no_create': True}"/>
+                    <field name="sale_sub_type_id" options="{'no_create': True}" domain="[('type_id', '=', sale_type_id)]"/>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="quote_validity"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="after">
+				   <field name="ordered_delivery_date" attrs ="{'readonly':[('state', 'in', ['sale','done','cancel'])]}"/>
+                </xpath>
+
+                <xpath expr="//notebook/page/field[@name='order_line']/tree" position="inside">
+				   <button name="action_delivery_date" string="Update Delivery" type="object" class="btn-primary"
+                   attrs ="{'invisible':[('state',  '!=' , 'sale')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_quotation_tree_view_inherited">
+            <field name="name">view.sale.quotation.tree.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="quotation_name" string="Number"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sale_type_id" options="{'no_create': True}"/>
+                    <field name="sale_sub_type_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_quotation_tree_view_inherited">
+            <field name="name">view.sale.quotation.tree.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="l10n_in_sale.view_order_form_inherit_l10n_in_sale"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='l10n_in_gst_treatment']" position="attributes">
+                    <attribute name="string">GST Type</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sale_order_tree_inherited">
+            <field name="name">view.sale.order.tree.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sale_type_id" options="{'no_create': True}"/>
+                    <field name="sale_sub_type_id"/>
+                </xpath>
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="sale_order_view_search_inherit_quotation_inherited">
+            <field name="name">view.sale.quotation.search.view.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="quotation_name" string="Quotation" filter_domain="[('quotation_name', 'ilike', self)]"/>
+                </xpath>
+            </field>
+         </record>
+
+        <record model="ir.ui.view" id="sale_order_search_view_inherited">
+            <field name="name">view.sale.order.search.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="inside">
+                    <filter name="group_sales_team" string="Sales Team" context="{'group_by':'team_id'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_users_form_view_inherited">
+            <field name="name">view.res.users.form.inherited</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]/group/field[@name='partner_id']" position="after">
+                    <field name="incharge_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="account_accountant.menu_accounting" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        </record>
+
+        <record id="model_sale_order_action_late_delivery_alert" model="ir.actions.server">
+            <field name="name">Late Delivery Alert</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_late_delivery_alert()</field>
+        </record>
+
+
+    </data>
+</odoo>

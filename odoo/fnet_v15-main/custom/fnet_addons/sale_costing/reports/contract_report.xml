@@ -1,0 +1,1152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="sale_order_contract_report">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page" style="height:100%; font-size: 30px;">
+                    <t t-set="company" t-value="doc.company_id if doc and 'company_id' in doc else res_company"/>
+                    <div style="text-align: center; margin-top: 300px;">
+                        <h1 style="font-size:45px; padding:10px;"><strong>CONTRACT</strong></h1>
+                        <h1 style="font-size:45px; padding:10px;"><strong>FOR</strong></h1>
+                        <h1 style="font-size:45px; padding:10px; color:#00acff;"><strong>MANAGED</strong>
+                            <span style="color:00de8a;"><strong>SERVICE</strong></span>
+                        </h1>
+                        <h1 style="font-size:30px; padding:10px;">(Statement of Work)</h1>
+                        <h1 style="font-size:15px; padding:10px; font-weight: bold;">BY</h1>
+                        <h1 style="font-size:50px; padding:10px;">
+                            <strong>
+                                <t t-esc="company.name"/>
+                            </strong>
+                        </h1>
+                        <h1 style="font-size:30px; padding:30px;">
+                            <t t-esc="company.name"/>
+                            <br/>
+                            <t t-esc="company.street"/>
+                            <br/>
+                            <t t-esc="company.street2"/>
+                            <br/>
+                            <t t-esc="company.city"/>
+                            <br/>
+                            <t t-esc="company.state_id.name"/>
+                            <br/>
+                            <t t-esc="company.zip"/>
+                            <br/>
+                            <t t-esc="company.country_id.name"/>
+                            <br/>
+                        </h1>
+                        <a t-att-href="company.website" target="_blank">
+                            <t t-esc="company.website"/>
+                        </a>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <h1 style="font-size:15px; font-weight: bold;">AND BETWEEN</h1>
+                        <br/>
+                        <t t-set="partner" t-value="doc.partner_id"/>
+                        <div>
+                            <t t-if="partner.image_1920">
+                                <div class="col flex-grow-0 pr-3">
+                                    <img t-attf-src="#{image_data_uri(partner.avatar_1024)}" alt="Contact"/>
+                                </div>
+                            </t>
+                        </div>
+                        <h1 style="font-size:50px; padding:30px;">
+                            <strong>
+                                <t t-esc="partner.name"/>
+                            </strong>
+                        </h1>
+                        <h1 style="font-size:30px; padding:30px;">
+                            <t t-esc="partner.name"/>
+                            <br/>
+                            <t t-esc="partner.street"/>
+                            <br/>
+                            <t t-esc="partner.street2"/>
+                            <br/>
+                            <t t-esc="partner.city"/>
+                            <br/>
+                            <t t-esc="partner.state_id.name"/>
+                            <br/>
+                            <t t-esc="partner.zip"/>
+                            <br/>
+                            <t t-esc="partner.country_id.name"/>
+                        </h1>
+                    </div>
+                    <br/>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Confidentiality</h1>
+                        <br/>
+                        <p>
+                            This contract is being submitted to
+                            <strong>
+                                <t t-esc="partner.name"/>
+                            </strong>
+                            . Ltd (herein referred to as 'Customer') by '
+                            <strong>
+                                <t t-esc="company.name"/>
+                            </strong>
+                            (here in referred to as Service Provider) on the understanding that the contents would
+                            not be divulged to any third party without prior written consent from the latter.
+                        </p>
+                    </div>
+                    <br/>
+                    <div style="page-break-before: always;">
+                        <div>
+                            <h1 style="font-size:30px; font-weight:bold; color:#00acff;">AGREEMENT</h1>
+                            <br/>
+                            <p>
+                                This Agreement between<t t-esc="partner.name"/>. Ltd, a company incorporated under the
+                                provisions of the Companies Act, 1956 having its registered office at
+                                <t t-esc="partner.name"/>,
+                                <t t-esc="partner.street"/>,
+                                <t t-esc="partner.street2"/>,
+                                <t t-esc="partner.city"/>,
+                                <t t-esc="partner.state_id.name"/>,
+                                <t t-esc="partner.zip"/>,
+                                <t t-esc="partner.country_id.name"/>, hereinafter referred to as '<t t-esc="partner.name"/>.'
+                                <br/>
+                                <br/>
+                                <t t-esc="company.name"/>, a company incorporated under the provisions of the Companies
+                                Act, 1956, having its registered office at
+                                <t t-esc="company.name"/>,
+                                <t t-esc="company.street"/>,
+                                <t t-esc="company.street2"/>,
+                                <t t-esc="company.city"/>,
+                                <t t-esc="company.state_id.name"/>,
+                                <t t-esc="company.zip"/>,
+                                <t t-esc="company.country_id.name"/>,
+                                (herein after referred to as ‘<t t-esc="company.name"/>’.
+                                <br/>
+                                <br/>
+                                The expressions
+                                <t t-esc="partner.name"/>
+                                and
+                                <t t-esc="company.name"/>
+                                are each hereinafter also referred to as the “Party” and collectively, as the “Parties”.
+                            </p>
+                        </div>
+                        <br/>
+                        <div>
+                            <h1 style="font-size:30px; font-weight: bold; color:#00acff;">WHEREAS</h1>
+                            <br/>
+                            <p>
+                                The Objective of this terms of the contract is to provide “<t t-esc="partner.name"/>” an
+                                understanding of the in-scope services, service levels and governance structure,
+                                necessary to provide services to them. The SOW is based upon the information and data
+                                furnished by "<t t-esc="partner.name"/>".
+                                <br/>
+                                Now, the Parties hereby enter into this Agreement on non-exclusive basis to provide the
+                                agreed services on the terms and conditions appearing hereinafter.
+                            </p>
+                        </div>
+                    </div>
+                    <br/>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Scope Of Work</h1>
+                        <br/>
+                        <p>
+                            <t t-esc="company.name"/>
+                            is responsible for providing the below category of services
+                            holistically.
+                        </p>
+                        <table style="border:1px solid black; padding:10px; width:100%; text-align:center;">
+                            <thead>
+                                <tr>
+                                    <th style="border:1px solid black; text-align:center;">Service Type</th>
+                                    <th style="border:1px solid black; text-align:center;">Service Code</th>
+                                    <th style="border:1px solid black; text-align:center;">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="services" t-value="doc.sale_order_id.opportunity_id.service_type_ids"/>
+                                <t t-foreach="services" t-as="rec">
+                                    <tr>
+                                        <td style="border:1px solid black; text-align:center;">
+                                            <t t-esc="rec.crm_service_type"/>
+                                        </td>
+                                        <td style="border:1px solid black; text-align:center;">
+                                            <t t-esc="rec.code"/>
+                                        </td>
+                                        <td style="border:1px solid black; text-align:center;">
+                                            <t t-esc="rec.description"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <br/>
+
+
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Managed Services</h1>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Data Center Support Services
+                        </h1>
+                        <br/>
+                        <p>
+                            <t t-esc="company.name"/>
+                            is responsible for providing 24/7 support to<t t-esc="partner.name"/>, Data Center
+                            infrastructure equipments in Scope, in terms of Monitor, Maintain and Breakfix to ensure
+                            availability as per the agreed SLA through 6 people at Chennai, one person each at four
+                            other locations based on agreed timeslots by Onsite dedicated team and Remote
+                            Infrastructure Management Services (Shared team).
+                        </p>
+
+                        <br/>
+
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Technology Landscape
+                            Supported
+                        </h1>
+                        <br/>
+                        <table style="border:1px solid black; padding:10px; width:100%; text-align:center;">
+                            <thead>
+                                <tr>
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">Platform
+                                    </th>
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">
+                                        Virtualization
+                                    </th>
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">Network
+                                    </th>
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">Storage
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Windows
+                                    </td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">VMware</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Network
+                                    </td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Storage
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Linux</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;"></td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Fortinet
+                                    </td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">AMI</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Service Window:</h1>
+                        <br/>
+                        <p>
+                            <t t-esc="company.name"/>
+                            will provide the in-scope services, as per the Service Window detailed below
+                        </p>
+                        <ul>
+                            <li>Remote Infrastructure Management Services (RIMS) – 24X7x365Days.</li>
+                            <li>ONSITE TEAM – 06:30 AM TO 09:30 PM – Monday through Saturday.</li>
+                            <li>L7 Consulting -First Six Months - 4 Hrs. per Month Second Six Months- 4 Hrs
+                                Bi-Monthly
+                            </li>
+                        </ul>
+                    </div>
+                    <br/>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">EPO SUPPORTED:</h1>
+                        <br/>
+                        <p>Data Center: - (Detailed EPOs Count in APPENDIX 1)</p>
+                        <table style="border:1px solid black; padding:10px; width:100%; text-align:center;">
+                            <thead>
+                                <tr style="background-color: #7eb6c9;">
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">EPOs
+                                        Details
+                                    </th>
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="count" t-value="doc.sale_order_id.epo_costing_ids"/>
+                                <t t-set="grand_total" t-value="0"/>
+                                <t t-foreach="count" t-as="rec">
+                                    <tr>
+                                        <td style="border:1px solid black; padding:10px; text-align:center;">
+                                            <t t-esc="rec.sale_epo_id.name"/>
+                                        </td>
+                                        <td style="border:1px solid black; padding:10px; text-align:center;">
+                                            <t t-esc="rec.sale_epo_qty"/>
+                                        </td>
+                                        <t t-set="grand_total" t-value="grand_total + rec.sale_epo_qty"/>
+                                    </tr>
+                                </t>
+                                <tr style="background-color: #7eb6c9;">
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">
+                                        <strong>Grand Total</strong>
+                                    </td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">
+                                        <t t-esc="grand_total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <p>End User Devices:</p>
+                        <table style="border:1px solid black; width:100%; text-align:center;">
+                            <thead>
+                                <tr style="background-color:00de8a;">
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">Location
+                                    </th>
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">End Users
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">Test</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Description of Services</h1>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Remote Infrastructure
+                            Management Service
+                        </h1>
+                        <h2 style="font-size:30px; font-weight:bold; color:#00acff;">Monitoring</h2>
+                        <p>Server Infrastructure will be monitored on a 24/7 scale for the specific parameters in
+                            each of the device categories as mentioned in the below table. Appropriate action will
+                            be taken on critical alerts generated from the devices and closed properly.
+                        </p>
+                        <br/>
+                        <table style="border:2px solid #ffffff; padding:10px; width:100%; text-align:center;">
+                            <thead>
+                                <tr style="background-color:#0da0d8;">
+                                    <th style="border:1px solid #ffffff; padding:10px; text-align:center;">
+                                        MONITORING
+                                    </th>
+                                    <th style="border:1px solid #ffffff; padding:10px; text-align:center;">STATUS
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color:#6ca3c8;">
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; text-align:left;">
+                                        Availability
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; text-align:right; background-color:#6ca3c8;">
+                                        Server
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; font-weight:bold; background-color:#a2c7df;">
+                                        Up/Down
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; text-align:right; background-color:#6ca3c8;">
+                                        OS Services
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; font-weight:bold; background-color:#a2c7df;">
+                                        Up/Down
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; text-align:right; background-color:#6ca3c8;">
+                                        Network Interface
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; font-weight:bold; background-color:#a2c7df;">
+                                        Up/Down
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #ffffff; padding:5px; text-align:center; text-align:right; background-color:#6ca3c8;">
+                                        Storage Interface
+                                    </td>
+                                    <td style="border:1px solid #ffffff; padding:5px; text-align:center; font-weight:bold; background-color:#a2c7df;">
+                                        Up/Down
+                                    </td>
+                                </tr>
+                                <tr style="background-color:#6ca3c8;">
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; text-align:left;">
+                                        Performance
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; text-align:right; background-color:#6ca3c8;">
+                                        CPU
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; font-weight:bold; background-color:#a2c7df;">
+                                        Utilization &amp; Trend
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; text-align:right; background-color:#6ca3c8;">
+                                        Memory
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; font-weight:bold; background-color:#a2c7df;">
+                                        Utilization &amp; Trend
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; text-align:right; background-color:#6ca3c8;">
+                                        Disk Space
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:center; font-weight:bold; background-color:#a2c7df;">
+                                        Utilization &amp; Trend
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid #ffffff; padding:5px; text-align:center; text-align:right; background-color:#6ca3c8;">
+                                        Gateway Device interface I/O
+                                    </td>
+                                    <td style="border:1px solid #ffffff; padding:5px; text-align:center; font-weight:bold; background-color:#a2c7df;">
+                                        Utilization &amp; Trend
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Maintenance</h1>
+                        <p>Futurenet will conduct periodic health check on Servers, Network, all other devices in
+                            scope once a month, in which, Futurenet will do a deep dive into key parameters, usage
+                            analysis and logs. Maintenance report will be part of the consolidated monthly report.
+                        </p>
+                        <br/>
+                        <table>
+                            <thead>
+                                <tr style="background-color:#a6c111;">
+                                    <th colspan="2"
+                                        style="border:1px solid #ffffff; padding:10px; text-align:left;">Server:
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color:#c5d959;">
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:left;">Physical:
+                                        <br/>Activity:
+                                        <br/>
+                                        <ul>
+                                            <li>Event Analysis &amp; Corrective Action if any</li>
+                                            <li>Patching (Need based)</li>
+                                            <li>OS hygiene Check (Cleaning up Temp and system related files)</li>
+                                            <li>Sys backup (if required)</li>
+                                            <li>Antivirus Update</li>
+                                        </ul>
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:left;">Virtual:
+                                        <br/>Activity:
+                                        <br/>
+                                        <ul>
+                                            <li>Event Analysis &amp; Corrective Action if any</li>
+                                            <li>Patching (Need based)</li>
+                                            <li>OS hygiene by Cleaning up Temp and system related files</li>
+                                            <li>Metadata Backup</li>
+                                            <li>Planned Server reboot</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <div style="page-break-before: always;">
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr style="background-color:#a6c111;">
+                                    <th style="border:1px solid #ffffff; padding:10px; text-align:left;">Network:
+                                    </th>
+                                    <th style="border:1px solid #ffffff; padding:10px; text-align:left;">Storage:
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color:#c5d959;">
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:left;">Activity:
+                                        <br/>
+                                        <ul>
+                                            <li>Event Analysis &amp; Corrective Action if any</li>
+                                            <li>Configuration fine tuning</li>
+                                            <li>Patching (Need based)</li>
+                                            <li>Configuration backup</li>
+                                        </ul>
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:left;">Activity:
+                                        <br/>
+                                        <ul>
+                                            <li>Event Analysis &amp; Corrective Action</li>
+                                            <li>Configuration Backup</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Assumptions:</h1>
+                        <ul style="list-style-type: circle;">
+                            <li>Patching will happen based on availability, recommendation, testbed availability
+                                &amp; customer’s confirmation
+                            </li>
+                            <li>Equipment should be under warranty or OEM/Vendor support contract</li>
+                            <li>Firmware Upgrade will not be in RIMS scope</li>
+                        </ul>
+                        <br/>
+                        <h2 style="font-size:30px; font-weight:bold; color:#00acff;">Break Fix (Mend)</h2>
+                        <p>All break down calls, Network outages and Major incidents will be considered under break
+                            fix category. The below scope comes under Mend.
+                        </p>
+                        <ul>
+                            <li>Incident Management (Break down situations)</li>
+                            <li>Problem Management (Repetitive Incidents and incidents that depend on Vendor or
+                                Customer for resolution)
+                            </li>
+                            <li>Change Management (Change in Environment that’s needed to fix a problem needs to
+                                follow this)
+                            </li>
+                            <li>Release Management (New patch and tool releases that needs to be deployed to devices
+                                in the environment)
+                            </li>
+                        </ul>
+                        <p>
+                            <span style="font-weight: bold;">Hardware:</span>
+                            Futurenet responsibility with Hardware devices or components failure will be limited to
+                            coordinating with OEM or Support Vendor for repair or part replacement, provided M/S
+                            <t t-esc="partner.name"/> Silks Pvt. Ltd has a warranty or contract with Vendor.
+                        </p>
+                    </div>
+                    <br/>
+                    <div>
+                        <h2 style="font-size:30px; font-weight:bold; color:#00acff;">Reports:</h2>
+                        <table>
+                            <thead>
+                                <tr style="background-color: #926395;">
+                                    <th style="border:2px solid #ffffff; padding:5px; text-align:center;">Daily
+                                        &amp; Weekly
+                                    </th>
+                                    <th style="border:2px solid #ffffff; padding:5px; text-align:center;">Monthly
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color: #bd9ebf;">
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:left;">
+                                        <span style="font-weight: bold;">Monitoring Status:</span>
+                                        Daily Availability of the Device/Service<br/>Alert Information
+                                        <br/>
+                                        <br/>
+                                        <span style="font-weight: bold;">Backup: Weekly Report</span>
+                                        <br/>
+                                        <br/>Job status<br/>Trend
+                                    </td>
+                                    <td style="border:2px solid #ffffff; padding:5px; text-align:left;">
+                                        <span>Comprehensive Report that comprises of the following:</span>
+                                        <br/>Incident<br/>Service Request<br/>Problem<br/>Maintenance<br/>Backup
+                                        <br/>Trend
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">OUT OF SCOPE</h1>
+                        <P>Services not covered under our services include:</P>
+                        <ul>
+                            <li>AMC Hardware</li>
+                            <li>Internet connectivity and other communication equipment’s failure.</li>
+                            <li>Power / UPS failure.</li>
+                            <li>Application Support / Re-installation of Applications on Servers</li>
+                            <li>Operating System version or hardware upgrade</li>
+                            <li>Any other circumstances arise out of natural calamities like earthquake, flood,
+                                etc.
+                            </li>
+                            <li>Projects whether it’s hardware, software, or other deployments in a big scale.</li>
+                            <li>Any new implementation activity which is considered as a separate project</li>
+                            <li>Other than RIMS scope of work</li>
+                        </ul>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Assumptions &amp;
+                            Dependencies
+                        </h1>
+                        <p>The following are the key assumptions and considerations that we have made while making
+                            this scope of work:
+                        </p>
+                        <ol style="list-style-type: decimal;">
+                            <li>Current IT Architecture &amp; IT Policy to be shared.</li>
+                            <li>Classification of Servers and services(Critical /Non-Critical)</li>
+                            <li>ISP &amp; Vendor Information (Contract/Contact/Escalation Matrix/Call Logging
+                                Procedure)
+                            </li>
+                            <li>Other dependent and supporting equipment/services details. (Ex- Power, UPS, Cooling,
+                                Backup, Applications etc.)
+                            </li>
+                            <li>Customer Escalation Matrix</li>
+                            <li>Post contract acceptance for Contract signing, Futurenet Technologies will conduct a
+                                due diligence to assess the health of all the devices that are proposed to be
+                                included in the contract.
+                            </li>
+                            <li>All Devices and Equipment that come under this Services Contract should have either
+                                AMC with a Vendor/OEM or should be under Warranty.
+                            </li>
+                            <li>Customer should provide the system for monitoring system deployment.</li>
+                            <li>Customer should provide the necessary systems to run the ticketing applications.
+                            </li>
+                            <li>Customer should provide the asset management and password management tools.</li>
+                            <li>There will not be any change in the scope of work without notification to Futurenet
+                                Technologies
+                            </li>
+                            <li>Any changes in the environment without prior notification should be avoided.</li>
+                            <li>There will not be any additional devices (EPOs) to be added without notification to
+                                Futurenet Technologies and a CR raised for the original contract amendment.
+                            </li>
+                            <li>Futurenet Technologies responsibility with Hardware devices or component’s failure
+                                will be limited to coordinating with OEM or Support Vendor for repair or part
+                                replacement, provided “<t t-esc="partner.name"/>” has a warranty or contract with Vendor
+                            </li>
+                        </ol>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Engagement Model</h1>
+                        <p>Data Center infrastructure will be monitored by RIMS support team at Futurenet Technologies on a 24/7 scale and will be responsible for the resolution of problems that gets logged through Monitoring system or tickets created through emails. Futurenet Technologies shall resolve incidents as per the committed Service Levels</p><br/>
+                        <img t-att-src="'/sale_costing/static/src/Rims_img.png'" alt="Description"/>
+                    </div>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">RIMS Operations:</h1>
+                        <h2 style="font-size:25px; font-weight:bold; color:#00acff;">Call Logging with RIMS Service Desk is mandatory</h2>
+                        <p>The onsite support team will be registering support tickets to support@futurenet.in for non-proactive incidents, problems and support requests, which will be attended by the RIMS team.</p>
+                        <br/>
+                        <p>Futurenet Technologies RIMS Team would receive the calls / request from <t t-esc="partner.name"/> support desk via email or phone. </p>
+                        <ul>
+                            <li>Futurenet Technologies RIMS Helpdesk team would analyze the ticket &amp; assign it to the right technical engineer. </li>
+                            <li>Technical engineer would resolve the issue as per the SLA defined, close the ticket &amp; inform the <t t-esc="partner.name"/> support desk about the closure</li>
+                            <li>Futurenet Technologies onsite team would coordinate with vendors whenever required to close the tickets.</li>
+                        </ul>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">END USER SERVICES</h1>
+                        <p>Futurenet Technologies provide End User services with a 5 Member team stationed at <t t-esc="partner.name"/> Office. The Team size and the responsibilities of the team lead and members are mentioned in the below sections.</p>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Team Sizing</h1>
+                        <table style="width: 100%;">
+                            <thead style="background-color: #155199;">
+                                <tr>
+                                    <th style="border:2px solid black; padding:5px; text-align:center;">Location</th>
+                                    <th style="border:2px solid black; padding:5px; text-align:center;">Engineer Level</th>
+                                    <th style="border:2px solid black; padding:5px; text-align:center;">Qty</th>
+                                    <th style="border:2px solid black; padding:5px; text-align:center;">Timing</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Chennai</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Level-3 Team Leader</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">1</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;"><strong>9Hrs Shift</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Chennai</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Level-1 End user Support</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">2</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;"><strong>9Hrs Shift</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Chennai</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Level-1 End user Support</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">2</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;"><strong>9Hrs Shift</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Chennai</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Level-1 End user Support</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">1</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;"><strong>9Hrs Shift</strong></td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Chennai</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">Level-1 End user Support</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;">1</td>
+                                    <td style="border:2px solid black; padding:5px; text-align:left;"><strong>9Hrs Shift</strong></td>
+                                </tr>
+                            </tbody>
+                        </table><br/>
+                        <p><strong>*Every Friday Next Weekly on-site support engineer shift roster will be share with customer.</strong></p><br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Engineer Replacement Process- On-Site Team:</h1>
+                        <ul>
+                            <li>In any circumstance where the engineer is moved out of the site, the same will be intimated to the customer with 2 months prior notice. Parallelly we will identify the proper manpower resource, deploy him &amp; knowledge transfer will be done within the stipulated time.</li>
+                            <br/>
+                            <li>Two trained engineers will be planned as backup in case of on-site engineer’s absence.</li>
+                        </ul>
+                    </div>
+                    <br/>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">ROLES &amp; RESPONSIBILITIES</h1><br/>
+                        <p style="color: #00de8a;"><strong>&#8658; Team Leader ONSITE - Responsibilities</strong></p>
+                        <ul>
+                            <li>Will be the single point of contact representing the onsite and RIMS team for the customer</li>
+                            <li>Manage the Onsite team to ensure that they deliver as per the agreed commitment.</li>
+                            <li>Provide Technical Support Onsite, to manage the Customer Infrastructure, which comes Under the purview of this contract</li>
+                            <li>Coordination with all relevant stakeholders </li>
+                            <li>Coordination and follow-up with vendor for any part replacement</li>
+                            <li>Customer relationship management </li>
+                            <li>Ensure that Service Levels are adhered to as committed</li>
+                            <li>Monthly reports to be prepared and presented</li>
+                            <li>Meetings to be conducted with the customer on a weekly or monthly basis with minutes of meeting shared and ensuring action items are closed on time.</li>
+                            <li>To be the first point of contact for the Customer</li>
+                            <li>Ensure that RCA is shared with the customer in case of Major Incidents or Problems.</li>
+                            <li>Report and escalate to client’s management as needed</li>
+                            <li>Create and maintain project documentation</li>
+                            <li>Ensure that Backup &amp; DR are functioning as per norms created</li>
+                            <li>Handle first level escalations and resolve to closure</li>
+                            <li>IT Asset Management and timely information to the Customer regarding Asset expiry as and when they happen.</li>
+                            <li>Ensure overall Customer Satisfaction</li>
+                        </ul>
+                        <p style="color: #00de8a;"><strong>&#8658; Onsite Team - Responsibilities</strong></p>
+                        <ul>
+                            <li>Onsite team will be responsible for Managing End user Environment that include Desktop, Laptop, Workstations, and Printers on a 24/7 scale.</li>
+                            <li>Team will provide Smart Hand Support by helping the RIMS team in any activity in the Data Center that needs physical presence.</li>
+                            <li>Responsible for OS installation, Application installation, Mail Client configuration and Antivirus definitions update.
+                                <ul style="margin-left: 10%;">
+                                    <li>Preventive maintenance of Desktops, Laptops &amp; Printers.</li>
+                                    <li>Troubleshoot problems related to End User Services.</li>
+                                    <li>Ensure and maintain data backup for the Desktop &amp; Laptop Users with the tools / hardware provided by the customer.</li>
+                                    <li>Timely reporting to the End User regarding Call closures</li>
+                                    <li>During their Shift, should take ownership of any major incident or outage by coordinating with the RIMS team or vendors to ensure faster TAT.</li>
+                                    <li>Complete adherence to SLA as per the commitment for End User Services.</li>
+                                    <li>Take complete control and manage Customer IT Assets using the deployed tool.</li>
+                                    <li>To adhere to the Customer established policies and processes.</li>
+                                    <li>Vendor coordination for any hardware failure if need be.</li>
+                                    <li>Participation in Customer and Team meetings</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">L7 Consulting</h1>
+                        <br/>
+                        <p>A L7 Consultant Collaborating with and advises clients' IT departments to make <t t-esc="partner.name"/>’s business needs to be in future vision and reality with the right mix of technologies.</p>
+                        <ul>
+                            <li style="list-style-type: none;">
+                                &#11162; L7 Consultant can provide value:
+                                <ul style="margin-left: 10px">
+                                    <li>Help set strategic priorities, key initiatives, and identify ROI</li>
+                                    <li>Provide Methods and Processes to drive change</li>
+                                    <li>input on regulatory and compliance matters</li>
+                                    <li>Assessing current processes, recommending software upgrades, and directing the executive team on the best processes</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">SLA Management</h1>
+                        <br/>
+                        <p>Futurenet Technologies provides the Standard SLA-KPI parameters and will be adhered as agreed. (Based on the customer requirement and request, the SLA KPI parameters are liable to change and signed off at additional price)</p>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff; text-align: center;">Incident Severity or Priority Definition with SLA Targets:</h1>
+                        <table  style="width: 100%;">
+                            <thead style="background-color: #f5913d;">
+                                <tr>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">Severity <br/>(or)<br/> Priority</th>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">Description <br/>(Environment Perspective)</th>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">Response <br/>Time</th>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">Resolution <br/>Time</th>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">KPI Target<br/>(Monthly)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #f5913d;">1</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:left; background-color: #fabb97;">Incident with Major impact on Business</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">20 Min</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">2-Hours</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">95%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #f5913d;">2</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:left; background-color: #fabb97;">Incident with Minor impact on business but high impact on Users</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">20 Min</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">4-Hours</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">95%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #f5913d;">3</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:left; background-color: #fabb97;">Incident with minor impact on business and Users</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">30 Min</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">16-Hours</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">95%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #f5913d;">4</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:left; background-color: #fabb97;">Incident with no business impact</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">30 Min</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">48-Hours</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center; background-color: #fabb97;">95%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="page-break-before: always;">
+                        <table style="width: 100%;">
+                            <thead style="background-color: #009bff;">
+                                <tr>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">Severity</th>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">Service Request Description</th>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">Response Time</th>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">Resolution Time</th>
+                                    <th style="border:2px solid black; padding:20px; text-align:center;">KPI Target (Monthly)</th>
+                                </tr>
+                            </thead>
+                            <tbody style="background_color: #9deaff;">
+                                <tr>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">High</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:left;">Service request with major impact on business</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">30 Min</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">4-Hours</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">95%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">Medium</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:left;">Service request with minor impact on business but high impact on users</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">30-Min</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">8-Hours</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">95%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">Low</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:left;">Service request with minor impact on business and users</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">45 Min</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">2 Day</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">95%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">Very Low</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:left;">No Impact</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">24-Hours</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">2 Day</td>
+                                    <td style="border:2px solid black; padding:20px; text-align:center;">95%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold;">Definition of SLA Parameters:</h1>
+                        <ol style="list-style-type: decimal;">
+                            <li>Response Times: This is defined as the maximum time in which an engineer will acknowledge the receipt of the alert and act by either creating a ticket if it is a valid event or closing it if it is found to be invalid. </li>
+                            <li>Resolution Times: This is defined as the maximum time in which systems would be restored in case of an outage Tickets that are under observation after an Outage or Change</li>
+                        </ol>
+                        <h1 style="font-size:30px; font-weight:bold;">SLA Exceptions</h1>
+                        <ol style="list-style-type: decimal;">
+                            <li>End User Delay</li>
+                            <li>Hardware Failures</li>
+                            <li>Software Bugs</li>
+                            <li>OEM / Vendor Support</li>
+                        </ol>
+                    </div>
+                    <br/>
+                    <div>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Escalation Matrix</h1>
+                        <t t-set="customer" t-value="doc.rims_customer_master_id"/>
+                        <t t-if="customer">
+                            <t t-foreach="customer.escalation_matrix" t-as="esc">
+                                <table style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <td style="border:2px solid black; padding:20px; text-align:center;">Level
+                                            </td>
+                                            <td style="border:2px solid black; padding:20px; text-align:center;">Name
+                                            </td>
+                                            <td style="border:2px solid black; padding:20px; text-align:center;">
+                                                Designation
+                                            </td>
+                                            <td style="border:2px solid black; padding:20px; text-align:center;">Email
+                                            </td>
+                                            <td style="border:2px solid black; padding:20px; text-align:center;">Phone
+                                                No
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="customer.escalation_matrix" t-as="esc">
+                                            <tr>
+                                                <td style="border:2px solid black; padding:20px; text-align:center;">
+                                                    <span t-field="esc.level"/>
+                                                </td>
+                                                <td style="border:2px solid black; padding:20px; text-align:center;">
+                                                    <t t-esc="esc.name"/>
+                                                </td>
+                                                <td style="border:2px solid black; padding:20px; text-align:center;">
+                                                    <t t-esc="esc.designation"/>
+                                                </td>
+                                                <td style="border:2px solid black; padding:20px; text-align:center;">
+                                                    <t t-esc="esc.email"/>
+                                                </td>
+                                                <td style="border:2px solid black; padding:20px; text-align:center;">
+                                                    <t t-esc="esc.contact_number"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </t>
+                        </t>
+                    </div>
+                    <br/>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">GOVERNANCE</h1>
+                        <table style="width: 100%;">
+                            <thead style="background-color: #f56363;">
+                                <tr>
+                                    <th style="border:2px solid white; padding:20px; text-align: left;">Review</th>
+                                    <th style="border:2px solid white; padding:20px; text-align: left;">Scope</th>
+                                    <th style="border:2px solid white; padding:20px; text-align: left;">Participants</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border:2px solid white; padding:20px; text-align: center; background-color: #f56363;" rowspan="3">Monthly</td>
+                                    <td style="border:2px solid white; padding:20px; text-align: left; background-color: #f88a8a;">Reporting and analysis of metrics data</td>
+                                    <td style="border:2px solid white; padding:20px; text-align: left; background-color: #f88a8a;">Team Lead</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid white; padding:20px; text-align: left; background-color: #f6b7b7;">Environment Related Issues</td>
+                                    <td style="border:2px solid white; padding:20px; text-align: left; background-color: #f6b7b7;">Team Lead</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid white; padding:20px; text-align: left; background-color: #f88a8a;">Major Incidents or Problems</td>
+                                    <td style="border:2px solid white; padding:20px; text-align: left; background-color: #f88a8a;">Team Lead</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid white; padding:20px; text-align: center; background-color: #f56363;" rowspan="2">Quarterly</td>
+                                    <td style="border:2px solid white; padding:20px; text-align: left; background-color: #f6b7b7;">Significant Issues of Concern</td>
+                                    <td style="border:2px solid white; padding:20px; text-align: left; background-color: #f6b7b7;">Team Lead</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid white; padding:10px; text-align: left; background-color: #f88a8a;">Customer Satisfaction Index</td>
+                                    <td style="border:2px solid white; padding:10px; text-align: left; background-color: #f88a8a;">SDM /Account Manager</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">TERMS &amp; CONDITIONS</h1>
+                        <br/>
+                        <ul style="list-style-type: none;">
+                            <li>&#11162; &#160;	&#160;	<strong>FUTURENET</strong> Team sizing is based on the Infrastructure Landscape and Support Window requirements provided by <strong><t t-esc="partner.name"/>.</strong></li><br/>
+                            <li>&#11162; &#160;	&#160;	The contract will be valid for a minimum of <strong>One Years</strong> on acceptance between both the parties and release of Work Order by the customer.</li><br/>
+                            <li>&#11162; &#160;	&#160;	In the event the onsite engineer needs to travel for the other branches of <strong>the customer</strong> based on requirement, such travel costs, food, stay other allowances and logistics will be borne by <strong>Customer</strong>.</li><br/>
+                            <li>&#11162; &#160;	&#160;	The Purchase Order/Work Order to be released in the name of <strong>“<t t-esc="company.name"/>”</strong> as per the above rates</li><br/>
+                            <li>&#11162; &#160;	&#160;	On-Site engineer eligible for avail one day causal leave per month with approval of management.</li><br/>
+                            <li>&#11162; &#160;	&#160;	Replacement engineer will be provided if the on-site engineer is on-leave for two or more consecutive days.</li><br/>
+                            <li>&#11162; &#160;	&#160;	Project work such as mass change management function...etc. will not be considered as part of this contract; it will be done on mutually agreed cost.</li><br/>
+                            <li>&#11162; &#160;	&#160;	There will be cost implications in case of changes to the EPOs /Support Engineer/shift Timing…etc, deviating from the agreed upon terms set forth in this contract.</li><br/>
+                        </ul>
+                    </div>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Applicable Laws</h1>
+                        <p>The laws and regulations in force in the Indian government shall govern the contract.  Any dispute or difference arising out of the contract shall be referred to Commercial court of India.</p>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Disputes Resolution:</h1>
+                        <p>All disputes, differences and/or claims, arising out of this contract/agreement, whether during the subsistence or thereafter shall be settled by arbitration in accordance with the provisions of The Arbitration and Conciliation Act, 1996 or any statutory amendments thereof or any other Act governing the arbitration and shall be referred to the sole arbitration of an arbitrator nominated by the Director,</p><br/>
+                        <p><strong>(<t t-esc="partner.name"/>)</strong> The award given by such an arbitrator shall be final and binding on all the parties to this agreement.</p><br/>
+                        <p>It is a term of this agreement that in the event of such an arbitrator to whom the matter has been originally referred dying or being unable to act for any reason, the Director, </p><br/>
+                        <p><strong><t t-esc="partner.name"/></strong>, at the time of such death of the arbitrator or his inability to act as arbitrator, shall appoint another person to act as arbitrator. Such a person shall be entitled to proceed with the reference from the stage at which it was left by his predecessor.</p><br/>
+                        <p>The venue of arbitration proceedings shall be at Chennai only.</p><br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Non-Disclosure Agreement:</h1>
+                        <p>Futurenet Technologies India Private Limited, agrees that any and all information that is generated or made available in the course of their assignment shall be kept confidential and shall not be disclosed to any agency within or outside the Company without the explicit written consent of the management.</p><br/>
+                        <p>In turn, (<strong><t t-esc="partner.name"/></strong>,) agrees not to disclose any details of the contract between (<strong><t t-esc="partner.name"/></strong>) &amp; Futurenet Technologies India Pvt Ltd, except for regulatory, audit, accounting and all other internal operational purposes.</p><br/>
+                        <p>In case of any discrepancies of NDA and proved that Futurenet Technologies India Pvt Ltd is responsible for discrepancies then Futurenet Technologies India Pvt Ltd will compensate <t t-esc="partner.name"/> on the mutually accepted loss estimated due to breach of contract.</p><br/>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Non-Solicitation</h1>
+                        <p>During the Term of the contract and for one (1)year thereafter, Customer shall not encourage or solicit any employee, leave or terminate its relationship with Futurenet for any reason.</p><br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Auditability</h1>
+                        <p>Futurenet Technologies India Pvt Ltd agrees to allow the record keeping, performance details and metrics to be independently audited by (<strong><t t-esc="partner.name"/></strong>,) authorized representatives / Auditors.
+                            Futurenet Technologies India Pvt Ltd also agrees that if the above audit highlights any discrepancies against the agreed working / metrics, then Futurenet Technologies India Pvt Ltd will take all corrective measures to eliminate the discrepancies.</p><br/>
+                        <p>	In particular, as per industry practice access rights and vulnerability tests may be performed from anywhere by (<strong><t t-esc="partner.name"/></strong>,) authorized representative / auditor.</p><br/>
+                    </div>
+                    <div>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Termination of Contract</h1>
+                        <p>This Agreement shall be valid for ONE year, effective from 01/01/2023 and up to 31/12/2023. It may, however, be extended for such further period as may be mutually agreed to by the parties hereto, on such terms and conditions, as may be mutually agreed.
+                            Either Party shall terminate the agreement by providing two months (60Days) notice period to other party.</p><br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Commercials</h1>
+                        <p><t t-esc="partner.name"/> has agreed to pay for the consideration of the services rendered by Futurenet a total amount of Rs. 60,60,000 (INR Sixty Lakh sixty Thousand Only). The said amount shall be payable in quarterly basis i.e., Rs. 5,05,000/- (INR Five Lakh five Thousand only) per quarterly for the accepted services subject to raising of GST invoices on <t t-esc="partner.name"/> on completion of each quarter.</p>
+                        <br/>
+                        <p><t t-esc="partner.name"/> shall deduct from the Professional service fees, tax deducted at source “(TDS”) and/or any other statutory deductions wherever applicable and/or wherever enforced, as per provisions of the Income Tax Act, 1961 and/or any other applicable law.</p>
+                        <br/>
+                        <p>Goods &amp; Services Tax (“GST”) shall be extra at applicable rate.</p>
+                        <br/>
+                        <p>Futurenet shall provide <t t-esc="partner.name"/> with a valid Goods and Service Tax Identification Number and a valid Goods and Services Tax Invoice in original, along with supporting details/documents wherever relevant, at the time of raising invoice for each payment and shall upload the same in GSTN Portal of the relevant invoice of <t t-esc="partner.name"/> and shall file GST return month on month along-with GST payment as stipulated in GST Act from time to time.</p>
+                        <br/>
+                        <p>Any liability, claim, penalty, charges, fees, levies or any other or similar payment or liability incurred by the <t t-esc="partner.name"/> in respect of Goods and Services Tax for the services under this Agreement shall be the sole responsibility of Futurenet.</p>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Entire Agreement</h1>
+                        <p>This agreement, together with all applicable SOW(s), schedules and annexure(s) attached hereto, whether or not they are actually attached is the complete and exclusive agreement between the parties with respect to the subject matter hereof, superseding any prior agreements and communications (both written and oral) regarding such subject matter except to the extent provisions of other agreements are incorporated herein by reference.</p>
+                    </div>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Amendments</h1>
+                        <p>Except as specified herein in this agreement, no modification, amendment to, or alteration of this agreement, including, without limitation, any schedules referred to herein and attached hereto, or any SOW, shall be effective unless such modification, amendment or alteration is reduced to writing by both the parties.</p>
+                        <br/>
+                        <p>In witness whereof the parties have signed this agreement to be duly executed on the day, month and year first above written in the presence of the following witnesses.</p>
+                        <br/>
+                        <h1 style="font-size:30px; font-weight:bold; margin-left: 10%;">Exclusions</h1><br/>
+                        <p style="margin-left: 15%;">Contract price will be revised in following situations:</p>
+                        <br/>
+                        <ol style="list-style-type: decimal; margin-left: 15%;">
+                            <li>When government imposes additional and special taxes</li>
+                            <li>Any other circumstances arise out of natural calamities like earthquake, etc.,</li>
+                        </ol>
+                    </div>
+                    <br/>
+                    <div>
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" style="border:2px solid black; padding:40px; text-align: left;">Signed on behalf of <br/> <strong>M/S<t t-esc="partner.name"/></strong></th>
+                                    <th colspan="2" style="border:2px solid black; padding:40px; text-align: left;">Signed on behalf of <br/> <strong>M/S<t t-esc="company.name"/></strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2" style="border:2px solid black; text-align: left; height: 600px;">Authorized Signatory with seal:</td>
+                                    <td colspan="2" style="border:2px solid black; text-align: left; height: 600px;">Authorized Signatory with seal:</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:30px; text-align: left;">Name:</td>
+                                    <td style="border:2px solid black; padding-left:150px; text-align: left;"></td>
+                                    <td style="border:2px solid black; padding:30px; text-align: left;">Name:</td>
+                                    <td style="border:2px solid black; padding:30px; text-align: left;">Ashok</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:2px solid black; padding:30px; text-align: left;">Designation:</td>
+                                    <td style="border:2px solid black; padding-left:150px; text-align: left;"></td>
+                                    <td style="border:2px solid black; padding:30px; text-align: left;">Designation:</td>
+                                    <td style="border:2px solid black; padding:30px; text-align: left;">Managing Director</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div style="page-break-before: always;">
+                        <h1 style="font-size:30px; font-weight:bold; color:#00acff;">Annexure</h1>
+                        <br/>
+                        <table style="border:1px solid black; padding:10px; width:100%; text-align:center;">
+                            <thead style="background-color: #7eb6c9;">
+                                <tr>
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">EPOs
+                                        Details
+                                    </th>
+                                    <th style="border:1px solid black; padding:10px; text-align:center;">Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="count" t-value="doc.sale_order_id.epo_costing_ids"/>
+                                <t t-set="grand_total" t-value="0"/>
+                                <t t-foreach="count" t-as="rec">
+                                    <tr>
+                                        <td style="border:1px solid black; padding:10px; text-align:center;">
+                                            <t t-esc="rec.sale_epo_id.name"/>
+                                        </td>
+                                        <td style="border:1px solid black; padding:10px; text-align:center;">
+                                            <t t-esc="rec.sale_epo_qty"/>
+                                        </td>
+                                        <t t-set="grand_total" t-value="grand_total + rec.sale_epo_qty"/>
+                                    </tr>
+                                </t>
+                                <tr style="background-color: #7eb6c9;">
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">
+                                        <strong>Grand Total</strong>
+                                    </td>
+                                    <td style="border:1px solid black; padding:10px; text-align:center;">
+                                        <t t-esc="grand_total"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div>
+                        <table style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Location</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">VM Name</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Count</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Type</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Bangalore</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">RMKVBLR-DB-01</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">1</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">VMs</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Bangalore</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">RMKVBLR-DB-01</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">1</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">VMs</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Bangalore</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">RMKVBLR-DB-01</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">1</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">VMs</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Bangalore</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">RMKVBLR-DB-01</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">1</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">VMs</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Bangalore</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">RMKVBLR-DB-01</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">1</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">VMs</td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">Bangalore</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">RMKVBLR-DB-01</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">1</td>
+                                    <td style="border:1px solid black; padding:20px; text-align:center;">VMs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="sale_order_contract_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sale_costing.sale_order_contract_report"/>
+            </t>
+        </t>
+    </template>
+</odoo>

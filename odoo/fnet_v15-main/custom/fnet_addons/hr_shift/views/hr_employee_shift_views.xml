@@ -1,0 +1,153 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_hr_employee_shift_tree">
+            <field name="name">view.hr.employee.shift.tree</field>
+            <field name="model">hr.employee.shift</field>
+            <field name="arch" type="xml">
+                <tree default_order="date desc">
+                    <field name="employee_id"/>
+                    <field name="shift_id"/>
+                    <field name="date_start"/>
+                    <field name="actual_date_start"/>
+                    <field name="date_end"/>
+                    <field name="actual_date_end"/>
+                    <field name="total_hours" widget="float_time"/>
+                    <field name="actual_hours" widget="float_time"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_employee_shift_form">
+            <field name="name">view.hr.employee.shift.form</field>
+            <field name="model">hr.employee.shift</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_cancel" string="Cancel" type="object" class="oe_highlight" states="confirm" groups="hr_shift.group_shift_administrator"/>
+
+                        <button name="action_shift_approve" string="Allowance Request" type="object" class="oe_highlight" attrs="{'invisible': ['|',('request_allowance', '=', False),('request_emp','=',False)]}"/>
+                        <button name="action_cancel" string="Shift Request Cancel " type="object" class="oe_highlight" attrs="{'invisible': [('request_allowance', '=', False)]}" groups="hr_shift.group_shift_administrator"/>
+                        <button name="action_shift_approved" string="Request Approve" type="object" class="oe_highlight" attrs="{'invisible': [('request_allowance', '=', False)]}" groups="hr_shift.group_shift_administrator"/>
+                        <button name="action_shift_change_req" string="Request Shift Change" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('replaced_shift_count', '!=', 0), ('state', 'not in', ['confirm'])]}" groups="base.group_user"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <!--<button name="action_view_shift" icon="fa-file-text-o" class="oe_stat_button" type="object" attrs="{'invisible': [('shift_count', '=', 0)]}">
+                                <field name="shift_count" widget="statinfo" string="Replaced Shifts"/>
+                            </button>-->
+                            <button name="action_open_replaced_shift_smt_btn"
+                            attrs="{'invisible': [('replaced_shift_count', '=', 0)]}"
+                            class="oe_stat_button" type="object" icon="fa-file-text-o">
+                                <field name="replaced_shift_count" widget="statinfo" string="Shift Change Request"/>
+                                <span>Shift Change Request</span>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="shift_id"/>
+                                <field name="shift_swapped" invisible="1"/>
+                                <field name="request_allowance" invisible="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="start_time" widget="float_time"/>
+                                <field name="actual_date_start"/>
+                                <field name="month_plan_id"/>
+                                <field name="status" invisible="1"/>
+                                <field name="request_emp" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="end_time" widget="float_time"/>
+                                <field name="actual_date_end"/>
+                                <field name="employee_level"/>
+                            </group>
+                        </group>
+                        <group name="group_note">
+                            <group class="oe_subtotal_footer oe_right" name="group_shift_total">
+                                <field name="total_hours" widget="float_time"/>
+                                <field name="actual_hours" widget="float_time"/>
+                                <field name="overtime" widget="float_time" groups="hr_shift.group_shift_administrator"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Attendance Entries" groups="base.group_system">
+                                <field name="attendance_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_shift_calendar" model="ir.ui.view">
+            <field name="name">view.hr.employee.shift.calendar</field>
+            <field name="model">hr.employee.shift</field>
+            <field name="arch" type="xml">
+                <calendar date_start="date_start" date_stop="date_end" mode="month" string="Shift" color="shift_id" event_limit="8">
+                    <field name="employee_id" avatar_field="image_128" filters="1"/>
+                    <field name="company_id"/>
+                    <field name="shift_id" filters="1"/>
+<!--                    <field name="color"/>-->
+                </calendar>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_employee_shift">
+            <field name="name">My Shift</field>
+            <field name="res_model">hr.employee.shift</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_employee_all_shift">
+            <field name="name">All Employee Shift</field>
+            <field name="res_model">hr.employee.shift</field>
+            <field name="view_mode">calendar,tree,form</field>
+        </record>
+
+        <menuitem name="My Shift" id="menu_hr_employee_shift_own" sequence="1" parent="menu_hr_shift_main"
+                  action="action_hr_employee_shift"/>
+        <menuitem name="All Employee Shift" id="menu_hr_employee_shift" sequence="2" parent="menu_hr_shift_main"
+                  action="action_hr_employee_all_shift" groups="hr_shift.group_shift_administrator"/>
+
+        <record id="view_attendance_tree_shift_inherit" model="ir.ui.view">
+            <field name="name">hr.attendance.tree.shift.inherit</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+            <field name="arch" type="xml">
+                <field name="check_out" position="after">
+                    <field name="shift_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_attendance_view_form_shift_inherit" model="ir.ui.view">
+            <field name="name">hr.attendance.form.shift.inherit</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+            <field name="arch" type="xml">
+                <field name="check_out" position="after">
+                    <field name="shift_id" readonly="0"/>
+                </field>
+            </field>
+        </record>
+<!--        <record id="view_employee_form_shift_inherit" model="ir.ui.view">-->
+<!--            <field name="name">hr.employee.form.shift.inherit</field>-->
+<!--            <field name="model">hr.employee</field>-->
+<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="user_id" position="after">-->
+<!--                    <field name="leave_based"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

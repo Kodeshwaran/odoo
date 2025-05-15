@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mail_template_proforma_invoice" model="mail.template">
+        <field name="name">Proforma Invoice Email</field>
+        <field name="model_id" ref="model_proforma_invoice"/>
+        <field name="email_from">{{object.sale_order_id.company_id.email or ''}}</field>
+        <field name="email_to">{{object.sale_order_id.partner_id.email or ''}}</field>
+        <field name="subject">Proforma Invoice: {{object.proforma_name}}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello,</p>
+                <p>Please find attached the Proforma Invoice <strong><t t-out="object.proforma_name"/></strong>.</p>
+                <p>Total Amount: <t t-out="object.total_amount"/></p>
+                <p>Thank you!</p>
+            </div>
+        </field>
+        <field name="report_template" ref="proforma_invoice.action_report_proforma_invoice"/>
+    </record>
+</odoo>

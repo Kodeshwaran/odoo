@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_multiple_quotation_creation_wizard" model="ir.ui.view">
+        <field name="name">Multiple Quotation</field>
+        <field name="model">multiple.quotation.creation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Multiple Vendor Quotation">
+                <group>
+                    <field name="partner_id"/>
+                    <field name="sale_order_id" readonly="1"/>
+                </group>
+                <field name="multiple_quotation_lines">
+                    <tree editable="bottom" limit="150">
+                        <field name="select_product"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="name" readonly="1"/>
+                        <field name="product_qty" readonly="1"/>
+                        <field name="product_uom_id" readonly="1"/>
+                        <field name="price_unit"/>
+                        <field name="tax_id" widget="many2many_tags" force_save="1"/>
+                        <field name="price_tax" readonly="1" force_save="1" string="Tax Value"/>
+                        <field name="price_total" readonly="1" force_save="1"/>
+                        <field name="price_subtotal" readonly="1" force_save="1"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button name="create_purchase_requisition" string="Confirm" type="object" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_multiple_quotation_creation_wizard" model="ir.actions.act_window">
+        <field name="name">Multiple Quotation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">multiple.quotation.creation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_multiple_quotation_creation_wizard">
+        <field name="name">Multiple Vendor Selection</field>
+        <field name="res_model">multiple.quotation.creation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        <record id="ir_cron_hr_allocation_clear" model="ir.cron">
+            <field name="name">HR Leave Allocation Yearly Reset</field>
+            <field name="model_id" ref="model_hr_leave_allocation"/>
+            <field name="state">code</field>
+            <field name="code">model._reset_leave()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+        <record id="ir_cron_hr_leave_allocation_expiry" model="ir.cron">
+            <field name="name">HR Leave Allocation Expiry</field>
+            <field name="model_id" ref="model_hr_leave_allocation"/>
+            <field name="state">code</field>
+            <field name="code">model._check_leave_expiry()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <!--<record id="ir_cron_hr_leave_allocation_automatic" model="ir.cron">
+            <field name="name">HR Leave Allocation Automatic</field>
+            <field name="model_id" ref="model_hr_leave_allocation"/>
+            <field name="state">code</field>
+            <field name="code">model._auto_allocation_leave()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>-->
+
+    </data>
+</odoo>

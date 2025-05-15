@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <template id="payment_advise_template_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="mm_onscreen_report.payment_advise_template_pay_report" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
+   <template id="payment_advise_template_pay_report">
+    <t t-call="web.html_container">
+		<t t-call="web.external_layout">
+			<t t-foreach="docs" t-as="o">
+				<div class="page" style="font-size:14px;width:60%;border-collapse:collapse;">
+					
+					<style>
+						.table thead > tr > th, .table > tbody > tr > td {border:1px solid black;}
+					</style>
+					<h4 style = "text-align:center;padding-top:20px;font-family: Roboto, Ubuntu, Arial, sans-serif;">PAYMENT ADVICE</h4>
+					<p style = "text-align:center;padding-top:20px;text-transform:uppercase;font-family: Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.partner_id.company_id.name"/>
+					<p style = "text-align:center;padding-top:20px;text-transform:uppercase;font-family: Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.partner_id.company_id.street"/>
+					<p style = "text-align:center;padding-top:20px;text-transform:uppercase;font-family: Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.partner_id.company_id.street2"/>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Beneficiary's Name:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.partner_id.name"/><br/><br/>
+					</div>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Beneficiary's Code:</t><br/><br/>
+					</div>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Beneficiary Address:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.partner_id.street"/>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.partner_id.street2"/><br/><br/><br/>
+					</div>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Client Ref No:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.get_client_ref(o)"/><br/><br/>
+					</div>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Date:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.payment_date" t-field-options='{"format": "dd-MM-y"}'/><br/><br/>
+					</div>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Bank Reference No:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.communication"/><br/><br/>
+					</div>
+					
+					<p>We have initiated a credit to the Account Number <b><span t-esc="o.get_account_no(o)"/></b> for the amount <b>Rs.<span t-esc="o.amount"/></b> of through NEFT for the below mentioned details</p>
+					<br/><br/>
+					
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">IFSC Code:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.get_account_ifsc(o)"/><br/><br/>
+					</div>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Beneficiary Bank Name:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.get_account_bank(o)"/><br/><br/>
+					</div>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Invoice number:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.get_inv_no(o)"/><br/><br/>
+					</div>
+					<div>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;">Invoice amount:</t>
+						<t style="font-family:Roboto, Ubuntu, Arial, sans-serif;" t-esc="o.amount"/><br/><br/>
+					</div>
+					
+					<br/><br/><br/><br/>
+					
+					<p><center>This is Computer generated advice. Does not require any signature</center></p>
+					
+                </div>
+			</t>
+		</t>
+    </t>
+    </template>
+</data>
+</odoo>

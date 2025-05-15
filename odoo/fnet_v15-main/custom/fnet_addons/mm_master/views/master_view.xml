@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_sale_type_form" model="ir.ui.view">
+            <field name="name">view.sale.type.form</field>
+            <field name="model">sale.type</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <form string="Travel">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="code"/>
+                                <field name="active"/>
+                                <field name="payment_term_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="sub_types" string="Sub Types">
+                                <field name="sales_sub_types"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_sale_type_tree" model="ir.ui.view">
+            <field name="name">view.sale.type.tree</field>
+            <field name="model">sale.type</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree string="Travel">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="payment_term_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_sale_type" model="ir.actions.act_window">
+            <field name="name">Sale Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_sale_type_tree"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a contact in your address book.
+                </p>
+                <p>
+                    Odoo helps you easily track all activities related to
+                    a customer: discussions, history of business opportunities,
+                    documents, etc.
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem id="menu_sale_type" sequence="3" parent="account.account_account_menu" action="action_sale_type"/>
+
+        <record id="sale_type_lines_tree_view" model="ir.ui.view">
+            <field name="name">sale_type_lines_view_tree</field>
+            <field name="model">sale.type.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,132 @@
+<odoo>
+    <data>
+        <template id="customer_sale_quotation_report">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="mm_sale.report_sale_quotation"/>
+            </t>
+        </template>
+
+        <template id="report_sale_quotation">
+            <t t-call="web.html_container">
+                <t t-set="company" t-value="user.company_id"/>
+                <t t-foreach="docs" t-as="doc">
+                    <div style="border:1px solid;height:100%;font-family:sans-serif;">
+                        <div class="page">
+                            <table class="table table-bordered" style="font-family:courier-new;width:100%;vertical-align:middle;" cellspacing="0" cellpadding="10">
+                                <tr style="font-weight:bold;font-size:15px;background-color:#CCCCCC;text-align:center;border:1px solid;">
+                                    <td style="border:1px solid;"><span><strong>Proposal</strong></span></td>
+                                </tr>
+                                <tr style="text-align:right;border-top:1px solid;border-left:1px solid;border-right:1px solid;">
+                                    <td>
+                                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                     style="max-height: 100px; max-width:150px;"
+                                     alt="Logo"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered" style="width:100%;">
+                                <tr style="font-weight:bold;font-size:15px;">
+                                    <td><span>From</span></td>
+                                </tr>
+                                <tr style="font-weight:bold;font-size:15px;">
+                                    <td><span>M/s.</span><span t-esc="company.name"/></td>
+                                </tr>
+                                <tr style="font-size:15px;">
+                                    <td><span t-esc="company.street"/>,<span t-esc="company.street2"/></td>
+                                </tr>
+                                <tr style="font-size:15px;">
+                                    <td><span t-esc="company.city"/>,<span t-esc="company.state_id.name"/>,<span t-esc="company.zip"/>,<span t-esc="company.country_id.name"/></td>
+                                </tr>
+                            </table>
+                            <table style="float:right;border:1px solid;background-color:#CCCCCC;" cellspacing="0" cellpadding="4">
+                                <tr style="font-size:13px;border:2px solid;">
+                                    <td style="border:1px solid;"><span><strong>Name</strong></span></td>
+                                    <td style="border:1px solid;"><span t-esc="doc.user_id.name"/></td>
+                                </tr>
+                                <tr style="font-size:13px;border:2px solid;">
+                                    <td style="border:1px solid;"><span><strong>Designation</strong></span></td>
+                                    <td style="border:1px solid;"><span t-esc="doc.user_id.partner_id.function"/></td>
+                                </tr>
+                                <tr style="font-size:13px;border:2px solid;">
+                                    <td style="border:1px solid;"><span><strong>Date</strong></span></td>
+                                    <td style="border:1px solid;"><span t-esc="doc.date_order.strftime('%d.%m.%Y')"/></td>
+                                </tr>
+                                <tr style="font-size:13px;border:2px solid;">
+                                    <td style="border:1px solid;"><span><strong>Board No</strong></span></td>
+                                    <td style="border:1px solid;"><span t-esc="company.phone"/></td>
+                                </tr>
+                                <tr style="font-size:13px;border:1px solid;">
+                                    <td style="float:right;border:1px solid;"><span><strong>Phone</strong></span></td>
+                                    <td style="float:right;border:1px solid;"><span t-esc="doc.user_id.partner_id.phone"/></td>
+                                </tr>
+                                <tr style="font-size:13px;border:1px solid;">
+                                    <td style="float:right;border:1px solid;"><span><strong>Product</strong></span></td>
+                                    <td style="float:right;border:1px solid;"><t t-if="doc.sale_sub_type_id"><span t-esc="doc.sale_sub_type_id.name"/></t></td>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered" style="width:100%;border-left:2px">
+                                <tr style="font-weight:bold;font-size:15px;">
+                                    <td><span>To</span></td>
+                                </tr>
+                                <tr style="font-weight:bold;font-size:15px;">
+                                    <td><span>M/s.</span><span t-esc="doc.partner_id.name"/></td>
+                                </tr>
+                                <tr style="font-size:15px;">
+                                    <td><span t-esc="doc.partner_id.street"/>,<span t-esc="doc.partner_id.street2"/></td>
+                                </tr>
+                                <tr style="font-size:15px;">
+                                    <td><span t-esc="doc.partner_id.city"/>,<span t-esc="doc.partner_id.state_id.name"/>,<span t-esc="doc.partner_id.zip"/>,<span t-esc="doc.partner_id.country_id.name"/></td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table class="table table-bordered" style="width:100%; border:1px solid;" cellspacing="0" cellpadding="5">
+                                <tr style="border: 1px solid black;text-align:center;">
+                                    <td style="border: 1px solid black;"><strong>S.No</strong></td>
+                                    <td style="border: 1px solid black;"><strong>Description</strong></td>
+                                    <td style="border: 1px solid black;"><strong>Qty</strong></td>
+                                    <td style="border: 1px solid black;"><strong>Unit Price</strong></td>
+                                    <td style="border: 1px solid black;"><strong>Total</strong></td>
+                                    <td style="border: 1px solid black;"><strong>Tax</strong></td>
+                                </tr>
+                                <t t-foreach="doc.order_line_details()" t-as="rec">
+                                    <tr style="background: white;border: 1px solid black;">
+                                        <td style="border: 1px solid black;text-align:center;"><span t-esc="rec['no']"/></td>
+                                        <td style="border: 1px solid black;text-align:left;"><span t-esc="rec['description']"/></td>
+                                        <td style="border: 1px solid black;text-align:center;"><span t-esc="'%.0f'%rec['qty']"/></td>
+                                        <td style="border: 1px solid black;text-align:right;"><span t-esc="'%.2f'%rec['price']"/></td>
+                                        <td style="border: 1px solid black;text-align:right;"><span t-esc="'%.2f'%rec['total']"/></td>
+                                        <td style="border: 1px solid black;text-align:center;"><span t-esc="rec['taxes']"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <br/>
+                            <table class="table table-borderless" style="width:100%;">
+                                <tr><td><span><strong>Terms &amp; Conditions</strong></span></td></tr>
+                                <tr><td><span t-raw="'&lt;br/&gt;'"/></td></tr>
+                                <tr><td><span><strong>Tax :  </strong></span><span>Taxes Extra as mentioned in the quote</span></td></tr>
+                                <tr><td><span t-raw="'&lt;br/&gt;'"/></td></tr>
+                                <tr><td><span><strong>Delivery :  </strong></span><t t-if="doc.picking_policy"><span t-field="doc.picking_policy"/></t></td></tr>
+                                <tr><td><span t-raw="'&lt;br/&gt;'"/></td></tr>
+                                <tr><td><span><strong>Payment :  </strong></span><t t-if="doc.payment_term_id"><span t-esc="doc.payment_term_id.name"/></t></td></tr>
+                                <tr><td><span t-raw="'&lt;br/&gt;'"/></td></tr>
+                                <tr><td><span><strong>Validity :  </strong></span><t t-if="doc.quote_validity"><span t-esc="doc.quote_validity.strftime('%d.%m.%Y')"/></t></td></tr>
+                            </table>
+                            <br/>
+                            <br/>
+                            <table class="table table-borderless">
+                                <tr><td><span>Thanking You,</span></td></tr>
+                                <tr><td><span>Yours Sincerely</span></td></tr>
+                                <tr><td><strong><span>for  </span><i><span t-esc="company.name"/></i></strong></td></tr>
+                            </table>
+                                <br/>
+                                <br/>
+                            <table>
+                                <tr><td><span t-esc="doc.user_id.name"/></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_move,account_move,model_account_move,,1,1,1,1
+access_journal_report,journal_report,model_journal_report,,1,1,1,1
+access_outgoing_payment,outgoing_payment,model_outgoing_payment,,1,1,1,1

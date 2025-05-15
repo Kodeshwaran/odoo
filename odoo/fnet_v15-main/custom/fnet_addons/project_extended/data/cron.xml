@@ -1,0 +1,23 @@
+<odoo>
+     <record model="ir.cron" id="task_deadline_alert">
+        <field name="name">Project Task: Deadline Alert</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_project_task"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_task_deadline_alert()</field>
+    </record>
+
+     <record model="ir.cron" id="timesheet_remainder">
+        <field name="name">Timesheet: Timesheet Entry Alert</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_account_analytic_line"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_timesheet_entry_alert()</field>
+    </record>
+</odoo>

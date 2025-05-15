@@ -1,0 +1,194 @@
+<odoo>
+    <data>
+<!--        <record id="order_view_form_send_button" model="ir.ui.view">-->
+<!--            <field name="name">order.view.form.send.button</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale_costing.order_view_form_sale_costing_inherit"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='commencement_date']" position="after">-->
+<!--                    -->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="order_view_form_sale_costing_inherit" model="ir.ui.view">
+            <field name="name">order.view.form.sale.costing.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="sale_costing_id"/>
+                    <label for="commencement_date" string="commencement/On boarding Date"/>
+                    <div>
+                        <field name="commencement_date" class="o_inline"/>
+                        <button name="on_boarding_mail_send" type="object" string="Send" class="oe_highlight"
+                                style="margin-left: 16px;"/>
+                    </div>
+                    <field name="service_date"/>
+                </xpath>
+                <div class="oe_button_box" position="inside">
+                    <button class="oe_stat_button" type="object" name="action_create_contract_smart"
+                            icon="fa-credit-card">
+                        <field name="contract_count" widget="statinfo"/>
+                    </button>
+                </div>
+                <xpath expr="//notebook//page[last()]" position="after">
+                    <page string='EPO Details'>
+                        <group>
+                            <group>
+                                <div>
+                                    <div>
+                                        <h3>Epo</h3>
+                                    </div>
+                                    <field name="epo_costing_ids" widget="one2many">
+                                        <tree editable="bottom">
+                                            <field name="s_no"/>
+                                            <field name="sale_epo_id"/>
+                                            <field name="sale_service_type_id"/>
+                                            <field name="sale_epo_qty"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                                <br/>
+                                <div>
+                                    <div>
+                                        <h3>Resources</h3>
+                                    </div>
+                                    <field name="resource_costing_ids" widget="one2many">
+                                        <tree>
+                                            <field name="s_no"/>
+                                            <field name="sale_resource"/>
+                                            <field name="sale_resource_qty"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </group>
+                        </group>
+
+
+<!--                        <div colspan="4">-->
+<!--                            -->
+<!--                        </div>-->
+                        <group>
+                            <field name='epo_count' readonly="1"/>
+                            <field name='resource_count' readonly="1"/>
+                            <field name="epo_list_document" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                    </page>
+                </xpath>
+<!--                <field name="order_line" position="attributes">-->
+<!--                    <attribute name="attrs">{'readonly':[('state', '!=', 'draft')]}</attribute>-->
+<!--                </field>-->
+<!--                <group name="sale_shipping" position="inside">-->
+<!--                    <label for="date_delivery" class="oe_inline"/>-->
+<!--                    <div class="o_row">-->
+<!--                        <field name="date_delivery" nolabel="1" class="oe_inline"/>-->
+<!--                        <button name="send_delivery_alert" type="object" string="Send Alert" class="oe_highlight" attrs="{'invisible': [('date_delivery', '=', False), ('state', 'in', ['sale', 'done'])]}"/>-->
+<!--                    </div>-->
+<!--                </group>-->
+            </field>
+        </record>
+
+        <record id="sale_order_data_form_view_inherited" model="ir.ui.view">
+            <field name="name">sale_order_data_view_form_inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="commencement_date" invisible="1"/>
+                    <field name="service_date" invisible="1"/>
+<!--                    <field name="is_costing_order_line" invisible="1"/>-->
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="before">
+                    <field name="is_costing_order_line" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_costing_order_line', '=', True)]}</attribute>
+                </xpath>
+            </field>
+
+        </record>
+
+        <record id="uom_uom_default_set_inherit" model="ir.ui.view">
+            <field name="name">uom.uom.default.set.inherit</field>
+            <field name="model">uom.uom</field>
+            <field name="inherit_id" ref="uom.product_uom_form_view"/>
+            <field name="arch" type="xml">
+                <field name="rounding" position="after">
+                    <field name="is_default_set" invisible="1" force_save="1"/>
+                    <field name="is_default" attrs="{'readonly': [('is_default_set', '!=', False)]}" force_save="1"/>
+                    <field name="company_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="sale_costing_count_form" model="ir.ui.view">
+            <field name="name">sale costing count form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_purchase.sale_order_inherited_form_purchase"/>
+            <field name="arch" type="xml">
+                <div class="oe_button_box" position="inside">
+                    <button class="oe_stat_button" type="object" name="action_view_sale_costing_order"
+                            icon="fa-credit-card">
+                        <field name="sale_costing_count" widget="statinfo"/>
+                    </button>
+                </div>
+            </field>
+        </record>
+
+        <record id="sale_send_email_form" model="ir.ui.view">
+            <field name="name">sale send email form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//button[@name='action_quotation_send']" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible': [('sale_costing_count', '=', 0)]}</attribute>-->
+<!--                </xpath>-->
+               <xpath expr="//button[@name='action_quotation_send']" position="after">
+                    <button id="11" name="action_quotation_send" string="Send by proposal" type="object"
+                    attrs="{'invisible': [('sale_costing_count', '=', 0)]}"/>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send']" position="after">
+                    <button name="create_contract" string="Create Contract" type="object"
+                    attrs="{'invisible': [('subscription_count', '=', 0)]}"/>
+                    <field name="subscription_count" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="view_order_tree_inherit_field" model="ir.ui.view">-->
+<!--            <field name="name">view.order.tree.inherit.field</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.view_order_tree"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="date_order" position="after">-->
+<!--                    <field name="tender_id"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="view_rims_button_inherit" model="ir.ui.view">
+            <field name="name">view rims button product inherit</field>
+            <field name="model">rims.customer.master</field>
+            <field name="inherit_id" ref="rims_dashboard.rims_customer_master_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="action_epo_details_report" string="Send Epo" type="object" class="btn-primary"/>
+                        <button name="action_open_upload_file" class="oe_highlight" type="object" string="Upload EPO"/>
+                    </header>
+                </xpath>
+                <xpath expr="//sheet" position="after">
+                    <div>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" options="{'open_attachments': True}"/>
+                            <field name="message_ids"/>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

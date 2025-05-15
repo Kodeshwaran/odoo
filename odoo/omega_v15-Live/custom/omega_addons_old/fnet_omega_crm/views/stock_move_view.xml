@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+   <record model="ir.ui.view" id="view_stockmove_tree_inherits">
+        <field name="name">view.stockmove.tree.inheritss</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+        <field name="arch" type="xml">      
+             <field name="product_id" position='before'>
+                    <field name="item_no"/>
+            </field>            
+        </field>        
+    </record>
+
+    
+       <record model="ir.ui.view" id="view_stockmove_form_inherits">
+        <field name="name">view.stockmove.from.inheritss</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_picking_form"/>
+        <field name="arch" type="xml">      
+             <field name="product_id" position='before'>
+                    <field name="item_no"/>
+            </field>        
+        </field>        
+    </record>       
+    
+       <record model="ir.ui.view" id="view_stock_picking_inherit">
+        <field name="name">view.stock.picking.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">      
+             <field name="priority" position='after'>
+                <field name="shipment_type"/>
+            </field>        
+             <field name="partner_id" position='replace'>
+                <field name="partner_id" attrs="{'invisible': [('picking_type_code', '=', 'internal')]}" context="{'show_address': 1}"/>
+            </field>        
+             <field name="partner_id" position='after'>
+                <field name="omega_trn_no"/>
+            </field>
+            <field name="picking_type_id" position='after'>
+                <field name="package_name"/>
+                <field name="package_dimention"/>
+                <field name="package_net"/>
+                <field name="package_gross"/>
+            </field>
+        </field>        
+    </record>   
+        
+    </data>
+</odoo>         

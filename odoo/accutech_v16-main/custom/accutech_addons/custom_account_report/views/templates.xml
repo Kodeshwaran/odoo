@@ -1,0 +1,65 @@
+<odoo>
+    <!-- Define Styles for the Account Move Report -->
+    <template id="report_account_move_styles" inherit_id="web.external_layout">
+        <xpath expr="." position="inside">
+            <style>
+                .header img {
+                    float: left;
+                }
+                .header div {
+                    float: right;
+                    text-align: right;
+                    margin-right: 20px;
+                }
+                .customer-details {
+                    margin-top: 20px;
+                }
+                .customer-details div {
+                    width: 50%;
+                    display: inline-block;
+                    vertical-align: top;
+                }
+                .customer-details p {
+                    margin: 0;
+                    line-height: 1.5;
+                }
+                .account-move-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                .account-move-table th, .account-move-table td {
+                    border: 1px solid #000;
+                    padding: 5px;
+                    text-align: left;
+                }
+                .account-move-table th {
+                    background-color: #f2f2f2;
+                }
+            </style>
+        </xpath>
+    </template>
+
+    <!-- Define the Report Action -->
+    <record id="report_account_move" model="ir.actions.report">
+        <field name="name">Account Invoice Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_account_report.report_account_move_invoice</field>
+        <field name="print_report_name">'Account Invoice Report - %s' % (object.name or 'Unknown')</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="custom_account_report.custom_paperformat_account_invoice"/>
+    </record>
+
+    <record id="report_downpayment" model="ir.actions.report">
+        <field name="name">Downpayment Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_account_report.report_downpayment_invoice</field>
+        <field name="print_report_name">'Downpayment Report - %s' % (object.name or 'Unknown')</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="custom_account_report.custom_paperformat_account_invoice"/>
+    </record>
+
+</odoo>

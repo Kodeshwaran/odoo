@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_terms,access.sale.terms,model_sale_terms,,1,1,1,1
+access_sale_terms_conditions, access.sale.terms.conditions,model_sale_terms_conditions,,1,1,1,1
+access_sale_order_terms_conditions, access.sale.order.terms.conditions,model_sale_order_terms_conditions,,1,1,1,1
+access_account_terms,access.account.terms,model_account_terms,,1,1,1,1
+access_account_terms_conditions, access.account.terms.conditions,model_account_terms_conditions,,1,1,1,1
+access_account_move_terms_conditions, access.account.move.terms.conditions,model_account_move_terms_conditions,,1,1,1,1
+access_account_move_description_details, access.account.description.details,model_account_move_description_details,,1,1,1,1
+access_purchase_terms,access.purchase.terms,model_purchase_terms,,1,1,1,1
+access_purchase_terms_conditions, access.purchase.terms.conditions,model_purchase_terms_conditions,,1,1,1,1
+access_purchase_order_terms_conditions, access.purchase.order.terms.conditions,model_purchase_order_terms_conditions,,1,1,1,1
+access_sale_terms_template,access_sale_terms_template,model_sale_terms_template,base.group_user,1,1,1,1
+access_account_terms_template,access_account_terms_template,model_account_terms_template,base.group_user,1,1,1,1
+access_purchase_terms_template,access_purchase_terms_template,model_purchase_terms_template,base.group_user,1,1,1,1

@@ -1,0 +1,56 @@
+<odoo>
+    <data noupdate="1">
+        <record id="cron_late_counts" model="ir.cron">
+            <field name="name">Late Counts</field>
+            <field name="model_id" ref="fnet_late.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.action_apply_late_deduction()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="cron_rims_late_counts" model="ir.cron">
+            <field name="name">Late Rims Counts</field>
+            <field name="model_id" ref="fnet_late.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.action_apply_rims_late_deduction()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+        <record id="cron_weekly_late_arrival_report" model="ir.cron">
+            <field name="name">Send Weekly Late Arrivals Report</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.send_late_arrival_report()</field>
+            <field name="interval_type">weeks</field>
+            <field name="interval_number">1</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="ir_cron_send_reminder_email" model="ir.cron">
+            <field name="name">Send Reminder Email</field>
+            <field name="model_id" ref="model_hr_late_approval"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_manager_mail()</field>
+            <field name="interval_type">hours</field>
+            <field name="interval_number">1</field>
+            <field name="numbercall">-1</field>
+            <field name="nextcall">17:00:00</field>
+        </record>
+
+        <record id="ir_cron_hide_approve_button" model="ir.cron">
+            <field name="name">Hide Approve Button</field>
+            <field name="model_id" ref="model_hr_late_approval"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_hide_approve_button()</field>
+            <field name="interval_type">days</field>
+            <field name="interval_number">1</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+</odoo>

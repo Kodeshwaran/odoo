@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+
+        <record id="payment_request_wizard_view_form" model="ir.ui.view">
+            <field name="name">Payment Request Wizard View Form</field>
+            <field name="model">payment.request.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="request_id" invisible="1"/>
+<!--                            <field name="journal_id" domain="[('type', '=', ['bank', 'cash'])]"/>-->
+                        </group>
+                        <field name="payment_request_lines" nolabel="1" readonly="1">
+                            <tree>
+                                <field name="company_id" invisible="1"/>
+                                <field name="available_payment_method_line_ids" invisible="1"/>
+                                <field name="journal_id"/>
+                                <field name="payment_method_line_id"/>
+                                <field name="amount" readonly="1"/>
+                                <field name="payment_date"/>
+                                <field name="communication"/>
+<!--                                <field name="analytic_account_id"/>-->
+                                <field name="narration"/>
+                                <field name="request_id"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="available_payment_method_line_ids" invisible="1"/>
+                                   <field name="journal_id"/>
+                                    <field name="payment_method_line_id"/>
+                                    <field name="amount" readonly="1"/>
+                                    <field name="payment_date"/>
+                                    <field name="communication"/>
+    <!--                                <field name="analytic_account_id"/>-->
+                                    <field name="narration"/>
+                                </group>
+                            </form>
+                        </field>
+                    </sheet>
+                    <footer>
+                        <button name="action_register_payments" type="object" string="Register Payments" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

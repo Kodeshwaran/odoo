@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+    <data>
+        <record id="view_account_move_inherit" model="ir.ui.view">
+            <field name="name">account.move.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <search >
+                    <field name="narration"  filter_domain="[('narration', 'ilike', self)]"/>
+                </search>
+            </field>
+        </record>
+    </data>
+</odoo>

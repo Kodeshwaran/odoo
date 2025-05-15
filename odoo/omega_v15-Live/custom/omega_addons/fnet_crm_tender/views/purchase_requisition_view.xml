@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_purchase_requisition_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <field name="vendor_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="customer_id"/>
+                    <field name="oppor_id"/>
+                </xpath>
+                <xpath expr="//field[@name='origin']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+<!--                <xpath expr="//field[@name='ordering_date']" position="after">-->
+<!--                    <field name="confirm_date"/>-->
+<!--                </xpath>-->
+                <xpath expr="//page[1]" position="after">
+                    <page string="Received Bids">
+                        <field name="bid_received_line" widget="one2many_list">
+                            <tree editable="bottom" create="false" delete="false">
+                                <field name="valid_qoute"/>
+                                <field name="tender_id" invisible="1" required="1"/>
+                                <field name="purchase_order_id"/>
+                                <field name="vender_id"/>
+                                <field name="product_id"/>
+                                <field name="quantity" sum="Total Quantity"/>
+                                <field name="unit_measure"/>
+                                <field name="purchase_unit_price" sum="Total Purchase Unit Price" widget="monetary"/>
+                                <field name="purchase_total_price" sum="Total Purchase Price" widget="monetary"/>
+                                <field name="unit_price" sum="Total Unit Price" widget="monetary"/>
+                                <field name="sub_total" sum="Total Price" widget="monetary"/>
+                                <button name="update_price" string="Update" type="object"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//button[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_done']" position="before">
+                    <button name="create_rfq" type="object"
+                            attrs="{'invisible':[('state','not in' ,['in_progress','open'])] }" string="Create RFQs"
+                            class="oe_highlight"/>
+
+                    <button name="make_quotation" type="object"
+                            string="Create Sale Quotation"
+                            class="oe_highlight" invisible="1"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="open_quotation" type="object" class="oe_stat_button" icon="fa-list-alt"
+                            attrs="{'invisible': [('state', '=', 'draft')]}">
+                        <div class="o_stat_info">
+                            <field name="quote_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Quote(s)</span>
+                        </div>
+                    </button>
+                </xpath>
+                <field name="product_id" position="before">
+                    <field name="vendor_ids" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>			

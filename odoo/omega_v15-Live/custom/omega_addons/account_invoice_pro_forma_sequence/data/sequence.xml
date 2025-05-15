@@ -1,0 +1,12 @@
+<odoo>
+
+    <data>
+        <record id="sale_quotation_pro_forma_seq" model="ir.sequence">
+            <field name="name">Pro-Forma Sequence</field>
+            <field name="code">pro.forma</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+
+</odoo>

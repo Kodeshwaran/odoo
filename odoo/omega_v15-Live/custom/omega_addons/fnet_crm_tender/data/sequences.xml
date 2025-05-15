@@ -1,0 +1,51 @@
+<odoo>
+    <data noupdate="1">
+        <record model="ir.sequence" id="purchase_sequence">
+			<field name="name">Sequence For Purchase confirm</field>
+			<field name="code">confirm.purchase</field>
+			<field name="implementation">standard</field>
+			<field name="active">TRUE</field>
+			<field name="padding">5</field>
+			<field name="company_id" eval="False"/>
+			<field name="number_increment">1</field>
+		</record>
+
+        <record model="ir.sequence" id="purchase_draft_sequence">
+			<field name="name">Sequence For Purchase create</field>
+			<field name="code">purchase.order</field>
+			<field name="implementation">standard</field>
+			<field name="active">TRUE</field>
+			<field name="prefix">PQTE/%(year)s/</field>
+			<field name="padding">5</field>
+			<field name="company_id" eval="False"/>
+			<field name="number_increment">1</field>
+		</record>
+
+		<record model="ir.sequence" id="enquiry_sequence">
+			<field name="name">Sequence For Opportunity</field>
+			<field name="code">opportunity_sequence</field>
+			<field name="implementation">standard</field>
+			<field name="active">TRUE</field>
+			<field name="prefix">ENQ</field>
+			<field name="padding">5</field>
+			<field name="company_id" eval="False"/>
+			<field name="number_increment">1</field>
+		</record>
+
+		<record id="seq_voip_phonecall" model="ir.sequence">
+            <field name="name">Voip Phonecall</field>
+            <field name="code">voip.phonecall</field>
+            <field name="prefix">DSR/%(month)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+		<record id="sale_quotation_seq" model="ir.sequence">
+            <field name="name">Sale Quotation Sequence</field>
+            <field name="code">sale.quotation</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

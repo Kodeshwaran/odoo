@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="create_multiple_rfq">
+            <field name="name">Multiple RFQ</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//header/button[2]" position="attributes">
+                    <attribute name="attrs">{'invisible': True }</attribute>
+                </xpath>
+
+                <xpath expr="//header/button[1]" position="attributes">
+                    <attribute name="attrs">{'invisible': True }</attribute>
+                </xpath>
+                <xpath expr="//field[@name='vendor_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': True }</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree//field[@name='product_id']" position="before">
+                    <field name="item_no"/>
+                    <field name="vendor_id" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//button[@name='action_in_progress']" position="before">
+                    <button name="create_rfqs" type="object"
+                            string="New RFQ" class="btn-primary"
+                            attrs="{'invisible': [('state', '!=', 'in_progress'),('state', '!=', 'open')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']" position="before">
+                    <button name="select_all_vendor" type='object' icon="fa-check" class="oe_inline oe_stat_button"
+                            string="Select All"/>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree//field[@name='product_id']" position="before">
+                    <field name="select_line" string="Select"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='product_id']" position="replace">
+                    <field name="product_id"/>
+                    <field name="product_category_id"/>
+                    <field name="description"/>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/form/group/field[@name='product_id']" position="replace">
+                    <field name="product_id"/>
+                    <field name="product_category_id"/>
+                    <field name="description"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

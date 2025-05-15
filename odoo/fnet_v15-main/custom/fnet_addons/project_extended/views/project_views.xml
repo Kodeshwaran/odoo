@@ -1,0 +1,299 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="project_task_type_edit_deadline_alert">
+            <field name="name">project.task.deadline.alert.inherit</field>
+            <field name="model">project.task.type</field>
+            <field name="inherit_id" ref="project.task_type_edit"/>
+            <field name="arch" type="xml">
+                <field name="sequence" position="after">
+                    <field name="enable_deadline_alert"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="project_task_inherit">
+            <field name="name">project.task.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_ids']" position="after">
+                    <field name="number"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="responsibility"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="project_task_kanban_inherit">
+            <field name="name">project.task.kanban.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="arch" type="xml">
+                <field name="tag_ids" position="after">
+                    <div t-if="record.start_date.raw_value or record.end_date.raw_value" class="text-muted o_row">
+                        <span class="fa fa-clock-o mr-2" title="Dates"/>
+                        <field name="start_date" widget="date"/>
+                        <i class="fa fa-long-arrow-right mx-2 oe_read_only" aria-label="Arrow icon" title="Arrow"/>
+                        <field name="end_date" widget="date"/>
+                    </div>
+                </field>
+            </field>
+        </record>
+
+        <record id="inherit_sale_order_binary" model="ir.ui.view">
+            <field name="name">inherit_sale_order_binary</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="technical_file" widget="many2many_binary"/>
+                    <field name="scope_file_id" widget="many2many_binary"/>
+                    <field name="scope_file" filename="scope_file_name" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='commitment_date']" position="after">
+                    <button name="action_update_commitment_date" type="object" string="Update Delivery Date"
+                            class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//span[@class='text-muted']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[last()]" position="after">
+                    <page string="Project Details" attrs="{'invisible': [('is_project_mail', '=', False)]}">
+                        <group>
+                            <group style="width:50%;">
+                                <field name="account_manager" invisible="1"/>
+                                <field name="solution_architect" invisible="1"/>
+                                <field name="nlc_person"/>
+                                <field name="nlc_mail"/>
+                                <field name="nlc_no"/>
+                                <field name="is_project_mail" invisible="1"/>
+                                <field name="team_id"/>
+                            </group>
+                            <group style="width:50%;">
+                                <field name="slc_person"/>
+                                <field name="slc_mail"/>
+                                <field name="slc_no"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="is_project_mail" invisible="0"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit_project_project_view_form_simplified_new" model="ir.ui.view">
+            <field name="name">project.project.view.form.simplified.new</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="sale_timesheet.project_project_view_form_simplified_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='allow_billable']" position="after">
+                    <field name="source_document"/>
+                    <field name="project_value"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="technical_file" widget="many2many_binary"/>
+                    <field name="scope_file_id" widget="many2many_binary"/>
+                    <field name="scope_file" filename="scope_file_name" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_edit_project_new" model="ir.ui.view">
+            <field name="name">project.edit.view.form.new</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="source_document" invisible="1"/>
+                    <field name="start_date" invisible="1"/>
+                    <field name="end_date" invisible="1"/>
+                    <field name="project_value" invisible="1"/>
+                    <!--                    <field name="vendor_attachment"  widget="many2many_binary" invisible="1"/>-->
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_task_form2_new" model="ir.ui.view">
+            <field name="name">project.task.view.form.new</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_ids']" position="after">
+                    <field name="source_document" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <label for="date_start" string="Actual Start Date &amp; End Date" id="label_dates"/>
+                    <div>
+                        <div class="o_row o_row_readonly">
+                            <span class="oe_inline">
+                                From
+                            </span>
+                            <field name="date_start" class="oe_inline" nolabel="1"
+                                   widget="daterange" options="{'related_end_date': 'date_end'}"/>
+                            <span class="oe_inline">
+                                To
+                            </span>
+                            <field name="date_end" class="oe_inline" widget="daterange"
+                                   options="{'related_start_date': 'date_start'}"/>
+                        </div>
+                    </div>
+                    <field name="project_value" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_project_tree_inherit" model="ir.ui.view">
+            <field name="name">project.project.tree</field>
+            <field name="model">project.project</field>
+            <field eval="0" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Tasks" multi_edit="1" sample="1" js_class="project_list">
+                    <field name="name"/>
+                    <field name="project_code"/>
+                    <field name="source_document"/>
+                    <field name="project_value"/>
+                    <field name="start_date" string="Schedule Start Date"/>
+                    <field name="end_date" string="Schedule End Date"/>
+                    <!--                    <field name="date_start" string="Actual Start Date"/>-->
+                    <!--                    <field name="date_end" string="Actual End Date"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="project.open_view_project_all_group_stage">
+            <field name="view_mode">kanban,tree,form,ganttaps</field>
+        </record>
+        <record model="ir.actions.act_window" id="project.open_view_project_all">
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+        <record id="inherit_crm_lead_view_form" model="ir.ui.view">
+            <field name="name">crm.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_sub_type_id']" position="after">
+                    <label for="technical_file"/>
+                    <div class="o_row">
+                        <field name="technical_file" widget="many2many_binary" readonly="1"/>
+                        <button name="action_update_technical_file" type="object" string="Update" class="oe_highlight"/>
+                    </div>
+                    <label for="scope_file_id"/>
+                    <div class="o_row">
+                        <field name="scope_file_id" widget="many2many_binary" readonly="1"/>
+                        <button name="action_update_scope_file" type="object" string="Update" class="oe_highlight"/>
+                    </div>
+                    <field name="approval_check" invisible="1"/>
+                    <field name="project_approved" invisible="1"/>
+<!--                    <field name="tech_file" widget="technical_file_name"/>-->
+                    <field name="scope_file" filename="scope_file_name" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_set_lost']" position="after">
+                    <button class="oe_highlight" string="Project Approved" type="object" name="action_project_approved" attrs="{'invisible': [('approval_check', '=', False)]}"/>
+                    <button class="oe_highlight" string="Project Rejected" type="object" name="action_project_rejected" attrs="{'invisible': [('approval_check', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//group[hasclass('mt48')]/field[@name='function']" position="before">
+                    <field name="solution_architect"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='purchase_ok']" position="after">
+                    <span class="d-inline-block">
+                        <field name="is_project_mail"/>
+                        <label for="is_project_mail"/>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+        <record id="new_crm_stage_form_inherited" model="ir.ui.view">
+            <field name="name">CRM Stage view form inherited</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="pre_sale_requested" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='hide_graph']" position="after">
+                    <field name="reponsible_user" widget="many2many_tags"/>
+                    <label for="project_approval"/>
+                    <div class="o_row">
+                        <field name="project_approval" nolabel="1"/><span attrs="{'invisible': [('project_approval', '=', False)]}">Revenue Limit:</span><field style="width:250px;" name="project_revenue_limit" nolabel="1" attrs="{'invisible': [('project_approval', '=', False)]}"/>
+                    </div>
+                    <field name="project_responsible" attrs="{'invisible': [('project_approval', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='fold']" position="after">
+                    <field name="is_project_approved"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="new_project_form_inherited" model="ir.ui.view">
+            <field name="name">Project view form inherited</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="before">
+<!--                    <button name="action_assign_manager" string="Assign Project Manager" type="object" class="oe_highlight" groups="project.group_project_manager"/>-->
+                    <button name="action_project_closure" string="Project Closure" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('is_done', '=', False),('is_closure', '=', True)]}"/>
+<!--                    <button name="action_project_report" string="Report" type="object" class="oe_highlight" groups="project.group_project_manager"/>-->
+                </xpath>
+                <xpath expr="//field[@name='label_tasks']" position="before">
+                    <field name="project_code"/>
+                    <field name="source_document"/>
+                    <field name="project_value"/>
+                    <field name="is_done" invisible="1"/>
+                    <field name="is_closure" invisible="1"/>
+                </xpath>
+                <xpath expr="//div[@name='dates']" position="after">
+                    <label for="start_date" string="Actual Start Date '&amp;' End Date" id="label_dates"/>
+                    <div>
+                        <div class="o_row o_row_readonly">
+                            <span class="oe_inline">
+                                From
+                            </span>
+                            <field name="start_date" class="oe_inline" nolabel="1"
+                                   widget="daterange" options="{'related_end_date': 'end_date'}"/>
+                            <span class="oe_inline">
+                                To
+                            </span>
+                            <field name="end_date" class="oe_inline" widget="daterange"
+                                   options="{'related_start_date': 'start_date'}"/>
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//label[@for='date_start']" position="attributes">
+                    <attribute name="string">Scheduled Dates</attribute>
+                </xpath>
+                <xpath expr="//page[@name='description']" position='after'>
+                    <page string="Closure Details" name="closure_details">
+                        <group>
+                            <field name="account_manager"/>
+                            <field name="sign_off_date"/>
+                            <field name="invoice_requested_date"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_sales_button_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.sale.button</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_schedule_meeting']" position="attributes">
+                    <attribute name="groups" add="sales_team.group_sale_salesman"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

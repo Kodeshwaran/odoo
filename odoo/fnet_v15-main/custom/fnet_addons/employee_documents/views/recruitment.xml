@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_recruitment_applicant_form" model="ir.ui.view">
+            <field name="name">recruitment.applicant.form</field>
+            <field name="model">recruitment.applicant</field>
+            <field name="arch" type="xml">
+                <form string="Recruitment Applicant">
+                    <header>
+                        <button name="action_draft_document" string="Set to Draft" type="object" states="cancel"/>
+                        <button name="action_request" string="Request" class="btn-primary"
+                                type="object" states="draft"/>
+                        <button name="action_hod" string="Approve" class="btn-primary"
+                                type="object"
+                                attrs="{'invisible':['|',('is_hod','!=',True),  ('state','!=','request')]}"/>
+                        <button name="action_reject_document" string="Reject" type="object"
+                                attrs="{'invisible':['|',('is_hod','!=',True),  ('state','!=','request')]}"/>
+                        <button name="action_md" string="Approve" class="btn-primary"
+                                type="object" groups="mm_master.group_company_managing_director" states="approve01"/>
+                        <button name="action_reject_document" string="Reject" type="object" groups="mm_master.group_company_managing_director" states="approve01"/>
+                        <button name="action_hr" string="Approve" class="btn-primary"
+                                type="object" groups="hr.group_hr_user"
+                                states="approve02"/>
+                        <button name="action_reject_document" string="Reject" type="object" groups="hr.group_hr_user" states="approve02"/>
+                        <button name="action_close" string="Close" type="object" states="approve03"/>
+                        <button name="action_cancel_document" string="Cancel" type="object"
+                                states="draft,request"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,request,approve01,approve02,approve03"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group col="4">
+                            <field name="ref_id"/>
+                            <field name="user_id" string="Requested by" readonly="1"/>
+                            <field name="job_id" string="Job Position"/>
+                            <field name="department_id" string="Department"/>
+                            <field name="leval" widget="radio" options="{'horizontal': true}" string="Level"/>
+                            <field name="date"/>
+                            <field name="budget_amount"/>
+                            <field name="qualification"/>
+                        </group>
+                        <group col="4">
+                            <field name="skills"/>
+                            <field name="no_vacancy"/>
+                            <field name="experience"/>
+                            <field name="location_id"/>
+                            <field name="position"/>
+                            <field name="timing" widget="radio" options="{'horizontal': true}"/>
+<!--                            <field name="new_position"/>-->
+<!--                            <field name="replacement"/>-->
+                            <field name="company_id" invisible="1"/>
+                            <field name="description" class="oe-bordered-editor" options="{'style-inline': true}"
+                                   force_save="1"/>
+                            <field name="employee_name" attrs="{'invisible': [('position', '=', 'new_position')]}"/>
+                            <field name="file" filename="file_name"/>
+                            <field name="is_hod" invisible="1"/>
+
+
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_recruitment_applicant_tree" model="ir.ui.view">
+            <field name="name">recruitment.applicant.tree</field>
+            <field name="model">recruitment.applicant</field>
+            <field name="arch" type="xml">
+                <tree decoration-danger="state == 'reject'"
+                      decoration-muted="state == 'request'"
+                      decoration-info="state == 'approve01'"
+                      decoration-primary="state == 'approve02'"
+                      decoration-success="state == 'approve03'"
+                      sample="1" multi_edit="1">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="job_id"/>
+                    <field name="no_vacancy"/>
+                    <field name="state" widget="badge"
+                           decoration-danger="state == 'reject'"
+                           decoration-muted="state == 'request'"
+                           decoration-info="state == 'approve01'"
+                           decoration-primary="state == 'approve02'"
+                           decoration-success="state == 'approve03'"
+                    />
+                </tree>
+            </field>
+        </record>
+
+        <!--        <record id="hr_job_form_inherit" model="ir.ui.view">-->
+        <!--            <field name="name">hr_job_kanban_inherit</field>-->
+        <!--            <field name="model">hr.job</field>-->
+        <!--            <field name="inherit_id" ref="hr_recruitment.view_hr_job_kanban"/>-->
+        <!--            <field name="arch" type="xml">-->
+
+        <!--                <xpath expr="//field[@name='no_of_recruitment']" position="after">-->
+        <!--                    <field name="no_vacancy" invisible="1"/>-->
+        <!--                </xpath>-->
+
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <record id="action_recruitment_applicant" model="ir.actions.act_window">
+            <field name="name">Recruitment Request</field>
+            <field name="res_model">recruitment.applicant</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create a new one</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_recruitment_root"
+                  name="Recruitment Request"
+                  parent="hr.menu_hr_employee_payroll"
+                  action="action_recruitment_applicant"
+                  sequence="100"/>
+
+
+        <record id="request_mail_template" model="mail.template">
+            <field name="name">request_mail_template</field>
+            <field name="model_id" ref="employee_documents.model_recruitment_applicant"/>
+            <field name="subject">Recruitment Request</field>
+            <field name="email_to">{{ (object.department_id.head_of_department.work_email)}}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="xml">
+                <div>
+
+                    <body>
+                        <p>Dear
+                            <t t-out="object.department_id.head_of_department.name">,</t>
+                        </p>
+                        <p>Please click the button below to approve</p>
+                        <a class="btn btn-primary" style="color:black;"
+                           t-att-href="ctx.get('access_link')">Approve
+                        </a>
+                    </body>
+                </div>
+
+            </field>
+
+        </record>
+
+        <record id="hod_approve_mail_template" model="mail.template">
+            <field name="name">hod_approve_mail_template</field>
+            <field name="model_id" ref="employee_documents.model_recruitment_applicant"/>
+            <field name="subject">HOD Approve</field>
+            <field name="email_to">{{ (object.get_email_to_md())}}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="xml">
+                <div>
+
+                    <body>
+                        <p>Dear sir,
+
+                        </p>
+                        <p>Please click the button below to approve:</p>
+                        <a class="btn btn-primary" style="color:black;"
+                           t-att-href="ctx.get('access_link')">Approve
+                        </a>
+                    </body>
+                </div>
+
+            </field>
+
+        </record>
+
+        <record id="md_approve_mail_template" model="mail.template">
+            <field name="name">md_approve_mail_template</field>
+            <field name="model_id" ref="employee_documents.model_recruitment_applicant"/>
+            <field name="subject">MD Approve</field>
+            <field name="email_to">{{ (object.get_email_to_hr())}}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="xml">
+                <div>
+
+                    <body>
+                        <p>Dear sir,
+
+                        </p>
+                        <p>Please click the button below to approve:</p>
+                        <a class="btn btn-primary" style="color:black;"
+                           t-att-href="ctx.get('access_link')">Approve
+                        </a>
+                    </body>
+                </div>
+            </field>
+        </record>
+
+        <record id="manager_approve_mail_template" model="mail.template">
+            <field name="name">manager_approve_mail_template</field>
+            <field name="model_id" ref="employee_documents.model_recruitment_applicant"/>
+            <field name="subject">MD Approve</field>
+            <field name="email_to">{{ (object.get_email_to_hr())}}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="xml">
+                <div>
+
+                    <body>
+                        <p>Dear sir,
+
+                        </p>
+                        <p>Kindly approve the following position "<b><t t-out="object.job_id.name"></t></b>" for "<b><t t-out="object.department_id.name"></t></b>"</p>
+                        <a class="btn btn-primary" style="color:black;"
+                           t-att-href="ctx.get('access_link')">Approve
+                        </a>
+                    </body>
+                </div>
+            </field>
+        </record>
+
+
+
+
+        <record id="res_users_recruitment_request_form_view_inherit" model="ir.ui.view">
+            <field name="name">res.user.recruitment.request.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="hr_holidays.res_users_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_recruitment_request" type="object"
+                            string="Recruitment Request" class="oe_highlight" attrs="{'invisible': [('can_recruitment_request', '=', False)]}"/>
+                    <field name="can_recruitment_request" invisible="0"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="view_recruitment_request"
+                            attrs="{'invisible': [('recruitment_request_count', '=', 0)]}"
+                            class="oe_stat_button" type="object" icon="fa-file-text-o">
+                        <field name="recruitment_request_count" widget="statinfo" nolabel="1" invisible="1"/>
+                        <span>Recruitment Request</span>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

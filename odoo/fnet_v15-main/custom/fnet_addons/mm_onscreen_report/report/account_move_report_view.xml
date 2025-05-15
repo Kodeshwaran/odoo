@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <template id="gst_move_template_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-if="o.move_type == 'out_invoice'">
+                    <t t-call="mm_onscreen_report.gst_invoice_template_gst_report_out_invoice" t-lang="lang"/>
+                </t>
+                <t t-if="o.move_type == 'out_refund'">
+                    <t t-call="mm_onscreen_report.gst_invoice_template_gst_report_out_refund" t-lang="lang"/>
+                </t>
+                <t t-if="o.move_type == 'in_invoice'">
+                    <t t-call="mm_onscreen_report.gst_invoice_template_gst_report_in_invoice" t-lang="lang"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+   <template id="gst_invoice_template_gst_report_out_invoice">
+    <t t-call="web.html_container">
+		<t t-call="web.external_layout">
+			<t t-foreach="docs" t-as="o">
+				<t t-if="doc and 'company_id' in doc">
+					<t t-set="company" t-value="doc.company_id"></t>
+				</t>
+				<t t-if="not doc or not 'company_id' in doc">
+					<t t-set="company" t-value="res_company"></t>
+				</t>
+				 
+				<table class="table table-bordered" style="font-size:15px">
+					  <tbody>
+					  <tr>
+						  <p style="margin-bottom:0px; padding-top:0px;font-weight:bold;text-align:center;">TAX INVOICE</p>
+					  </tr>
+					  <tr>
+						<td width="70%"><span itemprop="image" t-field="company.logo" t-options='{"widget": "image"}' /></td>
+						<td width="29.99%">
+							<div t-field="company.name" t-attf-style="white-space:nowrap;font-size:14px;font-weight:500;"/>
+							<div t-field="company.street" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>                                      
+							<div t-field="company.street2" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>                                      
+							<div style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;">
+								<span t-field="company.city"/> - <span t-field="company.zip"/>
+							</div>
+							<div t-field="company.phone" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>
+							<div t-field="company.email" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>
+							<p style="margin-bottom:0px; padding-top:0px;font-size:14px;"><span t-if="company.vat">GST: <span t-field="company.vat"/></span></p>
+						</td>
+					  </tr>
+					  </tbody>
+				</table>
+				<table class="table table-bordered table-inverse" style="font-size:15px;margin-top:-1.5%;">
+					<tr style="font-size:12px;background: white;">
+						<td rowspan="3" style="font-weight:bold;font-size:15px;padding-top:25px;padding-bottom:25px;">
+							<span>Invoice Number</span><br/><br/>
+							<span t-field="o.name"/>
+						</td>
+						<td><span style="font-weight:bold;font-size:12px;">Invoice Date</span></td>
+						<td><span t-field="o.date" t-field-options='{"format": "d MMMM y"}'/></td>
+						<td><span style="font-weight:bold;">Due Date</span></td>
+						<td><span t-field="o.invoice_date_due" t-field-options='{"format": "d MMMM y"}'/></td>
+					</tr>
+					<tr style="font-size:12px;background: white;">
+						<td><span style="font-weight:bold;">Sales Person</span></td>
+						<td><span t-field="o.user_id.name"/></td>
+						<td><span style="font-weight:bold;">Sales Team</span></td>
+						<td><span t-field="o.team_id.name"/></td>
+					</tr>
+					<tr style="font-size:12px;background: white;">
+						<td><span style="font-weight:bold;">Payment Term</span></td>
+						<td><span t-field="o.invoice_payment_term_id.name"/></td>
+						<td><span style="font-weight:bold;">Customer Ref</span></td>
+						<td><span t-field="o.ref"/></td>
+					</tr>
+				</table>
+				<table class="table table-bordered table-inverse" style="font-size:15px;margin-top:-1.5%">
+					<tr style="font-size:12px;background: white;">
+						<td>
+							<b style="font-size: 13px;">BILLING ADDRESS:</b><br/>
+							<div style="font-size: 13px;font-weight:bold;" t-esc="o.partner_id.name"/>
+							<div t-esc="o.partner_id.street"/>
+							<div t-esc="o.partner_id.street2"/>
+							<div>
+								<span t-field="o.partner_id.city"/> - <span t-field="o.partner_id.zip"/>
+							</div>
+							<div t-esc="o.partner_id.phone"/>
+							GST : <div t-esc="o.partner_id.vat"/>
+						</td>
+						<td>
+							<b style="font-size: 13px;">SHIPPING ADDRESS:</b>
+							<div style="font-size: 13px;font-weight:bold;" t-esc="o.partner_shipping_id.name"/>
+							<div t-esc="o.partner_shipping_id.street"/>
+							<div t-esc="o.partner_shipping_id.street2"/>
+							<div>
+								<span t-field="o.partner_shipping_id.city"/> - <span t-field="o.partner_shipping_id.zip"/>
+							</div>
+							<div t-esc="o.partner_shipping_id.phone"/>
+							GST : <div t-esc="o.partner_shipping_id.vat"/>
+						</td>
+					</tr>
+				</table>
+				
+				<table class="table table-bordered" style="font-size:15px;margin-top:-1.5%">
+					<tr style="font-size:12px;background: white;">
+						<th>S.No</th>
+						<th>Description of Goods</th>
+						<th>HSN/SAC Code</th>
+						<th>Tax</th>
+						<th>Quantity</th>
+						<th>Rate</th>
+						<th>Uom</th>
+						<th>Amount</th>
+					</tr>
+					<t t-set="counter" t-value="1"/>
+					<tr t-foreach="o.invoice_line_ids" t-as="doc" style="font-size:15px;background: white;">
+						<t t-if="doc.product_id ">
+							<td style="text-align:center;"><t t-esc="counter"/><t t-set="counter" t-value="counter+1"/></td>
+							<td style="padding-left:10px;"><span t-field="doc.name"/></td>
+							<td style="padding-left:10px;"><span t-field="doc.product_id.l10n_in_hsn_code"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-esc="', '.join(map(lambda x: (x.description or x.name), doc.tax_ids))"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.quantity"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.price_unit"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.product_uom_id.name"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.price_total"/></td>
+						</t>
+					</tr>
+					<t t-if="o.tds_added > 0 ">
+						<tr style="font-size:12px;background: white;">
+							<td colspan="7" style="padding-left:10px;text-align:right;">TCS:</td>
+							<td style="padding-left:10px;text-align:right;"><span t-esc="o.tds_added"/></td>
+						</tr>
+					</t>
+					<tr style="font-size:12px;background: white;" t-if="o.get_tds_des(o) &lt; 0 ">
+						<td colspan="7" style="padding-left:10px;text-align:right;">TDS:</td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="o.get_tds_des(o)"/></td>
+					</tr>
+					<tr style="font-size:12px;background: white;">
+						<td colspan="7" style="padding-left:10px;text-align:left;">Total Amount (in words):<span t-esc="o.get_tax_amt(o, o.amount_total)"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-field="o.amount_total"/></td>
+					</tr>
+				</table>
+				<table class="table table-bordered" style="font-size:12px;margin-top:-1.5%">
+					<tr style="padding-left:10px;text-align:center;font-size:12px;background: white;">
+						<th rowspan="2">HSN/SAC Code</th>
+						<th rowspan="2">TaxableValue</th>
+						<th colspan="2">Central Tax</th>
+						<th colspan="2">State Tax</th>
+					</tr>
+					<tr style="padding-left:10px;text-align:center;background: white;">
+						<th>Rate(%)</th>
+						<th>Amount</th>
+						<th>Rate(%)</th>
+						<th>Amount</th>
+					</tr>
+					<tr t-foreach="o.get_tax_des(o)" t-as="doc" style="background: white;">
+						<td style="padding-left:10px;"><span t-esc="doc['hsn']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['price_subtotal']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['cgst'] or doc['igst']" /></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['cgst_val'] or doc['igst_val']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['sgst']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['sgst_val']"/></td>
+					</tr>
+					<tr t-foreach="o.get_tax_tot_des(o)" t-as="doc1" style="background: white;">
+						<td style="padding-left:10px;text-align:center;">Total</td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['price_subtotal']"/></td>
+						<td style="padding-left:10px;text-align:right;"></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['cgst_val'] or doc1['igst_val']"/></td>
+						<td style="padding-left:10px;text-align:right;"></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['sgst_val']"/></td>
+					</tr>
+					<tr style="background: white;">
+						<td colspan="6" style="padding-left:10px;text-align:left;">Tax Amount (in words):<span t-esc="o.get_tax_amt(o, o.amount_tax)"/></td>
+					</tr>
+					<tr style="background: white;">
+						<td colspan="6" style="padding-left:10px;text-align:left;"><span t-esc="o.narration"/></td>
+					</tr>
+					<tr style="text-align:left;background: white;">
+						<td colspan="2"><span style="font-weight:bold;"><u>Declaration</u></span><br/>
+										<span>We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct</span></td>
+						<td colspan="4" width="50%"><t t-if="o.company_id.partner_id.bank_ids">
+											Bank Holder : <t t-esc="o.get_bank(o)[0]['bank_holder']"/><br/>
+											Bank Number : <t t-esc="o.get_bank(o)[0]['bank_number']"/><br/>
+											Bank Name : <t t-esc="o.get_bank(o)[0]['bank_name']"/><br/>
+											Bank IFSC : <t t-esc="o.get_bank(o)[0]['bank_ifsc']"/><br/>
+										</t></td>
+					</tr>
+					<tr style="text-align:right;font-size:12px;background: white;">
+						<td colspan="6">For : <span t-esc="o.company_id.name"/><br/><br/><br/>
+						<span>Authorised Signatory</span>
+						</td>
+					</tr>
+				</table>
+				 
+			</t>
+		</t>
+    </t>
+    </template>
+    
+    
+   <template id="gst_invoice_template_gst_report_out_refund">
+    <t t-call="web.html_container">
+		<t t-call="web.external_layout">
+			<t t-foreach="docs" t-as="o">
+				<t t-if="doc and 'company_id' in doc">
+					<t t-set="company" t-value="doc.company_id"></t>
+				</t>
+				<t t-if="not doc or not 'company_id' in doc">
+					<t t-set="company" t-value="res_company"></t>
+				</t>
+				 
+				<table class="table table-bordered" style="font-size:15px">
+					  <tbody>
+					  <tr>
+						  <p style="margin-bottom:0px; padding-top:0px;font-weight:bold;text-align:center;">CREDIT NOTE</p>
+					  </tr>
+					  <tr>
+						<td width="70%"><span itemprop="image" t-field="company.logo" t-options='{"widget": "image"}' /></td>
+						<td width="29.99%">
+							<div t-field="company.name" t-attf-style="white-space:nowrap;font-size:14px;font-weight:500;"/>
+							<div t-field="company.street" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>                                      
+							<div t-field="company.street2" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>                                      
+							<div style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;">
+								<span t-field="company.city"/> - <span t-field="company.zip"/>
+							</div>
+							<div t-field="company.phone" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>
+							<div t-field="company.email" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>
+							<p style="margin-bottom:0px; padding-top:0px;font-size:14px;"><span t-if="company.vat">GST: <span t-field="company.vat"/></span></p>
+						</td>
+					  </tr>
+					  </tbody>
+				</table>
+				<table class="table table-bordered table-inverse" style="font-size:15px;margin-top:-1.5%">
+					<tr style="font-size:10px;">
+						<td rowspan="3" style="font-weight:bold;font-size:15px;padding-top:25px;padding-bottom:25px;">
+							<span>Credit Note Number</span><br/><br/>
+							<span t-field="o.name"/>
+						</td>
+						<td><span style="font-weight:bold;font-size:10px;">Credit Note Date</span></td>
+						<td><span t-field="o.date" t-field-options='{"format": "d MMMM y"}'/></td>
+						<td><span style="font-weight:bold;">Due Date</span></td>
+						<td><span t-field="o.invoice_date_due" t-field-options='{"format": "d MMMM y"}'/></td>
+					</tr>
+					<tr style="font-size:10px;">
+						<td><span style="font-weight:bold;">Sales Person</span></td>
+						<td><span t-field="o.user_id.name"/></td>
+						<td><span style="font-weight:bold;">Sales Team</span></td>
+						<td><span t-field="o.team_id.name"/></td>
+					</tr>
+					<tr style="font-size:10px;">
+						<td><span style="font-weight:bold;">Payment Term</span></td>
+						<td><span t-field="o.invoice_payment_term_id.name"/></td>
+						<td><span style="font-weight:bold;">Customer Ref</span></td>
+						<td><span t-field="o.ref"/></td>
+					</tr>
+				</table>
+				<table class="table table-bordered table-inverse" style="font-size:15px;margin-top:-1.5%">
+					<tr style="font-size:10px;">
+						<td>
+							<b style="font-size: 13px;">BILLING ADDRESS:</b><br/>
+							<div style="font-size: 13px;font-weight:bold;" t-esc="o.partner_id.name"/>
+							<div t-esc="o.partner_id.street"/>
+							<div t-esc="o.partner_id.street2"/>
+							<div>
+								<span t-field="o.partner_id.city"/> - <span t-field="o.partner_id.zip"/>
+							</div>
+							<div t-esc="o.partner_id.phone"/>
+							GST : <div t-esc="o.partner_id.vat"/>
+						</td>
+						<td>
+							<b style="font-size: 13px;">SHIPPING ADDRESS:</b>
+							<div style="font-size: 13px;font-weight:bold;" t-esc="o.partner_shipping_id.name"/>
+							<div t-esc="o.partner_shipping_id.street"/>
+							<div t-esc="o.partner_shipping_id.street2"/>
+							<div>
+								<span t-field="o.partner_shipping_id.city"/> - <span t-field="o.partner_shipping_id.zip"/>
+							</div>
+							<div t-esc="o.partner_shipping_id.phone"/>
+							GST : <div t-esc="o.partner_shipping_id.vat"/>
+						</td>
+					</tr>
+				</table>
+				
+				<table class="table table-bordered" style="font-size:15px;margin-top:-1.5%">
+					<tr style="font-size:10px;">
+						<th>S.No</th>
+						<th>Description of Goods</th>
+						<th>HSN/SAC Code</th>
+						<th>Tax</th>
+						<th>Quantity</th>
+						<th>Rate</th>
+						<th>Uom</th>
+						<th>Amount</th>
+					</tr>
+					<t t-set="counter" t-value="1"/>
+					<tr t-foreach="o.invoice_line_ids" t-as="doc" style="font-size:10px;">
+						<t t-if="doc.product_id ">
+							<td style="text-align:center;"><t t-esc="counter"/><t t-set="counter" t-value="counter+1"/></td>
+							<td style="padding-left:10px;"><span t-field="doc.name"/></td>
+							<td style="padding-left:10px;"><span t-field="doc.product_id.l10n_in_hsn_code"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-esc="', '.join(map(lambda x: (x.description or x.name), doc.tax_ids))"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.quantity"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.price_unit"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.product_uom_id.name"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.price_total"/></td>
+						</t>
+					</tr>
+					<tr style="font-size:10px;">
+						<td colspan="7" style="padding-left:10px;text-align:left;">Total Amount (in words):<span t-esc="o.get_tax_amt(o, o.amount_total)"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-field="o.amount_total"/></td>
+					</tr>
+				</table>
+				<table class="table table-bordered" style="font-size:10px;margin-top:-1.5%">
+					<tr style="padding-left:10px;text-align:center;font-size:10px;">
+						<th rowspan="2">HSN/SAC Code</th>
+						<th rowspan="2">TaxableValue</th>
+						<th colspan="2">Central Tax</th>
+						<th colspan="2">State Tax</th>
+					</tr>
+					<tr style="padding-left:10px;text-align:center;">
+						<th>Rate(%)</th>
+						<th>Amount</th>
+						<th>Rate(%)</th>
+						<th>Amount</th>
+					</tr>
+					<tr t-foreach="o.get_tax_des(o)" t-as="doc">
+						<td style="padding-left:10px;"><span t-esc="doc['hsn']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['price_subtotal']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['cgst'] or doc['igst']" /></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['cgst_val'] or doc['igst_val']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['sgst']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['sgst_val']"/></td>
+					</tr>
+					<tr t-foreach="o.get_tax_tot_des(o)" t-as="doc1">
+						<td style="padding-left:10px;text-align:center;">Total</td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['price_subtotal']"/></td>
+						<td style="padding-left:10px;text-align:right;"></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['cgst_val'] or doc1['igst_val']"/></td>
+						<td style="padding-left:10px;text-align:right;"></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['sgst_val']"/></td>
+					</tr>
+					<tr>
+						<td colspan="6" style="padding-left:10px;text-align:left;">Tax Amount (in words):<span t-esc="o.get_tax_amt(o, o.amount_tax)"/></td>
+					</tr>
+					<tr>
+						<td colspan="6" style="padding-left:10px;text-align:left;"><span t-esc="o.narration"/></td>
+					</tr>
+					<tr style="text-align:left;">
+						<td colspan="2"><span style="font-weight:bold;"><u>Declaration</u></span><br/>
+										<span>We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct</span></td>
+						<td colspan="4" width="50%"><t t-if="o.company_id.partner_id.bank_ids">
+											Bank Holder : <t t-esc="o.get_bank(o)[0]['bank_holder']"/><br/>
+											Bank Number : <t t-esc="o.get_bank(o)[0]['bank_number']"/><br/>
+											Bank Name : <t t-esc="o.get_bank(o)[0]['bank_name']"/><br/>
+											Bank IFSC : <t t-esc="o.get_bank(o)[0]['bank_ifsc']"/><br/>
+										</t></td>
+					</tr>
+					<tr style="text-align:right;font-size:12px;">
+						<td colspan="6">For : <span t-esc="o.company_id.name"/><br/><br/><br/>
+						<span>Authorised Signatory</span>
+						</td>
+					</tr>
+				</table>
+			</t>
+		</t>
+    </t>
+    </template>
+    
+  <template id="gst_invoice_template_gst_report_in_invoice">
+    <t t-call="web.html_container">
+		<t t-call="web.external_layout">
+			<t t-foreach="docs" t-as="o">
+				<t t-if="doc and 'company_id' in doc">
+					<t t-set="company" t-value="doc.company_id"></t>
+				</t>
+				<t t-if="not doc or not 'company_id' in doc">
+					<t t-set="company" t-value="res_company"></t>
+				</t>
+				 
+				<table class="table table-bordered" style="font-size:15px">
+					  <tbody>
+					  <tr>
+						  <p style="margin-bottom:0px; padding-top:0px;font-weight:bold;text-align:center;">TAX INVOICE</p>
+					  </tr>
+					  <tr>
+						<td width="70%"><span itemprop="image" t-field="company.logo" t-options='{"widget": "image"}' /></td>
+						<td width="29.99%">
+							<div t-field="company.name" t-attf-style="white-space:nowrap;font-size:14px;font-weight:500;"/>
+							<div t-field="company.street" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>                                      
+							<div t-field="company.street2" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>                                      
+							<div style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;">
+								<span t-field="company.city"/> - <span t-field="company.zip"/>
+							</div>
+							<div t-field="company.phone" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>
+							<div t-field="company.email" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;font-size:14px;"/>
+							<p style="margin-bottom:0px; padding-top:0px;font-size:14px;"><span t-if="company.vat">GST: <span t-field="company.vat"/></span></p>
+						</td>
+					  </tr>
+					  </tbody>
+				</table>
+				<table class="table table-bordered table-inverse" style="font-size:15px;margin-top:-1.5%">
+					<tr style="font-size:10px;">
+						<td rowspan="3" style="font-weight:bold;font-size:15px;padding-top:25px;padding-bottom:25px;">
+							<span>Invoice Number</span><br/><br/>
+							<span t-field="o.name"/>
+						</td>
+						<td><span style="font-weight:bold;font-size:10px;">Invoice Date</span></td>
+						<td><span t-field="o.date" t-field-options='{"format": "d MMMM y"}'/></td>
+						<td><span style="font-weight:bold;">Due Date</span></td>
+						<td><span t-field="o.invoice_date_due" t-field-options='{"format": "d MMMM y"}'/></td>
+					</tr>
+					<tr style="font-size:10px;">
+						<td><span style="font-weight:bold;">Sales Person</span></td>
+						<td><span t-field="o.user_id.name"/></td>
+						<td><span style="font-weight:bold;">Sales Team</span></td>
+						<td><span t-field="o.team_id.name"/></td>
+					</tr>
+					<tr style="font-size:10px;">
+						<td><span style="font-weight:bold;">Payment Term</span></td>
+						<td><span t-field="o.invoice_payment_term_id.name"/></td>
+						<td><span style="font-weight:bold;">Customer Ref</span></td>
+						<td><span t-field="o.ref"/></td>
+					</tr>
+				</table>
+				<table class="table table-bordered table-inverse" style="font-size:15px;margin-top:-1.5%">
+					<tr style="font-size:10px;">
+						<td>
+							<b style="font-size: 13px;">BILLING ADDRESS:</b><br/>
+							<div style="font-size: 13px;font-weight:bold;" t-esc="o.partner_id.name"/>
+							<div t-esc="o.partner_id.street"/>
+							<div t-esc="o.partner_id.street2"/>
+							<div>
+								<span t-field="o.partner_id.city"/> - <span t-field="o.partner_id.zip"/>
+							</div>
+							<div t-esc="o.partner_id.phone"/>
+							GST : <div t-esc="o.partner_id.vat"/>
+						</td>
+						<td>
+							<b style="font-size: 13px;">SHIPPING ADDRESS:</b>
+							<div style="font-size: 13px;font-weight:bold;" t-esc="o.partner_shipping_id.name"/>
+							<div t-esc="o.partner_shipping_id.street"/>
+							<div t-esc="o.partner_shipping_id.street2"/>
+							<div>
+								<span t-field="o.partner_shipping_id.city"/> - <span t-field="o.partner_shipping_id.zip"/>
+							</div>
+							<div t-esc="o.partner_shipping_id.phone"/>
+							GST : <div t-esc="o.partner_shipping_id.vat"/>
+						</td>
+					</tr>
+				</table>
+				
+				<table class="table table-bordered" style="font-size:15px;margin-top:-1.5%">
+					<tr style="font-size:10px;">
+						<th>S.No</th>
+						<th>Description of Goods</th>
+						<th>HSN/SAC Code</th>
+						<th>Tax</th>
+						<th>Quantity</th>
+						<th>Rate</th>
+						<th>Uom</th>
+						<th>Amount</th>
+					</tr>
+					<t t-set="counter" t-value="1"/>
+					<tr t-foreach="o.invoice_line_ids" t-as="doc" style="font-size:10px;">
+						<t t-if="doc.product_id ">
+							<td style="text-align:center;"><t t-esc="counter"/><t t-set="counter" t-value="counter+1"/></td>
+							<td style="padding-left:10px;"><span t-field="doc.name"/></td>
+							<td style="padding-left:10px;"><span t-field="doc.product_id.l10n_in_hsn_code"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-esc="', '.join(map(lambda x: (x.description or x.name), doc.tax_ids))"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.quantity"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.price_unit"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.product_uom_id.name"/></td>
+							<td style="padding-left:10px;text-align:right;"><span t-field="doc.price_total"/></td>
+						</t>
+					</tr>
+					<t t-if="o.tds_added > 0 ">
+						<tr style="font-size:10px;">
+							<td colspan="7" style="padding-left:10px;text-align:right;">TCS:</td>
+							<td style="padding-left:10px;text-align:right;"><span t-esc="o.tds_added"/></td>
+						</tr>
+					</t>
+					<tr style="font-size:10px;" t-if="o.get_tds_des(o) &lt; 0 ">
+						<td colspan="7" style="padding-left:10px;text-align:right;">TDS:</td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="o.get_tds_des(o)"/></td>
+					</tr>
+					<tr style="font-size:10px;">
+						<td colspan="7" style="padding-left:10px;text-align:left;">Total Amount (in words):<span t-esc="o.get_tax_amt(o, o.amount_total)"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-field="o.amount_total"/></td>
+					</tr>
+				</table>
+				<table class="table table-bordered" style="font-size:10px;margin-top:-1.5%">
+					<tr style="padding-left:10px;text-align:center;font-size:10px;">
+						<th rowspan="2">HSN/SAC Code</th>
+						<th rowspan="2">TaxableValue</th>
+						<th colspan="2">Central Tax</th>
+						<th colspan="2">State Tax</th>
+					</tr>
+					<tr style="padding-left:10px;text-align:center;">
+						<th>Rate(%)</th>
+						<th>Amount</th>
+						<th>Rate(%)</th>
+						<th>Amount</th>
+					</tr>
+					<tr t-foreach="o.get_tax_des(o)" t-as="doc">
+						<td style="padding-left:10px;"><span t-esc="doc['hsn']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['price_subtotal']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['cgst'] or doc['igst']" /></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['cgst_val'] or doc['igst_val']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['sgst']"/></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc['sgst_val']"/></td>
+					</tr>
+					<tr t-foreach="o.get_tax_tot_des(o)" t-as="doc1">
+						<td style="padding-left:10px;text-align:center;">Total</td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['price_subtotal']"/></td>
+						<td style="padding-left:10px;text-align:right;"></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['cgst_val'] or doc1['igst_val']"/></td>
+						<td style="padding-left:10px;text-align:right;"></td>
+						<td style="padding-left:10px;text-align:right;"><span t-esc="doc1['sgst_val']"/></td>
+					</tr>
+					<tr>
+						<td colspan="6" style="padding-left:10px;text-align:left;">Tax Amount (in words):<span t-esc="o.get_tax_amt(o, o.amount_tax)"/></td>
+					</tr>
+					<tr>
+						<td colspan="6" style="padding-left:10px;text-align:left;"><span t-esc="o.narration"/></td>
+					</tr>
+					<tr style="text-align:left;">
+						<td colspan="2"><span style="font-weight:bold;"><u>Declaration</u></span><br/>
+										<span>We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct</span></td>
+						<td colspan="4" width="50%"><t t-if="o.company_id.partner_id.bank_ids">
+											Bank Holder : <t t-esc="o.get_bank(o)[0]['bank_holder']"/><br/>
+											Bank Number : <t t-esc="o.get_bank(o)[0]['bank_number']"/><br/>
+											Bank Name : <t t-esc="o.get_bank(o)[0]['bank_name']"/><br/>
+											Bank IFSC : <t t-esc="o.get_bank(o)[0]['bank_ifsc']"/><br/>
+										</t></td>
+					</tr>
+					<tr style="text-align:right;font-size:12px;">
+						<td colspan="6">For : <span t-esc="o.company_id.name"/><br/><br/><br/>
+						<span>Authorised Signatory</span>
+						</td>
+					</tr>
+				</table>
+				 
+			</t>
+		</t>
+    </t>
+    </template>  
+    
+</data>
+</odoo>

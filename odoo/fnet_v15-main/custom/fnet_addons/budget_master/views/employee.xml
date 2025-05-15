@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+
+        <record id="hr_employee_view_form_inherited" model="ir.ui.view">
+            <field name="name">Hr Employee form view inherited</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='payroll_group']" position="after">
+                    <group name="budget" string="Budget">
+                        <field name="budget_lines" nolabel="1" domain="[('budget_id', '!=', False)]">
+                            <tree editable="bottom" create="0" delete="0">
+                                <field name="employee_id" invisible="1"/>
+                                <field name="budget_id"/>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="department_id"/>
+                                <field name="percentage" widget="percentage"/>
+                            </tree>
+                        </field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

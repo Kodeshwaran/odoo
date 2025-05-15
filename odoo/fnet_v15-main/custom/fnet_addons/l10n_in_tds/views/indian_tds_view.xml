@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_partner_tds_form" model="ir.ui.view">
+			<field name="name">res.partner.tds</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="account.view_partner_property_form" 	/>
+			<field name="arch" type="xml">
+				<xpath expr="//page[3]" position="inside">
+				    <group>
+    			        <field name="credit_limit"/>
+			        </group>
+					<group string="TDS Information" >
+						<group>
+							<field name="tds_applicable"/>
+						</group>
+						<group>
+							<field name="tds_section_id" options="{'no_create':True}"
+								attrs="{'invisible': [('tds_applicable', '==', False)], 'required': [('tds_applicable', '==', True)]}" />
+							<field name="tds_type"
+								attrs="{'invisible': [('tds_applicable' ,'==', False)], 'required': [('tds_applicable', '==', True)]}" />
+						</group>
+					</group>
+<!--					<group string="TCS Information" >-->
+					<group string="TCS Information" >
+						<group>
+							<field name="tcs_applicable"/>
+							<field name="disable_tcs_warn" string="194Q Declaration" groups="account.group_account_manager"/>
+						</group>
+						<group>
+							<field name="tcs_section_id" options="{'no_create':True}"
+								attrs="{'invisible': [('tcs_applicable', '==', False)], 'required': [('tcs_applicable', '==', True)]}" />
+							<field name="tcs_type"
+								attrs="{'invisible': [('tcs_applicable' ,'==', False)], 'required': [('tcs_applicable', '==', True)]}" />
+						</group>
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+
+<!-- TDS -->
+
+		<record id="view_section_tds_form" model="ir.ui.view">
+			<field name="name">section.tds.form</field>
+			<field name="model">section.tds</field>
+			<field name="arch" type="xml">
+				<form string="TDS Sections">
+					<group>
+						<group>
+							<field name="name" />
+							<field name="nature"/>
+							<field name="acc_payable_id" options="{'no_create':True}" />
+							<field name="acc_receivable_id" options="{'no_create':True}" />
+							<field name="effect_date" invisible="1"/>
+							<field name="company_id" options="{'no_create':True,'no_open':True}" />
+						</group>
+						
+					</group>
+					<notebook>
+						<page string="TDS Line">
+							<field name="tds_line_ids">
+								<tree editable="bottom">
+									<field name="tds_id" invisible="1"/>
+									<field name="from_dt" required="1"/>
+									<field name="to_dt" required="1"/>
+									<field name="company_percent"/>
+									<field name="individual_percent"/>
+									<field name="others_percent"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record id="view_section_tds_tree" model="ir.ui.view">
+			<field name="name">section.tds.tree</field>
+			<field name="model">section.tds</field>
+			<field name="arch" type="xml">
+				<tree string="TDS Sections">
+					<field name="name" />
+					<field name="nature" />
+					<!-- <field name="individual_percent" /> -->
+					<!-- <field name="company_percent" /> -->
+					<!-- <field name="others_percent" /> -->
+					<field name="acc_receivable_id" />
+					<field name="acc_payable_id" />
+					<field name="company_id" />
+				</tree>
+			</field>
+		</record>
+		<record id="action_tds_section" model="ir.actions.act_window">
+			<field name="name">TDS Sections</field>
+			<field name="res_model">section.tds</field>
+			<!-- <field name="view_type">form</field> -->
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem id="tds_menu_id" name="TDS"
+			parent="account.menu_finance_configuration" sequence="17" />
+
+		<menuitem action="action_tds_section" id="menu_tds_section_view"
+			name="Sections" parent="tds_menu_id" />
+
+
+<!-- TCS -->
+
+		<record id="view_section_tcs_form" model="ir.ui.view">
+			<field name="name">section.tcs.form</field>
+			<field name="model">section.tcs</field>
+			<field name="arch" type="xml">
+				<form string="TCS Sections">
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="starting_month" required="1"/>
+								<field name="tcs_percentage" invisible='1'/>
+								<field name="limit_amt" invisible='1'/>
+								<field name="acc_payable_id" options="{'no_create':True}" invisible='1'/>
+								<field name="acc_receivable_id" options="{'no_create':True}" invisible='1'/>
+								<field name="company_id" options="{'no_create':True,'no_open':True}" />
+							</group>
+						</group>
+						<notebook>
+							<page string="TCS Line">
+								<field name="tcs_line_ids">
+									<tree editable="bottom">
+										<field name="tcs_id" invisible="1"/>
+										<field name="from_dt" required="1"/>
+										<field name="to_dt" required="1"/>
+										<field name="gst_tax_id" required="1" domain="[('type_tax_use', '=', 'sale')]"/>
+										<field name="tcs_tax_id" required="1" domain="[('tax_group_id.name', '=', 'TCS')]"/>
+										<field name="tcs_percentage" invisible='1'/>
+										<field name="limit_amt"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="view_section_tcs_tree" model="ir.ui.view">
+			<field name="name">section.tcs.tree</field>
+			<field name="model">section.tcs</field>
+			<field name="arch" type="xml">
+				<tree string="TCS Sections">
+					<field name="name" />
+					<field name="starting_month" />
+					<field name="tcs_percentage" />
+					<field name="limit_amt" />
+					<field name="acc_receivable_id" />
+					<field name="acc_payable_id" />
+					<field name="company_id" />
+				</tree>
+			</field>
+		</record>
+		<record id="action_tcs_section" model="ir.actions.act_window">
+			<field name="name">TCS Sections</field>
+			<field name="res_model">section.tcs</field>
+			<!-- <field name="view_type">form</field> -->
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem id="tcs_menu_id" name="TCS"
+			parent="account.menu_finance_configuration" sequence="18" />
+
+		<menuitem action="action_tcs_section" id="menu_tcs_section_view"
+			name="Sections" parent="tcs_menu_id" />
+
+
+	</data>
+</odoo>

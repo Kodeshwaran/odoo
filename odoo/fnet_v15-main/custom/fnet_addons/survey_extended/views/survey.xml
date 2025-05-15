@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="survey_question_form_view_inherited">
+        <field name="name">survey.question.view.form.inherited</field>
+        <field name="model">survey.question</field>
+        <field name="inherit_id" ref="survey.survey_question_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='suggested_answer_ids']/tree/field[@name='value']" position="after">
+                <field name="findings"/>
+                <field name="explanation"/>
+                <field name="recommendations"/>
+            </xpath>
+            <xpath expr="//field[@name='suggested_answer_ids']" position="after">
+                <!--                <label for="is_important"/>-->
+                <field name="is_important"/>
+                <field name="important_msg" widget="html"/>
+            </xpath>
+            <xpath expr="//label[@for='validation_required']" position="after">
+                <br/>
+                <field name="is_name" nolabel="1"/>
+                <label for="is_name"/>
+                <br/>
+                <field name="is_company" nolabel="1"/>
+                <label for="is_company"/>
+                <label for="is_company"/>
+                <br/>
+                <field name="is_otp" nolabel="1"/>
+                <label for="is_otp"/>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="survey_fill_form_start_inherited" inherit_id="survey.survey_fill_form_start">
+        <xpath expr="//button[@type='submit']" position="replace">
+            <button type="submit" value="start" class="btn btn-primary btn-lg">
+                <t t-if="survey.certification">
+                    Start Certification
+                </t>
+                <t t-if="survey.start_button_name">
+                    <span t-esc="survey.start_button_name"/>
+                </t>
+                <t t-else="">
+                    Start Survey
+                </t>
+            </button>
+        </xpath>
+    </template>
+
+    <!--<template id="survey_fill_form_inherited" inherit_id="survey.survey_fill_form">
+        <xpath expr="//div[hasclass('o_survey_form_content')]" position="replace">
+            <t t-if="answer.state == 'new'" t-call="survey.survey_fill_form_start"/>
+            <t t-elif="answer.state == 'in_progress'" t-call="survey.survey_fill_form_in_progress" />
+            <t t-else="" t-call="survey_extended.survey_fill_form_done_customised"/>
+        </xpath>
+    </template>-->
+
+    <record model="ir.ui.view" id="survey_user_input_form_inherited">
+        <field name="name">survey.user_input.form.inh</field>
+        <field name="model">survey.user_input</field>
+        <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="user_name" string="User Name" readonly="0"/>
+                <field name="survey_email" readonly="0"/>
+                <field name="otp_code" readonly="1"/>
+                <field name="answer_otp" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='user_input_line_ids']" position="replace">
+                <field name="user_input_line_ids" mode="tree" attrs="{'readonly': True}">
+                    <tree>
+                        <field name="question_sequence" invisible="1"/>
+                        <field name="question_id"/>
+                        <field name="page_id" invisible="1"/>
+                        <field name="answer_type"/>
+                        <field name="skipped" invisible="1"/>
+                        <field name="value_char_box"/>
+                        <field name="create_date" invisible="1"/>
+                        <field name="answer_is_correct" invisible="1"/>
+                        <field name="answer_score" invisible="1"/>
+                        <field name="value_text_box" invisible="0"/>
+                        <field name="value_date" invisible="0"/>
+                        <field name="value_datetime" invisible="0"/>
+                        <field name="value_numerical_box" invisible="0"/>
+
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="survey_user_input_tree_inherit">
+        <field name="name">survey.user_input.form.inh</field>
+        <field name="model">survey.user_input</field>
+        <field name="inherit_id" ref="survey.survey_user_input_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_date']" position="before">
+                <field name="user_name"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="survey_form_inherit">
+        <field name="name">survey.user_input.form.inh</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="image_logo" filename="file_name"/>
+                <field name="file_name" invisible="1"/>
+                <field name="survey_type" required="1"/>
+                <field name="venue_address" string="Address"
+                       attrs="{'required': [('survey_type', '=', 'event')], 'invisible': [('survey_type', '!=', 'event')]}"/>
+                <field name="event_time"
+                       attrs="{'required': [('survey_type', '=', 'event')], 'invisible': [('survey_type', '!=', 'event')]}"/>
+                <field name="date_of_event"
+                       attrs="{'required': [('survey_type', '=', 'event')], 'invisible': [('survey_type', '!=', 'event')]}"/>
+                <field name="address_url"
+                       attrs="{'required': [('survey_type', '=', 'event')], 'invisible': [('survey_type', '!=', 'event')]}"/>
+                <field name="gentle_remainder" string="Gentle reminder required"
+                       attrs="{'invisible': [('survey_type', '!=', 'event')]}"/>
+                <field name="confirmation_email" string="Confirmation email required"
+                       attrs="{'invisible': [('survey_type', '!=', 'event')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='title']" position="attributes">
+                <attribute name="widget">html</attribute>
+            </xpath>
+            <xpath expr="//form//header" position="inside">
+                <button name="session_close_email" type="object" class="btn-primary" string="Survey Thanks"
+                        attrs="{'invisible': [('survey_type', '!=', 'event')]}"/>
+            </xpath>
+            <xpath expr="//page[@name='options']" position="inside">
+                <group>
+                    <field name="start_button_name"/>
+                </group>
+            </xpath>
+            <xpath expr="//page[@name='description_done']" position="inside">
+                <group>
+                    <field name="contact_details"/>
+                    <field name="first_score"/>
+                    <field name="second_score"/>
+                    <field name="third_score"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="survey_kanban_inherit">
+        <field name="name">survey.survey.kanban.inherit</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_kanban"/> <!-- Replace with the actual External ID -->
+        <field name="arch" type="xml">
+            <xpath expr="//kanban/templates/div[1]/div[2]/h4/field[@name='title']" position="attributes">
+                <attribute name="widget">html</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

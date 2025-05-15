@@ -1,0 +1,41 @@
+<odoo>
+<!--    <template id="report_sales_quotation_styles" inherit_id="web.external_layout">-->
+<!--        <xpagit th expr="." position="inside">-->
+<!--            <style>-->
+<!--                .header {-->
+<!--                    padding-top: 20px; /* Add space above the header */-->
+<!--                }-->
+<!--                .header img {-->
+<!--                    float: left;-->
+<!--                }-->
+<!--                .header div {-->
+<!--                    float: right;-->
+<!--                    text-align: right;-->
+<!--                    margin-right: 20px;-->
+<!--                }-->
+<!--                .customer-details div {-->
+<!--                    width: 50%;-->
+<!--                    display: inline-block;-->
+<!--                    vertical-align: top;-->
+<!--                }-->
+<!--                .customer-details p {-->
+<!--                    margin: 0;-->
+<!--                    line-height: 1.5;-->
+<!--                }-->
+<!--            </style>-->
+<!--        </xpath>-->
+<!--    </template>-->
+    <record id="action_report_sales_quotation" model="ir.actions.report">
+        <field name="name">Sales Quotation</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_sales_report.report_sales_quotation</field>
+        <field name="report_file">custom_sales_report.report_sales_quotation</field>
+        <field name="print_report_name">'Sales Quotation - %s' % (object.quotation_name)</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="custom_sales_report.custom_paperformat_sales_quotation"/>
+    </record>
+
+</odoo>
+

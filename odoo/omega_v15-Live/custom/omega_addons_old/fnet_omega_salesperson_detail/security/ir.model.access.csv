@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_saleperson_detail_report,saleperson.detail.report,model_saleperson_detail_report,sales_team.group_sale_manager,1,1,1,1
+access_pipeline_saleperson_detail_report,pipeline.payment.detail,model_pipeline_payment_detail,sales_team.group_sale_manager,1,1,1,1
+access_lead_aging_detail_report,aging.report.detail,model_aging_report_detail,sales_team.group_sale_manager,1,1,1,1

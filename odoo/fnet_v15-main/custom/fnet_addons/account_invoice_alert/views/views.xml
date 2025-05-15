@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+
+        <record id="account_move_form_view_inherited" model="ir.ui.view">
+            <field name="name">account_move_view_form_inherited</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_reference']" position="after">
+                    <field name="next_alert" invisible="1"/>
+<!--                    <field name="customer_name"/>-->
+                </xpath>
+<!--                <xpath expr="//field[@name='partner_id']" position="after">-->
+<!--                    <field name="customer_name"/>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="res_config_settings_form_inherited" model="ir.ui.view">
+            <field name="name">res_config_settings_view_form_inherited</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='default_taxes_setting_container']" position="after">
+                    <h2>Invoices Due Mail Trigger Settings</h2>
+                    <div class="row mt16 o_settings_container" name="invoice_due_settings">
+                        <div class="col-12 col-lg-6 o_setting_box" id="invoice_due_mail_options">
+                            <div class="oe_inline">
+                                <label for="accounts_mail"/>
+                                <field name="accounts_mail" force_save="1"/>
+                                <label for="md_mail"/>
+                                <field name="md_mail" force_save="1"/>
+                                <label for="long_due_alert"/>
+                                <field name="long_due_alert" force_save="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

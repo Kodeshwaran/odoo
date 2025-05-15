@@ -1,0 +1,26 @@
+# -*- coding: utf-8 -*-
+{
+    'name': "Employee Shift Management",
+    'summary': """Shift Management: Manage employee shift through odoo.""",
+    'description': """This module helps to implement 24/7 shift management system into odoo.""",
+    'author': "Futurenet Technologies India Pvt Ltd",
+    'website': "http://www.futurenet.in",
+    'category': 'Human Resource',
+    'version': '15.0.1',
+    'depends': ['base', 'hr', 'hr_attendance'],
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'data/datas.xml',
+        'wizard/shift_reporting.xml',
+        'wizard/shift_change_wizard.xml',
+        'wizard/night_shift_reporting.xml',
+        'wizard/attendance_report.xml',
+        'views/hr_shift_views.xml',
+        'views/hr_employee_shift_views.xml',
+        'views/hr_shift_change.xml',
+        'views/hr_shift_plan_view.xml',
+        'views/monthly_shift_plan_view.xml',
+        'views/res_config_settings.xml',
+    ],
+}

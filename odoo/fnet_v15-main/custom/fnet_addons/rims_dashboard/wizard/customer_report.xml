@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="rims_customer_report_form_view" model="ir.ui.view">
+        <field name="name">Customer Report</field>
+        <field name="model">rims.customer.report</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="RIMS Customer Report" create="0" delete="0">
+                <div class="custom_form_view">
+                <sheet>
+                    <table style="width:100%;">
+                        <tr>
+                            <td float="left"><label for="customer_id" style="color:white;"/></td>
+                            <td float="right"><label for="contract_type" style="color:white;"/></td>
+                            <td float="right" style="text-align:right;"><span style="color:white;font-weight:bold;" groups="rims_dashboard.group_rims_head" attrs="{'invisible': [('customer_id', '=', False)]}">Contract Document</span></td>
+                            <td float="right" style="text-align:right;"><span style="color:white;font-weight:bold;" groups="rims_dashboard.group_rims_head" attrs="{'invisible': [('customer_id', '=', False)]}">EPO Details</span></td>
+                        </tr>
+
+                        <tr>
+                            <td float="left">
+                                <h1>
+                                    <field name="customer_id" domain="[('contract_type', '=', contract_type )]" options="{'no_create':true, 'no_edit':true, 'no_open':true}" style="width:670px;"/>
+                                </h1>
+                            </td>
+                            <td float="right">
+                                <field name="contract_type" nolabel="1" class="rims_box_view" options="{'no_open':true, 'no_create':true, 'no_edit': true}"/>
+                            </td>
+                            <td float="left" style="text-align:center;"><button name="get_contract_document" type="object"
+                                                                                 class="rims_button_custom" groups="rims_dashboard.group_rims_head" attrs="{'invisible':[('customer_id', '=', False)]}"><br/><span class="fa fa-download fs-xs" style="padding-left:30%;padding-bottom:20px;font-size:40px;"/></button></td>
+                            <td float="left" style="text-align:center;"><button name="action_epo_report" type="object"
+                                                                                 class="rims_button_custom" groups="rims_dashboard.group_rims_head" attrs="{'invisible':[('customer_id', '=', False)]}"><br/><span class="fa fa-download fs-xs" style="padding-left:30%;padding-bottom:20px;font-size:40px;"/></button></td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <div>
+                        <table style="width:60%;float:left;">
+                            <tr style="width:30%;">
+                                <td attrs="{'invisible':['|',('customer_id', '=', False), ('contract_start_date', '=', False)]}"><label for="contract_start_date" string="Contract Period From" style="color:white;"/></td>
+                                <td style="text-align:left;" attrs="{'invisible':['|',('customer_id', '=', False), ('contract_start_date', '=', False)]}"><field name="contract_start_date" nolabel="1" readonly="1" class="rims_box_view"/> <span style="font-size:14px;padding-left:20px;padding-right:20px;color:white;font-weight: bold;">To</span><field name="contract_end_date" nolabel="1" readonly="1" class="rims_box_view"/></td>
+                            </tr>
+<!--                            <tr style="width:30%;">-->
+<!--                                <td attrs="{'invisible':['|',('customer_id', '=', False), ('contract_end_date', '=', False)]}"><label style="color:white;" for="contract_end_date" /></td>-->
+<!--                                <td style="text-align:left;" attrs="{'invisible':['|',('customer_id', '=', False), ('contract_end_date', '=', False)]}"><field name="contract_end_date" nolabel="1" readonly="1" class="rims_box_view"/></td>-->
+<!--                            </tr>-->
+                            <tr style="width:30%;">
+                                <td attrs="{'invisible':['|',('customer_id', '=', False), ('service_code', '=', False)]}"><label for="service_code" style="color:white;" /></td>
+                                <td style="text-align:left;" attrs="{'invisible':['|',('customer_id', '=', False), ('service_code', '=', False)]}"><field name="service_code" nolabel="1" readonly="1" class="rims_box_view2"/></td>
+                            </tr>
+                            <tr style="width:30%;">
+                                <td attrs="{'invisible':['|',('customer_id', '=', False), ('epo_count', '&lt;=', 0)]}"><label for="epo_count" style="color:white;"/></td>
+                                <td style="text-align:left;" attrs="{'invisible':['|',('customer_id', '=', False), ('epo_count', '&lt;=', 0)]}"><field name="epo_count" nolabel="1" readonly="1" class="rims_box_view"/></td>
+                            </tr>
+                            <tr style="width:30%;">
+                                <td attrs="{'invisible':['|',('customer_id', '=', False), ('first_epo_count', '&lt;=', 0)]}"><label for="first_epo_count" style="color:white;"/></td>
+                                <td style="text-align:left;" attrs="{'invisible':['|',('customer_id', '=', False), ('first_epo_count', '&lt;=', 0)]}"><field name="first_epo_count" nolabel="1" readonly="1" class="rims_box_view"/></td>
+                            </tr>
+                            <tr style="width:50%;">
+                                <td attrs="{'invisible':['|',('customer_id', '=', False), ('rims_scope', '=', False)]}"><label for="rims_scope" style="color:white;" /></td>
+                                <td style="text-align:left;" attrs="{'invisible':['|',('customer_id', '=', False), ('rims_scope', '=', False)]}"><field name="rims_scope" nolabel="1" readonly="1" class="rims_box_view3"/></td>
+                            </tr>
+                        </table>
+                        <table style="float:right;">
+                            <tr style="padding:10px;">
+                                <td attrs="{'invisible':['|',('customer_id', '=', False), ('street', '=', False)]}"><span style="color:white;font-weight:bold;">Address</span></td>
+                            </tr>
+                            <tr style="padding:10px;">
+                                <td style="text-align:center;width:250px;height:150px;" attrs="{'invisible':['|',('customer_id', '=', False), ('street', '=', False)]}"  class="rims_address_view">
+                                    <field name="street" nolabel="1" readonly="1"/>,
+                                    <field name="street2" nolabel="1" readonly="1"/>,
+                                    <field name="city" nolabel="1" readonly="1"/>,
+                                    <field name="state_id" nolabel="1" readonly="1" widget='selection' options="{'no_open': true}"/>,
+                                    <field name="zip" nolabel="1" readonly="1"/>,
+                                    <field name="country_id" nolabel="1" readonly="1" widget='selection'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <notebook class="my-custom-module-notebook">
+                        <page name="customer_matrix" string="Customer Account Manager Matrix">
+                            <field name="customer_matrix" nolabel="1">
+                                <form>
+                                    <group>
+                                        <field name="customer_id" invisible="1"/>
+                                        <field name="person"/>
+                                        <field name="name"/>
+                                        <field name="email"/>
+                                        <field name="contact_number"/>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="customer_id" invisible="1"/>
+                                    <field name="person"/>
+                                    <field name="name"/>
+                                    <field name="email"/>
+                                    <field name="contact_number"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="escalation_matrix" string="Escalation Matrix">
+                            <field name="escalation_matrix" nolabel="1" options="{'no_open': true}">
+                                <form>
+                                    <group>
+                                        <field name="customer_id" invisible="1" no_open="1"/>
+<!--                                        <field name="category_id"/>-->
+                                        <field name="level"/>
+                                        <field name="name"/>
+                                        <field name="designation"/>
+                                        <field name="email"/>
+                                        <field name="contact_number"/>
+                                        <field name="escalation_time"/>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="customer_id" invisible="1" no_open="1"/>
+<!--                                    <field name="category_id"/>-->
+<!--                                    <field name="service_id" domain="[('category_id', '=', category_id)]" widget="many2many_tags"/>-->
+                                    <field name="level"/>
+                                    <field name="name"/>
+                                    <field name="designation"/>
+                                    <field name="email"/>
+                                    <field name="contact_number"/>
+                                    <field name="escalation_time"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="monitoring_details" string="Monitoring Details">
+                            <group>
+                                <field name="tool_name" readonly="1"/>
+                                <field name="tool_version" readonly="1"/>
+                                <field name="monitoring_ip_address" readonly="1"/>
+                                <field name="environment_access" readonly="1"/>
+                            </group>
+                            <field name="monitoring_details" nolabel="1" options="{'no_open': true}">
+                                <form>
+                                    <group>
+                                        <field name="customer_id" invisible="1" no_open="1"/>
+<!--                                        <field name="name"/>-->
+                                        <field name="monitoring_url"/>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="customer_id" invisible="1" no_open="1"/>
+<!--                                    <field name="category_id"/>-->
+<!--                                    <field name="service_id" domain="[('category_id', '=', category_id)]" widget="many2many_tags"/>-->
+<!--                                    <field name="name"/>-->
+                                    <field name="monitoring_url"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="monitoring_alert_members" string="Monitoring Alert Members">
+                            <field name="monitoring_alert_members" nolabel="1" options="{'no_open': true}">
+                                <form>
+                                    <group>
+                                        <field name="customer_id" invisible="1" no_open="1"/>
+                                        <field name="category_id"/>
+                                        <field name="service_id"/>
+                                        <field name="level"/>
+                                        <field name="name"/>
+                                        <field name="mail_type"/>
+                                        <field name="email"/>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="customer_id" invisible="1" no_open="1"/>
+                                    <field name="category_id"/>
+                                    <field name="service_id"/>
+                                    <field name="level"/>
+                                    <field name="name"/>
+                                    <field name="mail_type"/>
+                                    <field name="email"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="report_members_details" string="Report Members">
+                            <field name="report_members" nolabel="1" options="{'no_open': true}">
+                                <form>
+                                    <group>
+                                        <field name="customer_id" invisible="1" no_open="1"/>
+                                        <field name="report_type"/>
+                                        <field name="name"/>
+                                        <field name="mail_type"/>
+                                        <field name="email"/>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="customer_id" invisible="1" no_open="1"/>
+                                    <field name="report_type"/>
+                                    <field name="name"/>
+                                    <field name="mail_type"/>
+                                    <field name="email"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="vendor_details" string="Vendor Details">
+                            <field name="vendor_details" nolabel="1">
+                                <form>
+                                    <group>
+                                        <field name="customer_id" invisible="1" no_open="1"/>
+                                        <field name="category_id"/>
+                                        <field name="service_id" domain="[('category_id', '=', category_id)]" widget="many2many_tags"/>
+                                        <field name="servers_name"/>
+                                    </group>
+                                    <group name="escalation_matrix" string="Escalation Matrix">
+                                        <field name="vendor_escalation_matrix" nolabel="1">
+                                            <tree editable="bottom">
+                                                <field name="vendor_id" invisible="1" no_open="1"/>
+                                                <field name="escalation_name"/>
+                                                <field name="escalation_mail_to"/>
+                                                <field name="escalation_mail_cc"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="customer_id" invisible="1" no_open="1"/>
+                                    <field name="category_id"/>
+                                    <field name="service_id" domain="[('category_id', '=', category_id)]" widget="many2many_tags"/>
+                                    <field name="servers_name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <br/>
+                    <br/>
+                    <notebook class="my-custom-module-notebook">
+                        <page string="Technology Landscape Supported" name="technology_landscape_supported">
+                            <field name="technology_supported" nolabel="1" options="{'no_open': true}">
+                            <form>
+                                <group>
+                                    <field name="customer_id" invisible="1" no_open="1"/>
+                                    <field name="technology_type"/>
+                                    <field name="service_ids" widget="many2many_tags"
+                                           domain="[('technology_type', '=', technology_type)]" options="{'no_create':true, 'no_edit':true}"/>
+                                </group>
+                            </form>
+                            <tree>
+                                <field name="customer_id" invisible="1" no_open="1"/>
+                                <field name="technology_type"/>
+                                <field name="service_ids" widget="many2many_tags"
+                                       domain="[('technology_type', '=', technology_type)]" options="{'no_create':true, 'no_edit':true}"/>
+                            </tree>
+                        </field>
+                        </page>
+                        <page name="epo_supported" string="EPO Supported - Summary">
+                            <field name="epo_supported" nolabel="1" options="{'no_open': true}">
+                            <form>
+                                <group>
+                                    <field name="customer_id" invisible="1" no_open="1"/>
+                                    <field name="epo_type_id" readonly="1" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="device_category_id" readonly="1" widget="many2many_tags"/>
+                                    <field name="device_qty" readonly="1"/>
+                                </group>
+                            </form>
+                            <tree>
+                                <field name="customer_id" invisible="1" no_open="1"/>
+                                <field name="epo_type_id" readonly="1" options="{'no_create':true, 'no_edit':true}"/>
+                                <field name="device_category_id" readonly="1" widget="many2many_tags"/>
+                                <field name="device_qty" readonly="1" sum="total"/>
+                            </tree>
+                        </field>
+                        </page>
+                        <page name="epo_details" string="EPO Details">
+                            <field name="epo_details" nolabel="1" options="{'no_open': true}">
+                            <form>
+                                <group>
+                                    <field name="customer_id" invisible="1"/>
+                                    <field name="s_no" force_save="1"/>
+                                    <field name="device_name"/>
+                                    <field name="ip_address"/>
+                                    <field name="epo_type_id" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="device_category_id" domain="[('epo_id', '=', epo_type_id)]" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="platform_id" domain="[('technology_type', '=', 'platform')]" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="technology_id" domain="[('technology_type', '=', 'technology')]" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="folder"/>
+                                    <field name="create_date"/>
+                                </group>
+                            </form>
+                            <tree>
+                                <field name="customer_id" invisible="1"/>
+                                    <field name="s_no" force_save="1"/>
+                                    <field name="device_name"/>
+                                    <field name="ip_address"/>
+                                    <field name="epo_type_id" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="device_category_id" domain="[('epo_id', '=', epo_type_id)]" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="platform_id" domain="[('technology_type', '=', 'platform')]" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="technology_id" domain="[('technology_type', '=', 'technology')]" options="{'no_create':true, 'no_edit':true}"/>
+                                    <field name="folder"/>
+                                    <field name="create_date"/>
+                            </tree>
+                        </field>
+                        </page>
+                        <page name="support_details" string="Support Subscription">
+                            <field name="support_details" nolabel="1" options="{'no_open': true}">
+                            <form>
+                                <group>
+                                    <field name="s_no"/>
+                                    <field name="category"/>
+                                    <field name="description"/>
+                                    <field name="ip_address"/>
+                                    <field name="serial_no"/>
+                                    <field name="type"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="account_id_name"/>
+                                    <field name="email"/>
+                                    <field name="l1_name"/>
+                                    <field name="l1_no"/>
+                                    <field name="l2_name"/>
+                                    <field name="l2_no"/>
+                                    <field name="l3_name"/>
+                                    <field name="l3_no"/>
+
+                                </group>
+                            </form>
+                            <tree>
+                                <field name="customer_id" invisible="1"/>
+                                    <field name="s_no"/>
+                                    <field name="category"/>
+                                    <field name="description"/>
+                                    <field name="ip_address"/>
+                                    <field name="serial_no"/>
+                                    <field name="type"/>
+                                    <field name="start_date"/>
+                                    <field name="end_date"/>
+                                    <field name="account_id_name"/>
+                                    <field name="email"/>
+                                    <field name="l1_name"/>
+                                    <field name="l1_no"/>
+                                    <field name="l2_name"/>
+                                    <field name="l2_no"/>
+                                    <field name="l3_name"/>
+                                    <field name="l3_no"/>
+                            </tree>
+                        </field>
+                        </page>
+                        <page name="monitoring_thresholds_ids" string="Monitoring Thresholds">
+                            <td float="right" style="text-align:center;">
+                                <button name="action_mt_report" type="object" class="rims_button_custom"
+                                        groups="rims_dashboard.group_rims_head"
+                                        attrs="{'invisible':[('customer_id', '=', False)]}">
+                                    <span class="fa fa-download"
+                                          style="font-size: 20px;"/>
+                                </button>
+                                <span class="download-text" groups="rims_dashboard.group_rims_head"
+                                      attrs="{'invisible': [('customer_id', '=', False)]}">
+                                       Download
+                                </span>
+
+                            </td>
+
+                            <field name="monitoring_thresholds_ids" nolabel="1" options="{'no_open': true}">
+                            <form>
+                                <group>
+                                    <field name="host_id" />
+                                    <field name="ip_address" />
+                                    <field name="service" />
+                                    <field name="criticality" />
+                                    <field name="cpu_capacity" string="CPU Capacity"/>
+                                    <field name="cpu_warn_percentage" string="CPU Warn (%)"/>
+                                    <field name="cpu_crit_percentage" string="CPU Crit (%)"/>
+                                    <field name="memory_capacity" string="Memory Capacity"/>
+                                    <field name="memory_warn_percentage" string="Memory Warn (%)"/>
+                                    <field name="memory_crit_percentage" string="Memory Warn (%)"/>
+                                    <field name="disk_capacity" string="Disk Capacity"/>
+                                    <field name="disk_warn_percentage" string="Disk Warn (%)"/>
+                                    <field name="disk_crit_percentage" string="Disk Warn (%)"/>
+                                </group>
+                            </form>
+                            <tree>
+                                <field name="host_id" />
+                                <field name="ip_address" />
+                                <field name="service" />
+                                <field name="criticality" />
+                                <field name="cpu_capacity" string="CPU Capacity"/>
+                                <field name="cpu_warn_percentage" string="CPU Warn (%)"/>
+                                <field name="cpu_crit_percentage" string="CPU Crit (%)"/>
+                                <field name="memory_capacity" string="Memory Capacity"/>
+                                <field name="memory_warn_percentage" string="Memory Warn (%)"/>
+                                <field name="memory_crit_percentage" string="Memory Warn (%)"/>
+                                <field name="disk_capacity" string="Disk Capacity"/>
+                                <field name="disk_warn_percentage" string="Disk Warn (%)"/>
+                                <field name="disk_crit_percentage" string="Disk Warn (%)"/>
+                            </tree>
+                        </field>
+                        </page>
+
+                    </notebook>
+<!--                    <div name="technology_landscape_supported" class="rims_list_view2">-->
+<!--                        <br/>-->
+<!--                        <span style="color:black;font-weight:bold;padding:15px;font-size:15px;text-align:left;">Technology Landscape Supported</span>-->
+<!--                        <br/>-->
+<!--                        <br/>-->
+<!--                        <field name="technology_supported" nolabel="1" options="{'no_open': true}">-->
+<!--                            <form>-->
+<!--                                <group>-->
+<!--                                    <field name="customer_id" invisible="1" no_open="1"/>-->
+<!--                                    <field name="technology_type"/>-->
+<!--                                    <field name="service_ids" widget="many2many_tags"-->
+<!--                                           domain="[('technology_type', '=', technology_type)]" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                </group>-->
+<!--                            </form>-->
+<!--                            <tree>-->
+<!--                                <field name="customer_id" invisible="1" no_open="1"/>-->
+<!--                                <field name="technology_type"/>-->
+<!--                                <field name="service_ids" widget="many2many_tags"-->
+<!--                                       domain="[('technology_type', '=', technology_type)]" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                            </tree>-->
+<!--                        </field>-->
+<!--                    </div>-->
+<!--                    <br/>-->
+<!--                    <br/>-->
+<!--                    <div name="epo_supported" string="EPO Supported - Summary" class="rims_list_view2">-->
+<!--                        <br/>-->
+<!--                        <span style="color:black;font-weight:bold;padding:15px;font-size:15px;text-align:left;">EPO Supported - Summary</span>-->
+<!--                        <br/>-->
+<!--                        <br/>-->
+<!--                        <field name="epo_supported" nolabel="1" options="{'no_open': true}">-->
+<!--                            <form>-->
+<!--                                <group>-->
+<!--                                    <field name="customer_id" invisible="1" no_open="1"/>-->
+<!--                                    <field name="epo_type_id" readonly="1" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                    <field name="device_category_id" readonly="1" widget="many2many_tags"/>-->
+<!--                                    <field name="device_qty" readonly="1"/>-->
+<!--                                </group>-->
+<!--                            </form>-->
+<!--                            <tree>-->
+<!--                                <field name="customer_id" invisible="1" no_open="1"/>-->
+<!--                                <field name="epo_type_id" readonly="1" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                <field name="device_category_id" readonly="1" widget="many2many_tags"/>-->
+<!--                                <field name="device_qty" readonly="1" sum="total"/>-->
+<!--                            </tree>-->
+<!--                        </field>-->
+<!--                    </div>-->
+<!--                    <br/>-->
+<!--                    <br/>-->
+<!--                    <div name="epo_details" string="EPO Details" class="rims_list_view2">-->
+<!--                        <br/>-->
+<!--                        <span style="color:black;font-weight:bold;padding:15px;font-size:15px;text-align:left;">EPO Details</span>-->
+<!--                        <br/>-->
+<!--                        <br/>-->
+<!--                        <field name="epo_details" nolabel="1" options="{'no_open': true}">-->
+<!--                            <form>-->
+<!--                                <group>-->
+<!--                                    <field name="customer_id" invisible="1" no_open="1"/>-->
+<!--                                    <field name="s_no"/>-->
+<!--                                    <field name="device_name"/>-->
+<!--                                    <field name="ip_address"/>-->
+<!--                                    <field name="epo_type_id" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                    <field name="device_category_id" domain="[('epo_id', '=', epo_type_id)]" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                    <field name="platform_id" domain="[('technology_type', '=', 'platform')]" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                    <field name="technology_id" domain="[('technology_type', '=', 'technology')]" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                    <field name="folder"/>-->
+<!--                                </group>-->
+<!--                            </form>-->
+<!--                            <tree>-->
+<!--                                <field name="customer_id" invisible="1" no_open="1"/>-->
+<!--                                <field name="s_no"/>-->
+<!--                                <field name="device_name"/>-->
+<!--                                <field name="ip_address"/>-->
+<!--                                <field name="epo_type_id" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                <field name="device_category_id" domain="[('epo_id', '=', epo_type_id)]" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                <field name="platform_id" domain="[('technology_type', '=', 'platform')]" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                <field name="technology_id" domain="[('technology_type', '=', 'technology')]" options="{'no_create':true, 'no_edit':true}"/>-->
+<!--                                <field name="folder"/>-->
+<!--                            </tree>-->
+<!--                        </field>-->
+<!--                    </div>-->
+
+                </sheet>
+                </div>
+
+            </form>
+        </field>
+    </record>
+<!--    <template id="assets_backend" name="my_module.assets_backend" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <link rel="stylesheet" href="/rims_dashboard/static/src/css/style.css"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+<!--    <template id="assets_backend" name="rims_dashboard.assets_backend">-->
+<!--        <t t-call="web.assets">-->
+<!--            <t t-set="load_css" t-value="load_css + ['/rims_dashboard/static/src/css/style.css']"/>-->
+<!--        </t>-->
+<!--    </template>-->
+    <record id="action_rims_customer_report" model="ir.actions.act_window">
+        <field name="name">RIMS Customer Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">rims.customer.report</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="rims_customer_report_form_view"/>
+        <field name="target">inline</field>
+    </record>
+<!--    <menuitem id="menu_rims_customer_report" name="Customer Report" sequence="3" parent="menu_rims_root" action="action_rims_customer_report" groups="rims_dashboard.group_rims_user"/>-->
+</odoo>

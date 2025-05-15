@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        
+        <record id="ai_form_inher1" model="ir.ui.view">
+            <field name="name">ai.form.inher1</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="exchange_rate"/>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="lead_name" invisible="0"/>
+                    <field name="bank_name"/>
+                    <field name="po_date"/>                    
+                </xpath>
+                
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="omega_trn_no"/>
+                    <field name="customer_trn_no"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="replace">
+                   <field name="partner_shipping_id"  context="{'show_address': 1}" options="{&quot;always_reload&quot;: True}" groups="sale.group_delivery_invoice_address"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='residual']" position="after">
+                    <field name="aed_amount"/>
+                </xpath>
+                
+            </field>
+        </record>
+        
+        <record id="ai_tree_inher1" model="ir.ui.view">
+            <field name="name">ai.tree.inher1</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//field[@name='number']" position="after">
+                    <field name="lead_name"/>
+                </xpath>
+                
+            </field>
+        </record>
+        
+        <record id="account_invoice_form_view_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form.inheritss</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">             
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="bank_name"/>
+                    <field name="po_date"/>
+                </xpath> 
+                <xpath expr="//field[@name='partner_id']" position="before">
+                    <field name="omega_trn_no"/>
+                    <field name="customer_trn_no"/>
+                </xpath>  
+                <xpath expr="//field[@name='residual']" position="after">
+                    <field name="aed_amount"/>
+                </xpath>                                             
+            </field>
+        </record>
+        
+    </data>
+</odoo>

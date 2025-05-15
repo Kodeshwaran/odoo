@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="send_questionnaire_template" model="mail.template">
+            <field name="name">Send Questionnaire Template</field>
+            <field name="model_id" ref="sale_costing.model_crm_lead"/>
+            <field name="subject">Questionnaire</field>
+            <field name="email_from">{{object.email_from}}</field>
+            <field name="email_to">{{object.sale_person()}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse: separate;">
+                    <tr>
+                        <td valign="top" style="font-size: 13px;">
+                            <div>
+                                <h1>
+                                    <span style="font-size: 30px;">Send Questionnaire</span>
+                                </h1>
+                            </div>
+                            <div>
+                                <strong>Reference:</strong>
+                                <t t-out="object.sale_person()"/>
+                                <br/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">
+                            <hr width="100%"
+                                style="background-color: rgb(204,204,204); border: medium none; clear: both; display: block; font-size: 0px; min-height: 1px; line-height: 0; margin: 16px 0px 16px 0px;"/>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+        <record id="send_epo_details_template" model="mail.template">
+            <field name="name">Send Questionnaire Template</field>
+            <field name="model_id" ref="sale_costing.model_rims_customer_master"/>
+            <field name="subject">Questionnaire</field>
+            <field name="email_from">{{object.email()}}</field>
+            <field name="email_to">{{object.customer_email()}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="590"
+                       style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse: separate;">
+                    <tr>
+                        <td valign="top" style="font-size: 13px;">
+                            <div>
+                                <h1>
+                                    <span style="font-size: 30px;">Epo Details</span>
+                                </h1>
+                            </div>
+                            <div>
+                                <strong>Reference:</strong>
+                                <t t-out="object.customer_email()"/>
+                                <br/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">
+                            <hr width="100%"
+                                style="background-color: rgb(204,204,204); border: medium none; clear: both; display: block; font-size: 0px; min-height: 1px; line-height: 0; margin: 16px 0px 16px 0px;"/>
+                        </td>
+                    </tr>
+                </table>
+            </field>
+        </record>
+
+    </data>
+</odoo>

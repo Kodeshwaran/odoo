@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="res_config_settings_view_rims_form">
+            <field name="name">View RIMS Configuration Settings</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="rims_dashboard" string="RIMS" data-key="rims_dashboard" groups="rims_dashboard.group_rims_administrator">
+                        <h2 groups="rims_dashboard.group_rims_administrator">Monitoring Threshold Alert Mail Configuration</h2>
+                        <div class="row mt16 o_settings_container" name="purchase_setting_container">
+                            <div class="col-12 col-lg-6 o_setting_box" id="is_mt">
+                                <div class="o_setting_left_pane">
+                                    <field name="is_mt"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="is_mt"/>
+                                    <div class="text-muted">
+                                        If you want to send an email when an EPO is created but no monitoring threshold is set for that EPO
+                                    </div>
+                                    <div class="content-group" attrs="{'invisible': [('is_mt', '=', False)]}">
+                                        <div class="row mt16">
+                                            <label for="mt_to_mail" class="col-lg-4 o_light_label"/>
+                                            <field name="mt_to_mail"/>
+                                        </div>
+                                        <div class="row mt16">
+                                            <label for="mt_cc_mail" class="col-lg-4 o_light_label"/>
+                                            <field name="mt_cc_mail"/>
+                                        </div>
+                                        <div class="row mt16">
+                                            <label for="mt_days" class="col-lg-4 o_light_label"/>
+                                            <field name="mt_days"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="shift_config_settings_action" model="ir.actions.act_window">-->
+<!--            <field name="name">Settings</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="res_model">res.config.settings</field>-->
+<!--            <field name="view_id" ref="res_config_settings_view_form"/>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="target">inline</field>-->
+<!--            <field name="context">{'module' : 'shift', 'bin_size': False}</field>-->
+<!--        </record>-->
+
+<!--        <menuitem-->
+<!--        id="hr_shift_settings_menu"-->
+<!--        name="Settings"-->
+<!--        parent="hr_shift.menu_hr_shift_config"-->
+<!--        action="shift_config_settings_action"-->
+<!--        groups="base.group_system"-->
+<!--        sequence="1"/>-->
+
+    </data>
+</odoo>

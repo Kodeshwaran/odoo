@@ -1,0 +1,32 @@
+<odoo>
+    <data>
+
+        <record id="view_epo_details_wizard" model="ir.ui.view">
+            <field name="name">view.epo.details.wizard</field>
+            <field name="model">epo.details.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="epo_upload_file" filename="file_name"/>
+                        <field name="file_name" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button string='Upload Epo' name="action_generate_last_epo_details" type="object" class="btn-primary" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="epo_details_action">
+            <field name="name">Epo Details action</field>
+            <field name="res_model">epo.details.wizard</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_epo_details_wizard"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>
+

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_probation_review,access.probation.review,model_probation_review,base.group_user,1,1,1,1
+access_assessment_details,access.assessment.details,model_assessment_details,base.group_user,1,1,1,1
+access_probation_review_refusal,probation.review.refusal,model_probation_review_refusal,base.group_user,1,1,1,1

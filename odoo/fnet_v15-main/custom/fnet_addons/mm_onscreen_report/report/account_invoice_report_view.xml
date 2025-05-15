@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <template id="gst_invoice_template_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-if="o.move_type == 'out_invoice'">
+                    <t t-call="mm_onscreen_report.gst_invoice_template_report_out_invoice" t-lang="lang"/>
+                </t>
+            </t>
+        </t>
+    </template>
+
+   <template id="gst_invoice_template_report_out_invoice">
+    <t t-call="web.html_container">
+		<t t-call="web.external_layout">
+			<t t-foreach="docs" t-as="o">
+				<t t-if="doc and 'company_id' in doc">
+					<t t-set="company" t-value="doc.company_id"></t>
+				</t>
+				<t t-if="not doc or not 'company_id' in doc">
+					<t t-set="company" t-value="res_company"></t>
+				</t>
+				 
+				<table class="table" style="font-size:15px">
+					  <tbody>
+					  <tr>
+						<td width="70%"><span itemprop="image" t-field="company.logo" t-options='{"widget": "image"}' /></td>
+						<td width="29.99%">
+							<div t-field="company.name" t-attf-style="white-space:nowrap;font-size:16px;font-weight:500;"/>
+							<div t-field="company.street" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>                                      
+							<div t-field="company.street2" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>                                      
+							<div style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;">
+								<span t-field="company.city"/> - <span t-field="company.zip"/>
+							</div>
+							<div t-field="company.phone" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>
+							<div t-field="company.email" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>
+							<p style="margin-bottom:0px; padding-top:0px;"><span t-if="company.vat">GST: <span t-field="company.vat"/></span></p>
+						</td>
+					  </tr>
+					  </tbody>
+				</table>
+				<table class="table" style="font-size:15px;margin-top:-1.5%">
+					<tr>
+						<td rowspan="3" style="font-weight:bold;font-size:18px;padding-top:25px;padding-bottom:25px;">
+							<span>Invoice Number</span><br/><br/>
+							<span t-field="o.number"/>
+						</td>
+						<td><span style="font-weight:bold;">Invoice Date</span></td>
+						<td><span t-field="o.date_invoice" t-field-options='{"format": "d MMMM y"}'/></td>
+						<td><span style="font-weight:bold;">Due Date</span></td>
+						<td><span t-field="o.date_due" t-field-options='{"format": "d MMMM y"}'/></td>
+					</tr>
+					<tr>
+						<td><span style="font-weight:bold;">Sales Person</span></td>
+						<td><span t-field="o.user_id.name"/></td>
+						<td><span style="font-weight:bold;">Sales Team</span></td>
+						<td><span t-field="o.team_id.name"/></td>
+					</tr>
+					<tr>
+						<td><span style="font-weight:bold;">Payment Term</span></td>
+						<td><span t-field="o.payment_term_id.name"/></td>
+						<td><span style="font-weight:bold;">Customer Ref</span></td>
+						<td><span t-field="o.name"/></td>
+					</tr>
+				</table>
+				<table class="table" style="font-size:15px;margin-top:-1.5%">
+					<tr>
+						<td>
+							<b style="font-size: 16px;">BILLING ADDRESS:</b><br/>
+							<div style="font-size: 16px;font-weight:bold;" t-esc="o.partner_id.name"/>
+							<div t-esc="o.partner_id.street"/>
+							<div t-esc="o.partner_id.street2"/>
+							<div>
+								<span t-field="o.partner_id.city"/> - <span t-field="o.partner_id.zip"/>
+							</div>
+							<div t-esc="o.partner_id.phone"/>
+							GST : <div t-esc="o.partner_id.vat"/>
+						</td>
+						<td>
+							<b style="font-size: 16px;">SHIPPING ADDRESS:</b>
+							<div style="font-size: 16px;font-weight:bold;" t-esc="o.partner_shipping_id.name"/>
+							<div t-esc="o.partner_shipping_id.street"/>
+							<div t-esc="o.partner_shipping_id.street2"/>
+							<div>
+								<span t-field="o.partner_shipping_id.city"/> - <span t-field="o.partner_shipping_id.zip"/>
+							</div>
+							<div t-esc="o.partner_shipping_id.phone"/>
+							GST : <div t-esc="o.partner_shipping_id.vat"/>
+						</td>
+					</tr>
+				</table>
+				
+				<table class="table table" style="font-size:15px;margin-top:-1.5%">
+					<tr>
+						<td rowspan="2">S.No</td>
+						<td rowspan="2"> Product</td>
+						<td rowspan="2">HSN Code</td>
+						<td rowspan="2">Qty</td>
+						<td rowspan="2">Rate</td>
+						<td rowspan="2">Taxable Value</td>
+						<td rowspan="2">Discount</td>
+						<td colspan="2">CGST</td>
+						<td colspan="2">SGST</td>
+						<td colspan="2">IGST</td>
+					</tr>
+					<tr>
+						<td>Rate</td>
+						<td>Amt</td>
+						<td>Rate</td>
+						<td>Amt</td>
+						<td>Rate</td>
+						<td>Amt</td>
+					</tr>
+				</table>
+				 
+			</t>
+		</t>
+    </t>
+    </template>
+</data>
+</odoo>

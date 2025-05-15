@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <template id="new_homepage" inherit_id="website.homepage" name="Home Test">
+            <xpath expr="//div[@id='wrap']" position="replace">
+                <t t-set="pageName" t-value="'homepage'"/>
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_cover parallax s_parallax_is_fixed bg-black-50 pt96 pb96 o_colored_level"
+                             data-scroll-background-ratio="1" data-snippet="s_cover" data-name="Cover"
+                             style="background-image: none;">
+                        <span class="s_parallax_bg oe_img_bg"
+                              style="background-image: url('/fnet_website/static/description/ws6.png'); background-position: 50% 0;"/>
+                        <div class="o_we_bg_filter bg-black-50"/>
+                        <div class="container s_allow_columns" data-original-title="" title=""
+                             aria-describedby="tooltip853093">
+                            <h1 style="text-align: center;">
+                                <span style="font-size: 62px; font-weight: bolder;">Unlock ODOO's potential with
+                                    Futurenet's expertise!
+                                </span>
+                            </h1>
+                            <p style="text-align: center;">
+                                <br/>
+                            </p>
+                            <p class="lead" style="text-align: center;">
+                                <span style="font-size: 24px; font-weight: bolder;">Choosing ODOO is strategic, but
+                                    mastering its capabilities demands
+                                    expert guidance. At Futurenet, we've perfected ODOO integration,
+                                    seamlessly linking products and services. Trust us for a successful ODOO
+                                    implementation.
+                                </span>
+                                <br/>
+                            </p>
+                            <p class="lead" style="text-align: center;">
+                                <br/>
+                            </p>
+                            <p class="lead" style="text-align: center;">
+                                <span style="font-weight: bolder; font-size: 24px">
+                                    <span style="font-size: 24px">
+                                        <span style="font-size: 24px;">
+                                            <font style="font-style: normal; font-weight: normal; font-size: 36px;"
+                                                  class="text-white">Make the smart business move&amp;nbsp;
+                                            </font>
+                                        </span>
+                                    </span>
+                                </span>
+                            </p>
+                            <p class="lead" style="text-align: center;">
+                                <span style="font-weight: bolder; font-size: 24px">
+                                    <span style="font-size: 24px">
+                                        <span style="font-size: 24px;">
+                                            <font style="font-style: normal; font-weight: normal; font-size: 36px;"
+                                                  class="text-white">&amp;nbsp;"Choose ODOO with Futurenet's seasoned
+                                            </font>
+                                        </span>
+                                        <span style="font-weight: normal; font-size: 24px;">
+                                            <font style="font-style: normal; font-weight: normal;" class="text-white">
+                                                <span style="font-size: 36px;">experts"
+                                                </span>
+                                            </font>
+                                        </span>
+                                    </span>
+                                </span>
+                            </p>
+                            <p style="text-align: center;" data-original-title="" title=""
+                               aria-describedby="tooltip232624">
+                                <a class="btn btn-primary mb-2 o_default_snippet_text" href="/support">Support</a>
+                                <br/>
+                            </p>
+                        </div>
+                    </section>
+                    <section
+                            class="s_banner pt96 pb96 o_colored_level s_parallax_no_overflow_hidden oe_img_bg o_bg_img_center"
+                            data-scroll-background-ratio="0" data-snippet="s_banner" data-name="Banner"
+                            style="background-image: url('/fnet_website/static/description/ws5.png');">
+                        <div class="container">
+                            <div class="row s_nb_column_fixed">
+                                <div class="col-lg-6 jumbotron rounded o_cc o_cc1 pt32 pb32 o_colored_level"
+                                     data-name="Box" data-original-title="" title="" aria-describedby="tooltip815843">
+                                    <h1>
+                                        <font style="font-size: 62px; color: rgb(74, 16, 49); font-weight: bolder;">
+                                            ODOO
+                                        </font>
+                                    </h1>
+                                    <p>
+                                        <font style="font-size: 62px; color: rgb(156, 198, 239);">
+                                            <span style="font-size: 24px;">
+                                                <span style="font-size: 36px;">Implementation</span>
+                                            </span>
+                                        </font>
+                                        <font style="font-size: 62px;">
+                                            <span style="font-size: 24px;"><span style="font-size: 36px;">​</span>​
+                                            </span>
+                                        </font>
+                                    </p>
+                                    <p class="lead">Odoo stands as a powerful asset for your business, yet improper usage can lead to more harm than good.
+                                        Hence, compromising on seeking expert guidance for Odoo implementation is a risk you shouldn't take.
+                                        Make no compromises – secure the success of your business with the right expertise in Odoo implementation.
+                                        <br/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section
+                            class="s_banner pt96 pb96 o_colored_level s_parallax_no_overflow_hidden o_cc o_cc1 oe_img_bg o_bg_img_center"
+                            data-scroll-background-ratio="0" data-snippet="s_banner" data-name="Banner"
+                            style="background-image: url('/fnet_website/static/description/ws3.png');">
+                        <div class="container">
+                            <div class="row s_nb_column_fixed" data-original-title="" title=""
+                                 aria-describedby="tooltip188577">
+                                <div class="jumbotron rounded o_cc o_cc1 pt32 pb32 o_colored_level col-lg-6"
+                                     data-name="Box" style="" data-original-title="" title=""
+                                     aria-describedby="tooltip194860">
+                                    <h1>
+                                        <font style="font-size: 62px; color: rgb(115, 24, 66);">
+                                            <span style="font-weight: bolder;">ODOO</span>
+                                        </font>
+                                        <font style="font-size: 62px; color: rgb(198, 123, 165);">
+                                            <span style="font-size: 62px; font-weight: bolder; font-style: normal;">
+                                                SUPPORT
+                                            </span>
+                                        </font>
+                                        <font style="font-size: 62px; color: rgb(115, 24, 66);"/>
+                                        <br/>
+                                    </h1>
+                                    <p class="lead">Troubles with Odoo? Kick back with chilled beer and let us handle
+                                        the technical jitters for you
+                                        <br/>
+                                    </p>
+                                    <a class="mb-2 btn btn-primary" href="/contactus" data-original-title="" title="">
+                                        Contact us
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="support" name="Support">
+            <t t-call="website.layout">
+                <t t-set="logged_partner"
+                   t-value="request.env['website.visitor']._get_visitor_from_request().partner_id"/>
+                <t t-set="support_form_values" t-value="{
+                'email_to': res_company.email,
+                'name': request.params.get('name', ''),
+                'phone': request.params.get('phone', ''),
+                'email_from': request.params.get('email_from', ''),
+                'company': request.params.get('company', ''),
+                'subject': request.params.get('subject', ''),
+            }"/>
+                <span class="hidden" data-for="support_form" t-att-data-values="support_form_values"/>
+                <div id="wrap" class="oe_structure oe_empty">
+                    <section class="s_banner parallax s_parallax_is_fixed pt96 pb96 o_colored_level"
+                             data-scroll-background-ratio="1" data-snippet="s_banner" data-name="Banner"
+                             style="background-image: none;">
+                        <span class="s_parallax_bg oe_img_bg"
+                              style="background-image: url('/fnet_website/static/description/ws2.png'); background-position: 50% 0;"/>
+                        <div class="container">
+                            <div class="row s_nb_column_fixed">
+                                <div class="jumbotron rounded o_cc o_cc1 pt32 pb32 o_colored_level col-lg-8"
+                                     data-name="Box" data-original-title="" title="" aria-describedby="tooltip8983">
+                                    <h2>ODOO ERP Support &amp;amp; Maintenance</h2>
+                                    <p class="lead">At FutureNet, we offer essential Odoo ERP support and maintenance services. Our team,
+                                        comprised of both functional consultants and technical experts, addresses a wide range of issues.
+                                        From identifying technical challenges to offering tailored solutions,
+                                        our experienced team provides support through customization,
+                                        documentation, bug fixing, guidance, and more. Explore a range of services to enhance your Odoo experience with us.
+                                        <br/>
+                                    </p>
+                                    <a class="mb-2 btn btn-primary" href="/contactus" data-original-title="" title="">
+                                        Contact Us
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="s_text_image pt32 pb32 o_colored_level" data-snippet="s_text_image"
+                             data-name="Text - Image" style="background-image: none;">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6 pt16 pb16 o_colored_level">
+                                    <h2>ODOO AMC Service</h2>
+                                    <p class="o_default_snippet_text">
+                                        OOdoo, a dynamic software solution, thrives on continuous support from service partners and the community.
+                                        The global network of Odoo service partners stands ready to address and resolve your issues.
+
+                                    </p>
+                                    <p>
+                                        Amidst these partners, FutureNet shines as an Odoo gold partner with over 15+ years of expertise.
+                                        From a modest start to a company with 100+ dedicated professionals, we have evolved in tandem with Odoo's success.
+                                    </p>
+                                    <p>
+                                        Choose FutureNet for:
+                                    </p>
+                                    <li>
+                                        Dedicated team of expert professionals and developers
+                                    </li>
+                                    <li>
+                                        Best-in-class Odoo developers and Consultants to rectify the issues.
+                                    </li>
+                                    <li>
+                                        Customized Odoo AMC Packages for your Organization
+                                    </li>
+                                </div>
+                                <div class="col-lg-6 pt16 pb16 o_colored_level">
+                                    <img src="/fnet_website/static/description/ws8.png"
+                                         class="img img-fluid mx-auto" alt="" loading="lazy" data-original-id="2980"
+                                         data-original-src="/website/static/src/img/snippets_demo/s_text_image.jpg"
+                                         data-mimetype="image/jpeg"/>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="s_banner parallax s_parallax_is_fixed pt96 pb96 o_colored_level"
+                             data-scroll-background-ratio="1" data-snippet="s_banner" data-name="Banner"
+                             style="background-image: none;">
+                        <span class="s_parallax_bg oe_img_bg"
+                              style="background-image: url('/fnet_website/static/description/ws2.png'); background-position: 50% 0;"/>
+                        <div class="container">
+                            <div class="row s_nb_column_fixed">
+                                <div class="jumbotron rounded o_cc o_cc1 pt32 pb32 o_colored_level col-lg-7"
+                                     data-name="Box">
+                                    <h3 style="text-align: center;">
+                                        Why FutureNet
+                                    </h3>
+                                    <p style="text-align: center;">
+                                        Our team would help you in finding out the technical problem you facing.
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            High coding standards
+                                        </li>
+                                        <li>
+                                            Expert in all versions of Odoo
+                                        </li>
+                                        <li>
+                                            High quality deliverables
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            25+ years of experience
+                                        </li>
+                                        <li>
+                                            250,000+ Technical calls/year
+                                            <br/>
+                                        </li>
+                                        <li>
+                                            Technical &amp;amp; Functional expertise in all Odoo modules
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </t>
+        </template>
+
+        <record id="support_page" model="website.page">
+            <field name="url">/support</field>
+            <field name="is_published">True</field>
+            <field name="view_id" ref="support"/>
+            <field name="cache_time">0</field>
+            <field name="track">True</field>
+        </record>
+
+        <record id="menu_support" model="website.menu">
+            <field name="name">Support</field>
+            <field name="url">/support</field>
+            <field name="page_id" ref="support_page"/>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">30</field>
+        </record>
+
+
+    </data>
+</odoo>

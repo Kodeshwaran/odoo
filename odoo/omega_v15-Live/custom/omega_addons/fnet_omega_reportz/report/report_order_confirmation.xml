@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="custom_order_confirmation_header_footer">
+            <t t-if="doc and 'company_id' in doc">
+                <t t-set="company" t-value="doc.company_id"></t>
+            </t>
+            <t t-if="not doc or not 'company_id' in doc">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div>
+                <table width="100%"
+                       style="border-bottom: 2px solid #4CA5E7; border-collapse: collapse; padding-bottom: 10px;">
+                    <tr>
+                        <td width="80%" style="font-size: 14px;  padding: 5px;">
+                            <b>
+                                <span style="font-size: 17px;" t-field="company.name"/>
+                            </b>
+                            <br/>
+                            <span t-field="company.street"/>,
+                            <t t-if="company.street2">
+                                <span t-field="company.street2"/>,
+                            </t>
+                            <span t-field="company.city"/>,
+                            <t t-if="company.state_id">
+                                <span t-field="company.state_id"/>,
+                            </t>
+                            <span t-field="company.country_id"/>
+                            <br/>
+                            <span>
+                                <b>P.O.Box:</b>
+                                <span t-field="company.zip"/>
+                            </span>
+                            <br/>
+                            <span>
+                                <b>Phone :</b>
+                                <span t-field="company.phone"/>
+                            </span>
+                            <br/>
+                            <span>
+                                <b>Tax Registration Number :</b>
+                                <span t-field="company.vat"/>
+                            </span>
+                        </td>
+                        <td width="20%"
+                            style=" text-align:center; vertical-align:middle; padding: 5px;">
+                            <img t-att-src="image_data_uri(company.logo)"
+                                 style="width: 100px; height: auto; max-width: 100%;"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <t t-if="o.state == 'draft'">
+                <div class="watermark"
+                     style="position:absolute;left:-105px;top:385px;text-align:center;opacity:0.25;z-index:1000;transform:rotate(310deg);-webkit-transform:rotate(310deg);width:130%;">
+                    <p style="font-size:160px;color:#4CA5E7;">D&#160;&#160;R&#160;&#160;A&#160;&#160;F&#160;&#160;T</p>
+                </div>
+            </t>
+            <div class="footer">
+                <div style="border-top: 1px solid #4CA5E7;">
+                    <p style="text-align:center;font-size:16px;font-family:Liberation Serif;padding-top:3px;">Page:<span
+                            class="page"/>/
+                        <span class="topage"/>
+                    </p>
+                </div>
+            </div>
+        </template>
+
+        <template id="order_confirmation_sale_template_report">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <t t-if="doc and 'company_id' in doc">
+                        <t t-set="company" t-value="doc.company_id"></t>
+                    </t>
+                    <t t-if="not doc or not 'company_id' in doc">
+                        <t t-set="company" t-value="res_company"></t>
+                    </t>
+                    <t t-call="fnet_omega_reportz.custom_order_confirmation_header_footer"/>
+                    <t t-set="total" t-value="[]"/>
+                    <div class="page" style="width:100%;">
+                        <table width="100%;">
+                            <tr>
+                                <td style="width: 100%; text-align: left; padding: 15px; font-size: 17px;">
+                                    <span style="border-left: 10px solid red;">
+                                        <strong style="padding-left: 5px;">
+                                            ORDER CONFIRMATION
+                                        </strong>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width: 100%; padding-top: 10px;">
+                            <tr>
+                                <td style="width:50%; border-bottom: 1px solid #4CA5E7; padding: 10px;">
+                                    <b>
+                                        <span t-field="o.partner_id"/>
+                                    </b>
+                                    <br/>
+                                    <t t-if="o.partner_id.street">
+                                        <span t-field="o.partner_id.street"/>
+                                        <br/>
+                                    </t>
+                                    <t t-if="o.partner_id.street2">
+                                        <span t-field="o.partner_id.street2"/>
+                                        <br/>
+                                    </t>
+                                    <t t-if="o.partner_id.city">
+                                        <span t-field="o.partner_id.city"/>
+                                        <br/>
+                                    </t>
+                                    <t t-if="o.partner_id.state_id">
+                                        <span t-field="o.partner_id.state_id"/>
+                                        <br/>
+                                    </t>
+                                    <t t-if="o.partner_id.country_id">
+                                        <span t-field="o.partner_id.country_id"/>
+                                        <br/>
+                                    </t>
+                                    <br/>
+                                    <b>Kind Attention :</b>
+                                    <span t-field="o.contact_name_id.name"/>
+                                    <br/>
+                                    <b>Customer TRN NO :</b>
+                                    <span t-field="o.partner_id.vat"/>
+                                </td>
+                                <td style="vertical-align: top; border-bottom: 1px solid #4CA5E7; padding: 10px;">
+                                    <span>
+                                        <b>Ref No:</b>
+                                        <br/>
+                                        <t t-if="o.state in ['sale', 'done', 'cancel']">
+                                            <span t-field="o.name"/>
+                                        </t>
+                                        <t t-else="">
+                                            <span t-field="o.quotation_name"/>
+                                        </t>
+                                    </span>
+                                </td>
+                                <td style="vertical-align: top; padding: 10px; border-bottom: 1px solid #4CA5E7;">
+                                    <span>
+                                        <b>Date :</b>
+                                    </span>
+                                    <br/>
+                                    <span t-field="o.confirmation_date" t-field-options='{"format": "MM-dd-YYYY"}'/>
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="width:100%;">
+                            <table style="width: 100%; border-collapse: collapse; border-bottom: 1px solid #4CA5E7;">
+                                <tr style="background-color: rgb(240,244,247)">
+                                    <th style="width: 5%; font-size: 14px; text-align: left; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                        Item No
+                                    </th>
+                                    <th style="width: 35%; font-size: 14px; text-align: left; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                        Details
+                                    </th>
+                                    <th style="width: 20%; font-size: 14px; text-align: right; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                        Price
+                                    </th>
+                                    <th style="width: 20%; font-size: 14px; text-align: right; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                        Qty
+                                    </th>
+                                    <th style="width: 20%; font-size: 14px; text-align: right; border-bottom:1px solid #4CA5E7; border-top:1px solid #4CA5E7; padding: 10px;">
+                                        Total (<span t-field="o.currency_id"/>)
+                                    </th>
+                                </tr>
+                                <t t-foreach="o.order_line.sorted(key=lambda r: r.item_no and r.display_type == False)"
+                                   t-as="line">
+                                    <tr>
+                                        <td style="width: 5%; font-size: 14px; text-align: right; vertical-align: top; border-bottom:1px solid #4CA5E7; padding: 10px;">
+                                            <t t-if="line.item_no">
+                                                <span t-field="line.item_no"/>
+                                            </t>
+                                        </td>
+                                        <td style="width: 35%; font-size: 14px; text-align: left; padding: 10px; border-bottom:1px solid #4CA5E7;">
+                                            <t t-if="line.name">
+                                                <span t-field="line.name"/>
+                                            </t>
+                                        </td>
+                                        <td style="width: 20%; font-size: 14px; text-align: right; padding: 10px; border-bottom:1px solid #4CA5E7;">
+                                            <t t-esc="'{:.2f}'.format(line.price_unit)"/>
+                                        </td>
+                                        <td style="width: 20%; font-size: 14px; text-align: right; padding: 10px; border-bottom:1px solid #4CA5E7;">
+                                            <span t-field="line.product_uom_qty"/>
+                                        </td>
+                                        <td style="width: 20%; font-size: 14px; text-align: right; padding: 10px; border-bottom:1px solid #4CA5E7;">
+                                            <t t-esc="'{:.2f}'.format(line.price_subtotal)"/>
+                                            <t t-set="total" t-value="total+[line.price_subtotal]"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table style="width: 100%; border-bottom: 1px solid #4CA5E7;">
+                                <tr>
+                                    <td style="width: 40%; font-size: 14px; padding: 5px;">
+                                        <strong>Delivery Terms:</strong>
+                                    </td>
+                                    <td style="width: 60%; font-size: 14px; padding: 5px; border-left: 1px solid #4CA5E7;">
+                                        <span t-field="o.delivery_term"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 40%; font-size: 14px; padding: 5px;">
+                                        <strong>Payment Terms:</strong>
+                                    </td>
+                                    <td style="width: 60%; font-size: 14px; padding: 5px; border-left: 1px solid #4CA5E7;">
+                                        <span t-field="o.payment_term_id"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 60%;">
+
+                                    </td>
+                                    <td style="width: 40%">
+                                        <table style="width: 100%; padding:5px; font-size: 14px; text-align: left;">
+                                            <tr>
+                                                <td style="width: 50%; padding:5px; font-size: 14px; border-bottom: 1px solid #4CA5E7;">Untaxed(<span t-field="o.currency_id"/>)
+                                                </td>
+                                                <td style="width: 50%; padding:5px; font-size: 14px; text-align: right; border-bottom: 1px solid #4CA5E7;">
+                                                    <strong>
+                                                        <t t-esc="o.currency_id.name"/>
+                                                        <t t-esc="'{:.2f}'.format(o.amount_untaxed)"/>
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 50%; padding:5px; font-size: 14px; border-bottom: 1px solid #4CA5E7;"><span><b>Taxed(<span t-field="o.currency_id"/>)</b></span></td>
+                                                <strong>
+                                                    <td style="width: 50%; padding:5px; font-size: 14px; text-align: right; border-bottom: 1px solid #4CA5E7;">
+                                                        <strong>
+                                                            <t t-esc="o.currency_id.name"/>
+                                                            <t t-esc="'{:.2f}'.format(o.amount_tax)"/>
+                                                        </strong>
+                                                    </td>
+                                                </strong>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 50%; padding:5px; font-size: 14px; border-bottom: 1px solid #4CA5E7;">
+                                                    <span style="border-left: 5px solid  #FF0000">
+                                                        <b style="margin-left: 3px;">Total</b>
+                                                    </span>
+                                                </td>
+                                                <td style="width: 50%; padding:5px; font-size: 14px; text-align: right; border-bottom: 1px solid #4CA5E7;">
+                                                    <strong>
+                                                        <t t-esc="o.currency_id.name"/>
+                                                        <t t-esc="'{:.2f}'.format(o.amount_total)"/>
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br/>
+                        <br/>
+                        <tr>
+                            <td colspan="2" style="border-botttom:1px solid #4CA5E7;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <b>
+                                    <span style="text-align:left;" t-field="o.user_id.name"/>
+                                </b>
+                            </td>
+                        </tr>
+                        <div class="row">
+                            <table style="width:100%;border:1px solid #4CA5E7;">
+                                <tr>
+                                    <td style="width:100%;font-size: 16px;text-align:left;border:1px solid #4CA5E7;">
+                                        <span>
+                                            <b>Tax Registration Number :</b>
+                                            <span t-field="company.vat"/>
+                                        </span>
+                                        <br/>
+                                    </td>
+                                </tr>
+                                <t t-if="o.tax_notes">
+                                    <tr>
+                                        <td style="width:100%;font-size: 16px;border:1px solid #4CA5E7;text-align:left;">
+                                            <span t-field="o.tax_notes"/>
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="o.note">
+                                    <tr>
+                                        <td style="width:100%;font-size: 16px;border:1px solid #4CA5E7;text-align:left;">
+                                            <span t-field="o.note"/>
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <table style="width:100%;" cellpadding="0" cellspacing="0">
+                                <thead style="font-size:16px;border:1px solid #4CA5E7;">
+                                    <th style="border-right:1px solid #4CA5E7;border-left:1px solid #4CA5E7;">
+                                        <center>Signature</center>
+                                    </th>
+                                    <th style="border-right:1px solid #4CA5E7;">
+                                        <center>Name</center>
+                                    </th>
+                                    <th style="border-right:1px solid #4CA5E7;">
+                                        <center>Position</center>
+                                    </th>
+                                    <th style="border-right:1px solid #4CA5E7;">
+                                        <center>Date</center>
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border:1px solid #4CA5E7;height:45px;"></td>
+                                        <td style="border:1px solid #4CA5E7;height:45px;"></td>
+                                        <td style="border:1px solid #4CA5E7;height:45px;"></td>
+                                        <td style="border:1px solid #4CA5E7;height:45px;"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <tr>
+                                <span t-field="o.quotation_notes"/>
+                            </tr>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="order_confirmation_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="fnet_omega_reportz.order_confirmation_sale_template_report"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

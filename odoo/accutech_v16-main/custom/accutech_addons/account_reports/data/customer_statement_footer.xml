@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="customer_statement_footer">
+     <div class="footer" style="margin-top:100px;" >
+                 <p style="font-size:13px; width:70%; border-bottom: 1px solid #4CA5E7;"> <span style="font-size:13px; font-weight:bold;">Note:    </span> Kindly process the above payments for varios currency as below mention bank Details.</p>
+                   </div>
+                 <style>
+                     div.mycontainer {
+                     width:90%;
+                     }
+                     div.mycontainer div {
+                     width:33%;
+                     float:left;
+                     }
+                 </style>
+                 <div class="mycontainer">
+
+                           <div>
+                               <table  style=" text-align:left;  border-collapse: collapse;">
+                                   <tr style="font-size:10px;  font-weight: bold;">
+                                       <th style=" padding-top:10px; text-align:left; border-bottom: 1px solid #4CA5E7;">
+                                           Bank Details
+                                       </th>
+                                   </tr>
+                                   <tr style="font-size:10px;  font-weight: none;">
+                                       <td style="padding-top:10px; color:grey;">Bank Name:</td>
+                                       <td style="padding-top:10px;">Emirates NBD</td>
+
+                                   </tr>
+
+                                   <tr style="font-size:10px; text-align:left;">
+                                       <td style="padding-top:10px; color:grey;">Account Name:</td>
+                                       <td style=" padding-top:10px;">Abdulla Bin Hamid trading LLC</td>
+                                   </tr>
+                                   <tr style="font-size:10px; text-align:left;">
+                                       <td style="width:10%; padding-top:10px; color:grey;">Branch:</td>
+                                       <td style="width:20%; padding-top:10px;">Union Square branch</td>
+                                   </tr>
+                                   <tr style="font-size:10px; text-align:left;">
+                                       <td style=" padding-top:10px; color:grey;">Swift Code:</td>
+                                       <td style="padding-top:10px;">Abdulla Bin Hamid trading LLC</td>
+                                   </tr>
+                               </table>
+                           </div>
+
+                           <div>
+                             <table  style=" border-collapse: collapse;">
+                                   <tr style="font-size:10px;  font-weight: bold;">
+                                       <th style="padding-top:10px; text-align:left; border-bottom: 1px solid #4CA5E7;">
+                                           Account No's.:
+                                       </th>
+                                   </tr>
+                                   <tr style="font-size:10px;  font-weight: none;">
+                                       <td style="width:20%; padding-top:10px; color:grey;">AED:</td>
+                                       <td style="width:20%; padding-top:10px;">102356454544</td>
+
+                                   </tr>
+
+                                   <tr style="font-size:10px;">
+                                       <td style="width:10%; padding-top:10px; color:grey;">IBAN(AED):</td>
+                                       <td style="width:20%; padding-top:10px;">1044234222333</td>
+                                   </tr>
+
+                               </table>
+                           </div>
+                      <div>
+                             <table  style=" text-align:left; border-collapse: collapse;">
+
+
+                                   <tr style="font-size:10px;  font-weight: bold;">
+                                       <th style="padding-top:10px; text-align:left; padding-top:20px;">
+
+                                       </th>
+                                   </tr>
+                                   <tr style="font-size:10px;  font-weight: none;">
+                                       <td style="width:20%; padding-top:10px; color:grey;">IBAN(AED):</td>
+                                       <td style="width:20%; padding-top:10px;">AE829294758392003</td>
+
+                                   </tr>
+
+                                   <tr style="font-size:10px; text-align:left;">
+                                       <td style="width:10%; padding-top:10px; color:grey;">IBAN(EURO):</td>
+                                       <td style="width:20%; padding-top:10px;">AE10442DDDD34222333</td>
+                                   </tr>
+
+                               </table>
+                           </div>
+             </div>
+</template>
+
+</odoo>

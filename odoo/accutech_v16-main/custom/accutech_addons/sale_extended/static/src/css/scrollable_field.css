@@ -1,0 +1,10 @@
+.scrollable_field {
+    max-width: 100%;          /* Allow the field to fit within the container width */
+    max-height: 50px;        /* Set the height to show 3-4 lines */
+    overflow-x: auto;         /* Enable horizontal scrolling */
+    overflow-y: auto;       /* Hide vertical scrolling */
+    white-space: normal;      /* Allow content to wrap into multiple lines */
+    line-height: 1.0;         /* Optional: Adjust line spacing for better readability */
+    padding: 10px;            /* Optional: Add padding for visual spacing */
+    background-color: #f9f9f9; /* Optional: Add a light background for readability */
+}

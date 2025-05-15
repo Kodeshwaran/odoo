@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_lead_project_team_leader,crm_lead_project_team_leader,crm.model_crm_lead,project_team.group_project_team_leader,1,1,0,0
+access_expected_closing_project,expected.closing.line.project,mm_crm.model_expected_closing_line,project_team.group_project_team_leader,1,0,0,0
+access_assign_manager_wizard_user,assign_manager_wizard_user,project_extended.model_assign_manager_wizard,project_team.group_project_team_leader,1,1,1,1
+access_partner_request_user,partner_request_user,partner_creation.model_partner_request,project_team.group_project_team_leader,1,1,1,1
+access_sale_order_user,sale_order_user,sale.model_sale_order,project_team.group_project_team_leader,1,1,1,1

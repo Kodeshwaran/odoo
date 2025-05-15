@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+
+        <function model="res.groups" name="group_readonly"/>
+
+    </data>
+</odoo>

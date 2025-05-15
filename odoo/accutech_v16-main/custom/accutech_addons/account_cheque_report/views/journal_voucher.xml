@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report id="journal_voucher_move_id"
+        model="account.move"
+        string="Journal Voucher"
+        report_type="qweb-pdf"
+        name="account_cheque_report.journal_voucher_template_report_id"
+        file="account_cheque_report.journal_voucher_template_report_id"
+        print_report_name="'Cheque - %s' % (object.name)"
+        paperformat="account_cheque_report.custom_paperformat_journal_voucher"
+/>
+
+        <template id="journal_voucher_template_report_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="account_cheque_report.journal_voucher_template_report_move" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+<!--            <template id="custom_abdulla_sq_header">-->
+<!--                <t t-if="o and 'company_id' in o">-->
+<!--                    <t t-set="company" t-value="o.company_id"></t>-->
+<!--                </t>-->
+<!--                <t t-if="not o or not 'company_id' in o">-->
+<!--                    <t t-set="company" t-value="res_company"></t>-->
+<!--                </t>-->
+<!--                <div class="header">-->
+<!--                    <table style="width: 100%; font-size: 15px; line-height: 1.2;">-->
+<!--                        <tr style="vertical-align: top;">-->
+<!--                            <td style="text-align: left; width: 50%; padding: 0;">-->
+<!--                                <h2 style="font-size: 20px; margin: 0; font-weight: bold;"><span t-esc="o.company_id.name"/>-->
+<!--                                </h2>-->
+<!--                                <t t-if="o.company_id.street">-->
+<!--                                    <span t-field="o.company_id.street"/>,-->
+<!--                                </t>-->
+<!--                                <t t-if="o.company_id.street2">-->
+<!--                                    <span t-field="o.company_id.street2"/>,-->
+<!--                                </t>-->
+<!--                                <br/>-->
+<!--                                <t t-if="o.company_id.city">-->
+<!--                                    <span t-field="o.company_id.city"/>,-->
+<!--                                </t>-->
+<!--                                <t t-if="o.company_id.state_id">-->
+<!--                                    <span t-field="o.company_id.state_id.name"/>,-->
+<!--                                </t>-->
+<!--                                <t t-if="o.company_id.country_id">-->
+<!--                                    <span t-field="o.company_id.country_id.name"/>-->
+<!--                                </t>-->
+<!--                                <br/>-->
+<!--                                <t t-if="o.company_id.phone">Phone:-->
+<!--                                    <span t-field="o.company_id.phone"/>-->
+<!--                                </t>-->
+<!--                                <br/>-->
+<!--                                <t t-if="o.company_id.email">Email:-->
+<!--                                    <span t-field="o.company_id.email"/>-->
+<!--                                </t>-->
+<!--                                <br/>-->
+<!--                            </td>-->
+<!--                            <td style=" max-width:20%; vertical-align:top;  text-align:right;padding:3px;">-->
+<!--                                <t t-if="o.company_id.logo">-->
+<!--                                    <img t-att-src="image_data_uri(o.company_id.logo)" style="max-height: 100px; max-width:100px;"-->
+<!--                                         alt="Logo"/>-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </div>-->
+
+
+<!--                <div class="footer">-->
+<!--                    <table style="width:100%;">-->
+<!--                        <tr style="width:100%;">-->
+<!--                            <td style="align:center;text-align:center;font-size:15px;">Page <span class="page"/> of <span class="topage"/></td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--            </template>-->
+
+        <template id="journal_voucher_template_report_move">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+<!--                    <t t-call="account_cheque_report.custom_abdulla_sq_header"/>-->
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page" style="font-size:14px;width:60%;border-collapse:collapse;">
+
+                            <t t-set="r" t-value="o.company_id"/>
+
+                            <table style="width:100%;">
+
+                                <tr>
+<!--                                    <div style="font-size:16px;text-align:center;padding-top:20px;">-->
+<!--                                        <b><span t-field="o.company_id.name"/></b>-->
+<!--                                    </div>-->
+
+<!--                                    <div style="text-align:center;">-->
+<!--                                        <span t-field="o.company_id.street"/>-->
+<!--                                    </div>-->
+
+<!--                                    <div t-if="r.street2" style="text-align:center;">-->
+<!--                                        <span t-field="o.company_id.street2"/>-->
+<!--                                    </div>-->
+
+<!--                                    <div style="text-align:center;">-->
+<!--                                        <span t-field="o.company_id.city"/> - <span t-field="o.company_id.zip"/>-->
+<!--                                    </div>-->
+
+<!--                                    <div style="text-align:center;">-->
+<!--                                        CIN :-->
+<!--                                    </div>-->
+
+<!--                                    <div style="text-align:center;">-->
+<!--                                        E-Mail : <span t-field="o.company_id.email"/>-->
+<!--                                    </div>-->
+                                    <!---->
+                                    <div style="font-size:16px;text-align:center;padding-top:10px;">
+                                        <b>Journal Voucher</b>
+                                    </div>
+
+                                    <div class="row" style="padding-top:15px;">
+                                        <div class="col-xs-6 text-left" style="padding-left:20px;">No:
+                                            <b>
+                                                <span style="font-size:12px;" t-field="o.name"/>
+                                            </b>
+                                        </div>
+                                        <div class="col-xs-6 text-right" style="padding-right:20px;">Dated:
+                                            <b>
+                                                <span t-field="o.date" t-field-options='{"format": "d-MMM-y"}'/>
+                                            </b>
+                                        </div>
+                                    </div>
+
+                                </tr>
+
+                            </table>
+
+
+                            <table style="width:100%;margin-top:10px;">
+
+                                <thead>
+
+                                    <th class="col-xs-6 text-center"
+                                        style="padding:3px;border-right:1px solid black;border-top:1px solid black;border-bottom:1px solid black;">
+                                        Particulars
+                                    </th>
+
+                                    <th class="col-xs-3 text-right" style="padding:3px;border:1px solid black;">Debit
+                                    </th>
+
+                                    <th class="col-xs-3 text-right"
+                                        style="padding:3px;border-left:1px solid black;border-bottom:1px solid black;border-top:1px solid black;">
+                                        Credit
+                                    </th>
+
+                                </thead>
+
+
+                                <tr t-if="a.debit" t-foreach="o.line_ids" t-as="a" style="page-break-inside: avoid;">
+
+                                    <td class="col-xs-6"
+                                        style="border-right:1px solid black;padding-top:10px;padding-bottom:10px;">
+
+                                        <div class="row">
+
+                                            <span style="padding-left:23px;font-size:12px;"
+                                                  t-field="a.account_id.code"/>
+                                            -
+                                            <span style="padding-left:23px;font-size:12px;"
+                                                  t-field="a.account_id.name"/>
+
+                                            <span style="font-size:10px;">Dr</span>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td class="col-xs-3 text-right"
+                                        style="border-right:1px solid black;padding:5px;font-size:12px;padding-top:10px;padding-bottom:10px;">
+
+                                        <span t-if="a.debit" t-esc="'{0:,.2f}'.format(a.debit)"
+                                              t-field-options="{&quot;widget&quot;: &quot;False&quot;}"/>
+
+                                    </td>
+
+                                    <td></td>
+
+                                </tr>
+
+                                <tr t-if="a.credit" t-foreach="o.line_ids" t-as="a" style="page-break-inside: avoid;">
+
+                                    <td class="col-xs-6"
+                                        style="border-right:1px solid black;padding-bottom:5px;padding-top:10px;">
+
+                                        <div class="row">
+
+                                            <div class="col xs-12 text-left" style="font-size:10px;">To :
+                                                <span t-esc="o.partner_id.name"/>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row" style="font-size:10px;">
+
+                                            <span class="col-xs-8" style="padding-left:22px;">New Ref
+                                                <b>
+                                                    <span style="padding-left:23px;font-size:12px;"
+                                                          t-field="a.account_id.code"/>
+                                                    -
+                                                    <span style="padding-left:2px;" t-esc="a.account_id.name"/>
+                                                </b>
+                                            </span>
+
+                                            <b>
+                                                <span t-if="a.credit" style="padding-left:6px;padding-right:2px;">
+                                                    <span t-esc="'{0:,.2f}'.format(a.credit)"
+                                                          t-field-options="{&quot;widget&quot;: &quot;False&quot;}"/>
+                                                    Cr
+                                                </span>
+                                            </b>
+
+                                        </div>
+
+                                    </td>
+
+                                    <td style="border-right:1px solid black;"></td>
+
+                                    <td class="col-xs-3 text-right"
+                                        style="padding:5px;font-size:12px;padding-top:10px;padding-bottom:5px;">
+                                        <span t-if="a.credit" t-esc="'{0:,.2f}'.format(a.credit)"
+                                              t-field-options="{&quot;widget&quot;: &quot;False&quot;}"/>
+                                    </td>
+
+                                </tr>
+
+                                <tr style="height:80px;">
+
+                                    <td class="col-xs-6" style="border-right:1px solid black;"></td>
+                                    <td class="col-xs-3" style="border-right:1px solid black;"></td>
+                                    <td class="col-xs-3"></td>
+
+                                </tr>
+
+                                <tr style="page-break-inside: avoid;">
+
+                                    <td class="col-xs-6 text-left"
+                                        style="padding-top:10px;padding:5px;border-right:1px solid black;">
+                                        <b>On Account of :</b>
+                                        <div style="text-align:left;padding-left:40px;">
+                                            <span t-field="o.to_self"/>
+                                        </div>
+                                    </td>
+
+                                    <td class="col-xs-3" style="border-right:1px solid black;"></td>
+
+                                    <td class="col-xs-3"></td>
+
+                                </tr>
+
+                                <tr style="page-break-inside: avoid;">
+
+                                    <td class="col-xs-6"></td>
+
+                                    <td class="col-xs-3 text-right" style="padding:5px;border:1px solid black;">
+                                        <span t-field="o.currency_id.symbol"/>
+                                        <span t-esc="'{0:,.2f}'.format(abs(o.amount_total_signed))"/>
+                                    </td>
+
+                                    <td class="col-xs-3 text-right"
+                                        style="padding:5px;border-top:1px solid black;border-left:1px solid black;border-bottom:1px solid black;">
+                                        <span t-field="o.currency_id.symbol"/>
+                                        <span t-esc="'{0:,.2f}'.format(abs(o.amount_total_signed))"/>
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                            <p t-if="o.narration">
+                                <strong>Remarks:</strong>
+                                <br/>
+                                <span t-field="o.narration"/>
+                            </p>
+
+                            <div class="row" style="padding-top:40px;">
+                                <strong>Received By:</strong>
+                                <br/>
+                                <br/>
+                                <span>Authorized Signatory</span>
+                            </div>
+
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

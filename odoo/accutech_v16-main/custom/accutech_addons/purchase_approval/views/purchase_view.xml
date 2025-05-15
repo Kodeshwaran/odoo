@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_purchase_order_tree_approval_rules" model="ir.ui.view">
+            <field name="name">purchase.order.tree.approval.rules</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name='ready_for_po' invisible="1"/>
+                    <field name='approval_state'/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_purchase_order_list_approval_rules" model="ir.ui.view">
+            <field name="name">purchase.order.form.approval.rules</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="approval_state"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_purchase_order_form_approval_rules" model="ir.ui.view">
+            <field name="name">purchase.order.form.approval.rules</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <div name="button_box" position='before'>
+                    <widget name="web_ribbon" title="Requested"
+                            attrs="{'invisible': ['|', ('approval_state', '!=', 'to_approve'), ('state', 'in', ['purchase', 'done', 'cancel'])]}"/>
+                    <widget name="web_ribbon" title="Approved"
+                            attrs="{'invisible': ['|', ('approval_state', '!=', 'approved'), ('state', 'in', ['purchase', 'done', 'cancel'])]}"/>
+                </div>
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name='approval_state' invisible="1"/>
+                    <field name='user_ids' widget="many2many_tags" invisible="1" readonly="1"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='tax_totals_json']" position="after">-->
+<!--                    <div class="oe_subtotal_footer_separator oe_inline">-->
+<!--                        <label for="amount_in_company_currency" class="oe_inline"/>-->
+<!--                    </div>-->
+<!--                    <field name="amount_in_company_currency" nolabel="1" class="oe_subtotal_footer_separator"-->
+<!--                           widget='monetary' options="{'currency_field': 'company_currency'}"/>-->
+<!--                    <field name="company_currency" invisible="1"/>-->
+<!--                </xpath>-->
+                 <xpath expr="//button[@name='button_cancel']" position="before">
+                    <button name="action_send_for_approval" type="object" string="Send For Approval"
+                            groups="base.group_user"
+                            attrs="{'invisible': ['|', '|', '|', '|', '&amp;', ('state','!=','bid_received'), ('send_for_approval','=',True), '&amp;', ('state','=','bid_received'), ('send_for_approval','=',True), '&amp;', ('state','!=','bid_received'), ('send_for_approval','!=',True), '|', ('purchase_order_approval', '=', False), ('purchase_order_approval_rule_id', '=', False), ('purchase_order_approval_rule_ids', '=', [])]}"/>
+                </xpath>
+                <xpath expr="//button[last()]" position="after">
+                    <span class="label label-danger"
+                          attrs="{'invisible': ['|', ('ready_for_po', '=', True), ('send_for_approval', '=', False)]}">RFQ
+                        is not fully approved yet!
+                    </span>
+                </xpath>
+                <xpath expr="//button[@id='bid_confirm']" position="replace">
+                    <button name="button_confirm" type="object" string="Confirm Order" class="oe_highlight" id="bid_confirm" data-hotkey="v" attrs="{'invisible': ['|',('state','not in',['bid_received']), ('ready_for_po','=',False)]}"/>
+                </xpath>
+                <xpath expr="//notebook//page[@name='purchase_delivery_invoice']" position="after">
+                    <page string='Approval Hierarchy'
+                          attrs="{'invisible': ['|', ('purchase_order_approval', '=', False), ('purchase_order_approval_rule_id', '=', False)]}">
+                        <field name='purchase_order_approval_rule_ids' nolabel="1">
+                            <tree editable='bottom'>
+                                <field name='sequence'/>
+                                <field name='approval_role'/>
+                                <field name='users' widget="many2many_tags"/>
+                                <field name='date'/>
+                                <field name='is_approved' invisible="1"/>
+                                <field name="user_id"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string='Approval History'
+                          attrs="{'invisible': ['|', ('purchase_order_approval', '=', False), ('purchase_order_approval_rule_id', '=', False)]}">
+                        <field name='purchase_order_approval_history' nolabel="1">
+                            <tree>
+                                <field name='user'/>
+                                <field name='date'/>
+                                <field name="state"/>
+                                <field name="rejection_reason"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True), ('is_rejected', '=',
+                        False)]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <field name="send_approve_process" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="before">
+                    <button name="action_button_approve" string="Approve Order" type="object"
+                            groups="base.group_user"
+                            attrs="{'invisible': ['|', ('state', 'not in', ['bid_received']), ('approve_button', '!=', True)]}"/>
+                    <button name="reject_rfq" type="object" string="Reject Order" groups="base.group_user"
+                            attrs="{'invisible': ['|', ('state', 'not in', ['bid_received']), ('approve_button', '!=', True)]}"/>
+                    <field name='approve_button' invisible="1"/>
+                    <field name='ready_for_po' invisible="1"/>
+                    <field name='send_for_approval' invisible="1"/>
+                    <field name='is_rejected' invisible="1"/>
+                    <field name='dummy_compute' invisible="1"/>
+                    <field name='purchase_order_approval_rule_id' invisible="1"/>
+                    <field name='purchase_order_approval' invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="attributes">
+                    <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="action_to_approve_purchase_orders" model="ir.actions.act_window">
+            <field name="name">PO to Approve</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="domain">[('approve_button', '=', True),('state','not in',['cancel'])]</field>
+            <field name="context">{'purchase_approve': True}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a rfq that can be converted into a purchase
+                    order.
+                </p>
+                <p>
+                    Odoo will help you efficiently handle the complete purchase flow:
+                    rfq, purchase order, delivery, invoicing and payment.
+                </p>
+            </field>
+        </record>
+        <record id="view_rfq_rejection_reason_form" model="ir.ui.view">
+            <field name="name">rfq.rejection.reason.form</field>
+            <field name="model">rfq.rejection.reason</field>
+            <field name="arch" type="xml">
+                <form string="Rejection Reason">
+                    <group>
+                        <field name="reason"/>
+                    </group>
+                    <footer>
+                        <button string='Reject' name="button_reject" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+         <record id="purchase_order_form_inherit_access" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit.access</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="team_id"/>
+                </field>
+            </field>
+        </record>
+        <menuitem action="action_to_approve_purchase_orders" id="menu_to_approve_purchase_orders"
+                  name='Quotations to Approve' parent="purchase.menu_procurement_management" sequence="1"/>
+    </data>
+</odoo>

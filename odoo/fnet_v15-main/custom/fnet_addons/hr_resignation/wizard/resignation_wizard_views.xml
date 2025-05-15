@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="insert_int_field_inherit" model="ir.ui.view">
+            <field name="name">hr.employee.resignation</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="resignation_count" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="resignation_btn_res_users">
+            <field name="name">Resignation Form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="hr_holidays.res_users_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_resignation_form" type="object"
+                            string="Request Resignation" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="action_open_resignation_smt_btn"
+                            attrs="{'invisible': [('resignation_count', '=', 0)]}"
+                            class="oe_stat_button" type="object" icon="fa-file-text-o">
+                        <field name="resignation_count" widget="statinfo" nolabel="1" invisible="1"/>
+                        <span>Resignation Form</span>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_resignation_refusal_form">
+            <field name="name">Resignation Form</field>
+            <field name="model">hr.resignation.refusal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="refuse_reason"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="generate_message_post" string="Submit" type="object" class="oe_highlight"/>
+                        <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_resignation_refusal_action_window">
+            <field name="name">Resignation Refusal</field>
+            <field name="res_model">hr.resignation.refusal</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">form</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="hr_resignation_refusal_form_two">
+            <field name="name">Resignation Form</field>
+            <field name="model">resignation.confirmation.refusal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="refusal_confirmation"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="generate_message_post_refusal" string="Submit" type="object" class="oe_highlight"/>
+                        <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="hr_resignation_refusal_action_window_two">
+            <field name="name">Resignation Refusal</field>
+            <field name="res_model">resignation.confirmation.refusal</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">form</field>
+        </record>
+
+
+    </data>
+</odoo>

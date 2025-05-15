@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_audit_report_form">
+        <field name="name">audit.report.form</field>
+        <field name="model">audit.report</field>
+        <field name="arch" type="xml">
+            <form string="Audit Report">
+                <sheet>
+                    <group col="4">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="report_file" filename="report_file_name"/>
+                        <field name="report_file_name" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_audit_reporting" string="Print" type="object" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_audit_report" model="ir.actions.act_window">
+        <field name="name">Audit Report</field>
+        <field name="res_model">audit.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_audit_report"
+        name="Audit Report"
+        parent="account.menu_finance_reports"
+        action="action_audit_report"
+        sequence="0"
+    />
+
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+	<record id="sale_target_own_rule" model="ir.rule">
+        <field name="name">Own Target</field>
+        <field ref="model_sale_target_line" name="model_id"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+    <record id="sale_target_all_all" model="ir.rule">
+        <field name="name">All Target</field>
+        <field ref="model_sale_target_line" name="model_id"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
+    </record>
+    
+    <!-- DSR-->
+    
+    <record model="ir.module.category" id="module_category_dsr">
+		<field name="name">DSR</field>
+        <field name="description">DSR</field>
+        <field name="sequence">20</field>
+    </record>
+    
+    <record id="group_hr_dsr_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_dsr"/>
+    </record>
+    
+    <record id="group_hr_dsr_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_dsr"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_dsr_user'))]"/>
+    </record>
+    
+    
+	<record id="sale_dsr_own_rule" model="ir.rule">
+        <field name="name">Own DSR</field>
+        <field ref="voip_community.model_voip_phonecall" name="model_id"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_hr_dsr_user'))]"/>
+    </record>
+	<record id="sale_dsr_all_rule" model="ir.rule">
+        <field name="name">All DSR</field>
+        <field ref="voip_community.model_voip_phonecall" name="model_id"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('group_hr_dsr_manager'))]"/>
+    </record>
+   
+   
+	</data>
+</odoo>

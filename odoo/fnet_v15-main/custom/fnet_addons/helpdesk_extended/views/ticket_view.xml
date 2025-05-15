@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="helpdesk_stage_form_view" model="ir.ui.view">
+            <field name="name">helpdesk.stage.form.view</field>
+            <field name="model">helpdesk.stage</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_stage_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence']" position="before">
+                    <field name="code"/>
+                </xpath>
+                <xpath expr="//field[@name='legend_done']" position="after">
+                    <group string="Legend :">
+                        <p>
+                            <span><b>Name - Code</b></span><br/>
+                            New  - N<br/>
+                            Issue classified - IC<br/>
+                            Development - DEV<br/>
+                            Testing - TS<br/>
+                            Push to Live - PL<br/>
+                            Completed - COM<br/>
+                            Closed - CLO<br/>
+                        </p>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="helpdesk_extender_ticket_form_view" model="ir.ui.view">
+            <field name="name">helpdesk.extender.ticket.form.view</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="action_approved" string="Approved" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state_char', '!=', 'TS')]}"/>
+                    <button name="action_rejected" string="Rejected" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state_char', '!=', 'TS')]}"/>
+                </header>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="name_seq"/>
+                    <br/>
+                </xpath>
+                <xpath expr="//field[@name='email_cc']" position="after">
+                    <field name="expected_end_date"/>
+                    <field name="state_char" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="helpdesk_extender_ticket_tree_view" model="ir.ui.view">
+            <field name="name">helpdesk.extender.ticket.tree.view</field>
+            <field name="model">helpdesk.ticket</field>
+            <field name="inherit_id" ref="helpdesk.helpdesk_tickets_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="default_order">name_seq asc</attribute>
+                </xpath>
+                <xpath expr="//field[@name='display_name']" position="after">
+                    <field name="name_seq"/>
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="before">
+                    <field name="create_date"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--stages-->
+
+        <record id="stage_in_issue_classified" model="helpdesk.stage">
+            <field name="name">Issue classified</field>
+            <field name="code">IC</field>
+            <field name="sequence">1</field>
+            <field name="is_close" eval="False"/>
+        </record>
+
+        <record id="stage_development" model="helpdesk.stage">
+            <field name="name">Development</field>
+            <field name="code">DEV</field>
+            <field name="sequence">1</field>
+            <field name="is_close" eval="False"/>
+        </record>
+
+        <record id="stage_in_functional_testing" model="helpdesk.stage">
+            <field name="name">Testing</field>
+            <field name="code">TS</field>
+            <field name="sequence">1</field>
+            <field name="is_close" eval="False"/>
+        </record>
+
+        <record id="stage_in_push_live_testing" model="helpdesk.stage">
+            <field name="name">Push to Live</field>
+            <field name="code">PL</field>
+            <field name="sequence">1</field>
+            <field name="is_close" eval="False"/>
+        </record>
+
+        <record id="stage_in_completed" model="helpdesk.stage">
+            <field name="name">Completed</field>
+            <field name="code">COM</field>
+            <field name="sequence">1</field>
+            <field name="is_close" eval="False"/>
+        </record>
+
+        <record id="stage_in_closed" model="helpdesk.stage">
+            <field name="name">Closed</field>
+            <field name="code">CLO</field>
+            <field name="sequence">2</field>
+            <field name="is_close" eval="False"/>
+        </record>
+
+        <!--remove stages-->
+        <record id="helpdesk.stage_cancelled" model="helpdesk.stage">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="helpdesk.stage_solved" model="helpdesk.stage">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="helpdesk.stage_in_progress" model="helpdesk.stage">
+            <field name="active" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

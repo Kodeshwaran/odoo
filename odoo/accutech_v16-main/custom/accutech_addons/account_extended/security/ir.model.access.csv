@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_physical_inventory_verification,physical.inventory.verification,model_physical_inventory_verification,base.group_user,1,1,1,1
+access_physical_inventory_verification_line,physical.inventory.verification.line,model_physical_inventory_verification_line,base.group_user,1,1,1,1
+access_inventory_date_wizard,inventory.date.wizard,model_inventory_date_wizard,base.group_user,1,1,1,1
+access_account_payment,account_payment,model_account_payment,,1,1,1,1
+access_res_bank,res_bank,model_res_bank,,1,1,1,1

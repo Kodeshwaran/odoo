@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Paperformat -->
+        <record id="paperformat_due_invoices" model="report.paperformat">
+            <field name="name">European A4 low margin for DC</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>  <!-- Reduce top margin to avoid extra space -->
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">10</field> <!-- Adjust header spacing -->
+            <field name="dpi">90</field>
+        </record>
+
+        <!-- Report Action -->
+        <record id="report_due_invoices" model="ir.actions.report">
+            <field name="name">Customer/Vendor Due Invoices Report</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bell_account.report_due_vendor_invoices</field>
+            <field name="report_file">bell_account.report_due_vendor_invoices</field>
+            <field name="paperformat_id" ref="bell_account.paperformat_due_invoices"/>
+        </record>
+
+        <!-- Report Template -->
+        <template id="report_due_vendor_invoices">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <!-- Table starts with the header in the first page -->
+                        <table class="table table-condensed table-bordered" border="1" style="width:100%; page-break-inside:avoid;">
+                            <thead>
+                                <tr class="border-black" style="border-bottom:1px solid #dddddd;">
+                                    <th width="5%" class="text-center">S.No</th> <!-- Adjusted column width -->
+                                    <th width="15%" class="text-center"><strong>Bill Date</strong></th>
+                                    <th width="15%" class="text-center"><strong>Number</strong></th>
+                                    <th width="25%" class="text-center"><strong>Vendor Reference</strong></th>
+                                    <th width="15%" class="text-center">Due Date</th>
+                                    <th width="15%" class="text-center">Total</th>
+                                    <th width="10%" class="text-center">To Pay</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="partners" t-value="request.env['account.move'].search([('amount_residual', '!=', 0), ('move_type', '=', 'in_invoice')]).mapped('partner_id')"/>
+                                <t t-set="counter" t-value="1"/>
+
+                                <!-- Iterate through each partner -->
+                                <t t-foreach="partners" t-as="partner">
+                                    <t t-set="total" t-value="0"/>
+                                    <t t-set="totals" t-value="0"/>
+
+                                    <tr style="page-break-inside: avoid;">  <!-- Avoid breaking within a row -->
+                                        <td colspan="7" style="background-color:#f2f2f2;">
+                                            Vendor:
+                                            <b><span t-esc="partner.name"/></b>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Iterate through partner's invoices -->
+                                    <t t-foreach="request.env['account.move'].search([('partner_id', '=', partner.id), ('amount_residual', '!=', 0), ('move_type', '=', 'in_invoice')])" t-as="invoice">
+                                        <tr style="page-break-inside: avoid;">  <!-- Avoid page break inside row -->
+                                            <td class="text-left">
+                                                <span t-esc="counter"/>
+                                                <t t-set="counter" t-value="counter+1"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="invoice.invoice_date.strftime('%d-%m-%Y')"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="invoice.name"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="invoice.ref or ''"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="invoice.invoice_date_due.strftime('%d-%m-%Y')"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="'{0:,.2f}'.format(invoice.amount_total)"/>
+                                                <t t-set="total" t-value="total + invoice.amount_total"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-esc="'{0:,.2f}'.format(invoice.amount_residual)"/>
+                                                <t t-set="totals" t-value="totals + invoice.amount_residual"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+
+                                    <!-- Display the total for the partner -->
+                                    <tr style="font-weight:bold; background-color:#f9f9f9; page-break-inside: avoid;">  <!-- Ensure total stays with the last entry -->
+                                        <td colspan="5" class="text-right">Total</td>
+                                        <td class="text-right">
+                                            <span t-esc="'{0:,.2f}'.format(total)"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-esc="'{0:,.2f}'.format(totals)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

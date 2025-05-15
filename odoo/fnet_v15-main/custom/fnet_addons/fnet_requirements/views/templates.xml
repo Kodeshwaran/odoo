@@ -1,0 +1,14 @@
+<odoo>
+<!--    <data>-->
+<!--        <template id="assets_backend_invoice_inherit" name="fnet_requirements assets" inherit_id="web.assets_backend">-->
+<!--            <xpath expr="." position="inside">-->
+<!--                 <link rel="stylesheet" href="fnet_requirements/static/src/css/invoice.css"/>-->
+<!--            </xpath>-->
+<!--        </template>-->
+<!--    </data>-->
+<!--    <template id="assets_backend_invoice_tree_inherit" name="Invoice assets" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <link rel="stylesheet" href="/fnet_requirements/static/src/css/invoice.css"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>

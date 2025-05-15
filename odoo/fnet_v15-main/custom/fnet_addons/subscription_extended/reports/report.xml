@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="paperformat_contract_report_report" model="report.paperformat">
+        <field name="name">A4 Contract report</field>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">35</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">15</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">30</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="subscription_extended.contract_tos_sale_order_report" model="ir.actions.report">
+        <field name="name">Contract</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">subscription_extended.sale_order_tos_contract_report</field>
+        <field name="report_file">subscription_extended.sale_order_tos_contract_report</field>
+        <field name="print_report_name">'TOS-Contract - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="subscription_extended.paperformat_contract_report_report"/>
+    </record>
+
+</odoo>

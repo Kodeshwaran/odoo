@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_daily_report,daily.report,model_daily_report,base.group_user,1,1,1,1
+access_daily_report_old,daily.report.old,model_daily_report_old,base.group_user,1,1,1,1
+access_sale_budget_user,access.sale.budget,model_sale_budget,base.group_user,1,1,1,1
+access_sale_budget_line_user,access.sale.budget.line,model_sale_budget_line,base.group_user,1,1,1,1

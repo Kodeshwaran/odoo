@@ -1,0 +1,101 @@
+<odoo>
+    <data>
+
+        <template id="custom_employee_probation_extension_layout">
+            <t t-if="not o" t-set="o" t-value="doc"/>
+            <div class="header">
+
+            </div>
+            <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-out="0"/>
+            </div>
+            <div class="footer">
+                <div class="row">
+                    <div class="col-6" style="text-align:left">
+                        Thanking You,
+                        <br/>
+                        <strong>For
+                            <t t-out="env.user.company_id.name"/>
+                        </strong>
+                        ,
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div class="row" style="text-align:left">
+                    <strong>
+                        <p style="padding-left:20px;">
+                            <t t-out="o.employee_id.parent_id.name"/>
+                        </p>
+                        <p style="padding-left:20px;">
+                            <t t-out="o.employee_id.parent_id.job_title"/>
+                        </p>
+                    </strong>
+                </div>
+            </div>
+        </template>
+
+        <template id="employee_probation_extension_letter">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="employee_confirmation.custom_employee_probation_extension_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <strong>
+                                        <p>Date :
+                                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                                            <br/>
+                                            <br/>
+                                            Dear <span t-field="o.employee_id.name"/>,
+                                        </p>
+                                    </strong>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <t t-if="o.is_ctc_revised">
+                                <p>
+                                    With reference to your  Training / Probation letter dated <t t-if="o.employee_id.date_join"><strong><t t-esc="o.employee_id.date_join.strftime('%d-%m-%Y')"/></strong></t>, we would like to inform that your stipend
+                                    is increased to Rs. <strong><t t-out="o.new_ctc"/></strong> per month. Your Training / Probation period is extended to <t t-out="o.probation_extension"/> months after
+                                    the performance evaluation.
+                                </p>
+                            </t>
+                            <t t-else="">
+                                <p>
+                                    With reference to your appointment letter dated <t t-if="o.employee_id.date_join"><strong><t t-esc="o.employee_id.date_join.strftime('%d-%m-%Y')"/></strong></t>, we would like to inform that your
+                                    Training / Probation period is extended to <t t-out="o.probation_extension"/> months after the performance evaluation.
+                                </p>
+                            </t>
+                            <br/>
+                            <p>
+                                We are proud that you are associated <strong><t t-out="env.user.company_id.name"/></strong>, as
+                                part of the team.
+                            </p>
+                            <br/>
+                            <p>
+                                We wish you all the best and look forward to your continued support to take <strong><t t-out="env.user.company_id.name"/></strong>
+                                , to newer heights.
+                            </p>
+                            <br/>
+                            <p>
+                                The other terms and conditions of your service continue to remain unchanged. Please
+                                return a copy of this letter duly signed as a token of acceptance.
+                            </p>
+                            <br/>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

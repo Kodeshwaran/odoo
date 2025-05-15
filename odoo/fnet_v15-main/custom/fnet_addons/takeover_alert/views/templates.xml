@@ -1,0 +1,121 @@
+<odoo>
+    <data>
+
+        <record id="email_template_sale_order_confirmation_commencement_activity" model="mail.template">
+            <field name="name">Commencement of Activity</field>
+            <field name="model_id" ref="takeover_alert.model_sale_order"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Commencement of Activity</field>
+            <field name="email_to">{{ctx['email_to']}}</field>
+            <field name="email_cc">{{ctx['email_cc']}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p>Dear Team,</p>
+                <br/>
+                <p>This message is to notify you that the Sale Order <strong><t t-out="ctx.get('name')"/></strong> has products with takeovers.<br/></p>
+                 <br/>
+                <p>The following are the Order Details:</p>
+                <br/>
+                <t t-if="ctx.get('records')">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;"> Order Lines</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Commencement Date</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Date of Start service</strong></td>
+                            </tr>
+                            <t t-foreach="ctx.get('records')" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.get('product_name')"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.get('commencement_date')"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.get('service_date')"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_sale_order_prior_commencement_activity" model="mail.template">
+            <field name="name">Commencement of Activity</field>
+            <field name="model_id" ref="takeover_alert.model_sale_order"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Commencement of Activity</field>
+            <field name="email_to">{{ctx['email_to']}}</field>
+            <field name="email_cc">{{ctx['email_cc']}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p>Dear Team,</p>
+                <br/>
+                <p>This message is to notify you that the Sale Order <strong><t t-out="ctx.get('name')"/></strong> has services to start with a nearing commencement date.<br/></p>
+                 <br/>
+                <p>The following are the Order Details:</p>
+                <br/>
+                <t t-if="ctx.get('records')">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;"> Order Lines</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Commencement Date</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Date of Start service</strong></td>
+                            </tr>
+                            <t t-foreach="ctx.get('records')" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.get('product_name')"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.get('commencement_date')"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.get('service_date')"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,222 @@
+<odoo>
+    <data noupdate="0">
+        <record id="tds_section_192a" model="section.tds">
+            <field name="name">192A</field>
+            <field name="nature">Payment of accumulated balance of provident fund which is taxable in the hands of an employee.</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">0</field>
+            <field name="others_percent">10</field>            
+        </record>
+        <record id="tds_section_193" model="section.tds">
+            <field name="name">193</field>
+            <field name="nature"> Interest on Securities</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+        </record>
+        <record id="tds_section_194" model="section.tds">
+            <field name="name">194</field>
+            <field name="nature">Dividends</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+            <field name="others_percent">20</field>
+        </record>
+        <record id="tds_section_194ab" model="section.tds">
+            <field name="name">194A</field>
+            <field name="nature">Income by way of interest other than "Interest on securities"</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194b" model="section.tds">
+            <field name="name">194B</field>
+            <field name="nature">Winning from Lotteries</field>
+            <field name="individual_percent">30</field>
+            <field name="company_percent">30</field>
+            <field name="others_percent">00</field>
+        </record>
+        <record id="tds_section_194bb" model="section.tds">
+            <field name="name">194BB</field>
+            <field name="nature">Winning from Horse Races</field>
+            <field name="individual_percent">30</field>
+            <field name="company_percent">30</field>
+            <field name="others_percent">30</field>
+        </record>
+        <record id="tds_section_194c" model="section.tds">
+            <field name="name">194C</field>
+            <field name="nature">Contractor – Single Transaction</field>
+            <field name="individual_percent">1</field>
+            <field name="company_percent">2</field>
+            <field name="others_percent">20</field>
+        </record>
+        <record id="tds_section_194d" model="section.tds">
+            <field name="name">194D</field>
+            <field name="nature">Insurance Commission (15G – 15H allowed)</field>
+            <field name="individual_percent">5</field>
+            <field name="company_percent">0</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194da" model="section.tds">
+            <field name="name">194DA</field>
+            <field name="nature">Life insurance Policy</field>
+            <field name="individual_percent">1</field>
+            <field name="company_percent">1</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194e" model="section.tds">
+            <field name="name">194E</field>
+            <field name="nature">Non-Resident Sportsmen or Sports Association</field>
+            <field name="individual_percent">20</field>
+            <field name="company_percent">20</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194ee" model="section.tds">
+            <field name="name">194EE</field>
+            <field name="nature">Payment in respect of deposit under National Savings scheme</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+            <field name="others_percent">10</field>
+        </record>
+        <record id="tds_section_194f" model="section.tds">
+            <field name="name">194F</field>
+            <field name="nature">Payment on account of repurchase of unit by Mutual Fund or Unit Trust of India </field>
+            <field name="individual_percent">20</field>
+            <field name="company_percent">20</field>
+            <field name="others_percent">20</field>
+        </record>
+        <record id="tds_section_194g" model="section.tds">
+            <field name="name">194G</field>
+            <field name="nature">Commission, etc., on sale of lottery tickets</field>
+            <field name="individual_percent">5</field>
+            <field name="company_percent">5</field>
+            <field name="others_percent">5</field>
+        </record>
+        <record id="tds_section_194h" model="section.tds">
+            <field name="name">194H</field>
+            <field name="nature">Commission / Brokerage</field>
+            <field name="individual_percent">5</field>
+            <field name="company_percent">5</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194i" model="section.tds">
+            <field name="name">194I</field>
+            <field name="nature">Rent of Land or building or furniture or fitting</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194irme" model="section.tds">
+            <field name="name">194I</field>
+            <field name="nature">Rent of Plant &amp; Machinery</field>
+            <field name="individual_percent">2</field>
+            <field name="company_percent">2</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194ia" model="section.tds">
+            <field name="name">194IA</field>
+            <field name="nature">Transfer of certain immovable property other than agriculture land</field>
+            <field name="individual_percent">1</field>
+            <field name="company_percent">1</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194ib" model="section.tds">
+            <field name="name">194IB</field>
+            <field name="nature">Rent by Individual / HUF (wef 01.06.2017)</field>
+            <field name="individual_percent">5</field>
+            <field name="company_percent">0</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194ic" model="section.tds">
+            <field name="name">194IC</field>
+            <field name="nature">Payment of monetary consideration under Joint Development Agreements</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+            <field name="others_percent">0</field>
+        </record>
+        <record id="tds_section_194j" model="section.tds">
+            <field name="name">194J</field>
+            <field name="nature">Professional Fees / Technical Fees / etc.</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+            <field name="others_percent">00</field>
+        </record>
+        <record id="tds_section_194jpc" model="section.tds">
+            <field name="name">194J</field>
+            <field name="nature">Payment to Call Centre Operator</field>
+            <field name="individual_percent">2</field>
+            <field name="company_percent">2</field>
+            <field name="others_percent">00</field>
+        </record>
+        <record id="tds_section_194la" model="section.tds">
+            <field name="name">194LA</field>
+            <field name="nature">Payment of compensation on acquisition of certain immovable property</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+        </record>
+        <record id="tds_section_194lb" model="section.tds">
+            <field name="name">194LB</field>
+            <field name="nature">Payment of interest on infrastructure debt fund</field>
+            <field name="individual_percent">5</field>
+            <field name="company_percent">5</field>
+        </record>
+        <record id="tds_section_194lba1" model="section.tds">
+            <field name="name">194LBA(1)</field>
+            <field name="nature">Business trust shall deduct tax while distributing, any interest received or receivable by it from a SPV or any income received from renting or leasing or letting out any real estate asset owned directly by it, to its unit holders.</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+        </record>
+        <record id="tds_section_194lba2" model="section.tds">
+            <field name="name">194LBA(2)</field>
+            <field name="nature">Business trust shall deduct tax while distributing any interest income received or receivable by it from a SPV to its unit holders.</field>
+            <field name="others_percent">5</field>
+        </record>
+        <record id="tds_section_194lbb" model="section.tds">
+            <field name="name">194LBB</field>
+            <field name="nature">Investment fund paying an income to a unit holder [other than income which is exempt under Section 10(23FBB)]</field>
+            <field name="individual_percent">10</field>
+            <field name="company_percent">10</field>
+            <field name="others_percent">30</field>
+        </record>
+        <record id="tds_section_194lbc" model="section.tds">
+            <field name="name">194LBC</field>
+            <field name="nature">Income in respect of investment made in a securitisation trust (specified in Explanation of section115TCA)</field>
+            <field name="individual_percent">25</field>
+            <field name="company_percent">10</field>
+            <field name="others_percent">30</field>
+        </record>
+        <record id="tds_section_194lc" model="section.tds">
+            <field name="name">194LC</field>
+            <field name="nature">Payment of interest by an Indian Company or a business trust in respect of money borrowed in foreign currency under a loan agreement or by way of issue of long-term bonds (including long-term infrastructure bond)</field>
+            <field name="individual_percent">0</field>
+            <field name="company_percent">0</field>
+            <field name="others_percent">5</field>
+        </record>
+        <record id="tds_section_194ld" model="section.tds">
+            <field name="name">194LD</field>
+            <field name="nature">Payment of interest on rupee denominated bond of an Indian Company or Government securities to a Foreign Institutional Investor or a Qualified Foreign Investor</field>
+            <field name="individual_percent">0</field>
+            <field name="company_percent">0</field>
+            <field name="others_percent">5</field>
+        </record>
+        <record id="tds_section_196b" model="section.tds">
+            <field name="name">196B</field>
+            <field name="nature">Payment of interest on rupee denominated bond of an Indian Company or Government securities to a Foreign Institutional Investor or a Qualified Foreign Investor</field>
+            <field name="individual_percent">0</field>
+            <field name="company_percent">0</field>
+            <field name="others_percent">10</field>
+        </record>
+        <record id="tds_section_196c" model="section.tds">
+            <field name="name">196C</field>
+            <field name="nature">Income from foreign currency bonds or GDR of an Indian company (including long-term capital gain on transfer of such bonds or GDR)</field>
+            <field name="individual_percent">0</field>
+            <field name="company_percent">0</field>
+            <field name="others_percent">10</field>
+        </record>
+        <record id="tds_section_196d" model="section.tds">
+            <field name="name">196D</field>
+            <field name="nature">Income of foreign Institutional Investors from securities (not being dividend or capital gain arising from such securities)</field>
+            <field name="individual_percent">0</field>
+            <field name="company_percent">0</field>
+            <field name="others_percent">20</field>
+        </record>
+    </data>
+</odoo>

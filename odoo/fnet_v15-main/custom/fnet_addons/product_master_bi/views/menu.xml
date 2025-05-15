@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_product_master1"
+                  action="action_product_master1"
+                  name="product Master"
+                  parent="contacts.res_partner_menu_config" sequence="6"/>
+
+    </data>
+</odoo>

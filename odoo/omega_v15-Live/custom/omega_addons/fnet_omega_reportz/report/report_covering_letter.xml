@@ -1,0 +1,262 @@
+<odoo>
+    <data>
+     
+        <template id ="covering_letter_sale_order_template_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o"> 
+                    <style>
+                       pre{    
+                            display: flex;
+                            white-space:pre-line;
+                            word-break: break-word;
+                            border:0px;
+                            margin:0px;
+                            padding:0px;
+                            background-color:white;
+                            color:black;
+                            }
+                        th,td,tr {font-family:Liberation Serif; font-size:13px;} 
+                    </style>
+                    <t t-set="counter" t-value="1"/>
+					<t t-if="doc and 'company_id' in doc">
+						<t t-set="company" t-value="doc.company_id"></t>
+					</t>
+					<t t-if="not doc or not 'company_id' in doc">
+						<t t-set="company" t-value="res_company"></t>
+					</t>
+                    <div class="header">
+                        <div class="row">
+							<img t-att-src="image_data_uri(company.logo)" style="height:150px;width:150px;" alt="Logo"/>
+<!--							<span itemprop="image" t-field="company.logo" t-options='{"widget": "image"}' style="vertical-align:top;width:120px;"/>-->
+<!--                            <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' % res_company.logo" style="vertical-align:center;width:120px;"/>-->
+                        </div>
+					</div>        
+                    <div class="page">
+                        <div class="row" style="padding:0px;width:100%;float:left;margin-top:10px;height:1000px;border:0px solid white;display: table;">
+                            <table width="100%" style="vertical-align:top;">
+								<tr>
+									<td style="text-align:left;font-size:20px;padding-left:3px;"><strong><b>Dear</b> <span t-esc="o.partner_id.name" style="padding:5px;"/>&#44;</strong></td>
+								</tr>
+								 <tr><td><br/></td></tr>   
+								 <tr><td><br/></td></tr>   
+								<tr>
+									<td style="text-align:justify;font-size:20px;padding-left:3px;"><p>We are thankful for your interest towards our range of products and services. With reference to your below enquiry, please find attached our proposal for the same.</p></td>
+								</tr>
+								<tr><td><br/></td></tr>
+								<tr>
+									<td style="text-align:left;font-size:20px;padding-left:3px;"><span t-field="o.covering_notes"/></td>
+								</tr>
+								<tr><td><br/></td></tr>
+								<tr>
+									<td style="text-align:justify;font-size:20px;padding-left:3px;"><p>For any further queries please feel free to call us.</p></td>
+								</tr>
+								<tr><td><br/></td></tr>   
+								 <tr><td><br/></td></tr>   
+								 <tr>
+									<td style="text-align:left;font-size:20px;padding-left:3px;"><p>Hoping to receive your feedback on this quotation.</p></td>
+								</tr>
+
+<!--								<tr><td><br/></td></tr>   -->
+<!--								 <tr><td><br/></td></tr>   -->
+<!--								 <tr><td><br/></td></tr>								-->
+<!--								 <tr><td><br/></td></tr>								-->
+								 <tr><td><br/></td></tr>								
+								 <tr><td><br/></td></tr>								
+								 <tr><td><br/></td></tr>								
+								 <tr><td><br/></td></tr>								
+								 <tr><td><br/></td></tr>								
+								 <tr><td><br/></td></tr>	
+								 <tr><td><br/></td></tr>	
+								 <tr><td><br/></td></tr>	
+								 <tr><td><br/></td></tr>	
+								 <tr>
+									<td style="text-align:left;font-size:18px;padding-left:3px;"><b>Thank you &amp; Have a great day</b></td>
+								</tr>							
+								 <tr>
+									<td style="text-align:left;font-size:18px;padding-left:3px;"><b>Best Regards:</b></td>
+								</tr>	
+								<tr><td><br/></td></tr>								
+								<tr><td><br/></td></tr>	
+								<tr>
+									<td style="text-align:left;font-size:28px;padding-left:3px;"><b>Omega Engineering</b></td>
+								</tr>							
+								<tr>
+									<td style="text-align:left;font-size:18px;padding-left:3px;"><p><b>A:</b>P6-084; SAIF Zone; Sharjah-UAE | <b>E:</b> oe@omegaengg.com</p></td>
+								</tr>							
+								<tr>
+                                    <td style="text-align:left;font-size:18px;padding-left:3px;"><p><b>T:</b> +971 6 5574497 |<b> F:</b> +971 6 5574498 | <b>Locate us:</b> Google Map</p></td>
+								</tr>
+								<tr>
+                                    <td style="text-align:left;font-size:18px;padding-left:3px;"><p><b> www.omegaengg.com | LinkedIn</b> </p></td>
+								</tr>
+<!--								<tr><td><br/></td></tr>							-->
+								<tr><td><br/></td></tr>							
+								<tr>
+									<td style="text-align:justify;font-size:18px;padding-left:3px;"><p><b>Disclaimer:</b> The content of this email is confidential and intended for the recipient specified in message only. It is strictly forbidden to share any part of this message with any third party, without a written consent of the sender. If you received this message by mistake, please reply to this message and follow with its deletion, so that we can ensure such a mistake does not occur in the future.</p></td>
+								</tr>							
+								<tr><td><br/></td></tr>	
+								<tr>
+                                    <td style="text-align:justify;font-size:18px;padding-left:3px;"><p><b>Think Before You Ink &quot;Good for Our Planet&quot;  &quot;Good for Our Business&quot;</b></p></td>
+								</tr>							
+                            </table>
+<!--                            <div style="page-break-before:always;"/>-->
+<!--                            -->
+<!--                            <table width="100%" style="font-weight:bold;border:0px solid black;vertical-align:top;">-->
+<!--                                <thead>-->
+<!--                                    <th>-->
+<!--                                        <div class="col-xs-12"><br/></div>-->
+<!--                                    </th>-->
+<!--                                </thead>-->
+<!--                                <tbody style="padding:10px;width:100%;height:100%" >-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                        <t t-set="display_discount" t-value="any([l.discount for l in o.order_line])"/>-->
+<!--                                        <t t-foreach="o.order_lines_layouted()" t-as="page">-->
+<!--                                            <table style="border:0px;width:100%;border-spacing: 0px 18px;border-collapse: separate;">-->
+<!--                                                    <tr>-->
+<!--                                                        <th style="padding:10px;" class="text-right">S.No</th>-->
+<!--                                                        <th style="padding:10px;" class="text-right">Item No</th>-->
+<!--                                                        <th style="padding:10px;" class="text-right">Quantity</th>-->
+<!--                                                        <th style="padding:10px;" class="text-right">Unit Price</th>-->
+<!--                                                        <th style="padding:10px;" t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">Disc.(%)</th>-->
+<!--                                                        <th style="padding:10px;" class="text-right">Taxes</th>-->
+<!--                                                        <th style="padding:10px;" class="text-right" groups="sale.group_show_price_subtotal">Price</th>-->
+<!--                                                        <th style="padding:10px;" class="text-right price_tax_included" groups="sale.group_show_price_total">Total Price</th>-->
+<!--                                                   </tr>-->
+<!--                                                    <t t-foreach="page" t-as="layout_category">-->
+<!--                                                        <t t-if="layout_category_size > 1 or page_size > 1" groups="sale.group_sale_layout">-->
+<!--                                                            <tr class="active">-->
+<!--                                                                <td colspan="7" style="font-weight: bold;">&amp;bull;-->
+<!--                                                                    <t t-esc="layout_category['name']"/>-->
+<!--                                                                </td>-->
+<!--                                                            </tr>-->
+<!--                                                        </t>-->
+<!--                                                        <t t-foreach="layout_category['lines']" t-as="l">-->
+<!--                                                            <tr style="page-break-inside:avoid; font-size:11px;">-->
+<!--                                                                <td>-->
+<!--                                                                    <tr>    -->
+<!--                                                                        <td style="padding-left:3px;">-->
+<!--                                                                            <t t-esc="counter"/><t t-set="counter" t-value="counter+1"/></td>-->
+<!--                                                                            <td class="text-right">-->
+<!--                                                                                <span t-field="l.item_no"/>-->
+<!--                                                                        </td>-->
+<!--                                                                            -->
+<!--                                                                        <td class="text-right">-->
+<!--                                                                            <span t-field="l.product_uom_qty"/>-->
+<!--                                                                            <span t-field="l.product_uom" groups="product.group_uom"/>-->
+<!--                                                                        </td>-->
+<!--                                                                        <td class="text-right">-->
+<!--                                                                            <span t-field="l.price_unit"/>-->
+<!--                                                                        </td>-->
+<!--                                                                        <td class="text-right" t-if="display_discount" groups="sale.group_discount_per_so_line">-->
+<!--                                                                            <span t-field="l.discount"/>-->
+<!--                                                                        </td>-->
+<!--                                                                        <td class="text-right">-->
+<!--                                                                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.tax_id))"/>-->
+<!--                                                                        </td>-->
+<!--                                                                        <td  class="text-right" groups="sale.group_show_price_subtotal">-->
+<!--                                                                            <span t-field="l.price_subtotal"-->
+<!--                                                                                t-options='{"widget": "monetary", "display_currency": o.pricelist_id.currency_id}'/>-->
+<!--                                                                        </td>-->
+<!--                                                                        <td  class="text-right" groups="sale.group_show_price_total">-->
+<!--                                                                            <span t-field="l.price_total"-->
+<!--                                                                                t-options='{"widget": "monetary", "display_currency": o.pricelist_id.currency_id}'/>-->
+<!--                                                                        </td>-->
+<!--                                                            -->
+<!--                                                                    </tr>-->
+<!--                                                                    <tr>-->
+<!--                                                                        <td style="padding:10px;" colspan='2'></td>-->
+<!--                                                                        <td style="padding:10px;" colspan='6'>-->
+<!--                                                                            <span t-field="l.name"/>-->
+<!--                                                                            <span t-field="l.product_id.description_sale"/>-->
+<!--                                                                        </td>-->
+<!--                                                                    </tr>                                                                                       -->
+<!--                                                                </td>-->
+<!--                                                            </tr>                               -->
+<!--                                                        </t>-->
+
+<!--                                                        <t t-if="(layout_category_size > 1 or page_size > 1) and layout_category['subtotal']" groups="sale.group_sale_layout">-->
+<!--                                                            <tr class="text-right">-->
+<!--                                                                <td colspan="6">-->
+<!--                                                                    <strong>Subtotal: </strong>-->
+<!--                                                                    <t t-set="subtotal" t-value="sum(line.price_subtotal for line in layout_category['lines'])"/>-->
+<!--                                                                    <span t-esc="subtotal" t-options="{'widget': 'monetary', 'display_currency': o.pricelist_id.currency_id}"/>-->
+<!--                                                                </td>-->
+<!--                                                            </tr>-->
+<!--                                                        </t>-->
+<!--                                                    </t>-->
+<!--                                                </table>-->
+<!--                                                <t t-if="page_index &lt; page_size - 1" groups="sale.group_sale_layout">-->
+<!--                                                    <p style="page-break-before:always;"> </p>-->
+<!--                                                </t>-->
+<!--                                            </t>    -->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td width="100%" height="100%"></td>-->
+<!--                                    </tr>-->
+<!--                                </tbody>-->
+<!--                                <tfoot>-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <div class="row" name="total">-->
+<!--                                                <div class="col-xs-6 pull-right">-->
+<!--                                                    <table class="table table-condensed">-->
+<!--                                                        <tr class="border-black">-->
+<!--                                                            <td><strong>Total Without Taxes</strong></td>-->
+<!--                                                            <td class="text-right">-->
+<!--                                                                <span t-field="o.amount_untaxed"-->
+<!--                                                                    t-options='{"widget": "monetary", "display_currency": o.pricelist_id.currency_id}'/>-->
+<!--                                                            </td>-->
+<!--                                                        </tr>-->
+<!--                                                        <t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">-->
+<!--                                                            <tr>-->
+<!--                                                                <td><span t-esc="amount_by_group[0] or 'Taxes'"/></td>-->
+<!--                                                                <td class="text-right">-->
+<!--                                                                    <span t-esc="amount_by_group[1]"/>-->
+<!--                                                                </td>-->
+<!--                                                            </tr>-->
+<!--                                                        </t>-->
+<!--                                                        <tr class="border-black">-->
+<!--                                                            <td><strong>Total</strong></td>-->
+<!--                                                            <td class="text-right">-->
+<!--                                                                <span t-field="o.amount_total"-->
+<!--                                                                    t-options='{"widget": "monetary", "display_currency": o.pricelist_id.currency_id}'/>-->
+<!--                                                            </td>-->
+<!--                                                        </tr>-->
+<!--                                                    </table>-->
+<!--                                                </div>-->
+<!--                                            </div>      -->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </tfoot>-->
+<!--                            </table>-->
+                        </div>
+					</div>    
+				 </t>
+            </t>
+        </template>
+
+		<template id="covering_letter_template_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="fnet_omega_reportz.covering_letter_sale_order_template_report"/>
+                </t>
+            </t>
+        </template>
+
+    </data>    
+</odoo>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+           
+        

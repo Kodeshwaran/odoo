@@ -1,0 +1,173 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="purchase_order_form_inh_extended">
+            <field name="name">purchase.order.form.inh</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='print_quotation']" position="after">
+                    <button name="create_sale_quotation" string="Create Quotation" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['purchase']), ('po_type', '!=', 'sale_po')]}" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_rfq_send']" position="before">
+                    <button name="action_confirm_rfq" type="object" class="btn-primary" states="draft" string="Confirm RFQ"/>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="sale_id" readonly="1" attrs="{'invisible': [('sale_id', '=', False)]}"/>
+                    <field name="opportunity_id" readonly="1" attrs="{'invisible': [('opportunity_id', '=', False)]}"/>
+                    <field name="is_purchase_approval" readonly="1" invisible="1"/>
+                    <field name="po_type" attrs="{'readonly': [('state', '=', 'purchase')], 'invisible': [('opportunity_id', '!=', False)]}"/>
+                    <label for="main_discount" string="Overall Discount"/>
+                    <div class="o_row">
+                        <field name="main_discount"/>
+                        <span>%</span>
+                        <button name="update_discount" class="oe_inline" string="Update" type="object"/>
+                    </div>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="attributes">
+                    <attribute name="states">draft,to approve,sent,bid_received,purchase</attribute>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                    <field name="sale_line_id" invisible="1"/>
+                    <field name="item_no"/>
+                </xpath>
+
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='name']" position="after">
+                    <field name="model" optional="hide"/>
+                    <field name="make" optional="hide"/>
+                    <field name="parameter_1" optional="hide"/>
+                    <field name="country_id" optional="hide"/>
+                </xpath>
+
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="context">{'partner_id':parent.partner_id, 'quantity':product_qty, 'company_id': parent.company_id}</attribute>
+                </xpath>
+                <xpath expr="//button[@id='bid_confirm']" position="before">
+                    <button name="action_bid_received" type="object" string="Bid Received"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', '!=', 'sent')]}"/>
+                </xpath>
+                <xpath expr="//button[@id='bid_confirm']" position="before">
+                    <button name="action_send_for_approval" type="object" string="Send For Approval" attrs="{'invisible': ['|', ('state', 'not in', ['draft']), ('is_purchase_approval', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                <attribute name="states">bid_received</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
+                    <attribute name="states"></attribute>
+                    <attribute name="attrs">{'invisible': ['|', ('is_purchase_approval', '!=', False), ('state', '!=', 'draft')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,sent,purchase,bid_received</attribute>
+            </xpath>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="purchase_reference"/>
+                    <field name="purchase_contact"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_purchase_order_form_inh_extend">
+            <field name="name">purchase.order.inh.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="sale_purchase.purchase_order_inherited_form_sale"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_sale_orders']" position="attributes">
+                    <attribute name="groups"></attribute>
+                    <attribute name="string">Sale</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="product_template_form_inh_extended">
+            <field name="name">product.template.form.inh</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_policy']" position="before">
+                    <field name="is_default_set" invisible="1" force_save="1"/>
+                    <field name="is_default" attrs="{'readonly': [('is_default_set', '!=', False)]}" force_save="1"/>
+                    <field name="stock_keeping_unit"/>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="product_product_normal_form_inh_extended">
+            <field name="name">product.product.form.inh</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_policy']" position="before">
+                    <field name="is_default_set" invisible="1" force_save="1"/>
+                    <field name="is_default" attrs="{'readonly': [('is_default_set', '!=', False)]}" force_save="1"/>
+                    <field name="stock_keeping_unit"/>
+                </xpath>
+                <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="origin_country_id"/>
+                </xpath>
+<!--                <xpath expr="//page[@name='inventory']" position="inside">-->
+<!--                    <group string="Product Details">-->
+<!--                        <field name="model"/>-->
+<!--                        <field name="make"/>-->
+<!--                    </group>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="product_search_view_inherit" model="ir.ui.view">
+            <field name="name">product product search view inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_tmpl_id']" position="before">
+                    <field name="stock_keeping_unit" string="Product ID(SKU)"/>
+                </xpath>
+                <xpath expr="//field[@name='product_template_attribute_value_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_template_search_inherit_view" model="ir.ui.view">
+            <field name="name">product template search view inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='attribute_line_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_product_search_more_list_view_po" model="ir.ui.view">
+            <field name="name">search more external fields add</field>
+            <field name="model">product.product</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="stock_keeping_unit"/>
+                    <field name="qty_available"/>
+                    <field name="virtual_available"/>
+                    <field name="uom_id"/>
+                </tree>
+            </field>
+        </record>
+<!--        <record id="purchase_order_action" model="ir.ui.action">-->
+<!--            <field name="name">Actions</field>-->
+<!--            <field name="type">ir.actions.act_window</field>-->
+<!--            <field name="binding_model_id" ref="purchase.model_purchase_order"/>-->
+<!--            <field name="context">{"active_test": False}</field>-->
+<!--            <field name="domain">[]</field>-->
+<!--        </record>-->
+
+
+    </data>
+</odoo>

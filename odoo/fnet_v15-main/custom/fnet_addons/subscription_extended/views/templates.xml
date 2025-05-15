@@ -1,0 +1,490 @@
+<odoo>
+    <data>
+        <record id="email_template_subscription_expiry_alert_sales_person" model="mail.template">
+            <field name="name">Subscription Expiry</field>
+            <field name="model_id" ref="subscription_extended.model_sale_subscription"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Subscription Renewal for {{object.display_name}}</field>
+            <field name="email_to">{{object.user_id.partner_id.email}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p>Hi  <strong><t t-out="object.user_id.name"/></strong>,</p>
+                <br/>
+                <p>This message is to notify you that the subscription for <strong><t t-out="object.display_name"/></strong> for the customer <strong><t t-out="object.partner_id.name"/></strong><br/>
+                is expiring on <strong><t t-out="object.date"/></strong>.Please renew it.</p>
+                 <br/>
+                <p>The following are the Subscription Details:</p>
+                <br/>
+                <t t-if="object.recurring_invoice_line_ids">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;"> Subscriptions</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Description</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Quantity</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Date</strong></td>
+                            </tr>
+                            <t t-foreach="object.recurring_invoice_line_ids" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_id.name or ''"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.name or ''"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.quantity"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="object.date"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_subscription_expiry_alert_sales_head" model="mail.template">
+            <field name="name">Subscription Expiry</field>
+            <field name="model_id" ref="subscription_extended.model_sale_subscription"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Subscription Renewal for {{object.display_name}}</field>
+            <field name="email_to">{{object.user_id.sale_team_id.user_id.partner_id.email}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p>Hi  <strong><t t-out="object.user_id.sale_team_id.user_id.name"/></strong>,</p>
+                <br/>
+                <p>This message is to notify you that the subscription for <strong><t t-out="object.display_name"/></strong> for the customer <strong><t t-out="object.partner_id.name"/></strong><br/>
+                is expiring on <strong><t t-out="object.date"/></strong>.Please renew it immediately.</p>
+                 <br/>
+                <p>The following are the Subscription Details:</p>
+                <br/>
+                <t t-if="object.recurring_invoice_line_ids">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;"> Subscriptions</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Description</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Quantity</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Date</strong></td>
+                            </tr>
+                            <t t-foreach="object.recurring_invoice_line_ids" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_id.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.quantity"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="object.date"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_subscription_expiry_alert_md_accounts" model="mail.template">
+            <field name="name">Subscription Expiry</field>
+            <field name="model_id" ref="subscription_extended.model_sale_subscription"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Subscription Renewal for {{object.display_name}}</field>
+            <field name="email_to">lashok@futurenet.in,accounts@futurenet.in</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p>Dear Sir/Madam,</p>
+                <br/>
+                <p>This message is to notify you that the subscription for <strong><t t-out="object.display_name"/></strong> for the customer <strong><t t-out="object.partner_id.name"/></strong><br/>
+                 is expiring on <strong><t t-out="object.date"/></strong>.Please renew it immediately.</p>
+                 <br/>
+                <p>The following are the Subscription Details:</p>
+                <br/>
+                <t t-if="object.recurring_invoice_line_ids">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;"> Subscriptions</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Description</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Quantity</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Date</strong></td>
+                            </tr>
+                            <t t-foreach="object.recurring_invoice_line_ids" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_id.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.quantity"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="object.date"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_sale_quotation_alert_sales_person" model="mail.template">
+            <field name="name">Sale Quotation Confirm</field>
+            <field name="model_id" ref="subscription_extended.model_sale_order"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Sale Quotation confirmation for {{object.name}}</field>
+            <field name="email_to">{{object.order_line.subscription_id.user_id.email}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p>Hi <strong><t t-out="object.order_line.subscription_id.user_id.name"/></strong>,</p>
+                <br/>
+                <p>This message is to notify you that the Sale Quotation <strong><t t-out="object.name"/></strong> for the customer <strong><t t-out="object.partner_id.name"/></strong><br/> for the Subscription <strong><t t-out="object.order_line.subscription_id.display_name"/></strong>
+                is not confirmed and the payment is not done.The subscription is expiring on <strong><t t-out="object.order_line.subscription_id.date"/></strong>.<br/>
+                The Total Amount for the Sale Quotation is <strong><t t-out="object.order_line.price_subtotal"/></strong>
+                 Please confirm the Quotation immediately.</p>
+                 <br/>
+                <p>The following are the Sale Quotation Details:</p>
+                <br/>
+                <t t-if="object.order_line">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">Order Details</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Description</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Quantity</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Unit Price</strong></td>
+                            </tr>
+                            <t t-foreach="object.order_line" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_id.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_uom_qty"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.price_unit"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_sale_quotation_alert_sales_head" model="mail.template">
+            <field name="name">Sale Quotation Confirm</field>
+            <field name="model_id" ref="subscription_extended.model_sale_order"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Sale Quotation confirmation for {{object.name}}</field>
+            <field name="email_to">{{object.order_line.subscription_id.user_id.sale_team_id.user_id.email}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p>Hi <strong><t t-out="object.order_line.subscription_id.user_id.sale_team_id.user_id.name"/></strong>,</p>
+                <br/>
+                <p>This message is to notify you that the Sale Quotation <strong><t t-out="object.name"/></strong> for the customer <strong><t t-out="object.partner_id.name"/></strong><br/> for the Subscription <strong><t t-out="object.order_line.subscription_id.name"/></strong>
+                is not confirmed and the payment is not done.The subscription is expiring on <strong><t t-out="object.order_line.subscription_id.date"/></strong>.<br/>
+                The Total Amount for the Sale Quotation is <strong><t t-out="object.order_line.price_subtotal"/></strong>
+                 Please confirm the Quotation immediately.</p>
+                 <br/>
+                <p>The following are the Sale Quotation Details:</p>
+                <br/>
+                <t t-if="object.order_line">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">Order Details</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Description</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Quantity</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Unit Price</strong></td>
+                            </tr>
+                            <t t-foreach="object.order_line" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_id.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_uom_qty"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.price_unit"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_sale_quotation_alert_sales_md_accounts" model="mail.template">
+            <field name="name">Sale Quotation Confirm</field>
+            <field name="model_id" ref="subscription_extended.model_sale_order"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Sale Quotation confirmation for {{object.name}}</field>
+            <field name="email_to">lashok@futurenet.in,accounts@futurenet.in</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p><strong>Dear Sir/Madam</strong>,</p>
+                <br/>
+                <p>This message is to notify you that the Sale Quotation <strong><t t-out="object.name"/></strong> for the customer <strong><t t-out="object.partner_id.name"/></strong><br/> for the Subscription <strong><t t-out="object.order_line.subscription_id.name"/></strong>
+                is not confirmed and the payment is not done.The subscription is expiring on <strong><t t-out="object.order_line.subscription_id.date"/></strong>.<br/>
+                The Total Amount for the Sale Quotation is <strong><t t-out="object.order_line.price_subtotal"/></strong>
+                 Please confirm the Quotation immediately.</p>
+                 <br/>
+                <p>The following are the Sale Quotation Details:</p>
+                <br/>
+                <t t-if="object.order_line">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">Order Details</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Description</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Quantity</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Unit Price</strong></td>
+                            </tr>
+                            <t t-foreach="object.order_line" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_id.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.name"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_uom_qty"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.price_unit"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_sale_order_close_alert" model="mail.template">
+            <field name="name">Sale Order Close Template</field>
+            <field name="model_id" ref="subscription_extended.model_sale_order"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Sale Orders for Closure</field>
+            <field name="email_to">accounts@futurenet.in</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p><strong>Dear Team</strong>,</p>
+                <br/>
+                <p>This message is to notify that the following Sale Orders are pending for Closure.Give the
+                remarks for cancelling the order and close the sale order immediately.</p>
+                 <br/>
+                <p>The following are the Sale Orders for Closure:</p>
+                <br/>
+                <t t-if="ctx['records']">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="1" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">Sale Order</td>
+                            <td colspan="1" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">View</td>
+
+                        </thead>
+                        <tbody>
+                            <t t-foreach="ctx['records']" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:50%; font-size:17px; font-family:sans-serif;"><t t-out="rec['sale']"/></td>
+                                    <td style="text-align: center;width:50%; font-family:sans-serif;"><a t-att-href="rec.get('url')"
+                                style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                                View Order
+                            </a></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_subscription_expiry_alert_mail" model="mail.template">
+            <field name="name">Subscription Expiry Alert Mail</field>
+            <field name="model_id" ref="subscription_extended.model_sale_subscription"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Subscription Renewal for {{object.display_name}}</field>
+            <field name="email_to">{{ctx.get('email_to')}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                       table, th,tr, td {
+                           border: 2px solid black;
+                           border-collapse: collapse;
+                       }
+                       th,tr, td {
+                           padding: 5px;
+                       }
+                       p{
+                        text-align: left;
+                         font-size:15px;
+                         font-family:sans-serif;
+                       }
+                    </style>
+                </head>
+                <p>This message is to notify you that the subscription for <strong><t t-out="object.display_name"/></strong> for the customer <strong><t t-out="object.partner_id.name"/></strong><br/>
+                is expiring on <strong><t t-out="object.date"/></strong>.Please renew it.</p>
+                 <br/>
+                <p>The following are the Subscription Details:</p>
+                <br/>
+                <t t-if="object.recurring_invoice_line_ids">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="4" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;"> Subscriptions</td>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Product</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Description</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Quantity</strong></td>
+                                <td style="text-align: center;color: white;width:25%;background-color:#4DA8D5;
+                                font-weight: bold; font-size:17px; font-family:sans-serif;"><strong>Date</strong></td>
+                            </tr>
+                            <t t-foreach="object.recurring_invoice_line_ids" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.product_id.name or ''"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.name or ''"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="rec.quantity"/></td>
+                                    <td style="text-align: left;width:25%; font-size:17px; font-family:sans-serif;"><t t-out="object.date"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+    </data>
+</odoo>

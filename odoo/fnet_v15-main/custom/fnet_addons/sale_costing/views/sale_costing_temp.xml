@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="sale_costing_template_form_view" model="ir.ui.view">
+            <field name="name">sale.costing.template.form.view</field>
+            <field name="model">costing.template</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <notebook>
+                            <page string="Template">
+                                <field name="template_ids" widget="one2many">
+                                    <tree editable="bottom">
+                                        <field name="s_no"/>
+                                        <field name="temp_epo_id"/>
+                                        <field name="temp_service_type_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sale_costing_template_tree_view" model="ir.ui.view">
+            <field name="name">sale.costing.template.tree.view</field>
+            <field name="model">costing.template</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sale_costing_template_action" model="ir.actions.act_window">
+            <field name="name">Sale Costing Template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">costing.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first sale costing template!
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sale_costing_template_action"
+                  id="menu_sale_costing_template"
+                  sequence="10"
+                  name="Template"
+                  parent="sale.menu_sale_config"/>
+    </data>
+</odoo>

@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+       <record id="hr_contract_form_add_salary_revisions" model="ir.ui.view">
+        <field name="name">hr.contract.view.salary.division</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[2]" position="after">
+				 <page string="Salary History" id="salary_history">
+					<field name="history_line"  widget="one2many_list" readonly="1">
+						<tree editable="bottom">
+							<field name="contract_id" invisible="1"/>
+							<field name="old_basic"/>
+							<field name="old_wage"/>
+							<field name="old_structure_id"/>
+						</tree>
+					</field>
+				</page>
+			</xpath>
+			<xpath expr="//form/header/field[@name='state']" position="after">
+				<button type="action" name="%(salary_revision.action_salary_revision_wiz)d"
+						string="Salary Revision"
+						class="btn-primary"/>
+			</xpath>
+        </field>
+    </record>
+
+	<record id="hr_contract_inherit_new" model="ir.ui.view">
+        <field name="name">hr.contract.view.inherits.new</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_extended.hr_contract_form_additional_allowance_ded"/>
+        <field name="arch" type="xml">
+			 <field name="other_deduction" position="after">
+				<field name="effective_date" readonly="1"/>
+			</field>
+        </field>
+    </record>
+  </data>
+</odoo>

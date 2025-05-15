@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+<!--        <record id="view_unreconcile_reason_wizard_form" model="ir.ui.view">-->
+<!--            <field name="name">unreconcile.reason.wizard.form</field>-->
+<!--            <field name="model">unreconcile.reason.wizard</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form string="Unreconcile Reason">-->
+<!--                    <group>-->
+<!--                        <field name="reconcill_reason"/>-->
+<!--                    </group>-->
+<!--                    <footer>-->
+<!--                        <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>-->
+<!--                        <button string="Cancel" class="btn-secondary" special="cancel"/>-->
+<!--                    </footer>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="action_unreconcile_reason_wizard" model="ir.actions.act_window">-->
+<!--            <field name="name">Unreconcile Reason</field>-->
+<!--            <field name="res_model">unreconcile.reason.wizard</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="view_unreconcile_reason_wizard_form"/>-->
+<!--            <field name="target">new</field>-->
+<!--        </record>-->
+    </data>
+</odoo>

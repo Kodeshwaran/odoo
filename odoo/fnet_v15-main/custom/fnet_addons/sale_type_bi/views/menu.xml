@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_saletype_master1"
+                  action="action_saletype_master1"
+                  name="saletype Master"
+                  parent="contacts.res_partner_menu_config" sequence="7"/>
+
+    </data>
+</odoo>

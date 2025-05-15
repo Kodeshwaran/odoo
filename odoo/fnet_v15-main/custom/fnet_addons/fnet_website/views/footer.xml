@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <template id="layout_footer_counters" inherit_id="website.layout" name="Counters">
+            <xpath expr="//div[contains(@id, 'footer')]" position="replace">
+                <div class="container">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>© FutureNet. All rights reserved.</p>
+                                <p>Address:  37, 1st St, Singaravellan Nagar, Pallavan Nagar, Maduravoyal, Chennai, Tamil Nadu 600095</p>
+                                <p>Email: contact@futurenet.in | Phone: 044-2387 0000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>

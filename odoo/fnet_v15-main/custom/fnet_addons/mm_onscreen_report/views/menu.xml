@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+	
+<!--	<report id = "gst_account_invoices"-->
+<!--		model = "account.invoice"-->
+<!--		string = "GST Invoice"-->
+<!--		report_type = "qweb-pdf"-->
+<!--		name = "mm_onscreen_report.gst_move_template_report_new"-->
+<!--		file = "mm_onscreen_report.gst_move_template_report_new"-->
+<!--		print_report_name="'GST - %s' % (object.number)"-->
+<!--		/>-->
+
+<!--	<report id = "gst_account_move"-->
+<!--		model = "account.move"-->
+<!--		string = "GST Invoice"-->
+<!--		report_type = "qweb-pdf"-->
+<!--		name = "mm_onscreen_report.gst_move_template_report_new"-->
+<!--		file = "mm_onscreen_report.gst_move_template_report_new"-->
+<!--		print_report_name="'GST - %s' % (object.name)"-->
+<!--		/>-->
+		
+	<report id = "bank_check_move"
+		model = "account.move"
+		string = "Cheque"
+		report_type = "qweb-pdf"
+		name = "mm_onscreen_report.bank_check_template_report"  
+		file = "mm_onscreen_report.bank_check_template_report"
+		print_report_name="'Cheque - %s' % (object.name)"
+		/>
+		
+	<report id = "journal_voucher_move"
+		model = "account.move"
+		string = "Journal Voucher"
+		report_type = "qweb-pdf"
+		name = "mm_onscreen_report.journal_voucher_template_report"  
+		file = "mm_onscreen_report.journal_voucher_template_report"
+		print_report_name="'Cheque - %s' % (object.name)"
+		/>
+		
+	<report id = "quotation_sale"
+		model = "sale.order"
+		string = "Quotation Order"
+		report_type = "qweb-pdf"
+		name = "mm_onscreen_report.sale_quote_template_report"  
+		file = "mm_onscreen_report.sale_quote_template_report"
+		print_report_name="'Quote - %s' % (object.name)"
+		/>
+			
+	<report id = "dc_report"
+        model = "stock.picking"
+        string = "DC"
+        report_type = "qweb-pdf"
+        name = "mm_onscreen_report.dc_template_report"
+        file = "mm_onscreen_report.dc_template_report"
+        print_report_name="'DC - %s' % (object.name)"
+        />
+        
+	<report id = "payment_advise_report"
+        model = "account.payment"
+        string = "Payment Advise"
+        report_type = "qweb-pdf"
+        name = "mm_onscreen_report.payment_advise_template_report"
+        file = "mm_onscreen_report.payment_advise_template_report"
+        print_report_name="'DC - %s' % (object.name)"
+        />
+   
+</data>
+</odoo>

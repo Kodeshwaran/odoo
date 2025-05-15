@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+	
+	
+	<record id="business_vertical_1" model="business.vertical">
+		<field name="name">Manufacturing</field>
+	</record>
+
+	
+	<record id="business_vertical_2" model="business.vertical">
+		<field name="name">BFSI</field>
+	</record>
+	
+	<record id="business_vertical_4" model="business.vertical">
+		<field name="name">Media &amp; Publishing</field>
+	</record>
+	
+	<record id="business_vertical_5" model="business.vertical">
+		<field name="name">Education</field>
+	</record>
+	
+	<record id="business_vertical_6" model="business.vertical">
+		<field name="name">Health care</field>
+	</record>
+	
+	<record id="business_vertical_7" model="business.vertical">
+		<field name="name">IT/ITES</field>
+	</record>
+	
+	<record id="business_vertical_8" model="business.vertical">
+		<field name="name">FMGC</field>
+	</record>
+	
+	<record id="business_vertical_9" model="business.vertical">
+		<field name="name">Logistics</field>
+	</record>
+	
+	<record id="business_vertical_10" model="business.vertical">
+		<field name="name">Utilites</field>
+	</record>
+	
+	<record id="business_vertical_11" model="business.vertical">
+		<field name="name">Retail</field>
+	</record>
+	
+	<record id="business_vertical_12" model="business.vertical">
+		<field name="name">Energy &amp; power</field>
+	</record>
+
+	<record id="business_vertical_13" model="business.vertical">
+		<field name="name">Construction</field>
+	</record>
+
+	<record id="business_vertical_14" model="business.vertical">
+		<field name="name">Government-Central</field>
+	</record>
+
+	<record id="business_vertical_15" model="business.vertical">
+		<field name="name">Government-State</field>
+	</record>
+
+	<record id="business_vertical_16" model="business.vertical">
+		<field name="name">PSU-Ministires</field>
+	</record>
+
+	</data>
+</odoo>
+

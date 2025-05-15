@@ -1,0 +1,78 @@
+<odoo>
+    <data>
+
+        <!-- Form View for Physical Inventory -->
+        <record id="view_physical_inventory_form_view" model="ir.ui.view">
+            <field name="name">Physical Inventory Form View</field>
+            <field name="model">physical.inventory.verification</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+<!--                        <button name="action_submit_inventory" type="object" string="Submit" class="btn-secondary"/>-->
+                        <button name="action_send_for_approval" type="object" string="Send For Approval"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_validate" type="object" class="btn-primary" string="Validate" states="to_validate"/>
+                        <button name="action_reject" type="object" class="btn-danger" string="Reject" states="to_validate"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,to_validate,verify"/>
+                    </header>
+                    <sheet>
+                        <h2>
+                            <label for="inventory_datetime"/>
+                            <field name="inventory_datetime" string="Inventory Date" required="1"/>
+                        </h2>
+<!--                        <group col="2" colspan="6">-->
+<!--                            <field name="storage_location_id"/>-->
+<!--                            <field name="qty_available"/>-->
+<!--                            <field name="inventory_quantity" attrs="{'readonly': [('state', 'in', ['verify', 'reject'])]}"/>-->
+<!--                        </group>-->
+                        <notebook>
+                            <page string="Verification Lines">
+                                <field name="verification_lines">
+                                    <tree editable="bottom" force_save="1">
+                                        <field name="item_no" readonly="0" force_save="1"/>
+                                        <field name="product_id" readonly="0" force_save="1"/>
+                                        <field name="country_id" readonly="0" force_save="1" optional="hide"/>
+                                        <field name="model" readonly="0" force_save="1" optional="hide"/>
+                                        <field name="make" readonly="0" force_save="1" optional="hide"/>
+                                        <field name="parameter_1" readonly="0" force_save="1" optional="hide"/>
+                                        <field name="location_id" required="0" force_save="1" />
+                                        <field name="verified_qty" readonly="0" force_save="1"/>
+                                        <field name="uom_id" readonly="0" force_save="1"/>
+                                        <field name="counted_qty" force_save="1"/>
+                                        <field name="difference" decoration-muted="counted_qty == 0" decoration-danger="difference &lt; 0" decoration-success="difference &gt; 0" decoration-bf="difference != 0" readonly="1" force_save="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View for Physical Inventory -->
+        <record id="view_physical_inventory_list" model="ir.ui.view">
+            <field name="name">Physical Inventory Verification Tree</field>
+            <field name="model">physical.inventory.verification</field>
+            <field name="arch" type="xml">
+                <tree string="Physical Inventory Verification">
+                    <field name="product_id"/>
+                    <field name="state"/>
+                    <field name="qty_available"/>
+                    <field name="inventory_quantity"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action for Physical Inventory -->
+        <record id="action_physical_inventory_views" model="ir.actions.act_window">
+            <field name="name">Physical Inventory Verification</field>
+            <field name="res_model">physical.inventory.verification</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Menu Item -->
+        <menuitem id="physical_inventory_verification_menu" name="Physical Inventory Verification"
+                  parent="stock.menu_stock_warehouse_mgmt" groups="base.group_user" sequence="11" action="action_physical_inventory_views"/>
+
+    </data>
+</odoo>

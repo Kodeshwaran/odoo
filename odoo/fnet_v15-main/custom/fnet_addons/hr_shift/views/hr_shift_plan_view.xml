@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+<!--        <record model="ir.ui.view" id="view_hr_shift_plan_tree">-->
+<!--            <field name="name">view.hr.shift.plan.tree</field>-->
+<!--            <field name="model">hr.shift.plan</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <tree>-->
+<!--                    <field name="name"/>-->
+<!--                    <field name="start_date" options='{"showType": "months"}'/>-->
+<!--                    <field name="end_date"/>-->
+<!--                    <field name="based_on"/>-->
+<!--                </tree>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record model="ir.ui.view" id="view_hr_shift_plan_form">-->
+<!--            <field name="name">view.hr.shift.plan.form</field>-->
+<!--            <field name="model">hr.shift.plan</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form>-->
+<!--                    <header>-->
+<!--                        <button name="generate_shifts" string="Generate Shift" class="oe_highlight" type="object"/>-->
+<!--                    </header>-->
+<!--                    <sheet>-->
+<!--                        <div class="oe_title">-->
+<!--                            <h1>-->
+<!--                                <field name="name"/>-->
+<!--                            </h1>-->
+<!--                        </div>-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="start_date"/>-->
+<!--                                <field name="based_on"/>-->
+<!--                                <field name="number_of_leaves"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="end_date"/>-->
+<!--                                <field name="department_id" attrs="{'invisible': [('based_on', '!=', 'department')]}" widget="many2many_tags"/>-->
+<!--                                <field name="employee_ids" attrs="{'invisible': [('based_on', '!=', 'employee')]}" widget="many2many_tags"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="shift_ids">-->
+<!--                                <tree>-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="sequence" widget="handle"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </group>-->
+<!--                    </sheet>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record model="ir.actions.act_window" id="action_hr_shift_plan">-->
+<!--            <field name="name">Shift Plan</field>-->
+<!--            <field name="res_model">hr.shift.plan</field>-->
+<!--            <field name="view_mode">tree,form</field>-->
+<!--        </record>-->
+
+<!--        <menuitem name="Yearly Shift Plan" id="menu_hr_shift_plan" sequence="1" parent="menu_hr_shift_management"-->
+<!--                  action="action_hr_shift_plan"/>-->
+    </data>
+</odoo>

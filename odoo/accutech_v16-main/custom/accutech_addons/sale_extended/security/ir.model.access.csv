@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_po_user,sale.po,model_sale_po,base.group_user,1,1,1,1
+access_sale_po_line_user,sale.po.line,model_sale_po_line,base.group_user,1,1,1,1
+access_product_stock_company,product_stock_company,model_product_stock_company,base.group_user,1,1,1,1
+

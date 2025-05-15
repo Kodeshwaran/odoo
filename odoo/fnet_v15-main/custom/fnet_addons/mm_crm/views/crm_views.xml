@@ -1,0 +1,510 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+		<menuitem id="menu_voip_phonecall_view" name="DSR" sequence="10"
+    parent="crm.crm_menu_sales" action="voip_community.voip_phonecall_view" />
+
+
+	<!--Phone call -->
+	<record id="seq_voip_phonecall" model="ir.sequence">
+		<field name="name">Voip Phonecall</field>
+		<field name="code">voip.phonecall</field>
+		<field name="prefix">DSR/%(month)s/</field>
+		<field name="padding">5</field>
+		<field name="company_id" eval="False"/>
+	</record>
+	
+	<record id="voip_phonecall_fnet_tree_view" model="ir.ui.view">
+		<field name="name">Phonecalls Tree</field>
+		<field name="model">voip.phonecall</field>
+		<field name="arch" type="xml">
+			<tree string="Phonecalls" editable="top">
+				<field name="call_date" string="Date"/>
+				<field name="user_id" options="{'no_create': True,'no_edit':True}"/>
+				<field name="phonecall_type" string="Activity type" invisible="1"/>
+				<field name="phonecall_types" string="Activity type"/>
+				<field name="partner_id" context="{'default_customer_rank':1}" domain="[('customer_rank','>=',1)]" invisible="1"/>
+				<field name="contact_name"/>
+				<field name="phone"/>
+				<field name="note" string="Discussion"/>
+				<field name="duration"/>
+				<field name="outcome"/>
+				<field name="product"/>
+				<field name="value"/>
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window.view" id="action_voip_phonecall_fnet_view">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="voip_phonecall_fnet_tree_view"/>
+		<field name="act_window_id" ref="voip_community.voip_phonecall_view"/>
+	</record>
+	<!--Phone call -->
+	<record id="crm_stage_form_inh" model="ir.ui.view">
+		<field name="name">CRM - Stage</field>
+		<field name="model">crm.stage</field>
+		<field name="inherit_id" ref="crm.crm_stage_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='team_id']" position="after">
+				<field name="probability"/>
+                <field name="restrict_reverse"/>
+                <field name="attachment_required"/>
+                <field name="send_alert"/>
+                <field name="is_sales_manager"/>
+                <field name="hide_graph"/>
+			</xpath>
+		</field>
+	</record>
+	
+	<!-- Opportunity-->
+	
+	<record id="crm_lead_view_form_inh" model="ir.ui.view">
+		<field name="name">CRM - Opportnity</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_lead_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//group/field[@name='tag_ids']" position="after">
+				<field name="value_bl" attrs="{'required':[('probability', '>=', 10)]}"/>
+                    <label for="budget"/>
+                    <div class="o_row">
+				        <field name="budget"/><field name="budget_text" attrs="{'invisible': [('budget', '=', False)], 'required': [('budget', '!=', False)]}" nolabel="1"/>
+                    </div>
+                    <label for="authority"/>
+                    <div class="o_row">
+				        <field name="authority"/><field name="authority_text" attrs="{'invisible': [('authority', '=', False)], 'required': [('authority', '!=', False)]}" nolabel="1" class="o_row"/>
+                    </div>
+                    <label for="need"/>
+                    <div class="o_row">
+				        <field name="need"/><field name="need_text" attrs="{'invisible': [('need', '=', False)], 'required': [('need', '!=', False)]}" nolabel="1" class="o_row"/>
+                    </div>
+                    <label for="time_lead"/>
+                    <div class="o_row">
+				        <field name="time_lead"/><field name="time_text" attrs="{'invisible': [('time_lead', '=', False)], 'required': [('time_lead', '!=', False)]}" nolabel="1" class="o_row"/>
+                    </div>
+                <field name="attachment" widget="many2many_binary"/>
+                <field name="attachment_filename" invisible="1"/>
+                <field name="po_attachment" filename="attachment_filename" groups="base.group_no_one"/>
+			</xpath>
+            <xpath expr="//field[@name='date_deadline']" position="after">
+                <field name="create_date"/>
+            </xpath>
+            <xpath expr="//field[@name='date_deadline']" position="attributes">
+				<attribute name="attrs">{'required':[('type', '=', 'opportunity'), ('probability', '>=', 10)]}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='user_id']" position="attributes">
+				<attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='campaign_id']" position="attributes">
+				<attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='medium_id']" position="attributes">
+				<attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='source_id']" position="attributes">
+				<attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='source_id']" position="attributes">
+				<attribute name="options">{'no_create': True,'no_edit':True}</attribute>
+			</xpath>
+			<xpath expr="//field[@name='expected_revenue']" position="attributes">
+				<attribute name="required">1</attribute>
+			</xpath>
+            <xpath expr="//div[hasclass('o_row_readonly')][2]" position="after">
+                <field name="sale_type_id" options="{'no_create': True}" attrs="{'required':[('type', '=', 'opportunity'), ('probability', '>=', 10)]}"/>
+                <field name="sale_sub_type_id" options="{'no_create': True}" domain="[('type_id', '=', sale_type_id)]"/>
+            </xpath>
+            <xpath expr="//page[@name='lead']" position="after">
+                <page name="closing_date_track" string="Closing Date Tracking">
+                    <field name="expected_closing_track"/>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group[hasclass('mt48')]/field[@name='function']" position="before">
+                <field name="contact_description"/>
+            </xpath>
+		</field>
+	</record>
+
+    <record id="crm_search_view_inherited" model="ir.ui.view">
+        <field name="name">CRM search view inherited</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='close_date']" position="after">
+                <filter string="Expected Closing Date" name="expected_close_date" date="date_closed"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="crm_kanban_views_inherited" model="ir.ui.view">
+        <field name="name">CRM - Kanban view Inherited</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+		<field name="arch" type="xml">
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="date_deadline"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="closing_date_track_tree_view" model="ir.ui.view">
+		<field name="name">Closing Date Tracking Tree</field>
+		<field name="model">expected.closing.line</field>
+		<field name="arch" type="xml">
+            <tree create="false" delete="false">
+                <field name="date_change" width="30%%"/>
+                <field name="changed_by" width="30%%"/>
+                <field name="changed_from" width="40%%"/>
+            </tree>
+        </field>
+    </record>
+	
+	
+	<!-- Opportunity-->
+	
+	<!--Target -->
+	
+	<record id="view_sale_target_form" model="ir.ui.view">
+        <field name="name">view.sale.target.form</field>
+        <field name="model">sale.target</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Travel">
+				<header>
+                    <button name="open_target" string="Open" type="object" states="draft" class="btn-primary"/>
+                    <button name="close_target" string="Close" type="object" states="open" class="btn-primary"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,done"/>
+                </header>
+               <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <div class="oe_title">
+                        <label for="user_id" class="oe_edit_only"/>
+                        <h1><field name="user_id" placeholder="Salesperson" options="{'no_open': True, 'no_create': True}"/></h1>
+                    </div>
+                     <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Target">
+                            <field name="target_line">
+								<tree string="Target" create="false" editable="top">
+									<field name="name"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="tl_value"/>
+                                    <field name="bl_value"/>
+								</tree>
+								
+                            </field>
+                        </page>
+                    </notebook>
+              </sheet>
+              <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sale_target_tree" model="ir.ui.view">
+        <field name="name">view.sale.target.tree</field>
+        <field name="model">sale.target</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="travel Expense">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_sale_target_search" model="ir.ui.view">
+        <field name="name">view.sale.target.search</field>
+        <field name="model">sale.target</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <search string="travel Expense">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date_from"/>
+                <field name="state"/>
+            </search>
+        </field>
+    </record>
+
+    
+	<record id="action_target" model="ir.actions.act_window">
+		<field name="name">Sales Target</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sale.target</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{}</field>
+		<field name="search_view_id" ref="view_sale_target_search"/>
+		<field name="help" type="html">
+		  <p class="oe_view_nocontent_create">
+			Click to add a contact in your address book.
+		  </p><p>
+			Odoo helps you easily track all activities related to
+			a customer: discussions, history of business opportunities,
+			documents, etc.
+		  </p>
+		</field>
+	</record>
+	
+	<menuitem id="sales_team_target"
+            name="Sales Target"
+            parent="sale.menu_sale_config"
+            action="action_target"
+            groups="sales_team.group_sale_manager"
+            sequence="2"/>
+	
+	
+	<!--line -->
+	
+	<record id="view_sale_target_line_form" model="ir.ui.view">
+        <field name="name">view.sale.target.line.form</field>
+        <field name="model">sale.target.line</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Travel">
+               <sheet>
+                     <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="user_id"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="tl_value"/>
+                            <field name="bl_value"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+              </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sale_target_line_tree" model="ir.ui.view">
+        <field name="name">view.sale.target.line.tree</field>
+        <field name="model">sale.target.line</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="travel Expense" editable="top" delete="false">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="tl_value" readonly="1"/>
+                <field name="bl_value" readonly="1"/>
+                <field name="achived" readonly="1"/>
+            </tree>
+        </field>
+    </record>
+	
+	
+	
+	<record id="action_target_line" model="ir.actions.act_window">
+		<field name="name">Sales Target</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sale.target.line</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','=','open')]</field>
+		<field name="search_view_id" ref="view_sale_target_line_tree"/>
+		<field name="help" type="html">
+		  <p class="oe_view_nocontent_create">
+			Click to add a contact in your address book.
+		  </p><p>
+			Odoo helps you easily track all activities related to
+			a customer: discussions, history of business opportunities,
+			documents, etc.
+		  </p>
+		</field>
+	</record>
+	
+	<menuitem id="sales_team_target_line"
+            name="Sales Target"
+            parent="sale.sale_order_menu"
+            action="action_target_line"
+            sequence="30"/>
+            
+	
+		<record id="crm_fnet_tree_view" model="ir.ui.view">
+            <field name="name">crm.fnet.tree.view</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <tree string="Opportunities" decoration-bf="message_needaction==True" decoration-muted="probability == 100" decoration-danger="activity_date_deadline and (activity_date_deadline &lt; current_date)">
+					<field name="team_id" optional="show"/>
+					<field name="user_id" optional="show"/>
+					<field name="partner_id" string="Customer" optional="show"/>
+					<field name="name" string="Opportunity"/>
+					<field name="expected_revenue" sum="Expected Revenues" optional="show"/>
+					<field name="value_bl" optional="show" sum="Total"/>
+					<field name="probability" avg="Avg. of Probability" optional="show"/>
+					<field name="stage_id" required="1" optional="show"/>
+					<field name="date_deadline"/>
+					<field name="description" optional="hide"/>
+					<field name="lost_reason" optional="hide"/>
+                    
+                    <field name="create_date" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="email_from" optional="hide"/>
+                    <field name="phone" optional="hide"/>
+                    <field name="city" optional="hide"/>
+                    <field name="state_id" optional="hide"/>
+                    <field name="country_id" optional="hide"/>
+                    <field name="activity_date_deadline" optional="hide"/>
+                    <field name="activity_summary" optional="hide" readonly="1"/>
+                    <field name="medium_id" invisible="1"/>
+                    <field name="campaign_id" invisible="1"/>
+                    <field name="source_id" invisible="1"/>
+                    <field name="referred" invisible="1"/>
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="probability" invisible="1"/>
+                    <field name="write_date" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide" />
+                    <field name="tag_ids" optional="hide" widget="many2many_tags"/>
+                    <field name="priority" optional="hide"/>
+                    <field name="activity_exception_decoration" widget="activity_exception" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        
+       <record id="crm.crm_lead_action_pipeline_view_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_fnet_tree_view"/>
+            <field name="act_window_id" ref="crm.crm_lead_action_pipeline"/>
+        </record>
+        
+        
+        <record id="crm_fnet_tree_view_editable" model="ir.ui.view">
+            <field name="name">crm.fnet.tree.view</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <tree string="Opportunities" decoration-bf="message_needaction==True" decoration-muted="probability == 100" decoration-danger="activity_date_deadline and (activity_date_deadline &lt; current_date)" editable="bottom">
+					<field name="team_id" optional="show"/>
+<!--					<field name="user_id" optional="show"/>-->
+					<field name="partner_id" string="Customer" optional="show"/>
+					<field name="name" string="Opportunity"/>
+					<field name="expected_revenue" sum="Expected Revenues" optional="show"/>
+					<field name="value_bl" optional="show"/>
+					<field name="probability" avg="Avg. of Probability" optional="show"/>
+					<field name="stage_id" required="1" optional="show"/>
+					<field name="date_deadline"/>
+					<field name="description" optional="hide"/>
+					<field name="lost_reason" optional="hide"/>
+                    
+                    <field name="create_date" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="email_from" optional="hide"/>
+                    <field name="phone" optional="hide"/>
+                    <field name="city" optional="hide"/>
+                    <field name="state_id" optional="hide"/>
+                    <field name="country_id" optional="hide"/>
+                    <field name="activity_date_deadline" optional="hide"/>
+                    <field name="activity_summary" optional="hide" readonly="1"/>
+                    <field name="medium_id" invisible="1"/>
+                    <field name="campaign_id" invisible="1"/>
+                    <field name="source_id" invisible="1"/>
+                    <field name="referred" invisible="1"/>
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="probability" invisible="1"/>
+                    <field name="write_date" invisible="1"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide" />
+                    <field name="tag_ids" optional="hide" widget="many2many_tags"/>
+                    <field name="priority" optional="hide"/>
+                    <field name="activity_exception_decoration" widget="activity_exception" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="crm_lead_action_pipeline_editable">
+            <field name="name">Pipeline Edit</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">tree,graph,pivot,form,calendar,activity</field>
+            <field name="domain">[('type','=','opportunity')]</field>
+            <field name="context">{
+                    'default_type': 'opportunity',
+                    'search_default_assigned_to_me': 1
+            }</field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        </record>
+        
+        <record id="action_pipeline_view_tree_editable" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_fnet_tree_view_editable"/>
+            <field name="act_window_id" ref="crm_lead_action_pipeline_editable"/>
+        </record>
+        
+        <menuitem id="menu_crm_lead_action_pipeline_editable" name="Activity Edit" sequence="11"
+    parent="crm.crm_menu_sales" action="crm_lead_action_pipeline_editable" groups="sales_team.group_sale_manager"/>
+
+        <record id="sale_crm_view_form_inherited" model="ir.ui.view">
+            <field name="name">sale.crm.view.form.inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sale_crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|','|',('type', '=', 'lead'),('quotation_count', '>', 0), '&amp;', ('probability', '=', 0), ('active', '=', False)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_lead_view_graph_pie" model="ir.ui.view">
+            <field name="name">crm.lead.view.graph.pie</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <graph string="Opportunities Pie" sample="1" type="pie">
+                    <field name="stage_id"/>
+                    <field name="user_id"/>
+                    <field name="color" invisible="1"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm_lead_action_graph_view">
+            <field name="name">Dashboard</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">graph,tree</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'graph', 'view_id': ref('crm_lead_view_graph_pie')}),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('crm_fnet_tree_view')})]"/>
+            <field name="domain">['&amp;',('type','=','opportunity'),('stage_id.hide_graph', '=', False)]</field>
+            <field name="context">{
+                    'lang': 'en_IN',
+                    'default_type': 'opportunity',
+                    'search_default_assigned_to_me': 1
+                    'graph_mode': 'pie',
+                    'graph_measure': 'value_bl'
+            }</field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+        </record>
+
+         <menuitem id="menu_crm_lead_graph_dashboard" name="Dashboard" sequence="2"
+            parent="crm.crm_menu_root" action="crm_lead_action_graph_view"/>
+
+    </data>
+</odoo>

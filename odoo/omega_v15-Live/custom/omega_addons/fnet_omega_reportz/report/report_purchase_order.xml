@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="custom_purchase_order_header_footer">
+            <t t-if="doc and 'company_id' in doc">
+                <t t-set="company" t-value="doc.company_id"></t>
+            </t>
+            <t t-if="not doc or not 'company_id' in doc">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div class="header">
+                <table width="100%" style="font-size:12px;">
+                    <tr>
+                         <td width="50%" style="font-size: 14px;float:left;">
+                            <b><span style="font-size: 17px;" t-field="company.name"/></b><br/>
+                             <span t-field="company.street"/>,
+                             <t t-if="company.street2">
+                                 <span t-field="company.street2"/>,<br/>
+                             </t><span t-field="company.city"/>,<br/>
+                             <t t-if="company.state_id">
+                                <span t-field="company.state_id"/>,
+                             </t>
+                             <span t-field="company.country_id"/><br/>
+                             <span><b>Phone : </b><span t-field="company.phone"/></span><br/>
+                             <span><b>Tax Registration Number : <span t-field="company.vat"/></b></span><br/>
+                         </td>
+                        <td width="50%" style="float:right;">
+                            <img t-att-src="image_data_uri(company.logo)" style="height:130px;width:150px;float:right;" alt="Logo"/>
+                        </td>
+                    </tr>
+                </table>
+                <hr width="100%" style="background-color:#007FDE;border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;"/>
+<!--                <table class="table table-borderless" style="font-size:12px; border: 1px solid white;padding-left:1px;">-->
+<!--                    <tr>-->
+<!--                         <td width="35%" style="font-size: 14px;">-->
+<!--                            <b><span style="font-size: 17px;" t-field="company.name"/></b><br/>-->
+<!--                             <span t-field="company.street"/>,-->
+<!--                             <t t-if="company.street2">-->
+<!--                                <span t-field="company.street2"/>,-->
+<!--                             </t>-->
+<!--                             <br/>-->
+<!--                             <span t-field="company.city"/>,-->
+<!--                             <t t-if="company.state_id">-->
+<!--                                <span t-field="company.state_id"/>,-->
+<!--                             </t>-->
+<!--                             <span t-field="company.country_id"/><br/>-->
+<!--                             <span>Phone : <span t-field="company.phone"/></span><br/>-->
+<!--                             <span><b>Tax Registration Number : <span t-field="company.vat"/></b></span><br/>-->
+<!--                         </td>-->
+<!--                        <td width="30%"></td>-->
+<!--                        <td width="35%" align="right">-->
+<!--                            <right><img t-att-src="image_data_uri(company.logo)" style="height:150px;width:150px;" alt="Logo"/></right>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+            </div>
+            <div class="footer">
+                <div align="center">
+                    <span>This PO is electronically processed, hence no signature is required.</span>
+                </div>
+                <div style="border-top: 1px solid #007FDE;">
+                    <p style="text-align:center;font-size:16px;font-family:Liberation Serif;padding-top:3px;">Page:<span class="page"/>/<span class="topage"/></p>
+                </div>
+            </div>
+        </template>
+
+        <template id="purchase_order_report_template">
+            <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+				<t t-call="fnet_omega_reportz.custom_purchase_order_header_footer"/>
+                <t t-if="doc and 'company_id' in doc">
+                    <t t-set="company" t-value="doc.company_id"></t>
+                </t>
+                <t t-if="not doc or not 'company_id' in doc">
+                    <t t-set="company" t-value="res_company"></t>
+                </t>
+                <t t-set="total" t-value="[]"/>
+                <div class="page">
+                    <table style="width: 100%;">
+                        <tr>
+                            <th style="text-align: left; padding: 0;">
+                                <h1 style="border-left: 5px solid #F0AB00; font-size: 20px;">
+                                    <strong style="padding-left: 5px;">
+                                        Purchase Order
+                                    </strong>
+                                </h1>
+                            </th>
+                        </tr>
+                    </table>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 50%; padding: 10px; border-bottom: 1px solid #4CA5E7;">
+                                <strong>VENDOR:</strong>
+                                <br/>
+                                <b><span t-field="o.partner_id"/></b><br/>
+                                <t t-if="o.partner_id.street">
+                                    <span t-field="o.partner_id.street"/><br/>
+                                </t>
+                                <t t-if="o.partner_id.street2">
+                                    <span t-field="o.partner_id.street2"/><br/>
+                                </t>
+                                <t t-if="o.partner_id.city">
+                                    <span t-field="o.partner_id.city"/><br/>
+                                </t>
+                                <t t-if="o.partner_id.state_id">
+                                    <span t-field="o.partner_id.state_id"/><br/>
+                                </t>
+                                <t t-if="o.partner_id.country_id">
+                                    <span t-field="o.partner_id.country_id"/><br/>
+                                </t>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid #4CA5E7;">
+                                <t t-if="o.name">
+                                    Order NO:
+                                    <br/>
+                                    <br/>
+                                    <span t-field="o.name"/>
+                                </t>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid #4CA5E7;">
+                                <t t-if="o.date_order">
+                                    Order Date:
+                                    <br/>
+                                    <br/>
+                                    <span t-field="o.date_order" t-options='{"widget": "date", "format":"dd-MM-YYYY"}'/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #4CA5E7;">
+                                <strong>SHIP TO:</strong>
+                                <br/>
+                                <t t-if="o.partner_id.custom_street">
+                                    <span t-field="o.partner_id.custom_street"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.partner_id.custom_street2">
+                                    <span t-field="o.partner_id.custom_street2"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.partner_id.custom_city">
+                                    <span t-field="o.partner_id.custom_city"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.partner_id.custom_state_id">
+                                    <span t-field="o.partner_id.custom_state_id"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.partner_id.custom_country_id">
+                                    <span t-field="o.partner_id.custom_country_id"/>
+                                    <br/>
+                                </t>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid #4CA5E7;">
+                                Delivery Date:
+                                <br/>
+                                <br/>
+                                <t t-if="o.delivery_date">
+                                    <span t-field="o.delivery_date"
+                                          t-field-options='{"widget": "date", "format":"dd-MM-YYYY"}'/>
+                                </t>
+                            </td>
+                            <td style="padding: 10px; border-bottom: 1px solid #4CA5E7;">
+                                Payment Terms:
+                                <br/>
+                                <br/>
+                                <t t-if="o.payment_term_id">
+                                    <span t-field="o.payment_term_id"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;">
+                                Delivery Terms:
+                                <br/>
+                                <br/>
+                                <t t-if="o.delivery_term">
+                                    <span t-field="o.delivery_term"/>
+                                </t>
+                            </td>
+                            <td style="padding: 10px;">
+                                Your Ref:
+                                <br/>
+                                <br/>
+                                <t t-if="o.order_reference">
+                                    <span t-field="o.order_reference"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width: 100%; border-bottom: 1px solid #4CA5E7;">
+                        <tr style="background: rgb(240,244,247);">
+                            <th style="width: 5px;padding: 10px; text-align: left; border-bottom: 1px solid #4CA5E7; border-top: 1px solid #4CA5E7;">Item no</th>
+                            <th style="width: 40px;padding: 10px; text-align: left; border-bottom: 1px solid #4CA5E7; border-top: 1px solid #4CA5E7;">Details</th>
+                            <th style="width: 20px;padding: 10px; text-align: center; border-bottom: 1px solid #4CA5E7; border-top: 1px solid #4CA5E7;">Price</th>
+                            <th style="width: 15px;padding: 10px; text-align: center; border-bottom: 1px solid #4CA5E7; border-top: 1px solid #4CA5E7;">Qty</th>
+                            <th style="width: 20px;padding: 10px; text-align: center; border-bottom: 1px solid #4CA5E7; border-top: 1px solid #4CA5E7;">Total(<span t-esc="o.currency_id.name"/>)</th>
+                        </tr>
+                        <t t-set="counter" t-value="1"/>
+                        <tr t-foreach="o.order_line.sorted(lambda r: float(r.item_no))" t-as="d">
+                            <t t-if="d.product_id">
+                                <td style="width: ; padding: 10px; text-align: left;"><span style="text-align:center;" t-field="d.item_no"/></td>
+                                <td style="width: ; padding: 10px; text-align: left;"><span style="text-align:left;" t-field="d.name"/></td>
+                                <td style="width: ; padding: 10px; text-align: center;"><span style="text-align:left;" t-field="d.price_unit"/></td>
+                                <td style="width: ; padding: 10px; text-align: center;"><span style="text-align:left;" t-field="d.product_qty"/></td>
+                                <td style="width: ; padding: 10px; text-align: center;"><span style="text-align:right;" t-field="d.price_subtotal"/><t t-set="total" t-value="total+[d.price_subtotal]"/></td>
+                            </t>
+                        </tr>
+                    </table>
+                    <br/>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 60%;"></td>
+                            <td style="width: 17%; padding: 0px; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #4CA5E7; text_align: left;">
+                                <strong>Untaxed(<span t-field="o.currency_id"/>)
+                                </strong>
+                            </td>
+                            <td style="width: 5%; border-bottom: 1px solid #4CA5E7;"><strong>:</strong></td>
+                            <td style="width: 18%; padding: 0px; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #4CA5E7; text_align: right;">
+                                <t t-if="o.amount_untaxed">
+                                    <span t-field="o.amount_untaxed"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%;"></td>
+                            <td style="width: 17% padding: 0px; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #4CA5E7; text_align: left;">
+                                <strong>Taxes(<span t-field="o.currency_id"/>)</strong>
+                            </td>
+                            <td style="width: 5%; border-bottom: 1px solid #4CA5E7;"><strong>:</strong></td>
+                            <td style="width: 18%; padding: 0px; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #4CA5E7; text_align: right;">
+                                <t t-if="o.amount_tax">
+                                    <span t-field="o.amount_tax"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%;"></td>
+                            <td style="width: 17% padding: 0px; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #4CA5E7; text_align: left;">
+                                <strong>Total</strong>
+                            </td>
+                            <td style="width: 5%; border-bottom: 1px solid #4CA5E7;"><strong>:</strong></td>
+                            <td style="width: 18%; padding: 0px; padding-bottom: 10px; padding-top: 10px; border-bottom: 1px solid #4CA5E7; text_align: right;">
+                                <t t-if="o.amount_total">
+                                    <span t-field="o.amount_total"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="purchase_order_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="fnet_omega_reportz.purchase_order_report_template"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

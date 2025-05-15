@@ -1,0 +1,20 @@
+<odoo>
+    <record id="email_template_late_attendance1" model="mail.template">
+        <field name="name">Late Arrivals Report</field>
+        <field name="model_id" ref="model_hr_attendance"/>
+        <field name="subject">Late Arrivals Report for Your Team</field>
+        <field name="email_to">${object.employee_id.parent_id.work_email or ''}</field>
+        <field name="body_html"><![CDATA[
+            <p>Dear ${object.employee_id.parent_id.name},</p>
+            <p>The following employees under your supervision have been arriving late this month.</p>
+            <p>
+                <a href="${ctx.get('manager_view_url')}"
+                   style="display: inline-block; padding: 10px 15px; background-color: #dc3545;
+                          color: white; text-decoration: none; border-radius: 5px;">
+                    View Team Attendance Records
+                </a>
+            </p>
+            <p>Regards,<br/>HR Team</p>
+        ]]></field>
+    </record>
+</odoo>

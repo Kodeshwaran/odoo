@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <record id="view_product_stock_company_tree" model="ir.ui.view">
+            <field name="name">product.stock.company.tree</field>
+            <field name="model">product.stock.company</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id"/>
+                    <field name="company_1_qty"/>
+                    <field name="company_2_qty"/>
+                    <field name="company_3_qty"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_product_stock_company" model="ir.actions.act_window">
+            <field name="name">Product Stock by Company</field>
+            <field name="res_model">product.stock.company</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_product_stock_company"
+                  name="Product Stock by Company"
+                  parent="stock.menu_stock_root"
+                  action="action_product_stock_company"/>
+    </data>
+</odoo>

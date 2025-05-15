@@ -1,0 +1,111 @@
+<odoo>
+    <data>
+        <template id="sale_order_tos_contract_report">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="subscription_extended.report_tos_contract"/>
+            </t>
+        </template>
+
+        <template id="custom_header_footer">
+            <t t-set="company" t-value="user.company_id"/>
+            <div class="header text-right">
+                <t t-foreach="docs" t-as="doc">
+                    <div>
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                             style="max-height: 150px; max-width:100px;"
+                             alt="Logo"/>
+                    </div>
+                </t>
+            </div>
+            <div class="footer">
+                <div t-field="company.name" t-attf-style="white-space:nowrap;font-size:15px;text-align:center;font-weight:bold;"/>
+                <div t-attf-style="white-space:nowrap;font-size:15px;text-align:center;">
+                    <span t-esc="company.street"/>, <span t-esc="company.street2"/><br/>
+                    <span t-esc="company.city"/>, <span t-esc="company.state_id.name"/>, <span t-esc="company.country_id.name"/>, <span t-esc="company.zip"/>
+                </div>
+            </div>
+        </template>
+
+        <template id="report_tos_contract">
+            <div t-call="web.html_container">
+                <t t-set="company" t-value="user.company_id"/>
+                <t t-foreach="docs" t-as="doc">
+                    <div class="page">
+                        <t t-call="subscription_extended.custom_header_footer"/>
+                        <strong>
+                            Ref: <span t-esc="doc.contract_reference"/>
+                        </strong>
+                        <br/>
+                        <br/>
+                        <strong>
+                            Date: <span t-esc="doc.date_order.strftime('%d.%m.%Y')"/>
+                        </strong>
+                        <br/>
+                        <br/>
+                        <div>
+                            <strong><span t-field="doc.partner_id.name"/></strong>
+                        </div>
+                        <div>
+                            <span t-field="doc.partner_id.street"/>, <span t-field="doc.partner_id.street2"/>
+                        </div>
+                        <div class="col-xs-6">
+                            <span t-field="doc.partner_id.city"/>
+                            <span t-field="doc.partner_id.state_id"/>
+                            <span t-field="doc.partner_id.zip"/>
+                        </div>
+                        <div>
+                            <span t-field="doc.partner_id.country_id"/>
+                        </div>
+                        <br/>
+                        <div>
+                            <strong><u>Kind Attn: <span t-esc="doc.contact_name"/>,</u></strong>
+                        </div>
+                        <br/>
+                        <div>
+                            <span>Dear Sir,</span>
+                            <br/>
+                            <br/>
+                            <strong>Sub: Renewal of <span t-field="doc.contract_type"/> contract</strong>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div>
+                            <p>With reference to the above subject, we would like to get your attention to the &#160;<b><span t-field="doc.contract_type"/></b> contract getting<br/>
+                            expired on <t t-if="doc.subscription_id"><span t-esc="doc.subscription_id.date.strftime('%d.%m.%Y')"/></t>.</p>
+                            <p>
+                                We request you to renew the Contract as per the below commercials for a Period of One Year - <br/>
+                                <strong><t t-if="doc.contract_start_date"><span t-esc="doc.contract_start_date"/></t> to <t t-if="doc.contract_end_date"><span t-esc="doc.contract_end_date"/></t>.</strong>
+                            </p>
+                        <t t-set="contract_total" t-value="0"/>
+                        <t t-foreach="doc.order_line" t-as="line">
+                            <t t-set="contract_total" t-value="contract_total + line.price_unit"/>
+                        </t>
+                            <p>
+                               <span t-esc="doc.contract_name"/> - Rs.<t t-esc="contract_total"/> per Month.
+                            </p>
+                            <p>
+                                <strong>Scope of Work shall remain the same as per Previous Contract for <span t-field="doc.contract_type"/>.</strong>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                <strong><u>Terms and Conditions:</u></strong><br/>
+                                <span t-field="doc.note"/>
+                            </p>
+                        </div>
+                        <br/>
+                        <div>
+                            <p>
+                                Yours Faithfully,<br/><br/>
+                                <strong>For <span t-esc="company.name"/></strong><br/><br/>
+                                <strong><span t-esc="doc.user_id.name"/></strong><br/>
+                                <strong><span t-esc="env['hr.employee'].search([('user_id', '=', doc.user_id.id)], limit=1).job_title"/></strong><br/>
+                                <strong>Mobile: <span t-esc="env['hr.employee'].search([('user_id', '=', doc.user_id.id)], limit=1).mobile_phone"/></strong>
+                            </p>
+                        </div>
+                    </div>
+            </t>
+            </div>
+        </template>
+    </data>
+</odoo>

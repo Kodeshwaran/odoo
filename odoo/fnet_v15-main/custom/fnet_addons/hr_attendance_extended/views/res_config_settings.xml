@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_config_settings_attendance_view_form_inherited" model="ir.ui.view">
+        <field name="name">res.config.settings.attendance.view.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='hr_attendance']" position="inside">
+                <!--<h2>Automatic Check Out Configuration</h2>
+                <div groups="hr_attendance.group_hr_attendance_manager" class="row mt16 o_settings_container" name="automatic_check_out_settings">
+                    <div class="col-2 o_setting_box" id="attendance_check_out">
+                        <label for="auto_check_out"/>
+                    </div>
+                    <div class="col-3 o_setting_box">
+                        <field name="auto_check_out"/>
+                    </div>
+                    <div class="col-3 o_setting_box" attrs="{'invisible': [('auto_check_out', '=', False)]}">
+                        <field name="auto_check_out_hours"/>
+                    </div>
+                </div>-->
+                <h2>Automatic Check Out Configuration</h2>
+                <div class="row mt16 o_settings_container" groups="hr_attendance.group_hr_attendance_manager" name="automatic_check_out_settings">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="auto_check_out"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <span groups="hr_attendance.group_hr_attendance_manager"/>
+                            <label for="auto_check_out" class="o_form_label">Automatic Check Out</label>
+                            <div class="text-muted">
+                                Check out automatically after the specified time
+                            </div>
+                            <div class="mt16" attrs="{'invisible': [('auto_check_out', '=', False)],'required': [('auto_check_out', '=', True)]}">
+                                <div class="mt16 row">
+                                    <label for="auto_check_out_hours" class="col-5 col-lg-5 o_light_label"/>
+                                    <field name="auto_check_out_hours" class="col-lg-5 p-0" attrs="{'required': [('auto_check_out', '=', True)]}"/>
+                                </div>
+                            </div>
+                            <div class="mt16" attrs="{'invisible': [('auto_check_out', '=', False)],'required': [('auto_check_out', '=', True)]}">
+                                <div class="mt16 row">
+                                    <label for="duration" class="col-5 col-lg-5 o_light_label"/>
+                                    <field name="duration" class="col-lg-5 p-0" attrs="{'required': [('auto_check_out', '=', True)]}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

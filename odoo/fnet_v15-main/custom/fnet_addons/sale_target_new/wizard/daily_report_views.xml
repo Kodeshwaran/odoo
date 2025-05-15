@@ -1,0 +1,81 @@
+<odoo>
+
+    <record model="ir.ui.view" id="sales_daily_report_wizard_view1">
+            <field name="name">Daily Report New</field>
+            <field name="model">daily.report.new</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="report_details" filename="report_details_name"/>
+                            <field name="report_attachment" invisible="1"/>
+                            <field name="report_details_name" invisible="1"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_daily_report1" string="Print" type="object" class="btn-primary"/>
+                        <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sales_daily_report_wizard_action1">
+            <field name="name">Daily Report New</field>
+            <field name="res_model">daily.report.new</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sales_daily_report_wizard_view1"/>
+            <field name="target">new</field>
+        </record>
+
+<!--        <menuitem id="sales_daily_report_wizard_menu"-->
+<!--              name="Daily Report New"-->
+<!--              parent="account.menu_finance_reports"-->
+<!--              action="sales_daily_report_wizard_action1"-->
+<!--              sequence="3"/>-->
+
+<!--    <record model="ir.ui.view" id="sales_daily_report_old_wizard_view">-->
+<!--            <field name="name">Daily Report Old</field>-->
+<!--            <field name="model">daily.report.old</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form>-->
+<!--                    <sheet>-->
+<!--                        <group col="4">-->
+<!--                            <field name="date_from"/>-->
+<!--                            <field name="date_to"/>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <field name="report_details" filename="report_details_name"/>-->
+<!--                            <field name="report_attachment" invisible="1"/>-->
+<!--                            <field name="report_details_name" invisible="1"/>-->
+<!--                        </group>-->
+<!--                    </sheet>-->
+<!--                    <footer>-->
+<!--                        <button name="action_daily_report" string="Print" type="object" class="btn-primary"/>-->
+<!--                        <button string="Discard" class="btn-secondary" special="cancel" close="1"/>-->
+<!--                    </footer>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record model="ir.actions.act_window" id="sales_daily_report_old_wizard_action">-->
+<!--            <field name="name">Daily Report Old</field>-->
+<!--            <field name="res_model">daily.report.old</field>-->
+<!--            <field name="domain">[]</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="sales_daily_report_old_wizard_view"/>-->
+<!--            <field name="target">new</field>-->
+<!--        </record>-->
+
+<!--        <menuitem id="sales_daily_report_old_wizard_menu"-->
+<!--              name="Daily Report Old"-->
+<!--              parent="account.menu_finance_reports"-->
+<!--              action="sales_daily_report_old_wizard_action"-->
+<!--              sequence="3"/>-->
+
+</odoo>

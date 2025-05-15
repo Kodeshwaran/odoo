@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+
+        <record id="paperformat_for_quotation" model="report.paperformat">
+            <field name="name">European A4 low margin for Quotation</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="report_quotation" model="ir.actions.report">
+            <field name="name">Quotation</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">fnet_omega_reportz.quotation_report</field>
+            <field name="report_file">fnet_omega_reportz.quotation_report</field>
+            <field name="print_report_name">'Quotation'</field>
+            <field name="paperformat_id" ref="fnet_omega_reportz.paperformat_for_quotation"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="sale.action_report_saleorder" model="ir.actions.report">
+            <field name="binding_model_id" eval="False"/>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('name', '=', 'email_template_edi_sale'), ('module', '=', 'sale')]"/>
+            </function>
+            <value eval="{'noupdate': False}"/>
+        </function>
+
+        <record id="sale.email_template_edi_sale" model="mail.template">
+            <field name="report_template" ref="fnet_omega_reportz.report_quotation"/>
+            <field name="report_name">{{ (object.quotation_name or '').replace('/','_') }}</field>
+        </record>
+
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value eval="[('name', '=', 'email_template_edi_sale'), ('module', '=', 'sale')]"/>
+            </function>
+            <value eval="{'noupdate': True}"/>
+        </function>
+
+    </data>
+
+
+</odoo>

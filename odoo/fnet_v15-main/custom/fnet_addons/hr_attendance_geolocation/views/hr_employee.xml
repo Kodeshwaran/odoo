@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+
+        <record id="hr_work_location_form_view_inherited" model="ir.ui.view">
+        <field name="name">hr.work.location.form.view.inherited</field>
+        <field name="model">hr.work.location</field>
+        <field name="inherit_id" ref="hr.hr_work_location_form_view"/>
+        <field name="arch" type="xml">
+            <field name="location_number" position="after">
+                <field name="location_latitude"/>
+                <field name="location_longitude"/>
+            </field>
+        </field>
+    </record>
+
+    </data>
+</odoo>

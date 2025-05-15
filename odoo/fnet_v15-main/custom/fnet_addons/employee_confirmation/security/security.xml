@@ -1,0 +1,27 @@
+<odoo>
+    <record id="group_company_business_unit_heads" model="res.groups">
+			<field name="name">Business Unit(BU)</field>
+			<field name="category_id" ref="base.module_category_usability"/>
+    </record>
+     <record id="probation_review_manager_approval_view" model="ir.rule">
+        <field name="name">Probation Review Self Portal: Manager Child Records</field>
+        <field name="model_id" ref="employee_confirmation.model_probation_review"/>
+        <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), '|', ('employee_id.parent_id.user_id', '=', user.id), ('department_id.head_of_department.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+
+    <record id="probation_review_hr_and_md_approval_view" model="ir.rule">
+        <field name="name">Probation Review Self Portal: See all employees</field>
+        <field name="model_id" ref="employee_confirmation.model_probation_review"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr.group_hr_user')), (4, ref('mm_master.group_company_managing_director'))]"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="perm_read" eval="1"/>
+    </record>
+</odoo>

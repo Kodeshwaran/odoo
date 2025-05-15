@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_offer_letter_create" model="ir.ui.view">
+        <field name="name">offer.letter.wizard.form</field>
+        <field name="model">offer.letter.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Email message">
+                <sheet>
+                    <label for="subject"/>
+                    <h2><field name="subject"/></h2>
+                    <group>
+                        <field name="email_from"/>
+                        <field name="email_to"/>
+                        <field name="email_cc"/>
+                        <field name="res_model" invisible="0"/>
+                    </group>
+                    <notebook>
+                        <page string="Body" name="body">
+                            <field name="body_html" widget="html" options="{'style-inline': true}"/>
+                        </page>
+<!--                        <page string="Attachments" name="attachments">-->
+<!--                            <field name="attachment_ids"/>-->
+<!--                        </page>-->
+                    </notebook>
+                    <group col="4">
+                        <field name="attachment_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2"/>
+                        <field name="template_id" options="{'no_create': True}" domain="[('model_id.model', '=', res_model)]"/>
+                    </group>
+                    <footer>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        <button name="action_offer_letter" type="object" string="Send" class="btn-primary" />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--<record id="view_offer_letter_create" model="ir.ui.view">
+        <field name="name">offer.letter.wizard.form</field>
+        <field name="model">offer.letter.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="email" string="Email To:" readonly="1"/>
+                        <field name="subject"/>
+                        <field name="register_id" string="Register id:"/>
+                        <field name="body" class="oe-bordered-editor" options="{'style-inline': true}" force_save="1"/>
+                    </group>
+                    <footer>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        <button name="action_offer_letter" type="object" string="Send" class="btn-primary" />
+                    </footer>
+                </group>
+            </form>
+        </field>
+    </record>-->
+
+    <record id="action_offer_letter" model="ir.actions.act_window">
+        <field name="name">Email</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">offer.letter.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_offer_letter_create"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

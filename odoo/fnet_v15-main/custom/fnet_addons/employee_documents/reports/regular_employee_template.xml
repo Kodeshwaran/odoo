@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="paperformat_regular_employee_letter" model="report.paperformat">
+        <field name="name">A4 Regular Employment Letter</field>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">80</field>
+        <field name="margin_left">11</field>
+        <field name="margin_right">14</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+    <record id="action_report_regular_employment_letter" model="ir.actions.report">
+        <field name="name">Regular Employment Letter</field>
+        <field name="model">employee.registration</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_documents.regular_employment_letter</field>
+        <field name="report_file">employee_documents.regular_employment_letter</field>
+        <field name="binding_model_id" ref="model_employee_registration"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="employee_documents.paperformat_regular_employee_letter"/>
+    </record>
+
+    <template id="custom_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <div class="header">
+
+        </div>
+        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+    </template>
+
+    <template id="custom_employment_layout">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <div class="header">
+
+        </div>
+        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <div class="col-6" style="text-align:left">
+                    <p>For Futurenet Technologies (India) Private Limited</p>
+                    <br/>
+                    <br/>
+                    <strong>
+                        <p>L Ashok <br/> Managing Director</p>
+                    </strong>
+                </div>
+                <div class="col-6" style="text-align:right">
+                    <p style="text-align:left;padding-left:50px;">
+                        Read, understood &amp; accepted <br/>
+                        all the Terms &amp; conditions of <br/>
+                        Futurenet Technologies (India) Private Limited
+                    </p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="regular_employment_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="employee_documents.custom_employment_layout">
+                    <div class="page">
+                        <p>PRIVATE AND CONFIDENTIAL</p>
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>
+                                    <p>Date :
+                                        <span t-field="o.joining_date"/>
+                                        <br/>
+                                        <br/>
+                                        <t t-if="o.gender">
+                                            <t t-if="o.gender == 'male'">
+                                                <span>Mr.</span>
+                                            </t>
+                                            <t t-elif="o.gender == 'female'">
+                                                <span>Ms.</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span/>
+                                            </t>
+                                        </t>
+                                        <span t-field="o.name"/> <span t-field="o.last_name"/>,<br/>
+                                        <span t-field="o.street"/>, &#160;
+                                       <span t-field="o.street2"/>,<br/>
+                                       <span t-field="o.city"/>, &#160;
+                                        <span t-field="o.state_id.name"/>,<br/>
+                                        <span t-field="o.country_id"/>, &#160;
+                                        <span t-esc="str(o.zip)"/>.<br/>
+                                    </p>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <span>Reg: Employment with
+                            <strong>Futurenet Technologies (India) Private Limited</strong>
+                        </span>
+                        <br/>
+                        <br/>
+                        <span>
+                            <strong>Dear &#160;
+                            <t t-if="o.gender">
+                                <t t-if="o.gender == 'male'">
+                                    <span>Mr.</span>
+                                </t>
+                                <t t-elif="o.gender == 'female'">
+                                    <span>Ms.</span>
+                                </t>
+                                <t t-else="">
+                                    <span/>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <span>Mr/Ms.</span>
+                            </t>
+                            <t t-if="o.name">
+                                <t t-out="o.name"/> <t t-out="o.last_name"/>,
+                            </t>
+                        </strong>
+                        </span>
+                        <br/>
+                        <br/>
+                        In accordance to your recent discussion this letter will confirm that the following shall be
+                        the terms and conditions of your Employment with Futurenet Technologies (India)Private Limited.
+                        <br/>
+                        <br/>
+                        You are appointed as
+                        <strong>"
+                            <span t-field="o.job_id.name"/>
+                            ”
+                        </strong>
+                        of the Company effective from
+                        <strong>"
+                            <t t-if="o.joining_date">
+                                <t t-if="o.joining_date.day == 1">
+                                    <span t-esc="o.joining_date.strftime('%dst %B %Y')"/>
+                                </t>
+                                <t t-elif="o.joining_date.day == 2">
+                                    <span t-esc="o.joining_date.strftime('%dnd %B %Y')"/>
+                                </t>
+                                <t t-elif="o.joining_date.day == 3">
+                                    <span t-esc="o.joining_date.strftime('%drd %B %Y')"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-esc="o.joining_date.strftime('%dth %B %Y')"/>
+                                </t>
+                            </t>
+                            ”
+                        </strong>
+                        . As such, you
+                        shall perform the duties assigned to you from time to time by the designated senior as mentioned
+                        in Job Description. Terms and Conditions of Employment as follows.
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">
+                                1.
+                            </div>
+                            <div class="col-11" style="text-align: justify;">
+                                You will be on probation for a period of 6 (Six) months from the date of joining. The
+                                period of probation is subject to extension at the discretion of the management of the
+                                Company, by another period of 6 (Six) months. Confirmation of employment following the
+                                probation period will not be construed to have taken place unless you are informed in
+                                writing by the Company to that effect.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-2" style="text-align:right">
+                                a.
+                            </div>
+                            <div class="col-10" style="text-align: justify;">
+                                During the period of probation, your services may be terminated by the Company by
+                                giving notice of one month without assigning any reason thereof. Similarly, during the
+                                period of probation, you may terminate the contract by giving one-month notice to the
+                                Company. However, the formalities of submitting proper letter of resignation and
+                                obtaining no-dues certificate from all concerned shall have to be complied with.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2" style="text-align:right">
+                                b.
+                            </div>
+                            <div class="col-10" style="text-align: justify;" t-if="o.company_ctc">
+                                Your total CTC will be
+                                <strong>
+                                    <span t-field="o.company_ctc"
+                                          t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    /- (
+                                    <span t-field="o.ctc_amount_in_word"/>
+                                    )
+                                </strong>
+                                per month payable by 5th working day
+                                of the next English calendar month for the previous month. Details of such remuneration
+                                are provided in Salary Emoluments. All Payments made to you will be subject to
+                                deductions required by law including deductions in respect of tax and such other
+                                deduction and/or contributions as shall be made pursuant to the Applicable laws and
+                                policies and procedures of the Company.
+                                <br/>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                    <p style="page-break-before:always;"/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">
+                            2.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">
+                            In the Event of your Voluntary Separation from the organisation within 18 months of
+                            appointment date, you will have to repay Rs. 25,000/- the expenses incurred towards your
+                            training.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">
+                            3.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">In the event, the Company provides any
+                            specialized training to you,
+                            either in India or abroad and undertakes expenditure for this purpose, you will be
+                            required to enter into a minimum Service Period Agreement. The terms of the minimum
+                            Service Period Agreement will be in addition to those stated herein and in the Standing
+                            Orders, if applicable.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">
+                            4.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">On confirmation as a regular employee, you will
+                            be required to
+                            give two months’ notice, in case you decide to leave the company. In the event of you
+                            having
+                            any incomplete assignment, the Company will have the discretion to relieve you
+                            immediately
+                            or only at the end of the Two months’ notice period. On disciplinary grounds the company
+                            may
+                            terminate your services immediately.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">5.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">During your Service with the company, you will
+                            abide by the rules and
+                            regulations of the company as applicable from time to time.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">6.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">The Company reserves the right to make changes
+                            to any of your terms and
+                            conditions of employment in writing. You will be given not less than one month's written
+                            notice of any significant changes that may be given by way of an individual notice. Such
+                            changes will be deemed to be accepted unless you notify the Company of any objection in
+                            writing before the expiry of the notice period.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">7.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">You shall keep confidential at any time during
+                            or after your employment,
+                            any information (including proprietary or confidential information) about the business
+                            and affairs of, or belonging to the Company or any subsidiary of the Company or their
+                            respective customers or suppliers, including information which, though technically not
+                            trade secrets, the dissemination or knowledge whereof might prove prejudicial to the
+                            Company or its subsidiaries. You may be asked to sign a confidentiality agreement with
+                            the Company in this regard.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">8.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">Your services can be transferred to any of our
+                            Units / Departments /
+                            Client Location situated anywhere in India or abroad.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">9.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">You will keep informed of your correct address
+                            in Chennai and your
+                            permanent address. Any change of address in present or permanent address should be
+                            communicated to the management immediately or maximum within 7 days of such change.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">10.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">During your employment, you shall work
+                            exclusively for the Company and
+                            shall not engage in any other employment, trade, business or profession or work as an
+                            employee or in any other capacity, directly or indirectly, for any other person.
+                        </div>
+                    </div>
+                    <p style="page-break-after:always;"/>
+                    <div class="row">
+                        <div class="col-2" style="text-align:right">a.
+                        </div>
+                        <div class="col-10" style="text-align: justify;">You agree that you will not solicit any
+                            time after the termination of
+                            your employment any of the Company’s employees, directly or indirectly, or encourage any
+                            Company employee to leave the Company.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2" style="text-align:right">b.</div>
+
+                        <div class="col-10" style="text-align: justify;">You further agree that, for a period of 12
+                            (Twelve) months from the date
+                            on which this Agreement is terminated, you will not be associated, as an employee,
+                            agent, consultant, advisor, independent contractor, partner, officer, director, of any
+                            corporation, Partnership, or other entity, which is similar to, or in competition with,
+                            the business of the Company, or of any associated company.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-2" style="text-align:right">c.
+                        </div>
+                        <div class="col-10" style="text-align: justify;">During the period of employment, you shall
+                            not engage yourself in any
+                            other business or employment, academic or professional course without obtaining the
+                            prior permission in writing from the management
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">11.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">It is hereby understood and agreed by you
+                            and the Company, that this
+                            letter agreement shall come into effect on the date of your countersignature hereto;
+                            provided, however, that your employment with the Company shall be conditioned upon the
+                            fulfilment of any prerequisites specified in this letter or any annexure hereto,
+                            including but not limited to, verification of your antecedents and testimonials as
+                            furnished/claimed by you to the Company prior to your joining.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">12.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">If the terms and conditions of appointment
+                            enumerated in this
+                            appointment are acceptable
+                            to you, then please confirm your acceptance by signing on the duplicate copy of this
+                            document, and return it to the Company within 3 (Three) days of receiving this letter,
+                            failing which the offer will stand withdrawn as your action shall be deemed to be
+                            refusal to accept the same
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2" style="text-align:right">a.
+                        </div>
+                        <div class="col-10" style="text-align: justify;">It is acknowledged by you that as a
+                            condition of your continued
+                            employment, you will be required to comply in every respect with the Company’s policies
+                            and procedures as may be in effect from time to and which may be changed by the Company
+                            at any time at its discretion without any requirement to obtain your consent or approval
+                            or to notify you of the same unless you are covered under Standing Orders. The Company’s
+                            Policies, as may be modified from time to time and once issued, shall form an integral
+                            part of this offer letter and the contract between you and the Company.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">13.
+                        </div>
+                        <div class="col-11" style="text-align: justify;">You will automatically retire on attaining
+                            the age of 58 (fifty-eight)
+                            years unless otherwise informed in writing by the management of the Company.
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-1" style="text-align:right">14.
+                        </div>
+                        <div class="col-11">Your employment is subject to your being medically fit.</div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="action_report_internship_employment_letter" model="ir.actions.report">
+        <field name="name">Internship Letter</field>
+        <field name="model">hr.applicant</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_documents.internship_letter</field>
+        <field name="report_file">employee_documents.internship_letter</field>
+        <field name="binding_model_id" ref="model_hr_applicant"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="internship_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="employee_documents.custom_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>
+                                    <p>Date :
+                                        <span t-field="o.report_date"/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        TO,
+                                        <span t-field="o.name"/>
+                                    </p>
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:16px;">
+                            <div t-if="o.street">
+                                <span t-field="o.street"/>,
+                            </div>
+                            <div t-if="o.street2">
+                                <span t-field="o.street2"/>
+                                ,
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:16px;">
+                            <div t-if="o.city">
+                                <span t-field="o.city"/>
+                                ,
+                            </div>
+                            <div t-if="o.state_id">
+                                <span t-field="o.state_id.name"/>
+                                ,
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:16px;">
+                            <div t-if="o.country_id">
+                                <span t-field="o.country_id"/>
+                                ,
+                            </div>
+                            <div t-if="o.zip" t-esc="'%s' % str(o.zip).replace(',','')">
+                                <span t-field="o.zip" t-esc="'%s' % str(o.zip).replace(',','')"/>.
+                            </div>
+                        </div>
+                        <br/>
+                        <span>
+                            <strong>Dear Mr/Ms.
+                                <span t-field="o.name"/>
+                            </strong>
+                        </span>
+                        <br/>
+                        <br/>
+                        <span>
+                            <strong>Greetings from Futurenet Technologies (India) Private Limited....</strong>
+                        </span>
+                        <br/>
+                        <br/>
+                        In accordance to our recent discussion this letter will confirm the following terms and
+                        conditions with Futurenet Technologies (India) Private Limited.
+                        <br/>
+                        <br/>
+                        <br/>
+                        We offer you the position of <strong>“Internship”</strong> for Trainee Engineer with stipend of
+                        <strong>Rs.<span t-field="o.ctc_stripend"/>/-
+                        </strong>
+                        per month effective from
+                        <strong>
+                            <span t-field="o.effective_date"/>
+                        </strong>
+                        . Upon her successful completion of Internship
+                        after Internship Period, based on evaluation he may be eligible for statutory part.
+                        <br/>
+                        <br/>
+                        <br/>
+                        The period of training may be extended at the discretion of the organization, by another period
+                        of 3 months.
+                        <br/>
+                        <br/>
+                        We are happy to welcome you to our Futurenet family.
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <strong>Regards</strong>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <strong>
+                                <p>L Ashok</p>
+                                <p>Managing Director</p>
+                            </strong>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="action_report_employment_terms_conditions" model="ir.actions.report">
+        <field name="name">Terms &amp; Condition</field>
+        <field name="model">hr.applicant</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_documents.employment_terms_conditions</field>
+        <field name="report_file">employee_documents.employment_terms_conditions</field>
+        <field name="binding_model_id" ref="model_hr_applicant"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <template id="employment_terms_conditions">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="employee_documents.custom_layout">
+                    <div class="page">
+                        <p>Terms &amp; Conditions</p>
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>
+                                    <p>Date :
+                                        <span t-field="o.report_date"/>
+                                        <br/>
+                                        <span t-field="o.partner_name"/>
+                                    </p>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                        Terms and Conditions of Employment as follows.
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">
+                                1.
+                            </div>
+                            <div class="col-11">
+                                You will be on probation for a period of 6 (Six) months from the date of joining. The
+                                period of probation is subject to extension at the discretion of the management of the
+                                Company, by another period of 6 (Six) months. Confirmation of employment following the
+                                probation period will not be construed to have taken place unless you are informed in
+                                writing by the Company to that effect.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2" style="text-align:right">
+                                1a.
+                            </div>
+                            <div class="col-10">
+                                During the period of probation, your services may be terminated by the Company by giving
+                                notice of one month without assigning any reason thereof. Similarly, during the period
+                                of probation, you may terminate the contract by giving one-month notice to the Company.
+                                However, the formalities of submitting proper letter of resignation and obtaining
+                                no-dues certificate from all concerned shall have to be complied with.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2" style="text-align:right">
+                                1b.
+                            </div>
+                            <div class="col-10" t-if="o.ctc_amount">
+                                Your total CTC will be
+                                <strong>
+                                    <span t-field="o.ctc_amount"/>
+                                    /- (Rupees
+                                    <span t-field="o.ctc_amount_in_word"/>
+                                    )
+                                </strong>
+                                per month payable by 5th working day of the next English calendar month for the previous
+                                month. Details of such remuneration
+                                are provided in Salary Emoluments. All Payments made to you will be subject to
+                                deductions required by law including deductions in respect of tax and such other
+                                deduction and / or contributions as shall be made pursuant to the Applicable laws and
+                                policies and procedures of the Company.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row" style="padding-top:-300px;">
+                            <div class="col-1" style="text-align:right">
+                                2.
+                            </div>
+                            <div class="col-11">
+                                In the Event of your Voluntary Separation from the organisation within 18 months of
+                                appointment date, you will have to repay Rs. 25,000/- the expenses incurred towards your
+                                training.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">
+                                3.
+                            </div>
+                            <div class="col-11">In the event, the Company provides any specialized training to you,
+                                either in India or abroad and undertakes expenditure for this purpose, you will be
+                                required to enter into a minimum Service Period Agreement. The terms of the minimum
+                                Service Period Agreement will be in addition to those stated herein and in the Standing
+                                Orders, if applicable.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">
+                                4.
+                            </div>
+                            <div class="col-11">On confirmation as a regular employee, you will be required to
+                                give two months’ notice, in case you decide to leave the company. In the event of you
+                                having
+                                any incomplete assignment, the Company will have the discretion to relieve you
+                                immediately
+                                or only at the end of the Two months’ notice period. On disciplinary grounds the company
+                                may
+                                terminate your services immediately.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">5.
+                            </div>
+                            <div class="col-11">During your Service with the company, you will abide by the rules and
+                                regulations of the company as applicable from time to time.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">6.
+                            </div>
+                            <div class="col-11">The Company reserves the right to make changes to any of your terms and
+                                conditions of employment in writing. You will be given not less than one month's written
+                                notice of any significant changes that may be given by way of an individual notice. Such
+                                changes will be deemed to be accepted unless you notify the Company of any objection in
+                                writing before the expiry of the notice period.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">7.
+                            </div>
+                            <div class="col-11">You shall keep confidential at any time during or after your employment,
+                                any information (including proprietary or confidential information) about the business
+                                and affairs of, or belonging to the Company or any subsidiary of the Company or their
+                                respective customers or suppliers, including information which, though technically not
+                                trade secrets, the dissemination or knowledge whereof might prove prejudicial to the
+                                Company or its subsidiaries. You may be asked to sign a confidentiality agreement with
+                                the Company in this regard.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">8.
+                            </div>
+                            <div class="col-11">Your services can be transferred to any of our Units / Departments /
+                                Client Location situated anywhere in India or abroad.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">9.
+                            </div>
+                            <div class="col-11">You will keep informed of your correct address in Chennai and your
+                                permanent address. Any change of address in present or permanent address should be
+                                communicated to the management immediately or maximum within 7 days of such change.
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">10.
+                            </div>
+                            <div class="col-11">During your employment, you shall work exclusively for the Company and
+                                shall not engage in any other employment, trade, business or profession or work as an
+                                employee or in any other capacity, directly or indirectly, for any other person.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2" style="text-align:right">10a.
+                            </div>
+                            <div class="col-10">You agree that you will not solicit any time after the termination of
+                                your employment any of the Company’s employees, directly or indirectly, or encourage any
+                                Company employee to leave the Company.
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2" style="text-align:right">10b.</div>
+
+                            <div class="col-10">You further agree that, for a period of 12 (Twelve) months from the date
+                                on which this Agreement is terminated, you will not be associated, as an employee,
+                                agent, consultant, advisor, independent contractor, partner, officer, director, of any
+                                corporation, Partnership, or other entity, which is similar to, or in competition with,
+                                the business of the Company, or of any associated company.
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2" style="text-align:right">10c.
+                            </div>
+                            <div class="col-10">During the period of employment, you shall not engage yourself in any
+                                other business or employment, academic or professional course without obtaining the
+                                prior permission in writing from the management
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">11.
+                            </div>
+                            <div class="col-11">It is hereby understood and agreed by you and the Company, that this
+                                letter agreement shall come into effect on the date of your countersignature hereto;
+                                provided, however, that your employment with the Company shall be conditioned upon the
+                                fulfilment of any prerequisites specified in this letter or any annexure hereto,
+                                including but not limited to, verification of your antecedents and testimonials as
+                                furnished/claimed by you to the Company prior to your joining.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">12.
+                            </div>
+                            <div class="col-11">If the terms and conditions of appointment enumerated in this
+                                appointment are acceptable
+                                to you, then please confirm your acceptance by signing on the duplicate copy of this
+                                document, and return it to the Company within 3 (Three) days of receiving this letter,
+                                failing which the offer will stand withdrawn as your action shall be deemed to be
+                                refusal to accept the same
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2" style="text-align:right">12a.
+                            </div>
+                            <div class="col-10">It is acknowledged by you that as a condition of your continued
+                                employment, you will be required to comply in every respect with the Company’s policies
+                                and procedures as may be in effect from time to and which may be changed by the Company
+                                at any time at its discretion without any requirement to obtain your consent or approval
+                                or to notify you of the same unless you are covered under Standing Orders. The Company’s
+                                Policies, as may be modified from time to time and once issued, shall form an integral
+                                part of this offer letter and the contract between you and the Company.
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">13.
+                            </div>
+                            <div class="col-11">You will automatically retire on attaining the age of 58 (fifty-eight)
+                                years unless otherwise informed in writing by the management of the Company.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1" style="text-align:right">14.
+                            </div>
+                            <div class="col-11">Your employment is subject to your being medically fit.</div>
+                        </div>
+                        <br/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

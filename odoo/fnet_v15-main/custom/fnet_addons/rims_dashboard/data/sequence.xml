@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record id="increment_epo_details_sequence" model="ir.sequence">
+            <field name="name">S.No Incrementation</field>
+            <field name="code">support.details.sequence</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id"></field>
+        </record>
+        <record id="increment_epo_details_sequence_2" model="ir.sequence">
+            <field name="name">S.No Incrementation</field>
+            <field name="code">support.details</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="company_id"></field>
+        </record>
+    </data>
+</odoo>

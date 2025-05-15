@@ -1,0 +1,20 @@
+<odoo>
+    <odoo>
+
+        <record id="hr_employee_view_form_inherited" model="ir.ui.view">
+            <field name="name">HR Employee View Form Inherited</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='identification_group']" position="inside">
+                    <label for="is_unique_calendar"/>
+                    <div class="o_row">
+                         <field name="is_unique_calendar"/>
+                         <field name="emp_resource_calendar_id" attrs="{'invisible': [('is_unique_calendar', '=', False)]}"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </odoo>
+</odoo>

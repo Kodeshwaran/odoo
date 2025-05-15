@@ -1,0 +1,204 @@
+<odoo>
+    <data>
+
+        <record id="email_template_account_invoice_due_alert_before" model="mail.template">
+            <field name="name">Account Invoice Due Alert Before Template</field>
+            <field name="model_id" ref="account_invoice_alert.model_account_move"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Invoices nearing Payment Due Date</field>
+            <field name="email_to">{{ctx['email']}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                        table, th,tr, td {
+                        border: 2px solid black;
+                        border-collapse: collapse;
+                        }
+                        th,tr, td {
+                        padding: 5px;
+                        }
+                        p{
+                        text-align: left;
+                        font-size:15px;
+                        font-family:sans-serif;
+                        }
+                    </style>
+                </head>
+                <p>Dear
+                    <strong>
+                        <t t-out="ctx.get('name')"/>
+                    </strong>
+                    ,
+                </p>
+                <br/>
+                <p>This email is to notify that the following invoices are nearing its  payment due date.
+                    <br/>
+                    Take the necessary actions for them.
+                </p>
+                <br/>
+                <p>The following are the Invoices:</p>
+                <br/>
+                <t t-if="ctx.get('records')">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="1" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">Invoice
+                            </td>
+                            <td colspan="1" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">View
+                            </td>
+
+                        </thead>
+                        <tbody>
+                            <t t-foreach="ctx.get('records')" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:50%; font-size:17px; font-family:sans-serif;">
+                                        <t t-out="rec.get('invoice')"/>
+                                    </td>
+                                    <td style="text-align: center;width:50%; font-family:sans-serif;">
+                                        <a t-att-href="rec.get('url')"
+                                           style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                                            View Invoice
+                                        </a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_account_invoice_due_alert_after" model="mail.template">
+            <field name="name">Account Invoice Due Alert After Template</field>
+            <field name="model_id" ref="account_invoice_alert.model_account_move"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Invoices crossed Payment Due Date</field>
+            <field name="email_to">{{ctx['email']}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                        table, th,tr, td {
+                        border: 2px solid black;
+                        border-collapse: collapse;
+                        }
+                        th,tr, td {
+                        padding: 5px;
+                        }
+                        p{
+                        text-align: left;
+                        font-size:15px;
+                        font-family:sans-serif;
+                        }
+                    </style>
+                </head>
+                <p>Dear
+                    <strong>
+                        <t t-out="ctx.get('name')"/>
+                    </strong>
+                    ,
+                </p>
+                <br/>
+                <p>This email is to notify that the following invoices crossed its payment due date.
+                    <br/>
+                    Take the necessary actions for them.
+                </p>
+                <br/>
+                <p>The following are the Invoices:</p>
+                <br/>
+                <t t-if="ctx.get('records')">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="1" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">Invoice
+                            </td>
+                            <td colspan="1" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">View
+                            </td>
+
+                        </thead>
+                        <tbody>
+                            <t t-foreach="ctx.get('records')" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:50%; font-size:17px; font-family:sans-serif;">
+                                        <t t-out="rec.get('invoice')"/>
+                                    </td>
+                                    <td style="text-align: center;width:50%; font-family:sans-serif;">
+                                        <a t-att-href="rec.get('url')"
+                                           style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                                            View Invoice
+                                        </a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+        <record id="email_template_account_invoice_due_alert_long_due" model="mail.template">
+            <field name="name">Account Invoice Long Due Alert Template</field>
+            <field name="model_id" ref="account_invoice_alert.model_account_move"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Invoices crossed due date</field>
+            <field name="email_to">{{ctx['email']}}</field>
+            <field name="body_html" type="html">
+                <head>
+                    <style>
+                        table, th,tr, td {
+                        border: 2px solid black;
+                        border-collapse: collapse;
+                        }
+                        th,tr, td {
+                        padding: 5px;
+                        }
+                        p{
+                        text-align: left;
+                        font-size:15px;
+                        font-family:sans-serif;
+                        }
+                    </style>
+                </head>
+                <p>Dear Sir/Madam,</p>
+                <br/>
+                <p>This email is to notify that the following invoices had crossed its due date way before.
+                    <br/>
+                    Take the necessary actions for them.
+                </p>
+                <br/>
+                <p>The following are the Invoices:</p>
+                <br/>
+                <t t-if="ctx.get('records')">
+                    <table style="width: 100%;" border="2px">
+                        <thead>
+                            <td colspan="1" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">Invoice
+                            </td>
+                            <td colspan="1" style="text-align: center; font-weight: bold; background-color:#99A328;
+                            color:#white; font-size:20px; font-family:verdana; color:white;">View
+                            </td>
+
+                        </thead>
+                        <tbody>
+                            <t t-foreach="ctx.get('records')" t-as="rec">
+                                <tr>
+                                    <td style="text-align: left;width:50%; font-size:17px; font-family:sans-serif;">
+                                        <t t-out="rec.get('invoice')"/>
+                                    </td>
+                                    <td style="text-align: center;width:50%; font-family:sans-serif;">
+                                        <a t-att-href="rec.get('url')"
+                                           style="background-color:#875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px;">
+                                            View Invoice
+                                        </a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </field>
+        </record>
+
+    </data>
+</odoo>

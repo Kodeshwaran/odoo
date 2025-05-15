@@ -1,0 +1,188 @@
+<odoo>
+	<data>
+		<record id="sale_order_view_form" model="ir.ui.view">
+			<field name="name">sale.order.form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+
+				<xpath expr="//form/header/button[@name='action_cancel']" position="after">
+					<button name="button_confirm_done_delivery_revision" type="object" string="Confirm Order"
+                            class="oe_highlight" id="confirm_in_done" attrs="{'invisible': ['|', ('state', 'not in', ['revision']), ('is_stage_3', '=', False)]}"/>
+					<button name="action_revision" states="sent" type="object" string="Revision"/>
+					<button name="action_done_revision" states="sale,done" type="object" string="Revision"/>
+					<button name="action_send_for_approval" type="object" string="Send For Approval"  attrs="{'invisible': ['|', ('state', '!=', 'revision'), ('is_stage_1', '=', True)]}" id="request_in_done"/>
+					<button name="action_button_approve" string="Approve Quotation" type="object" groups="base.group_user"
+                        attrs="{'invisible': ['|','|', ('state', 'not in', ['revision']), ('approve_button', '!=', True), ('is_stage_1', '=', False)]}" id="approve_in_done"/>
+                <button name="reject_quotation" type="object" string="Reject Quotation" groups="base.group_user"
+                        attrs="{'invisible': ['|','|', ('state', 'not in', ['revision']), ('approve_button', '!=', True), ('is_stage_1', '=', False)]}" id="reject_in_done"/>
+				</xpath>
+				<xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="after">
+                    <field name="approval_state" invisible="1"/>
+                </xpath>
+				<xpath expr="//form/sheet/notebook/page[2]" position="after">
+					<field name="is_stage_1" invisible="1"/>
+					<field name="is_stage_2" invisible="1"/>
+					<field name="is_stage_3" invisible="1"/>
+					<field name="approve_button" invisible="1"/>
+					<page string="Revisions">
+						<field name="revision" string='Amendment Revision' invisible="1" readonly="1"/>
+						<field name="old_revision_ids">
+							<tree>
+<!--								<field name='quotation_name'/>-->
+								<field name="name" string="Reference"/>
+                                <field name='custom_date' string="Quotation Date" />
+                                <field name='state' invisible='1' />
+                                <field name='create_uid' string="Superseeded by" />
+								<field name="current_sale_id" invisible='1'/>
+							</tree>
+						</field>
+						<group>
+							<field name="active" invisible='1'/>
+						</group>
+					</page>
+				</xpath>
+
+				<xpath expr="//div[hasclass('oe_title')]/h1/field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('state', 'not in', ['revision', 'sale', 'done'])]}</attribute>
+                </xpath>
+				<xpath expr="//div[hasclass('oe_title')]/h1" position="inside">
+                    <field name="quotation_name" attrs="{'invisible':[('state', 'not in', ['draft','sent'])]}" readonly="1"/>
+                </xpath>
+
+				<xpath expr="//form/header/button[@name='action_draft']" position="attributes">
+					 <attribute name="invisible">1</attribute>
+				</xpath>
+				<!-- Readonly in Sent State -->
+				<xpath expr="//field[@name='order_line']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', 'in', ['sent', 'done'])]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='partner_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', 'in', ['sent', 'done'])]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='date_order']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', 'in', ['sent', 'done'])]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='validity_date']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', 'in', ['sent', 'done'])]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='pricelist_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='currency_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='payment_term_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', 'in', ['sent', 'done'])]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='note']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='user_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='team_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='client_order_ref']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='company_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='fiscal_position_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='invoice_status']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+
+				<xpath expr="//field[@name='origin']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_quotation_tree_with_onboarding_view_inherit" model="ir.ui.view">
+            <field name="name">sale.quote.tree.onboarding.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <field name="name" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="name" position="after">
+                    <field name="quotation_name" string="Quotation Number"/>
+                </field>
+            </field>
+        </record>
+
+		<record model="ir.ui.view" id="sale_order_view_search_inherit_quotation_inherited">
+            <field name="name">view.sale.quotation.search.view.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="quotation_name" string="Quotation" filter_domain="[('quotation_name', 'ilike', self)]"/>
+                </xpath>
+            </field>
+         </record>
+
+		<record id="view_order_form_inherit_sale_stock_inherit" model="ir.ui.view">
+			<field name="name">sale.order.form.sale.stock</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='warehouse_id']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+				<xpath expr="//field[@name='incoterm']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+				<xpath expr="//field[@name='picking_policy']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state', '=', 'sent')]}</attribute>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+            <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="domain">[('state', 'not in', ('sale','done'))]</field>
+            <field name="context">{'search_default_my_quotation': 1}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new quotation, the first step of a new sale!
+              </p><p>
+                Once the quotation is confirmed by the customer, it becomes a sales order.<br/> You will be able to create an invoice and collect the payment.
+              </p>
+            </field>
+        </record>
+		
+	</data>
+</odoo>

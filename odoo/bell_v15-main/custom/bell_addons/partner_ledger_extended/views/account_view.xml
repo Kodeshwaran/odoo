@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="view_account_payment_analytical_form" model="ir.ui.view">
+        <field name="name">account.payment.form.analytic.inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="analytic_account_id" options="{'no_create': True}" attrs="{}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_payment_from_invoices_inhrt_form" model="ir.ui.view">
+        <field name="name">account.payment.register.analytic.inherit</field>
+        <field name="model">account.payment.register</field>
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+        <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='communication']" position="after">
+                    <field name="analytic_account_id" options="{'no_create': True}" attrs="{}"/>
+            </xpath>
+        </data>
+        </field>
+    </record>
+
+   <!-- <record id="payment_invoice_form_analytical_form" model="ir.ui.view">
+        <field name="name">payment.invoice.form.analytic.inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+        <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='communication']" position="after">
+                <field name="analytic_account_id" options="{'no_create': True}" attrs="{}"/>
+            </xpath>
+        </data>
+        </field>
+    </record>-->
+
+    <!--<record id="account_report_partner_ledger_view_inherit" model="ir.ui.view">
+        <field name="name">Partner Ledger Inherit</field>
+        <field name="model">account.report.partner.ledger</field>
+        <field name="inherit_id" ref="account.account_report_partner_ledger_view"/>
+        <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='target_move']" position="after">
+                <field name="analytic_account_ids" widget="many2many_tags" options="{'no_create': True}" attrs="{'required':[('result_selection', '=', 'other')]}"/>
+                <field name="partner_ids" widget="many2many_tags"/>
+            </xpath>
+        </data>
+        </field>
+    </record>-->
+
+    <record id="account_move_line_view_inherit" model="ir.ui.view">
+        <field name="name">Account Move Line Inherit</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_form"/>
+        <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="analytic_name"/>
+            </xpath>
+        </data>
+        </field>
+    </record>
+
+    <!-- <template id="report_partnerledger_inherited_branches" inherit_id="account.report_partnerledger">
+        <xpath expr="//table[hasclass('table-condensed')]//thead//tr//th[2]" position="after">
+            <th>Analytic</th>
+        </xpath>
+        <xpath expr="//table[hasclass('table-condensed')]//tbody//tr[1]//td[1]" position="after">
+            <td>
+                <span/>
+            </td>
+        </xpath>
+        <xpath expr="//table[hasclass('table-condensed')]//tbody//tr[2]//td[2]" position="after">
+            <td>
+                <span t-esc="line['analytic_name']"/>
+            </td>
+        </xpath>
+    </template> -->
+</odoo>

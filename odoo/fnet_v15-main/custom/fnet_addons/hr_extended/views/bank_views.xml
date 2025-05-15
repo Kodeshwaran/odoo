@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+
+    <record id="bank_ifsc_code_inherit" model="ir.ui.view">
+            <field name="name">ifsc.code.form.inherit</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group/field[@name='acc_number']" position="after">
+                    <field name="ifsc_code"/>
+                </xpath>
+            </field>
+        </record>
+
+  </data>
+</odoo>

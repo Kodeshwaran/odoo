@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+		 <record id="crm_lead_lines" model="ir.ui.view">
+				<field name="name">opportunity.orderline</field>
+				<field name="model">crm.lead</field>
+				<field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+				<field name="arch" type="xml">
+          <xpath expr="//field[@name='team_id']" position="before">
+            <field name="req"/>
+          </xpath>
+        </field>
+      </record>
+
+      
+    </data>
+  </odoo>

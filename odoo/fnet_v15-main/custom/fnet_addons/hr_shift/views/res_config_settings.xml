@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="res_config_settings_view_form">
+            <field name="name">View Shift Configuration Settings</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="Shift" string="Shift Management" data-key="shift" groups="hr_shift.group_shift_administrator">
+                        <h2 groups="hr_shift.group_shift_administrator">Shift Mail Configuration</h2>
+                        <div groups="hr_shift.group_shift_administrator" class="row mt16 o_settings_container" name="shift_email_configure">
+                            <div class="col-2 o_setting_box" id="shift_cc_mail">
+                                <label for="shift_cc_mail"/>
+                            </div>
+                            <div class="col-3 o_setting_box">
+                                <field name="shift_cc_mail"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="shift_config_settings_action" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_id" ref="res_config_settings_view_form"/>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'shift', 'bin_size': False}</field>
+        </record>
+
+        <menuitem
+        id="hr_shift_settings_menu"
+        name="Settings"
+        parent="hr_shift.menu_hr_shift_config"
+        action="shift_config_settings_action"
+        groups="base.group_system"
+        sequence="1"/>
+
+    </data>
+</odoo>

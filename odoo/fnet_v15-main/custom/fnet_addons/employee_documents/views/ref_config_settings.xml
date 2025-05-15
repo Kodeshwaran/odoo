@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_config_settings_email_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.base.setup</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="0"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Employees" string="Employees"
+                     data-key="hr" groups="hr.group_hr_manager">
+
+                    <h2 groups="hr.group_hr_manager">New employee email creation request</h2>
+                    <div groups="hr.group_hr_manager" class="row mt16 o_settings_container" name="odoo_email_configure">
+                        <div class="col-2 o_setting_box" id="odoo_email">
+                            <label for="odoo_email"/>
+                        </div>
+                        <div class="col-3 o_setting_box">
+                            <field name="odoo_email"/>
+                        </div>
+                    </div>
+                    <div groups="hr.group_hr_manager" class="row mt16 o_settings_container" name="citrix_email_configure">
+                        <div class="col-2 o_setting_box" id="citrix_email">
+                            <label for="citrix_email"/>
+                        </div>
+                        <div class="col-3 o_setting_box">
+                            <field name="citrix_email"/>
+                        </div>
+                    </div>
+                    <div groups="hr.group_hr_manager" class="row mt16 o_settings_container"
+                         name="account_email_configure">
+                        <div class="col-2 o_setting_box" id="account_email">
+                            <label for="account_email"/>
+                        </div>
+                        <div class="col-3 o_setting_box">
+                            <field name="account_email"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

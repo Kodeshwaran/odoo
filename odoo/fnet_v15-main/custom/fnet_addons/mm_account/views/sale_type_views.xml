@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="view_sale_type_inherit_page" model="ir.ui.view">
+            <field name="name">view_sale_type_inherit_page</field>
+            <field name="model">sale.type</field>
+            <field name="inherit_id" ref="mm_master.view_sale_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sub_types']" position="after">
+                    <page name="declaration" string="Declaration">
+                        <group>
+                            <field name="declaration" nolabel="1"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

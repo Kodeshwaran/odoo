@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sale_line_delivery_date" model="ir.ui.view">
+        <field name="name">sale.order.line.wizard.tree</field>
+        <field name="model">sale.order.line.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="sale_order_line_id" invisible="1"/>
+                        <field name="delivery_date"/>
+                        <field name="order_delivery_date" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_delivery_date_update" type="object" string="Update" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-secondary"/>
+                    </footer>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_order_delivery_date" model="ir.actions.act_window">
+        <field name="name">Delivery Date</field>
+        <field name="res_model">sale.order.line.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sale_line_delivery_date"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

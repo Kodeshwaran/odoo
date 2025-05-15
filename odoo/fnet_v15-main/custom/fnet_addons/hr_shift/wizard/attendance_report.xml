@@ -1,0 +1,44 @@
+<odoo>
+    <record model="ir.ui.view" id="new_attendance_report_form_view">
+        <field name="name">New Attendance Reporting</field>
+        <field name="model">new.attendance.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="5">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="team"/>
+                            <field name="report_details" filename="report_details_name"/>
+                        </group>
+                        <field name="report_details_name" invisible="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_attendance_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" close="1"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="new_attendance_report_action">
+        <field name="name">Attendance Reporting</field>
+        <field name="res_model">new.attendance.report</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="new_attendance_report_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem name="RIMS &amp; DB Attendance Report"
+          id="menu_new_attendance_report"
+          sequence="3"
+          action="new_attendance_report_action"
+          parent="hr_shift.menu_hr_reporting"
+          groups="hr_shift.group_shift_user"/>
+
+</odoo>

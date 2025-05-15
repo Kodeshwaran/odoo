@@ -1,0 +1,355 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="rims_contract_type_view_tree">
+            <field name="name">Rims Contract type Tree View</field>
+            <field name="model">rims.contract.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_rims_contract_type">
+            <field name="name">RIMS Contract Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rims.contract.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_rims_contract_type"
+                  name="RIMS Contract Type"
+                  parent="rims_dashboard.menu_rims_configuration"
+                  action="action_rims_contract_type"
+                  sequence="4"/>
+
+        <record model="ir.ui.view" id="service_type_view_tree">
+            <field name="name">Service type Tree View</field>
+            <field name="model">service.type</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="name"/>
+                    <field name="technology_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_service_type">
+            <field name="name">Service Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">service.type</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_service_type"
+                  name="Service Types"
+                  parent="rims_dashboard.menu_rims_configuration"
+                  action="action_service_type"
+                  sequence="4"/>
+
+        <record model="ir.ui.view" id="epo_type_view_form">
+            <field name="name">EPO type Form View</field>
+            <field name="model">epo.type</field>
+            <field name="arch" type="xml">
+                <form string="EPO Types">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="mt_alert"/>
+                        </group>
+                        <group name="device_category" string="Device Categories">
+                            <field name="device_category" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="epo_type_view_tree">
+            <field name="name">EPO type Tree View</field>
+            <field name="model">epo.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_epo_type">
+            <field name="name">EPO</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">epo.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_epo_type"
+                  name="EPO Types"
+                  parent="rims_dashboard.menu_rims_configuration"
+                  action="action_epo_type"
+                  sequence="5"/>
+
+        <record model="ir.ui.view" id="rims_email_templates_view_form">
+            <field name="name">RIMS Email Templates Form View</field>
+            <field name="model">rims.email.templates</field>
+            <field name="arch" type="xml">
+                <form string="Email Templates">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" nolabel="1" placeholder="Template Name"/>
+                            </h1>
+                        </div>
+                        <group string="Mail Contents">
+                            <field name="content_lines" nolabel="1">
+                                <form string="Mail Content">
+                                    <div class="oe_title">
+                                        <h1>
+                                            <field name="name" nolabel="1" placeholder="Content Name"/>
+                                        </h1>
+                                    </div>
+                                    <group string="Content">
+                                        <field name="mail_content" widget="html" nolabel="1" style="height:300px;"/>
+                                    </group>
+                                </form>
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="rims_email_templates_view_tree">
+            <field name="name">RIMS Email Templates Tree View</field>
+            <field name="model">rims.email.templates</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_rims_email_templates">
+            <field name="name">RIMS Email Templates</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rims.email.templates</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+       <!-- <menuitem id="menu_rims_email_templates"
+                  name="Email Templates"
+                  parent="rims_dashboard.menu_rims_root"
+                  action="action_rims_email_templates"
+                  groups="rims_dashboard.group_rims_user"
+                  sequence="4"/>-->
+
+        <record model="ir.ui.view" id="sop_documents_view_form">
+            <field name="name">SOP Documents Form View</field>
+            <field name="model">standard.operating.procedure</field>
+            <field name="arch" type="xml">
+                <form string="SOP">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" nolabel="1" placeholder="Document Name"/>
+                            </h1>
+                        </div>
+                        <group string="Document">
+                            <field name="sop_document" filename="sop_document_filename"/>
+                            <field name="sop_document_filename" invisible="1" force_save="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="rims_sop_documents_view_tree">
+            <field name="name">SOP Documents Tree View</field>
+            <field name="model">standard.operating.procedure</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_rims_sop_documents">
+            <field name="name">SOP Documents</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">standard.operating.procedure</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--<menuitem id="menu_rims_sop"
+                  name="SOP Documents"
+                  parent="rims_dashboard.menu_rims_root"
+                  action="action_rims_sop_documents"
+                  groups="rims_dashboard.group_rims_user"
+                  sequence="5"/>-->
+
+        <record model="ir.ui.view" id="rims_service_category_view_form">
+            <field name="name">RIMS Service Category Form View</field>
+            <field name="model">rims.service.category</field>
+            <field name="arch" type="xml">
+                <form string="Service Category">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" nolabel="1" placeholder="Category Name"/>
+                            </h1>
+                        </div>
+                        <group string="Services">
+                            <field name="service_lines" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name" required="1"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="rims_service_category_view_tree">
+            <field name="name">RIMS Service Category Tree View</field>
+            <field name="model">rims.service.category</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_rims_service_category">
+            <field name="name">Service Categories</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rims.service.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_rims_service_category"
+                  name="Service Category"
+                  parent="rims_dashboard.menu_rims_configuration"
+                  action="action_rims_service_category"
+                  groups="rims_dashboard.group_rims_administrator"
+                  sequence="6"/>
+
+<!--        <record id="res_config_settings_email_view_form" model="ir.ui.view">-->
+<!--            <field name="name">res.config.settings.view.form.inherit.base.setup</field>-->
+<!--            <field name="model">res.config.settings</field>-->
+<!--            <field name="priority" eval="0"/>-->
+<!--            <field name="inherit_id" ref="base.res_config_settings_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//div[hasclass('settings')]" position="inside">-->
+<!--                    <div class="app_settings_block" data-string="RIMS" string="RIMS"-->
+<!--                         data-key="rims_dashboard">-->
+
+<!--                        <h2>Contract Expiry Alert Configuration</h2>-->
+<!--                        <div class="row mt16 o_settings_container" name="contract_mail_alert">-->
+<!--&lt;!&ndash;                            <div class="col-2 o_setting_box" id="contract_mail_alert">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <label for="contract_ids"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <div class="col-3 o_setting_box">&ndash;&gt;-->
+<!--                            <field name="contract_ids" nolabel="1" widget="one2many" mode="tree">-->
+<!--                                <tree editable="top">-->
+<!--                                    <field name="period"/>-->
+<!--                                    <field name="cc_mail"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+        <record model="ir.ui.view" id="contract_expiry_company_line_view_tree">
+            <field name="name">contract expiry company Tree View</field>
+            <field name="model">contract.expiry.company.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="period_type"/>
+                    <field name="period"/>
+                    <field name="to_emails"/>
+                    <field name="cc_emails"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_contract_expiry_company_line">
+            <field name="name">Contract Expiry Alert Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">contract.expiry.company.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_contract_expiry_company_line"
+                  name="Contract Expiry Alert Configuration"
+                  parent="rims_dashboard.menu_rims_configuration"
+                  action="action_contract_expiry_company_line"
+                  sequence="7"/>
+
+        <record model="ir.ui.view" id="support_details_alert_line_view_tree">
+            <field name="name">support details alert line Tree View</field>
+            <field name="model">support.details.alert.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="period"/>
+                    <field name="to_emails"/>
+                    <field name="cc_emails"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_support_details_alert_line">
+            <field name="name">Support Subscription End Date Alert Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">support.details.alert.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_support_details_alert_line"
+                  name="Support Subscription End Date Alert Configuration"
+                  parent="rims_dashboard.menu_rims_configuration"
+                  action="action_support_details_alert_line"
+                  sequence="8"/>
+
+        <record model="ir.ui.view" id="document_alert_line_view_tree">
+            <field name="name">Document Alert Line Tree View</field>
+            <field name="model">document.alert.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="repeated_mail"/>
+                    <field name="period"/>
+                    <field name="to_emails"/>
+                    <field name="cc_emails"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_document_alert_line">
+            <field name="name">Document Alert</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">document.alert.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_document_alert_line"
+                  name="Document Alert Configuration"
+                  parent="rims_dashboard.menu_rims_configuration"
+                  action="action_document_alert_line"
+                  sequence="8"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,46 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="account_move_form_view_inherit">
+            <field name="name">account.move.form.view.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="before">
+                    <field name="item_no" force_save="1"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_residual']" position="after">
+                    <field name="aed_amount"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_date']" position="after">
+                    <field name="bank_name"/>
+                    <field name="currency_id"/>
+                    <field name="exchange_rate"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
+                    <attribute name="editable"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/form/sheet/group/field[@name='product_id']" position="before">
+                        <field name="item_no" force_save="1" store="1"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='account_id']" position="before">
+                        <field name="item_no" force_save="1" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/form/sheet/field[@name='name']" position="attributes">
+                        <attribute name="widget">html</attribute>
+<!--                    <label for="product_note"/>-->
+<!--                    <field name="product_note" widget="html" options="{'style-inline': true}"/>-->
+                    <div class="oe_clear"/>
+                </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="attributes">
+                    <attribute name="widget">Html</attribute>
+                    <attribute name="options">{'plugins': ['fullscreen', 'paste', 'media']}</attribute>
+                </xpath>
+                <xpath expr="//group[@id='header_right_group']" position="inside">
+                    <field name="commitment_date"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

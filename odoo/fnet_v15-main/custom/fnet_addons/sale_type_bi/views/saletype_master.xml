@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="saletype_master_form_view" model="ir.ui.view">
+            <field name="name">saletype.master.form</field>
+            <field name="model">saletype.master</field>
+            <field name="arch" type="xml">
+                <form string="Trainee Details Upload">
+                    <sheet>
+                        <h2>
+                            <group>
+                            <field name="name"/>
+                            <field name="name1"/>
+                            <field name="name2"/>
+                            <field name="customer_id"/>
+                            </group>
+                        </h2>
+
+                    </sheet>
+
+
+                </form>
+            </field>
+        </record>
+
+        <record id="saletype_master_tree_view" model="ir.ui.view">
+            <field name="name">saletype.master.tree</field>
+            <field name="model">saletype.master</field>
+            <field name="arch" type="xml">
+                <tree export_xlsx="0" string="Company Master Details">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="action_saletype_master1" model="ir.actions.act_window">
+            <field name="name">saletype Master Details</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">saletype.master</field>
+            <field name="context">{}</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
+

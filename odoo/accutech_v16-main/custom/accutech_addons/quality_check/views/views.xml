@@ -1,0 +1,67 @@
+<odoo>
+    <!-- Quality Check Tree View -->
+    <record id="view_quality_check_tree" model="ir.ui.view">
+        <field name="name">quality.check.tree</field>
+        <field name="model">quality.check</field>
+        <field name="arch" type="xml">
+            <tree string="Quality Check">
+                <field name="name"/>
+                <field name="picking_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <field name="success"/>
+                <field name="remarks"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Quality Check Form View with One2many Product Lines -->
+    <record id="view_quality_check_form" model="ir.ui.view">
+        <field name="name">quality.check.form</field>
+        <field name="model">quality.check</field>
+        <field name="arch" type="xml">
+            <form string="Quality Check">
+                <header>
+                        <button string="Approve" name="action_approve" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button string="Reject" name="action_reject" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button string="Success" name="action_success" type="object" attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,rejected"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="picking_id"/>
+                        <field name="responsible_id"/>
+                        <field name="date"/>
+                        <field name="success"/>
+                        <field name="remarks"/>
+                    </group>
+                    <notebook>
+                        <page string="Product Lines">
+                            <field name="product_lines">
+                                <tree editable="bottom">
+                                    <field name="question"/>
+                                    <field name="product_id"/>
+                                    <field name="reserved_qty"/>
+                                    <field name="passed_qty"/>
+                                    <field name="uom_id"/>
+<!--                                    <field name="move_line_id"/>-->
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for Quality Check -->
+    <record id="action_quality_check" model="ir.actions.act_window">
+        <field name="name">Quality Checks</field>
+        <field name="res_model">quality.check</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">current</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_company_employee,company_employee,model_company_employee,,1,1,1,1
+access_company_meeting,company_meeting,model_company_meeting,,1,1,1,1
+access.meeting.office.lines,access_meeting_office_lines,model_meeting_office_lines,,1,1,1,1
+access.employee.tags.,access_employee_tags,model_employee_tags,,1,1,1,1
+access.cancel.meeting.wizard,access_cancel_meeting_wizard,model_cancel_meeting_wizard,,1,1,1,1
+access.odoo.playground,access_odoo_playground,model_odoo_playground,,1,1,1,1

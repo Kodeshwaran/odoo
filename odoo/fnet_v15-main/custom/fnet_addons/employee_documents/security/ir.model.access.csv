@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_register,employee.register,model_employee_registration,,1,1,1,1
+access_onboard_doc_line,onboard.doc.line,model_onboard_doc_line,,1,1,1,1
+access_recruitment_applicant,recruitment.applicant,model_recruitment_applicant,,1,1,1,1
+access_employee_qualification,access.education.qualification,model_employee_education_qualification,,1,1,1,1
+access.documents.checklist,access_documents_checklist,employee_documents.model_documents_checklist,,1,1,1,1
+access_create_registration_wizard,access.create.registration.wizard,model_create_registration_wizard,,1,1,1,1
+access_offer_letter_wizard_user,access.offer.letter.wizard.user,model_offer_letter_wizard,,1,1,1,1
+access_ir_model_base_user,ir_model_base_user,base.model_ir_model,,1,0,0,0

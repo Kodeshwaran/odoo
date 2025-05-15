@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_delivery_mail,delivery.mail,model_delivery_mail,base.group_user,1,1,1,1
+access_supplier_creation,supplier.creation,model_supplier_creation,purchase.group_purchase_user,1,1,1,1
+access_po_expected_delivery,po_expected_delivery,model_po_expected_delivery,base.group_user,1,1,1,1
+access_purchase_product_types,purchase_product_types,model_purchase_product_types,base.group_user,1,1,1,1
+

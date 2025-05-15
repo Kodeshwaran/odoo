@@ -1,0 +1,142 @@
+<odoo>
+    <data>
+        <record id="view_data_correction_wizard_form" model="ir.ui.view">
+            <field name="name">view.data.correction.wizard.form</field>
+            <field name="model">data.correction.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_update" string="Update" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="document"/>
+                                <field name="document_type"/>
+                                <field name="update_by"/>
+                            </group>
+                            <group>
+                                <field name="filename" invisible="1"/>
+                                <field name="file" filename="filename"
+                                       attrs="{'required': [('update_by', '=', 'file')], 'invisible': [('update_by', 'not in', ['file', 'csv'])]}"/>
+                                <field name="record_name"
+                                       attrs="{'required': [('update_by', '=', 'record')], 'invisible': [('update_by', '!=', 'record')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="update_to"/>
+                        </group>
+                        <notebook>
+                            <page string="Record">
+                                <field name="line_ids">
+                                    <tree>
+                                        <field name="sale_ids" widget="many2many_tags"/>
+                                        <field name="purchase_ids" widget="many2many_tags"/>
+                                        <field name="account_ids" widget="many2many_tags"/>
+                                        <field name="partner_ids" widget="many2many_tags"/>
+                                        <field name="document"/>
+                                        <field name="value"/>
+                                        <field name="value2"/>
+                                        <field name="value_html"/>
+                                        <field name="value_text"/>
+                                        <field name="date_value"/>
+                                    </tree>
+                                </field>
+                            </page>
+<!--                            <page string="Attachments">-->
+<!--                                <field name="attachment_ids"/>-->
+<!--                            </page>-->
+                            <page string="Attachment Details">
+                                <field name="attachment_line_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="res_model"/>
+                                        <field name="res_id"/>
+                                        <field name="type"/>
+                                        <field name="datas"/>
+<!--                                        <field name="datas_fname"/>-->
+                                        <field name="store_fname"/>
+                                        <field name="file_size"/>
+                                        <field name="create_uid"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_data_correction_wizard" model="ir.actions.act_window">
+            <field name="name">Data Correction</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">data.correction.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+        </record>
+
+        <record id="view_data_correction_line_wizard_form" model="ir.ui.view">
+            <field name="name">view.data.correction.line.wizard.form</field>
+            <field name="model">data.correction.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sale_ids" widget="many2many_tags"/>
+                                <field name="purchase_ids" widget="many2many_tags"/>
+                                <field name="account_ids" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="document"/>
+                                <field name="value"/>
+                                <field name="date_value"/>
+                            </group>
+                        </group>
+                        <group col="2">
+                            <field name="name"/>
+                            <field name="res_model"/>
+                            <field name="res_id"/>
+                            <field name="type"/>
+                            <field name="datas"/>
+                            <field name="file_size"/>
+                            <field name="created_by"/>
+                            <field name="created_date"/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_data_correction_line_wizard_tree" model="ir.ui.view">
+            <field name="name">view.data.correction.line.wizard.tree</field>
+            <field name="model">data.correction.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sale_ids" widget="many2many_tags"/>
+                    <field name="purchase_ids" widget="many2many_tags"/>
+                    <field name="account_ids" widget="many2many_tags"/>
+                    <field name="partner_ids" widget="many2many_tags"/>
+                    <field name="document"/>
+                    <field name="value"/>
+                    <field name="value2"/>
+                    <field name="value_html"/>
+                    <field name="value_text"/>
+                    <field name="date_value"/>
+                    <field name="name"/>
+                    <field name="res_model"/>
+                    <field name="res_id"/>
+                    <field name="type"/>
+                    <field name="datas"/>
+                    <field name="file_size"/>
+                    <field name="created_by"/>
+                    <field name="created_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem name="Data Correction" id="menu_data_correction_root" groups="base.group_no_one" web_icon="data_correction,static/description/menu.png"/>
+        <menuitem name="Data Correction" id="menu_data_correction_main" parent="menu_data_correction_root" action="action_data_correction_wizard"/>
+    </data>
+</odoo>

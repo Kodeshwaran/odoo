@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="commitment_date_update_view_form" model="ir.ui.view">
+        <field name="name">commitment.date.update.wizard.form</field>
+        <field name="model">commitment.date.update.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="move_id" invisible="1"/>
+                        <field name="date_commitment" invisible="1"/>
+                        <field name="date_commitment"/>
+                    </group>
+                    <footer>
+                        <button name="action_commitment_date_update" type="object" string="Update" class="btn-primary"/>
+                        <button string="Cancel" special="cancel" class="btn-secondary"/>
+                    </footer>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_move_update_commitment_date" model="ir.actions.act_window">
+        <field name="name">Commitment Date</field>
+        <field name="res_model">commitment.date.update.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="commitment_date_update_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

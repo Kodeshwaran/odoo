@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+
+        <record id="sale_view_form_inherited" model="ir.ui.view">
+            <field name="name">sale.order.view.form.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="attachment" widget="many2many_binary" attrs="{'invisible':[('id', '=', False)], 'readonly':[('state', 'in',['po_receive','sale','done'])]}"/>
+                    <field name="vendor_attachment" widget="many2many_binary"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="before">
+                    <button name="receive_po" type="object" string="Receive Customer PO" class="oe_highlight" states="draft,sent"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', 'not in', ['po_receive'])]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                    <attribute name="states">draft,po_receive</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sale_order_view_search_form_inherited" model="ir.ui.view">
+            <field name="name">sale.order.view.search.form.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='draft']" position="attributes">
+                    <attribute name="domain">[('state','in',('draft', 'sent', 'po_receive'))]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

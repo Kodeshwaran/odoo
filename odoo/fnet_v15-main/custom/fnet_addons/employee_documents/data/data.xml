@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record model="hr.recruitment.stage" id="stage_job1">
+            <field name="name">Onboard</field>
+            <field name="sequence">3</field>
+        </record>
+        <record id="recruitment_request_sequence" model="ir.sequence">
+            <field name="name">recruitment_sequence_code</field>
+            <field name="code">recruitment.applicant</field>
+            <field name="prefix">RR/%(year)s/</field>
+            <field name="number_increment" eval="1"/>
+        </record>
+    </data>
+</odoo>

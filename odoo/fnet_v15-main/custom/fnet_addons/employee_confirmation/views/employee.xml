@@ -1,0 +1,53 @@
+<odoo>
+    <data>
+
+        <record id="hr_employee_from_view_inherited" model="ir.ui.view">
+        <field name="name">Hr Employee Form view inherited</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" string="Probation Review Form" type="object"
+                        name="open_probation_review" icon="fa-book"/>
+            </xpath>
+            <xpath expr="//field[@name='country_of_birth']" position="after">
+                <field name="probation_status" groups="hr.group_hr_user"/>
+                <field name="is_intern" groups="hr.group_hr_user"/>
+            </xpath>
+            <xpath expr="//field[@name='spouse_birthdate']" position="after">
+                <field name="wedding_date" attrs="{'invisible': [('marital', '!=', 'married')]}" groups="hr.group_hr_user"/>
+                <field name="wedding_image" filename="wedding_filename" attrs="{'invisible': [('marital', '!=', 'married')]}"/>
+                <field name="wedding_filename" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='birthday']" position="after">
+                <field name="birthday_image" filename="birthday_filename"/>
+                <field name="birthday_filename" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='address_home_id']" position="after">
+                <field name="address_proof"/>
+            </xpath>
+            <xpath expr="//field[@name='country_of_birth']" position="after">
+                <field name="date_internship"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="last_name" placeholder="Last Name" style="margin-left:10px;"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="placeholder">First Name</attribute>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="hr_department_form_view_inherit" model="ir.ui.view">
+            <field name="name">Hr Department</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="head_of_department"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

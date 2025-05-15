@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+
+        <record id="hr_attendance_view_form_inherited" model="ir.ui.view">
+            <field name="name">hr.attendance.view.form.inherited</field>
+            <field name="model">hr.attendance</field>
+            <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='check_out']" position="after">
+                    <field name="automatic_checkout" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="menu_hr_attendance_reporting_main" name="Reporting" parent="hr_attendance.menu_hr_attendance_root"
+        sequence="25"/>
+
+        <menuitem id="hr_attendance.menu_hr_attendance_report" parent="hr_attendance_extended.menu_hr_attendance_reporting_main" name="Reporting Analysis"
+                  sequence="1"/>
+
+    </data>
+</odoo>

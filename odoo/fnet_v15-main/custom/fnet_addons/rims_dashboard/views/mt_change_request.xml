@@ -1,0 +1,105 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="mt_change_request_tree_view">
+            <field name="name">Monitoring Thresholds Change Request Tree </field>
+            <field name="model">mt.change.request</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="ticket_no"/>
+                    <field name="customer_id"/>
+                    <field name="requested_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mt_change_request_search_view" model="ir.ui.view">
+            <field name="name">Monitoring Thresholds Change Request search</field>
+            <field name="model">mt.change.request</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="ticket_no"/>
+                    <field name="customer_id"/>
+                    <field name="requested_date"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
+        <record id="view_mt_change_request_form" model="ir.ui.view">
+            <field name="name">Monitoring Thresholds Change Request Form</field>
+            <field name="model">mt.change.request</field>
+            <field name="arch" type="xml">
+                <form string="Monitoring Thresholds Change Request">
+                    <header>
+                        <button name="soc_approve" string="Submit" type="object" class="oe_highlight"   states="draft"/>
+                        <button name="action_verify" string="Verified" type="object" class="oe_highlight" groups="rims_dashboard.group_rims_administrator" states="submit"/>
+                        <button name="soc_approved" string="Approve" type="object" class="oe_highlight"  groups="rims_dashboard.group_rims_soc" states="verify" />
+                        <button name="action_cancel" string="Refuse" type="object" class="oe_highlight" groups="rims_dashboard.group_rims_soc" attrs="{'invisible': ['|',('is_admin','=',False),('state','not in','verify')]}"/>
+<!--                        <button name="action_cancel" string="Refuse" type="object" class="oe_highlight"  groups="rims_dashboard.group_rims_administrator" attrs="{'invisible': [('state','in',')]}"/>-->
+                        <button name="action_refuse" string="cancel" type="object" class="oe_highlight" states="draft,submit"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approve"/>
+                    </header>
+                    <sheet>
+                        <h1 align="center">
+                            <span style="font-size:30px;"><b>Monitoring Thresholds Change Request</b></span>
+                        </h1>
+                        <group style="width:50%;">
+                            <field name="ticket_no" attrs="{'readonly': [('state','in','approve')]}"/>
+                            <field name="customer_id" attrs="{'readonly': [('state','in','approve')]}"/>
+                            <field name="requested_by" invisible="1"/>
+                            <field name="is_admin" invisible="1"/>
+                            <field name="is_manager" invisible="1"/>
+                            <field name="requested_date"/>
+                            <field name="approved_date"/>
+                        </group>
+                        <group>
+                            <field name="mt_details_change_add_ids" nolabel="1" attrs="{'readonly': [('state','in',['approve','submit','verify'])]}" >
+                                <tree editable="bottom">
+                                    <field name="s_no" />
+                                    <field name="request_action"/>
+                                    <field name="mt_details_id" domain="[('customer_id.name', '=',name)]" attrs="{'invisible':[('request_action','not in', ['remove','edit'])], 'required':[('request_action','not in', 'add')]}"/>
+                                    <field name="name" invisible="1"/>
+                                    <field name="host_id" domain="[('customer_id', '=', name)]" attrs="{'readonly': [('request_action','=','remove')]}" force_save="1"/>
+                                    <field name="ip_address" attrs="{'readonly': [('request_action','=','remove')]}" force_save="1"/>
+                                    <field name="service" attrs="{'readonly': [('request_action','in','remove')]}" force_save="1"/>
+                                    <field name="criticality" attrs="{'readonly': [('request_action','in','remove')]}" force_save="1"/>
+                                    <field name="cpu_capacity" string="CPU Capacity" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                    <field name="cpu_warn_percentage" string="CPU Warn (%)" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                    <field name="cpu_crit_percentage" string="CPU Crit (%)" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                    <field name="memory_capacity" string="Memory Capacity" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                    <field name="memory_warn_percentage" string="Memory Warn (%)" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                    <field name="memory_crit_percentage" string="Memory Crit (%)" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                    <field name="disk_capacity" string="Disk Capacity" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                    <field name="disk_warn_percentage" string="Disk Warn (%)" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                    <field name="disk_crit_percentage" string="Disk Crit (%)" attrs="{'readonly': [('request_action','in','remove')]}"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="reason" style="width:50%;" attrs="{'invisible': [('state','in','approve')]}"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+
+                </form>
+            </field>
+        </record>
+        <record id="action_rims_mt_change_request" model="ir.actions.act_window">
+            <field name="name">Monitoring Thresholds Change Request</field>
+            <field name="res_model">mt.change.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create a new one</p>
+            </field>
+        </record>
+        <menuitem id="menu_rims_mt_change_request"
+                  name="Monitoring Thresholds Change Request"
+                  parent="rims_dashboard.menu_rims_configuration"
+                  action="action_rims_mt_change_request"
+                  sequence="3"/>
+    </data>
+</odoo>

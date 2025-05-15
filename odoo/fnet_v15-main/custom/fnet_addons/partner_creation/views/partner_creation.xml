@@ -1,0 +1,192 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="partner_request_view_form">
+            <field name="name">Partner Request Form View</field>
+            <field name="model">partner.request</field>
+            <field name="arch" type="xml">
+                <form string="Customer Request">
+                    <header>
+                        <button name="submit" type="object" string="Submit" class="oe_highlight" states="draft" groups="sales_team.group_sale_salesman"/>
+                        <button name="first_approve" type="object" string="BU Head Approval" class="oe_highlight" states="submit" groups="partner_creation.group_partner_creation_bu_head"/>
+                      <!--  <button name="second_approve" type="object" string="Finance Approval" class="oe_highlight" states="head_approve" groups="partner_creation.group_partner_creation_finance"/>
+                        <button name="third_approve" type="object" string="MD Approval" class="oe_highlight" states="finance_approve" groups="partner_creation.group_partner_creation_md"/>-->
+                        <button name="cancel" type="object" string="Reject" states="submit" groups="partner_creation.group_partner_creation_bu_head"/>
+<!--                        <button name="create_customer" type="object" string="Create Customer" class="oe_highlight" attrs="{'invisible': ['|',('state', '!=', 'md_approve'),('partner_id', '!=', False)]}" groups="partner_creation.group_partner_creation_bu_head"/>-->
+                        <field name="state" string="Status" widget="statusbar" statusbar_visible="draft,submit,head_approve"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="view_partner" type="object" class="oe_stat_button" icon="fa-book" attrs="{'invisible': [('partner_count', '=', 0)]}">
+                                <field name="partner_count" widget="statinfo" string="Customer"/>
+                            </button>
+                        </div>
+                        <h1><p style="text-align:center;"><b>CUSTOMER CREATION FORM</b></p></h1>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Name of the Customer" required="1"/>
+                            </h1>
+                        </div>
+                        <div class="o_address_format" style="width:400px;">
+                            <field name="street" placeholder="Street..." class="o_address_street"/>
+                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                            <field name="city" placeholder="City" class="o_address_city" />
+                            <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" context="{'country_id': country, 'default_country_id': country, 'zip': zip}"/>
+                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                            <field name="country" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                        </div>
+                        <group>
+                            <field name="tel_no" style="width:300px;"/>
+                            <field name="partner_id" invisible="1"/>
+                            <field name="opportunity_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <group string="Types of Business(Describe)">
+                                <field name="business_types_lines" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="business_description"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Major Shareholders">
+                                <field name="shareholders_lines" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="shareholder_description"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                        <group col="4">
+                            <field name="sales_turnover"/>
+                            <field name="employee_count"/>
+                            <field name="equity_capital"/>
+                            <field name="annual_profit"/>
+                        </group>
+                        <div class="o_row">
+                            <label for="debt_cover"/>
+                            <field name="debt_cover" style="width:200px;"/><span><p>To be filled by Finance Person</p></span>
+                        </div>
+                        <group string="Name of Banker(s)">
+                            <field name="bankers" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="banker_name"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="head_name"/>
+                            <field name="financial_controller"/>
+                        </group>
+                        <div class="o_row">
+                            <label for="payment_contact"/>
+                            <field name="payment_contact" style="width:300px;"/><span><p>to contact for Payments etc.</p></span>
+                        </div>
+                        <h4><p style="background-color:lightblue;">Existing Vendor List (Name and contact person Name to be provided)</p></h4>
+                        <group>
+                            <field name="vendor_list" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="vendor_name"/>
+                                    <field name="tel_no"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <h4><p style="background-color:lightblue;">Approximate value of expected business in the initial order:-</p></h4>
+                        <group col="6">
+                            <field name="hardware_ro"/>
+                            <field name="software_ro"/>
+                            <field name="other_ro"/>
+                        </group>
+                        <h4><p style="background-color:lightblue;">RATING APPROVED (Please approve box)</p></h4>
+                        <group col="4">
+                            <field name="rating_a"/>
+                            <field name="rating_b"/>
+                            <field name="rating_c"/>
+                        </group>
+                        <h4><p style="background-color:lightblue;">Vendor Checking Remarks</p></h4>
+                        <group>
+                            <group string="Finance Approval">
+                                <field name="finance_approved_by" readonly="1"/>
+                                <field name="finance_approved_on" readonly="1"/>
+                            </group>
+                            <group string="BU Head Approval">
+                                <field name="bu_head_approved_by" readonly="1"/>
+                                <field name="bu_head_approved_on" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="partner_request_view_tree">
+            <field name="name">Partner Request Form Tree</field>
+            <field name="model">partner.request</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_partner_request_window">
+            <field name="name">Customer Creation Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.request</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Customer Creation Request" id="partner_creation_request_menu" parent="crm.crm_menu_sales"
+                  action="action_partner_request_window" sequence="6"/>
+
+        <record model="ir.ui.view" id="business_types_line_tree_view">
+            <field name="name">Business types Tree View</field>
+            <field name="model">business.types.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="request_id" invisible="1"/>
+                    <field name="business_description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="shareholders_line_tree_view">
+            <field name="name">Shareholders lines Tree View</field>
+            <field name="model">shareholders.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="req_id" invisible="1"/>
+                    <field name="shareholder_description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bankers_line_view_tree">
+            <field name="name">Bankers Line Tree View</field>
+            <field name="model">banker.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="re_id" invisible="1"/>
+                    <field name="banker_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="vendor_line_tree_view">
+            <field name="name">Vendor Line Tree View</field>
+            <field name="model">vendor.line</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="vendor_name" width="50%%"/>
+                    <field name="tel_no" width="40%%"/>
+                    <field name="reqt_id" invisible="1" width="10%%"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--<record id="contacts.action_contacts" model="ir.actions.act_window">
+            <field name="context">{'default_is_company': True}</field>
+        </record>
+-->
+    </data>
+</odoo>

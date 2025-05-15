@@ -1,0 +1,185 @@
+<odoo>
+    <data>
+
+        <record id="probation_review_form_view" model="ir.ui.view">
+            <field name="name">Probation Review Form</field>
+            <field name="model">probation.review</field>
+            <field name="arch" type="xml">
+                <form string="Probation Review Form">
+                    <header>
+                        <button name="action_request" string="Request" type="object" states="draft"
+                                groups="hr.group_hr_user" class="oe_highlight"/>
+                        <button name="action_manager_approve" string="Manager Approve" type="object"
+                                attrs="{'invisible': ['|', '|', ('state', '!=', 'request'), ('is_manager', '=', False), ('is_hod', '!=', False)]}" class="oe_highlight"/>
+<!--                        <button name="action_manager_reject" string="Reject" type="object"-->
+<!--                                attrs="{'invisible': ['|', '|', ('state', '!=', 'request'), ('is_manager', '=', False), ('is_hod', '!=', False)]}"/>-->
+                        <button name="action_hod_approve" string="HOD Approve" type="object"
+                                class="oe_highlight" attrs="{'invisible': ['|', '|', ('is_manager', '!=', False), ('is_hod', '=', False), ('state', 'not in', ['manager_approve'])]}"/>
+<!--                        <button name="action_hod_reject" string="Reject" type="object" attrs="{'invisible': ['|', ('is_hod', '=', False), ('state', 'not in', ['manager_approve'])]}"/>-->
+                        <button name="action_manager_and_hod_approve" string="Manager and HOD Approve" type="object"
+                                class="oe_highlight" attrs="{'invisible': ['|', '|', ('is_manager', '=', False), ('is_hod', '=', False), ('state', 'not in', ['request'])]}"/>
+                        <button name="action_reject" string="Reject" type="object" attrs="{'invisible': ['|', ('state', 'not in', ['request', 'manager_approve']), ('is_manager', '=', False), ('is_hod', '=', False)]}"/>
+                        <button name="action_hr_approve" string="HR Approve" type="object" states="hod_approve"
+                                class="oe_highlight" groups="hr.group_hr_user"/>
+                        <button name="action_md_approve" string="MD Approve" type="object" states="hr_approve"
+                                class="oe_highlight" groups="mm_master.group_company_managing_director"/>
+                        <button name="action_done" string="Done" type="object" attrs="{'invisible': ['|', ('is_hr_approved', '=', False), ('state', 'not in', ['hr_approve'])]}" groups="hr.group_hr_manager"
+                                class="oe_highlight"/>
+<!--                        <button name="action_cancel" string="Cancel" type="object" states="draft"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,request,manager_approve,hod_approve,hr_approve,done"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id"/>
+                                <field name="department_id" readonly="1"/>
+                                <field name="date_join" readonly="1"/>
+                                <field name="manager_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="job_designation" readonly="1"/>
+                                <field name="probation_end_date" readonly="1"/>
+                                <field name="form_date" readonly="1"/>
+                                <field name="is_manager" invisible="1"/>
+                                <field name="is_hod" invisible="1"/>
+                                <field name="is_hr_approved" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Performance Assessment">
+                                <field name="assessment_detail">
+                                    <tree string="Assessment details" editable="bottom">
+                                        <field name="probation_id" invisible="1"/>
+                                        <field name="performance_description"/>
+                                        <field name="performance_rating"/>
+                                        <field name="performance_remarks"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <div>
+                            <h3>
+                                <strong>Probationary Review - Recommended Action:</strong>
+                            </h3>
+                        </div>
+                        <group>
+                            <field name="probation_review_action" widget="radio" nolabel="1"/>
+                        </group>
+                        <div style="width:50%;" class="o_row" name="extension" attrs="{'invisible':[('probation_review_action', '!=', 'ri')]}">
+                            <span>Extension of Probation period for</span>
+                            <field name="probation_extension" attrs="{'required':[('probation_review_action', '=', 'ri')]}"
+                                   nolabel="1" />
+                            <span>months</span>
+                        </div>
+                        <div>
+                            <h3>
+                                <strong>Approved By:</strong>
+                            </h3>
+                        </div>
+                        <group>
+                            <field name="manager_comments"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="manager_sign" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="manager_sign_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="hod_comments"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="hod_sign" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="hod_sign_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <div groups="hr.group_hr_user,mm_master.group_company_managing_director">
+                            <h3 groups="hr.group_hr_user,mm_master.group_company_managing_director">
+                                <strong>Action Required by HR:</strong>
+                            </h3>
+                        </div>
+                        <group groups="hr.group_hr_user,mm_master.group_company_managing_director">
+                            <field name="review_action_hr" widget="radio" nolabel="1"/>
+                            <field name="confirmation_date" attrs="{'invisible': [('review_action_hr', '!=', 'cs')], 'required': [('review_action_hr', '=', 'cs')]}"/>
+                            <field name="date_of_relieving" attrs="{'invisible': [('review_action_hr', '!=', 'nc')], 'required': [('review_action_hr', '=', 'nc')]}"/>
+                            <field name="is_ctc_revised" attrs="{'invisible': [('review_action_hr', '=', False)]}"/>
+                            <field name="new_ctc" attrs="{'invisible': ['|', ('review_action_hr', '=', False), ('is_ctc_revised', '=', False)], 'required': [('is_ctc_revised', '!=', False)]}" style="width:30%;"/>
+                        </group>
+                        <group groups="hr.group_hr_user,mm_master.group_company_managing_director">
+                            <field name="hr_comments"/>
+                        </group>
+                        <group groups="hr.group_hr_user,mm_master.group_company_managing_director">
+                            <group>
+                                <field name="hr_sign" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="hr_sign_date" readonly="1"/>
+                            </group>
+                        </group>
+                        <group groups="mm_master.group_company_managing_director">
+                            <field name="md_comments"/>
+                        </group>
+                        <group groups="mm_master.group_company_managing_director">
+                            <group>
+                                <field name="md_sign" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="md_sign_date" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="probation_review_tree_view" model="ir.ui.view">
+            <field name="name">Probation Review Form Tree View</field>
+            <field name="model">probation.review</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="employee_id"/>
+                    <field name="form_date"/>
+                    <field name="date_of_relieving"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        <record id="res_config_settings_view_form_probation_review_employee_inherit" model="ir.ui.view">-->
+<!--            <field name="name">res.config.settings.view.form.probation.review.employee.inherit</field>-->
+<!--            <field name="model">res.config.settings</field>-->
+<!--            <field name="inherit_id" ref="hr_payroll_community.res_config_settings_view_form_payroll"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//div[@id='hr_payroll_accountant']" position="after">-->
+<!--                    <h2>Mail Configuration</h2>-->
+<!--                    <div class="row mt16 o_settings_container" id="hr_payroll_mail_configure">-->
+<!--                        <label for="payslip_mail"/>-->
+<!--                        <div class="oe_inline">-->
+<!--                            <field name="payslip_mail"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record model="ir.actions.act_window" id="probation_review_action">
+            <field name="name">Probation Review Form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">probation.review</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Probation Review" id="hr_employee_probation_review_menu" parent="hr.menu_hr_employee_payroll"
+                  action="employee_confirmation.probation_review_action" groups="hr.group_hr_user" sequence="25"/>
+
+    </data>
+</odoo>

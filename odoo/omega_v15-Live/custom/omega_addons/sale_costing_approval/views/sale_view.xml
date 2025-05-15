@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_costing_tree_approval_rules" model="ir.ui.view">
+        <field name="name">sale.cost.onboarding.tree.approval.rules</field>
+        <field name="model">sale.costing</field>
+        <field name="inherit_id" ref="sale_costing.view_sale_costing_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name='ready_for_sc' invisible="1"/>
+                <field name='approval_state'/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_costing_form_approval_inherit" model="ir.ui.view">
+        <field name="name">sale.costing.form.approval.rules</field>
+        <field name="model">sale.costing</field>
+        <field name="inherit_id" ref="sale_costing.sale_costing_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position='before'>
+                <widget name="web_ribbon" title="Requested"
+                        attrs="{'invisible': [('approval_state', '!=', 'to_approve')]}"/>
+                <widget name="web_ribbon" title="Approved"
+                        attrs="{'invisible': [('approval_state', '!=', 'approved')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='pricelist_id']" position="after">
+                <field name='user_ids' widget="many2many_tags" invisible="1" readonly="1"/>
+                <field name='approval_state' invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook//page[last()]" position="after">
+                <page string='Approval Hierarchy'
+                      attrs="{'invisible': ['|', ('sale_cost_approval', '=', False), ('sale_cost_approval_rule_id', '=', False)]}">
+                    <field name='sale_cost_approval_rule_ids' nolabel="1">
+                        <tree editable='bottom'>
+                            <field name='sequence'/>
+                            <field name='approval_role'/>
+                            <field name='users' widget="many2many_tags"/>
+                            <field name='date'/>
+                            <field name='is_approved' invisible="1"/>
+                            <field name="user_id"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string='Approval History'
+                      attrs="{'invisible': ['|', ('sale_cost_approval', '=', False), ('sale_cost_approval_rule_id', '=', False)]}">
+                    <field name='sale_cost_approval_history' nolabel="1">
+                        <tree>
+                            <field name='user'/>
+                            <field name='date'/>
+                            <field name="state"/>
+                            <field name="rejection_reason"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                <attribute name='states'></attribute>
+                <attribute name='attrs'>{'invisible': ['|',('state','!=','draft'),('ready_for_sc','!=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="after">
+                <button name="action_button_approve" string="Approve Costing" type="object" groups="base.group_user"
+                        attrs="{'invisible': ['|', ('state', 'not in', ['draft', 'sent']), ('approve_button', '!=', True)]}"/>
+                <button name="reject_quotation" type="object" string="Reject Costing" groups="base.group_user"
+                        attrs="{'invisible': ['|', ('state', 'not in', ['draft', 'sent']), ('approve_button', '!=', True)]}"/>
+                <field name='approve_button' invisible="1"/>
+                <field name='ready_for_sc' invisible="1"/>
+                <field name='send_for_approval' invisible="1"/>
+                <field name='is_rejected' invisible="1"/>
+                <field name='sale_cost_approval_rule_id' invisible="1"/>
+                <field name='sale_cost_approval' invisible="1"/>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="before">
+                <button name="action_send_for_approval" type="object" string="Send For Approval"
+                        groups="base.group_user"
+                        attrs="{'invisible': ['|', '|', '|', '|', '&amp;', ('state','!=','draft'), ('send_for_approval','=',True), '&amp;', ('state','=','draft'), ('send_for_approval','=',True), '&amp;', ('state','!=','draft'), ('send_for_approval','!=',True), '|', ('sale_cost_approval', '=', False), ('sale_cost_approval_rule_id', '=', False), ('sale_cost_approval_rule_ids', '=', [])]}"/>
+            </xpath>
+            <field name="partner_id" position="after">
+                <field name='sale_cost_approval_rule_id' invisible="1"/>
+                <field name='sale_cost_approval' invisible="1"/>
+            </field>
+            <xpath expr="//button[last()]" position="after">
+                <span class="label label-danger"
+                      attrs="{'invisible': ['|', ('ready_for_sc', '=', True), ('send_for_approval', '=', False)]}">
+                    Costing is not fully approved yet!
+                </span>
+            </xpath>
+            <xpath expr="//field[@name='line_ids']" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True), ('is_rejected', '=', False)]}
+                </attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='finance_percentage']" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date']" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='agreement_id']" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </xpath>
+            <field name="company_id" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </field>
+            <field name="currency_id" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </field>
+            <field name="to_currency_id" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </field>
+            <field name="margin_percentage" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </field>
+            <field name="other_lines" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </field>
+            <field name="conversion_rate" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </field>
+            <field name="other_cost_template_id" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </field>
+            <field name="pricelist_id" position="attributes">
+                <attribute name='attrs'>{'readonly': [('send_for_approval', '=', True)]}</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="action_to_approve_costing" model="ir.actions.act_window">
+        <field name="name">Costing to Approve</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.costing</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('approve_button', '=', True),('state','not in',['cancel'])]</field>
+        <field name="context">{'sale_approve': True}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a costing that can be converted into a sales
+                order.
+            </p>
+            <p>
+                Odoo will help you efficiently handle the complete costing flow:
+                costing, quotation, sales order, delivery, invoicing and payment.
+            </p>
+        </field>
+    </record>
+    <record id="view_cost_rejection_reason_form" model="ir.ui.view">
+        <field name="name">cost.rejection.reason.form</field>
+        <field name="model">cost.rejection.reason</field>
+        <field name="arch" type="xml">
+            <form string="Rejection Reason">
+                <group>
+                    <field name="reason"/>
+                </group>
+                <footer>
+                    <button string='Reject' name="button_reject" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <menuitem action="action_to_approve_costing" id="menu_to_approve_sale_costing" name='Costing to Approve'
+              parent="sale.sale_order_menu" sequence="99"
+              groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
+</odoo>

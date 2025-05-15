@@ -1,0 +1,13 @@
+<odoo>
+    <record id="action_report_picking_operations" model="ir.actions.report">
+        <field name="name">Picking Operations Report</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">picking_operations.report_picking_operations</field>
+        <field name="report_file">picking_operations.report_picking_operations</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="print_report_name">'Picking - %s' % (object.name)</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="picking_operations.paperformat_picking_operations"/>
+    </record>
+</odoo>

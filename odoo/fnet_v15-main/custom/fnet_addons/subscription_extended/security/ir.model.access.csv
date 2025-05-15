@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contract_configuration,access_contract_configuration,model_contract_configuration,sales_team.group_sale_salesman,1,1,1,1
+access_renewal_days,access_renewal_days,model_renewal_days,sales_team.group_sale_salesman,1,1,1,1
+access_invoice_renewal_type_user,invoice_renewal_type_user,model_invoice_renewal_type,account.group_account_invoice,1,1,1,1
+access_warranty_lines,access_warranty_lines,model_warranty_lines,account.group_account_invoice,1,1,1,1
+access_warranty_lines_sales,access_warranty_lines_sales,model_warranty_lines,sales_team.group_sale_salesman,1,1,1,1

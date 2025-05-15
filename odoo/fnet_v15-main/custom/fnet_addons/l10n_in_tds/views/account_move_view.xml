@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <data>
+			<record id="invoice_journal_form_tds" model="ir.ui.view">
+                <field name="name">account.invoice.journal.form.tds</field>
+                <field name="model">account.move</field>
+                <field name="inherit_id" ref="journal_voucher.account_move_inherited_form" />
+                <field name="arch" type="xml">
+					<xpath expr="//field[@name='partner_id']" position= 'after'>
+						<field name="tds_related" readonly='1' force_save="1" attrs="{'invisible': [('move_type', '!=', 'in_invoice')]}"/>
+                        <field name="tds_section_id" invisible='1'/>
+					</xpath>
+				</field>
+			</record>
+
+            <record id="invoice_supplier_form_tds" model="ir.ui.view">
+                <field name="name">account.invoice.supplier.form.tds</field>
+                <field name="model">account.move</field>
+                <field name="inherit_id" ref="account.view_move_form" />
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='amount_residual']" position="before">
+                        <field name="amount_tds" attrs="{'invisible': [('move_type','not in',('in_invoice','in_refund'))]}"/>
+                        <field name="amount_tcs" attrs="{'invisible': [('move_type','not in',('out_invoice','out_refund'))]}"/>
+<!--						<field name="amount_net" class="oe_subtotal_footer_separator" attrs="{'invisible': [('move_type','!=','in_invoice')]}"/>-->
+                    </xpath>
+
+					<xpath expr="//page/field[@name='invoice_line_ids']/tree/field[@name='account_id']" position="after">
+						<field name='tds_section_id' attrs="{'column_invisible': [('parent.move_type','not in',('in_invoice','in_refund'))]}"/>
+					</xpath>
+					<xpath expr="//page/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="after">
+						<field name='tds_rate' attrs="{'column_invisible': [('parent.move_type','not in',('in_invoice','in_refund'))]}"/>
+						<field name='tds_amount' attrs="{'column_invisible': [('parent.move_type','not in',('in_invoice','in_refund'))]}"/>
+					</xpath>
+					 <xpath expr = "//page[2]/field[@name = 'line_ids']/tree/field[@name='account_id']" position = "before" >
+						<field name = "tds_section_id" invisible ="1"/>
+					</xpath>
+<!--					<xpath expr="//page/field[@name='invoice_line_ids']" position="attributes">-->
+<!--						<attribute name="context">{'type': type, 'journal_id': journal_id}</attribute>-->
+<!--					</xpath>-->
+<!--					<xpath expr="//field[@name='invoice_date']" position="attributes">-->
+<!--						<attribute name="required">1</attribute>-->
+<!--					</xpath>-->
+            </field>
+        </record>
+ 
+		<record id="tds_invoice_line_tree" model="ir.ui.view">
+			<field name="name">tds.invoice.lines.tree</field>
+			<field name="model">account.move.line</field>
+			<field name="arch" type="xml">
+				<tree string="TDS" create="0" edit="0">
+					<field name="inv_number" string="Vendor Master No."/>
+					<field name="partner_id" string="Name"/>
+					<field name="tds_section_id"/>
+					<field name="price_subtotal" string="Amount of Payment"/>
+                    <field name="Invoice_date2" string="Amount Paid/Credited Date"/>
+					<field name="tds_rate"/>
+					<field name="tds_amount"/>
+					<field name="invoice_date" string="Tax Deducted Date"/>
+					<field name="inv_number" string="Book Entry"/>
+					<field name="warehouse_id"/>
+					<field name="bill_no" string="Bill No"/>
+					<field name="bill_dt" string="Bill Date"/>
+					<field name="phone"/>
+					<field name="mobile"/>
+					<field name="email"/>
+					<field name="street"/>
+					<field name="street2"/>
+					<field name="city"/>
+					<field name="state_id"/>
+					<field name="zip" string="Pincode"/>
+					<field name="pan_no" string="PAN"/>
+					<field name="tan_no" string="TAN"/>
+					<field name="tds_type"/>
+					<field name="is_transporter"/>
+					<field name="narration"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="tds_invoice_line_search" model="ir.ui.view">
+			<field name="name">tds.invoice.lines.search</field>
+			<field name="model">account.move.line</field>
+			<field name="arch" type="xml">
+				<search string="TDS">
+					<field name="tds_rate"/>
+					<field name="tds_amount"/>
+					<field name="vendor_ref"/>
+					<field name="partner_id"/>
+					<field name="bill_date"/>
+					<field name="inv_number"/>
+					<field name="street"/>
+					<field name="street2"/>
+					<field name="city"/>
+					<field name="state_id"/>
+					<field name="zip"/>
+					<field name="pan_no"/>
+					<field name="tan_no"/>
+					<field name="tds_type"/>
+					<field name="is_transporter"/>
+					<field name="tds_section_id"/>
+					<field name="price_subtotal" sum="Total Untaxed"/>
+                    <field name="Invoice_date2"/>
+					<field name="tds_rate"/>
+					<field name="tds_amount"/>
+					<field name="invoice_date"/>
+					<field name="phone"/>
+					<field name="mobile"/>
+					<field name="email"/>
+					<field name="warehouse_id"/>
+					<field name="inv_number"/>
+					<field name="bill_date"/>
+					<field name="bill_no" string="Bill No"/>
+					<field name="bill_dt" string="Bill Date"/>
+					 <filter string="Company" name="company_only" domain="[('tds_type', '=', 'company')]"/>
+					 <filter string="Individual" name="individual_only" domain="[('tds_type', '=', 'individual')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Internal Reference" name="Intref" context="{'group_by':'inv_number'}"/>
+                        <filter name="Vendor Bill No" string="Vendor Bill No" context="{'group_by':'vendor_ref'}"/>
+                        <filter string="Bill Date" name="billdate" context="{'group_by':'bill_date'}"/>
+                        <filter name="group_by_partner_id" string="Vendor" context="{'group_by':'partner_id'}"/>
+                        <filter name="group_by_tan" string="TAN No" context="{'group_by':'tan_no'}"/>
+                        <filter name="group_by_pan" string="PAN No" context="{'group_by':'pan_no'}"/>
+                        <filter name="group_by_tds_type" string="Company/Individual" context="{'group_by':'tds_type'}"/>
+                        <filter name="group_by_tds_section_id" string="TDS Section" context="{'group_by':'tds_section_id'}"/>
+                        <filter name="group_by_payment_nature" string="Nature of Payment" context="{'group_by':'payment_nature'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+		
+		<record id="action_tds_invoice_line" model="ir.actions.act_window">
+			<field name="name">TDS Register</field>
+			<field name="res_model">account.move.line</field>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="tds_invoice_line_tree"/>
+            <field name="domain">[('invoice_type','in', ['in_invoice', 'in_refund']), ('tds_section_id', '!=', False)]</field>
+            <field name="search_view_id" ref="tds_invoice_line_search"/>
+		</record>
+		<menuitem id="menu_tds_invoice_lines" action="action_tds_invoice_line" parent="account.account_reports_management_menu"/>
+<!--		<menuitem id="menu_tcs_invoice_lines_inherited" action="mis_reports.tcs_report_action" parent="account.account_reports_management_menu"/>-->
+ 	</data>
+</odoo>

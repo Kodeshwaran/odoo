@@ -1,0 +1,93 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_hr_shift_change_req_tree">
+            <field name="name">Hr Shift Change Request Tree</field>
+            <field name="model">shift.change.request</field>
+            <field name="arch" type="xml">
+                <tree default_order='create_date desc'>
+                    <field name="employee_assigned_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_shift_change_req_form">
+            <field name="name">Hr Shift Change Request Form</field>
+            <field name="model">shift.change.request</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_employee_accept" string="Accept" type="object" attrs="{'invisible': ['|', '|', ('is_assigned_emp', '!=', False), ('is_manager', '!=', False), ('state', 'not in', ['send'])]}" class="oe_highlight"/>
+                        <button name="action_employee_reject" string="Reject" type="object" attrs="{'invisible': ['|', '|', ('is_assigned_emp', '!=', False), ('is_manager', '!=', False), ('state', 'not in', ['send'])]}" />
+                        <button name="action_manager_approve" string="Manager Approve" type="object" attrs="{'invisible': ['|', '|', '|', ('is_manager', '=', False), ('is_assigned_emp', '!=', False), ('is_requested_emp', '!=', False), ('state', 'not in', ['accept'])]}" class="oe_highlight"/>
+                        <button name="action_manager_reject" string="Reject" type="object" attrs="{'invisible': ['|', '|', '|', ('is_manager', '=', False), ('is_assigned_emp', '!=', False), ('is_requested_emp', '!=', False), ('state', 'not in', ['accept'])]}" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="send,accept,manager_approve"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="action_view_shift" icon="fa-calendar" class="oe_stat_button" type="object" attrs="{'invisible': [('shift_count', '=', 0)]}">
+                                <field name="shift_count" widget="statinfo" string="Shifts"/>
+                            </button>
+                        </div>
+                        <group col="4">
+                            <h2>Current Shift</h2>
+                            <h2>Requested Shift</h2>
+                        </group>
+                        <group col="4">
+                            <field name="employee_assigned_id"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="employee_requested_id"/>
+                            <field name="shift_assigned_id"/>
+                            <field name="shift_requested_id"/>
+                            <field name="assigned_date"/>
+                            <field name="requested_date"/>
+                            <field name="assigned_start_time"/>
+                            <field name="requested_start_time"/>
+                            <field name="assigned_end_time"/>
+                            <field name="requested_end_time"/>
+                            <field name="assigned_emp_shift" invisible="0"/>
+                            <field name="requested_emp_shift" invisible="0"/>
+                            <field name="assigned_shift_id" invisible="0"/>
+                            <field name="replaced_shift_id" invisible="0"/>
+                            <field name="employee_assigned_name" invisible="1"/>
+                            <field name="employee_requested_name" invisible="1"/>
+                            <field name="is_assigned_emp" invisible="1"/>
+                            <field name="is_requested_emp" invisible="1"/>
+                            <field name="is_manager" invisible="1"/>
+                        </group>
+                        <group string="Shift Analysis" attrs="{'invisible': [('is_manager', '=', False)]}">
+                            <notebook>
+                                <page string="Shifts">
+                                    <group col="4">
+                                        <field name="shift_week" widget="radio" options="{'horizontal':true}" nolabel="1"/>
+                                    </group>
+                                    <!--<tree default_order='date_start asc'>
+                                        <field name="date_week_ids"/>
+                                    </tree>-->
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="view_hr_shift_change_req_action">
+            <field name="name">Change Request</field>
+            <field name="res_model">shift.change.request</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'edit': 1,'create': 0}</field>
+<!--            <field name="domain">[]</field>-->
+        </record>
+
+        <menuitem name="Change Request"
+                  id="hr_shift_change_request_menu"
+                  parent="hr_shift.menu_hr_shift_main"
+                  action="view_hr_shift_change_req_action"
+                  sequence="3"/>
+
+    </data>
+</odoo>

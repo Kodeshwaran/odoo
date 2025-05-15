@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_cancel_meeting_form" model="ir.ui.view">
+        <field name="name">cancel.meeting.wizard.form</field>
+        <field name="model">cancel.meeting.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <group>
+                        <group>
+
+                            <field name="meeting_id"  invisible="context.get('hide_employee_field')"/>
+                            <field name="reason"/>
+                            <field name="meeting_id"/>
+
+                        </group>
+
+                        <group>
+                                <field name="date_cancel"/>
+
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_cancel" type="object" class="btn-secondary"
+                                string="cancel meeting "/>
+                       <button special="cancel" class="btn-primary" string="Discard"/>
+
+
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_cancel_meeting" model="ir.actions.act_window">
+        <field name="name">Cancel meeting</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cancel.meeting.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem id="menu_cancel_meeting_sub"
+              parent="menu_cancel_meeting"
+              name="Cancel meeting"
+              action="action_cancel_meeting"
+              sequence="0"/>
+
+
+</odoo>

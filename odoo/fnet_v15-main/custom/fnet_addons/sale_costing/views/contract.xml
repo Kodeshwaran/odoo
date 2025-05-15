@@ -1,0 +1,108 @@
+<odoo>
+    <data>
+        <record id="contract_form" model="ir.ui.view">
+            <field name="name">contract.form</field>
+            <field name="model">sale.contract</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_generate" string="Generate Pdf" type="object"
+                                class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="partner_id"/>
+                            <field name="contract_date"/>
+                            <field name="effective_date"/>
+                            <field name="contract_document" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="service_type_id" invisible="1"/>
+                            <field name="sale_order_id" invisible="0"/>
+                            <field name="rims_customer_master_id" invisible="0"/>
+                        </group>
+                    </sheet>
+                    <div>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" options="{'open_attachments': True}"/>
+                            <field name="message_ids"/>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="contract_tree" model="ir.ui.view">
+            <field name="name">contract.tree</field>
+            <field name="model">sale.contract</field>
+            <field name="arch" type="xml">
+                <tree default_order='create_date desc'>
+                    <field name="create_date" invisible="1"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_contract" model="ir.actions.act_window">
+            <field name="name">Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.contract</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Costing can be created from contract.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_contract"
+                  id="menu_contract"
+                  sequence="100"
+                  parent="sale.sale_order_menu"/>
+
+        <record id="sale_subscription_inherit_form" model="ir.ui.view">
+            <field name="name">sale_subscription_inherit_form</field>
+            <field name="model">sale.subscription</field>
+            <field name="inherit_id" ref="subscription_extended.sale_subscription_form_view_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='rims_type_id']" position="after">
+                    <field name="service_type_id"/>
+                </xpath>
+                <xpath expr="//notebook//page[last()]" position="after">
+                    <page string='EPO Details'>
+                        <group>
+                            <group>
+                                <div>
+                                    <div>
+                                        <h3>Epo</h3>
+                                    </div>
+                                    <field name="epo_costing_ids" widget="one2many">
+                                        <tree editable="bottom">
+                                            <field name="s_no"/>
+                                            <field name="sale_epo_id"/>
+                                            <field name="sale_service_type_id"/>
+                                            <field name="sale_epo_qty"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                                <br/>
+                                <div>
+                                    <div>
+                                        <h3>Resources</h3>
+                                    </div>
+                                    <field name="resource_costing_ids" widget="one2many">
+                                        <tree>
+                                            <field name="s_no"/>
+                                            <field name="sale_resource"/>
+                                            <field name="sale_resource_qty"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

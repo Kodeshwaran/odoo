@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <data>
+
+        <record model="ir.rule" id="history_order_line_rule">
+            <field name="name">history_order_line multi-company</field>
+            <field name="model_id" ref="model_history_order_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="purchase_costing_line_rule">
+            <field name="name">purchase_costing_line multi-company</field>
+            <field name="model_id" ref="model_purchase_costing_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="cost_history_line_rule">
+            <field name="name">cost_history_line multi-company</field>
+            <field name="model_id" ref="model_cost_history_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="history_costing_line_rule">
+            <field name="name">history_costing_line multi-company</field>
+            <field name="model_id" ref="model_history_costing_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="history_product_line_rule">
+            <field name="name">history_product_line multi-company</field>
+            <field name="model_id" ref="model_history_product_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="purchase_costingrule">
+            <field name="name">purchase_costing multi-company</field>
+            <field name="model_id" ref="model_purchase_costing"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="costing_duty_rule">
+            <field name="name">costing_duty multi-company</field>
+            <field name="model_id" ref="model_costing_duty"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="costing_margin_rule">
+            <field name="name">costing_margin multi-company</field>
+            <field name="model_id" ref="model_costing_margin"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="crm_lead_line_rule">
+            <field name="name">crm_lead_line multi-company</field>
+            <field name="model_id" ref="model_crm_lead_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="quote_offer_rule">
+            <field name="name">quote_offer multi-company</field>
+            <field name="model_id" ref="model_quote_offer"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <record model="ir.rule" id="request_so_line_rule">
+            <field name="name">request_so_line multi-company</field>
+            <field name="model_id" ref="model_request_so_line"/>																																	"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+
+        <!--
+        <record model="ir.rule" id="cutomer_product_line_rule">
+            <field name="name">cutomer_product_line multi-company</field>
+            <field name="model_id" ref="model_cutomer_product_line"/>																																	"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        </record>
+        -->
+
+
+    </data>
+</odoo>

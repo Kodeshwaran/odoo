@@ -1,0 +1,401 @@
+<odoo>
+    <record id="project_task_deadline_alert" model="mail.template">
+        <field name="name">Task Deadline Remainder</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="subject">Task Deadline Remainder: {{ object.name }}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="email_to">{{ctx.get('email')}}</field>
+        <field name="body_html" type="html">
+            <p style="margin: 0px;">
+                <span>Dear<t t-esc="ctx.get('assignee_name')"/>,
+                </span>
+                <br/>
+                <span style="margin-top: 8px;">Task that you have been assigned is due on
+                    <strong>
+                        <t t-out="object.date_deadline"/>
+                    </strong>
+                    .
+                </span>
+                <br/>
+                <span>
+                    <b>Task:</b>
+                    <t t-esc="object.display_name"/>
+                </span>
+            </p>
+            <p style="padding-top: 24px; padding-bottom: 16px;">
+                <a t-att-href="ctx.get('access_link')" t-att-data-oe-model="object._name" t-att-data-oe-id="object.id"
+                   style="background-color:#875A7B; padding: 10px; text-decoration: none; color: #fff; border-radius: 5px;">
+                    View Task
+                </a>
+            </p>
+        </field>
+    </record>
+    <record id="email_template_closure_project" model="mail.template">
+        <field name="name">email_template_closure_project</field>
+        <field name="model_id" ref="project_extended.model_project_project"/>
+        <field name="subject">Closure Project</field>
+        <field name="email_from">{{object.env.user.email}}</field>
+        <field name="email_to">{{object.env.user.company_id.purchase_email, object.env.user.company_id.accounts_mail}}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <table border="0" cellpadding="0" cellspacing="0" width="1000"
+                   style="background-color: white; border-collapse: collapse; margin-left: 5px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            Dear Purchase Team,
+                            <br/>
+                            <br/>
+                            This is with regard to the
+                            <b>
+                                <t t-out="object.name"/>
+                            </b>
+                            project completion, please find the details
+                            below.
+                            <br/>
+                            <br/>
+                            <b>Customer Name</b>:
+                            <t t-out="object.partner_id.name"/>
+                            <br/>
+                            <br/>
+
+                            <b>Account Manager</b>:
+                            <t t-out="object.account_manager"/>
+                            <br/>
+                            <br/>
+
+                            <b>OPF No.</b>:
+                            <t t-out="object.source_document"/>
+                            <br/>
+                            <br/>
+
+                            <b>Project Value</b>:
+                            <t t-out="object.project_value"/>
+                            <br/>
+                            <br/>
+
+                            <b>Sign Off Date</b>:
+                            <t t-out="object.sign_off_date"/>
+                            <br/>
+                            <br/>
+
+                            <b>Invoice Requested Date</b>:
+                            <t t-out="object.invoice_requested_date"/>
+                            <br/>
+                            <br/>
+
+                            This is to inform you that it has been more than 24hrs. Since the Invoice has been requested
+                            to be raised and inform the project co-ordinator on the same which is yet to be generated
+                            and informed. Kindly do the needful immediately.
+                            <br/>
+                            <br/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+    <record id="email_template_update_delivery_date" model="mail.template">
+            <field name="name">Update Delivery Date</field>
+            <field name="model_id" ref="project_extended.model_commitment_date_wizard"/>
+            <field name="subject">Update Delivery Date</field>
+            <field name="email_from">{{object.env.user.email}}</field>
+            <field name="email_to">{{object.action_project_email()}}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <table border="0" cellpadding="0" cellspacing="0" width="1000"
+                       style="background-color: white; border-collapse: collapse; margin-left: 5px;">
+                    <tr>
+                        <td valign="top" style="padding: 0px 10px;">
+                            <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                                Dear Project Team,
+                                <br/>
+                                <br/>
+                                The delivery date for <t t-out="object.sale_id.name"/> has been updated from <t t-out="object.sale_id.commitment_date" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/> to <t t-out="object.commitment_date" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/>.
+                                Please adjust your plans accordingly.
+                                <br/>
+                                <br/>
+                                Best Regards,
+                                <br/>
+                                <t t-out="object.env.user.name"/>
+                                <br/>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </field>
+        </record>
+
+    <record id="email_template_project_create_alert" model="mail.template">
+        <field name="name">Alert Project</field>
+        <field name="model_id" ref="project_extended.model_sale_order"/>
+        <field name="subject">Alert Project</field>
+        <field name="email_from">{{object.env.user.email}}</field>
+        <field name="email_to">{{object.action_project_email()}}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <table cellpadding="0" cellspacing="0" width="590" style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            Please find the <t t-out="object.partner_id.name"/> project details,
+                            Pls take it forward and do the needful.
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Customer Name</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 125px;padding-left: 5px; border: 1px solid #000;">Address</td>
+                                    <td style="width: calc(100% - 130px); border: 1px solid #000;">
+                                        <t t-esc="', '.join(filter(None,[object.partner_id.street, object.partner_id.street2, object.partner_id.city,object.partner_id.state_id.name, object.partner_id.zip]))"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Project Name</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.opportunity_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Project ID</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('project_id')"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Project Type (SI/CAN/CLOUD)</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.sale_type_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">OPF Number</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Project Revenue</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-esc="sum(object.order_line.filtered(lambda x: x.product_id.is_project_mail).mapped('price_subtotal'))"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Account Manager</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.opportunity_id.user_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Solution Architect</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.opportunity_id.solution_architect.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">First Level Contact Person </td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.nlc_person"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Mail Id</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.nlc_mail"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Contact Number</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.nlc_no"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Second Level Contact Person </td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.slc_person"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Mail Id</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.slc_mail"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Contact Number</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.slc_no"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Proposal Attached (YES/NO)</td>
+                                    <td style="width: calc(100% - 200px);  border: 1px solid #000;">
+                                       <t t-if="object.attachment">
+                                           YES
+                                       </t>
+                                        <t t-else="">
+                                           NO
+                                       </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Technical Document Attached (YES/NO)</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-if="object.technical_file">
+                                           YES
+                                       </t>
+                                        <t t-else="">
+                                           NO
+                                       </t>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+
+    <record id="email_template_project_create_alert_for_project" model="mail.template">
+        <field name="name">Alert Project</field>
+        <field name="model_id" ref="project_extended.model_project_project"/>
+        <field name="subject">Alert Project</field>
+        <field name="email_from">{{object.env.user.email}}</field>
+        <field name="email_to">{{object.user_id.login}}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <table cellpadding="0" cellspacing="0" width="590" style="background-color: white; border-collapse: collapse; margin-left: 20px;">
+                <tr>
+                    <td valign="top" style="padding: 0px 10px;">
+                        <div style="font-size: 13px; margin: 0px; padding: 0px;">
+                            You have been assigned to the project <t t-out="object.name"/>.
+                            Find the Project details below:
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Customer Name</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.partner_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 125px;padding-left: 5px; border: 1px solid #000;">Address</td>
+                                    <td style="width: calc(100% - 130px); border: 1px solid #000;">
+                                        <t t-esc="', '.join(filter(None,[object.partner_id.street, object.partner_id.street2, object.partner_id.city,object.partner_id.state_id.name, object.partner_id.zip]))"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Project Name</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Project ID</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.project_code"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Project Type (SI/CAN/CLOUD)</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').sale_type_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">OPF Number</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="object.source_document"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Project Revenue</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-esc="object.project_value"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Account Manager</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').opportunity_id.user_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Solution Architect</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').opportunity_id.solution_architect.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">First Level Contact Person </td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').nlc_person"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Mail Id</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').nlc_mail"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Contact Number</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').nlc_no"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Second Level Contact Person </td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').slc_person"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Mail Id</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').slc_mail"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Contact Number</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-out="ctx.get('sale_order').slc_no"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Proposal Attached (YES/NO)</td>
+                                    <td style="width: calc(100% - 200px);  border: 1px solid #000;">
+                                       <t t-if="ctx.get('sale_order').attachment">
+                                           YES
+                                       </t>
+                                        <t t-else="">
+                                           NO
+                                       </t>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 200px; border: 1px solid #000;">Technical Document Attached (YES/NO)</td>
+                                    <td style="width: calc(100% - 200px); border: 1px solid #000;">
+                                        <t t-if="ctx.get('sale_order').technical_file">
+                                           YES
+                                       </t>
+                                        <t t-else="">
+                                           NO
+                                       </t>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </field>
+    </record>
+</odoo>

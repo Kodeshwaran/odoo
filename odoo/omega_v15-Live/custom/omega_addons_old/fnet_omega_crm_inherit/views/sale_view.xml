@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <act_window id="act_multiple_quotation_creation_wizard"
+                    name="Hold Cutting Order"
+                    src_model="sale.order"
+                    res_model="multiple.quotation.creation.wizard"
+                    view_type="form" view_mode="form"
+                    key2="client_action_multi" target="new"/>
+
+    <record id="sale_order_form__extend_inherit" model="ir.ui.view">
+        <field name="name">sale.order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div class="oe_button_box" name="button_box">
+                <button name="action_view_purchase"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-shopping-basket"
+                    attrs="{'invisible': [('purchase_count', '=', 0)]}">
+                    <field name="purchase_count" widget="statinfo" string="Purchase"/>
+                </button>
+            </div>
+            <xpath expr="//button[@name='return_draft']" position="before">
+                <button name="%(fnet_omega_crm_inherit.act_multiple_quotation_creation_wizard)d" string="Create RFQ" type="action" icon="fa-cart-arrow-down"/>
+                <button name="action_set_to_draft" type="object" string="Set to Draft" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'draft'])]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

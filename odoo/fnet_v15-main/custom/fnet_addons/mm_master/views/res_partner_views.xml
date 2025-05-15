@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_res_partner_inh" model="ir.ui.view">
+            <field name="name">view.res.partner.inh</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="string">GSTIN</attribute>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="after">
+                       <field name="approved" invisible="1"/>
+                       <field name="customer_type_name"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                     <attribute name="attrs">{'required' : [('type', '=', 'contact'),('is_company', '=', True)], 'invisible': [('is_company','=', False)], 'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/div/div/field[@name='parent_id']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/div/field[@name='company_type']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/group/group/div/field[@name='street2']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/group/group/div/field[@name='city']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/group/group/div/field[@name='state_id']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/group/group/div/field[@name='zip']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/group/group/div/field[@name='phone']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/group/group/div/field[@name='mobile']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/group/group/div/field[@name='email']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                <xpath expr="//form/sheet/group/group/field[@name='vat']" position="attributes">
+                     <attribute name="attrs">{'readonly': [('approved','=',True)]}</attribute>
+                 </xpath>
+                 
+                 <xpath expr="//page[@name='internal_notes']" position="after">
+				   <page name='res_target' string="Target" groups="account.group_account_manager">
+						<field name="partner_target_line">
+							<tree name="target_res" string="Target" editable="bottom">
+								<field name="account_id" invisible="1"/>
+								<field name="account_code"/>
+								<field name="date_from"/>
+								<field name="date_to"/>
+								<field name="target_amount"/>
+								<field name="target_achived"/>
+							</tree>
+						</field>
+					</page>
+                </xpath>
+                <xpath expr="//form/sheet" position="before">
+                   <header>
+                       <button name="approve" type="object" string="Approve" groups="sales_team.group_sale_manager" attrs="{'invisible': [('approved', '=', True)]}"/>
+                       <button name="unapprove" type="object" string="Un Approve" groups="sales_team.group_sale_manager" attrs="{'invisible': [('approved', '!=', True)]}"/>
+                   </header>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_res_partner_filter_inh" model="ir.ui.view">
+            <field name="name">view.res.partner.filter.inh</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='inactive']" position="after">
+                     <filter string="Pending Approval" name="approved" domain="[('approved', '=', False)]"/>
+                </xpath>
+            </field>
+        </record>
+
+
+     </data>
+</odoo>

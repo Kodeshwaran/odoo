@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access.unreconcile.history,access_unreconcile_history,reconciliation_extended.model_unreconcile_history,,1,1,1,1
+access.payment.tracker,access_payment_tracker,reconciliation_extended.model_payment_tracker,,1,1,1,1
+access.unreconcile.reason.wizard,access_unreconcile_reason_wizard,reconciliation_extended.model_unreconcile_reason_wizard,,1,1,1,1

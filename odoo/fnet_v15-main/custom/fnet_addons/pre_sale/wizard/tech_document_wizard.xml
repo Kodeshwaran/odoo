@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+        <record id="tech_document_wizard_view_form" model="ir.ui.view">
+            <field name="name">Tech Document Wizard Form View</field>
+            <field name="model">tech.document.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="opportunity_id" invisible="1"/>
+                            <field name="version_name"/>
+                            <field name="tech_file" widget="many2many_binary"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="update_document" type="object" string="Update" class="oe_highlight"/>
+                        <button type="object" string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

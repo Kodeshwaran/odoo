@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+
+        <record model="ir.rule" id="saleperson_detail_report_user">
+            <field name="name">Salesperson Dashboard User View</field>
+            <field name="model_id" ref="model_saleperson_detail_report"/>
+            <field name="groups" eval="['|',(4, ref('sales_team.group_sale_salesman_all_leads')),(4, ref('sales_team.group_sale_salesman'))]" />
+            <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        </record>
+        
+        <record model="ir.rule" id="pipeline_payment_detail_user">
+            <field name="name">Pipeline Payment Dashboard User View</field>
+            <field name="model_id" ref="model_pipeline_payment_detail"/>
+            <field name="groups" eval="['|',(4, ref('sales_team.group_sale_salesman_all_leads')),(4, ref('sales_team.group_sale_salesman'))]" />
+            <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        </record>
+        
+        <record model="ir.rule" id="lead_aging_detail_user">
+            <field name="name">Leads Aging Dashboard User View</field>
+            <field name="model_id" ref="model_aging_report_detail"/>
+            <field name="groups" eval="['|',(4, ref('sales_team.group_sale_salesman_all_leads')),(4, ref('sales_team.group_sale_salesman'))]" />
+            <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+        </record>
+        
+        
+        <record model="ir.rule" id="saleperson_detail_report_manager">
+            <field name="name">Salesperson Dashboard Manager View</field>
+            <field name="model_id" ref="model_saleperson_detail_report"/>
+            <field name="groups" eval="['|',(4, ref('base.group_team_managers')),(4, ref('sales_team.group_sale_manager'))]" />
+            <field name="domain_force">[(1 ,'=', 1)]</field>
+        </record>
+        
+        <record model="ir.rule" id="pipeline_payment_detail_manager">
+            <field name="name">Pipeline Payment Dashboard Manager View</field>
+            <field name="model_id" ref="model_pipeline_payment_detail"/>
+            <field name="groups" eval="['|',(4, ref('base.group_team_managers')),(4, ref('sales_team.group_sale_manager'))]" />
+            <field name="domain_force">[(1 ,'=', 1)]</field>
+        </record>
+         
+        <record model="ir.rule" id="lead_aging_detail_manager">
+            <field name="name">Leads Aging Dashboard Manager View</field>
+            <field name="model_id" ref="model_aging_report_detail"/>
+            <field name="groups" eval="['|',(4, ref('base.group_team_managers')),(4, ref('sales_team.group_sale_manager'))]" />
+            <field name="domain_force">[(1 ,'=', 1)]</field>
+        </record> 
+        
+    </data>
+</odoo>

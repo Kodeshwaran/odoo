@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <template id="sale_quote_template_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="mm_onscreen_report.sale_quote_template_report_sale" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
+   <template id="sale_quote_template_report_sale">
+    <t t-call="web.html_container">
+		<t t-call="web.external_layout">
+			<t t-foreach="docs" t-as="o">
+				<t t-if="doc and 'company_id' in doc">
+					<t t-set="company" t-value="doc.company_id"></t>
+				</t>
+				<t t-if="not doc or not 'company_id' in doc">
+					<t t-set="company" t-value="res_company"></t>
+				</t>
+				 
+				<table class="table table-bordered table-inverse" border="1" style="font-family:courier-new;font-size: 10px;padding-left:10px;border:1px solid black !important';">
+					  <tr>
+						<td colspan="3" style="text-align: center;font-weight: bold;font-size: 15px;">QUOTATION</td>
+					  </tr>
+					  <tr>
+						<td width="50%">
+							<div t-field="company.name" t-attf-style="white-space:nowrap;font-size:16px;font-weight:500;"/>
+							<div t-field="company.street" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>                                      
+							<div t-field="company.street2" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>                                      
+							<div style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;">
+								<span t-field="company.city"/> - <span t-field="company.zip"/>
+							</div>
+							<div t-field="company.phone" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>
+							<div t-field="company.email" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>
+							<p style="margin-bottom:0px; padding-top:0px;"><span t-if="company.vat">GST: <span t-field="company.vat"/></span></p>
+						</td>
+						<td colspan="2" width="50%" style="text-align:right;padding-right:20px"><span itemprop="image" t-field="company.logo" t-options='{"widget": "image"}' /></td>
+					  </tr>
+					  <tr>
+						<td rowspan="7" width="50%">
+							<div t-field="o.partner_id.name" t-attf-style="white-space:nowrap;font-size:16px;font-weight:500;"/>
+							<div t-field="o.partner_id.street" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>                                      
+							<div t-field="o.partner_id.street2" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>                                      
+							<div style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;">
+								<span t-field="o.partner_id.city"/> - <span t-field="o.partner_id.zip"/>
+							</div>
+							<div t-field="o.partner_id.phone" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>
+							<div t-field="o.partner_id.email" style="margin-bottom:0px; padding-bottom:0px;white-space:nowrap;"/>
+							<p style="margin-bottom:0px; padding-top:0px;"><span t-if="o.partner_id.vat">GST: <span t-field="o.partner_id.vat"/></span></p>
+						</td>
+					  </tr>
+					  <tr>
+							<td style="font-size: 12px;padding-left:10px;">Quote Number</td>
+							<td style="font-size: 12px;padding-left:10px;"><span t-field="o.name"/></td>
+					  </tr>
+					  <tr>
+							<td style="font-size: 10px;padding-left:10px;">Sales Person</td>
+							<td><span t-field="o.user_id.name"/></td>
+					  </tr>
+					  <tr>
+							<td style="font-size: 10px;padding-left:10px;">Contact No</td>
+							<td><span t-field="o.user_id.partner_id.mobile"/></td>
+					  </tr>
+					  <tr>
+							<td style="font-size: 10px;padding-left:10px;">Email</td>
+							<td><span t-field="o.user_id.partner_id.email"/></td>
+					  </tr>
+					  <tr>
+							<td style="font-size: 10px;padding-left:10px;">Date</td>
+							<td><span t-field="o.date_order" t-field-options='{"format": "dd-MM-y"}'/></td>
+					  </tr>
+					  <tr>
+							<td style="font-size: 10px;padding-left:10px;">Customer Ref</td>
+							<td><span t-field="o.origin"/></td>
+					  </tr>
+				</table>
+				<table class="table table-bordered table-inverse" border="1" style="font-family:courier-new;font-size: 10px;margin-top:-20px;padding-left:10px;border:1px solid silver !important';">
+					<tr>
+						<th style="font-size: 10px;padding-left:10px;text-align:center;">S.No</th>
+						<th style="font-size: 10px;padding-left:10px;text-align:center;">Description</th>
+						<th style="font-size: 10px;padding-left:10px;text-align:center;">Qty</th>
+						<th style="font-size: 10px;padding-left:10px;text-align:center;">Amount</th>
+						<th style="font-size: 10px;padding-left:10px;text-align:center;">Tax</th>
+						<th style="font-size: 10px;padding-left:10px;text-align:center;">Total</th>
+					</tr>
+					<t t-set="counter" t-value="1"/>
+					<tr t-foreach="o.order_line" t-as="doc">
+						<td style="text-align:center;"><t t-esc="counter"/><t t-set="counter" t-value="counter+1"/></td>
+						<td style="font-size: 10px;padding-left:10px;"><span t-field="doc.name"/></td>
+						<td style="font-size: 10px;padding-left:10px;text-align:right;"><span t-field="doc.product_uom_qty"/></td>
+						<td style="font-size: 10px;padding-left:10px;text-align:right;"><span t-field="doc.price_unit"/></td>
+						<td style="font-size: 10px;padding-left:10px;"><span t-field="doc.tax_id.name"/></td>
+						<td style="font-size: 10px;padding-left:10px;text-align:right;"><span t-field="doc.price_total"/></td>
+					</tr>
+					<tr>
+						<td style="text-align:center;font-weight: bold;font-size: 12px;" rowspan="2" colspan="4"></td>
+						<td style="text-align:right;font-weight: bold;font-size: 12px;">Sub Total</td>
+						<td style="text-align:right;font-weight: bold;font-size: 12px;" ><span t-field="o.amount_untaxed"/></td>
+					</tr>
+					<tr>
+						<td style="text-align:right;font-weight: bold;font-size: 15px;">Grand Total</td>
+						<td style="text-align:right;font-weight: bold;font-size: 15px;"><span t-field="o.amount_total"/></td>
+					</tr>
+				</table>
+				 <p t-if="o.note">
+					<strong>Terms &amp; Conditions:</strong><br/>
+					<span t-field="o.note"/>
+				 </p>
+				 <table class="table table-bordered table-inverse" border="1" style="font-family:courier-new;font-size: 10px;padding-left:10px;border:1px solid silver !important';">
+					 <tr>
+						 <td  width="40%" style="text-align:left;font-weight: bold;font-size: 13px;">GST :- <span t-field="o.amount_tax"/></td>
+						 <td  width="60%" style="text-align:right;font-weight: bold;font-size: 13px;" rowspan="4" colspan="4">
+						 For <span style="text-align:right;font-weight: bold;font-size: 14px;" t-field="o.company_id.name"/><br/><br/><br/><br/><br/>
+						 <span style="text-align:right;font-weight: bold;font-size: 14px;" t-field="o.user_id.name"/>
+						 </td>
+					 </tr>
+					 <tr>
+						 <td style="text-align:left;font-weight: bold;font-size: 13px;">Delivery  :-<span t-field="o.commitment_date"/></td>
+					 </tr>
+					 <tr>
+						 <td style="text-align:left;font-weight: bold;font-size: 13px;">Payment  :-<span t-field="o.payment_term_id.name"/></td>
+					 </tr>
+					 <tr>
+						 <td style="text-align:left;font-weight: bold;font-size: 13px;">Validity  :-</td>
+					 </tr>
+				 </table>
+				 
+			</t>
+		</t>
+    </t>
+    </template>
+</data>
+</odoo>

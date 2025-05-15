@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+     <record model="ir.cron" id="cron_payment_info">
+            <field name="name">Product Delivery Remainder</field>
+            <field eval="True" name="active"/>            
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'stock.picking'"/>
+            <field name="function" eval="'product_delivery_cron'"/>
+      </record>
+    
+    </data>
+
+</odoo>

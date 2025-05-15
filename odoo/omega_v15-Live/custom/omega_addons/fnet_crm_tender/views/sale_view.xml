@@ -1,0 +1,350 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+        <record id="sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="after">
+                    <field name="is_expiry_warning" invisible="1"/>
+                    <div style="width:800px;" class="alert alert-info text-center o_form_header"
+                        attrs="{'invisible': [('is_expiry_warning', '=', False)]}"
+                        role="alert">
+                        <a class="close" data-dismiss="alert" href="#">x</a>
+                        <div>
+                        <strong>Warning!</strong>
+                        </div>
+                        <div>
+                            Expiry date of the customer is in the past. Please review and configure it.
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//page[2]" position="after">
+					<page string="Amendmend Notes">
+						<label for="amendment_notes" string="Amendmend Notes"/>
+							<div>
+								<field name="amendment_notes" attrs="{'required':[('state','in',['to approve','amendmend'])]}"/>	
+							</div>
+					</page>
+                </xpath>
+                <xpath expr="//tree/control" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="tender_id"/>
+                    <field name="enquiry_id"/>
+                </xpath>
+                
+                <field name="payment_term_id" position="attributes">
+					<attribute name="required">True</attribute>
+                </field>
+<!--
+                <field name="validity_date" position="attributes">
+					<attribute name="required">True</attribute>
+                </field>
+-->
+<!--                <field name="client_order_ref" position="attributes">-->
+<!--					<attribute name="required">True</attribute>-->
+<!--                </field>-->
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sale,done"/>
+                </xpath>
+                
+                
+                <xpath expr="//button[@name='action_quotation_send'][@states='sent,sale']" position="replace">
+                    <button name="action_quotation_send" string="Send by Email" type="object" states="sale"/>
+                </xpath>
+                
+                
+                <xpath expr="//button[@name='action_confirm']" position="before">
+                    <button name="action_confirm_quote" states="draft" type="object" string="Confirm Quote"/>
+                    <button name="approve_quote" states="to approve" type="object" string="Approve" class="oe_highlight" groups="sales_team.group_sale_manager"/>
+                    <button name="quote_reject" states="to approve" type="object" string="Reject" class="oe_highlight" groups="sales_team.group_sale_manager"/>
+                    <button name="return_draft" states="amendmend" type="object" string="Return to Draft" class="oe_highlight"/>
+                </xpath>
+                
+                
+<!--                <xpath expr="//button[@name='print_quotation'][@states='sent,sale']" position="replace">-->
+<!--                    <button name="print_quotation" string="Print" type="object" states="sale"/>-->
+<!--                </xpath>-->
+
+              
+                <xpath expr="//button[@id='action_confirm']" position="replace">
+                    <button name="action_confirm" states="won,hold" string="Confirm Sale" type="object" context="{'show_sale': True}"/>
+                </xpath>                
+                
+                
+                <xpath expr="//button[@name='action_cancel']" position="replace">
+                    <button name="action_cancel" states="won,hold" type="object" string="Cancel"/>
+                </xpath>
+                
+                
+                <xpath expr="//button[@name='action_draft']" position="replace">
+                    <button name="action_draft" states="cancel,hold,drop,lost" type="object" string="Set to Draft"/>
+                </xpath>
+                
+                
+                <xpath expr="//button[last()]" position="after">
+                    <button name="action_quote_won"  states="sent" string="Quotation Won"  type="object"/>
+                    <button name="action_quote_drop" states="sent" string="Quotation Drop" type="object"/>
+                    <button name="action_quote_lost" states="sent" string="Quotation Lost" type="object"/>
+                    <button name="action_quote_hold" states="sent" string="Quotation Hold" type="object"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit' ]" position="before">
+					<field name="purchase_unit_price" groups="sales_team.group_sale_manager"/>
+					<field name="purchase_total_price" groups="sales_team.group_sale_manager" invisible="True"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree//field[@name='name' ]" position="attributes">
+                    <attribute name="widget">Html</attribute>
+                    <attribute name="options">{'plugins': ['fullscreen', 'paste', 'media']}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form//field[@name='tax_id' ]" position="before">
+					<field name="purchase_unit_price" groups="sales_team.group_sale_manager"/>
+					<field name="purchase_total_price" groups="sales_team.group_sale_manager" invisible="True"/>
+                </xpath>         
+                <xpath expr="//field[@name='order_line']" position="attributes">
+					<attribute name="attrs">{'readonly':[('state','in',['sent','done','cancel'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amendment_notes']" position="after">
+                    <label for="tax_notes"/>
+                    <field name="tax_notes"/>
+                    <label for="covering_notes"/>
+                    <field name="covering_notes"/>
+                </xpath>
+                <xpath expr="//page[@name='other_information']" position="before">
+                    <page string="Notes" name="notes">
+                        <label for="quotation_notes" string="Quotation Notes"/>
+                            <div>
+                                <field name="quotation_notes"/>
+                            </div>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='validity_date']" position="after">
+                    <field name="confirmation_date"/>
+                    <field name="validity"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="omega_trn_no"/>
+                    <field name="customer_trn_no"/>
+                    <field name="delivery_term"/>
+                    <field name="bank_name"/>
+                    <field name="po_number"/>
+                    <field name="po_date"/>
+                    <field name="shipment_mode"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before">
+                    <field name="item_no"/>
+                </xpath>
+                <!--<xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+                    <field name="note"/>
+                </xpath>-->
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="exchange_rate"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="editable"/>
+                </xpath>
+                <!--<xpath expr="//field[@name='order_line']/form/label[@for='customer_lead']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/div[@name='lead']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>-->
+                <!--<xpath expr="//field[@name='order_line']/form/div[@name='invoice_lines']" position="before">
+                    <label for="note" string="Notes"/>
+                    <field name="note" widget="html"/>
+                </xpath>-->
+                <xpath expr="//group[@name='order_details']/div[1]/label[@for='date_order']" position="attributes">
+                    <attribute name="string">Date</attribute>
+                </xpath>
+                <xpath expr="//group[@name='order_details']/div[2]/label[@for='date_order']" position="attributes">
+                    <attribute name="string">Date</attribute>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]/h1" position="inside">
+                    <field name="quotation_name" attrs="{'invisible':[('state', 'not in', ['draft','sent'])]}" readonly="1"/>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]/h1/field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('state', 'not in', ['sale', 'done'])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='product_id']" position="before">
+                    <field name="item_no"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_quotation_tree_with_onboarding_view_inherit" model="ir.ui.view">
+            <field name="name">sale.quote.tree.onboarding.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <field name="name" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="name" position="after">
+                    <field name="quotation_name" string="Quotation Number"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_order_tree_view_inherit" model="ir.ui.view">
+            <field name="name">sale.order.tree.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="invoice_status" position="after">
+                    <field name="state"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="sale.action_quotations" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_id" ref="sale.view_quotation_tree"/>
+            <field name="view_mode">tree,kanban,form,calendar,pivot,graph</field>
+            <field name="context">{}</field>
+            <field name="domain">[('state','not in',('sale','done'))]</field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Create a Quotation, the first step of a new sale.
+              </p><p>
+                Your next actions should flow efficiently: confirm the Quotation 
+                to a Sale Order, then create the Invoice and collect the Payment.
+              </p><p>
+                Note that once a Quotation becomes a Sale Order, it will be moved 
+                from the Quotations list to the Sales Order list.
+              </p>
+            </field>
+        </record>
+        
+        <record id="sale_quote_tree_inherit" model="ir.ui.view">
+            <field name="name">sale.quote.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                
+                <field name="state" position="replace">
+                    <field name="state"/>
+                </field>
+                <field name="commitment_date" position="after">
+                                            <field name="date_order"/>
+
+                </field>
+                
+<!--                <xpath expr="//tree[@decoration-bf='message_needaction==True']" position="replace">-->
+<!--                    <tree string="Quotation" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'" colors="red:state=='lost'; coral:state=='drop'; blue:state=='hold'; green:state=='won'">-->
+<!--                        <field name="message_needaction" invisible="1"/>-->
+<!--                        <field name="name" string="Quotation Number"/>-->
+<!--                        <field name="date_order"/>-->
+<!--                        <field name="partner_id"/>-->
+<!--                        <field name="user_id"/>-->
+<!--                        <field name="amount_total" sum="Total Tax Included" widget="monetary"/>-->
+<!--                        <field name="state"/>-->
+<!--                    </tree>-->
+<!--                </xpath>-->
+
+            </field>
+        </record>
+<!--        <record id="view_sales_order_filter" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.list.select</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="Search Sales Order">-->
+
+<!--                    <field name="name" string="Sales Order" filter_domain="['|',('name','ilike',self),('client_order_ref','ilike',self)]"/>-->
+<!--                    <field name="partner_id" operator="child_of"/>-->
+<!--                    <field name="user_id"/>-->
+<!--                    <field name="team_id" string="Sales Team"/>-->
+<!--&lt;!&ndash;                    <field name="project_id"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <field name="product_id"/>&ndash;&gt;-->
+<!--                    <filter string="My Orders" domain="[('user_id','=',uid)]" name="my_sale_orders_filter"/>-->
+<!--                    <separator/>-->
+
+<!--                    <filter string="All Quotes"   name="all"  domain="[]"  help="Sales Order that haven't yet been confirmed"/>-->
+<!--                    <filter string="Gain Quotes"  name="won"  domain="[('state','in',('won','hold'))]" />-->
+<!--                    <filter string="Loss Quotes"  name="drop" domain="[('state','in',('drop','lost','cancel'))]"/>-->
+<!--                    <separator/>-->
+
+<!--                    <filter string="Sales" name="sales" domain="[('state','in',('sale','done'))]"/>-->
+<!--                    <separator/>-->
+
+<!--                    <filter string="To Invoice" domain="[('invoice_status','=','to invoice')]"/>-->
+<!--                    <filter string="Upselling" domain="[('invoice_status','=','upselling')]"/>-->
+
+<!--                    <separator/>-->
+<!--                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>-->
+
+<!--                    <group expand="0" string="Group By">-->
+<!--                        <filter string="Salesperson" domain="[]" context="{'group_by':'user_id'}"/>-->
+<!--                        <filter name="customer" string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>-->
+<!--                        <filter string="Order Month" domain="[]" context="{'group_by':'date_order'}"/>-->
+<!--                        <filter string="Status" context="{'group_by':'state'}"/>-->
+<!--                    </group>-->
+
+<!--               </search>-->
+<!--            </field>-->
+<!--        </record>-->
+<!--        -->
+        
+        
+        
+        <record id="view_approve_limit_tree" model="ir.ui.view">
+            <field name="name">approve.limit.tree</field>
+            <field name="model">approve.limit</field>
+            <field name="priority">4</field>
+            <field name="arch" type="xml">
+                <tree string="Limit Percentage">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_approve_limit_form" model="ir.ui.view">
+            <field name="name">approve.limit.form</field>
+            <field name="model">approve.limit</field>
+            <field name="arch" type="xml">
+                <form string="Limit of Approve">
+					
+					<group>
+						<group>
+							<field name="name"/>
+							<field name="values"/>
+						</group>
+						<group>
+							<field name="active"/>
+						</group>
+					</group>
+					
+				</form>
+			</field>
+		</record>			
+        <record id="manager_approve_limit" model="ir.actions.act_window">
+            <field name="name">Limit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">approve.limit</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_approve_limit_tree"/>
+            
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create for set the approve limit sale order.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem id="menu_approve" parent="sales_team.menu_sale_config" name="Approve Limit" sequence="1" action="manager_approve_limit" groups="sales_team.group_sale_manager"/>
+
+        <record model="ir.ui.view" id="sale_order_view_search_inherit_quotation_inherited">
+            <field name="name">view.sale.quotation.search.view.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="quotation_name" string="Quotation" filter_domain="[('quotation_name', 'ilike', self)]"/>
+                </xpath>
+            </field>
+         </record>
+    </data>
+</openerp>  

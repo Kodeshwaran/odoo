@@ -1,0 +1,174 @@
+<odoo>
+    <data>
+
+        <template id="survey_fill_form_start_inherit" inherit_id="survey.survey_fill_form_start">
+            <xpath expr="//div[hasclass('wrap')]/div[hasclass('mb32')]" position="before">
+                <div class="container m-0 p-0">
+                    <t t-set="company" t-value="doc.company_id if doc and 'company_id' in doc else res_company"/>
+                    <t t-if="company.logo">
+                        <div>
+                            <img style="margin: 0; padding: 0; position: absolute; top: 50px; right: 20px; width: 130px;" t-attf-src="#{image_data_uri(company.logo)}"
+                             alt="logo"/>
+                            <br/>
+                            <br/>
+                        </div>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="survey_fill_form_done_inherited" inherit_id="survey.survey_fill_form_done">
+            <xpath expr="//div[hasclass('wrap')]" position="replace">
+                <div style="padding: 15px; font-family: Verdana, sans-serif;">
+                    <t t-set="company" t-value="doc.company_id if doc and 'company_id' in doc else res_company"/>
+                    <div style="margin-top: 5px; margin-left: 5px;">
+                        <t t-if="company.logo">
+                            <img t-attf-src="#{image_data_uri(company.logo)}"
+                             alt="logo"/>
+                        </t>
+                    </div>
+                    <br/>
+                    <div>
+                        <h1 style="margin-top: 0; padding-top: 0; text-align:center;">Ransomware Self Assessment Report</h1>
+                    </div>
+                    <br/>
+                    <div>
+                        <t t-foreach="answer.user_input_line_ids" t-as="rec">
+                            <t t-if="rec.question_id.is_company == True">
+                                <span>
+                                    <strong>
+                                        <p>
+                                            Company's Name:
+                                            <t t-esc="rec.value_char_box"/>
+                                        </p>
+                                    </strong>
+                                </span>
+                            </t>
+                        </t>
+                        <t t-foreach="answer.user_input_line_ids" t-as="rec">
+                            <t t-if="rec.question_id.is_name == True">
+                                <span>
+                                    <strong>
+                                        <p>
+                                            Kind Attention:
+                                            <t t-esc="rec.value_char_box"/>
+                                        </p>
+                                    </strong>
+                                </span>
+                                <span>
+                                    <p>
+                                        Thank you for participating in the survey. Based on your responses, a detailed report has been sent to your email.
+                                    </p>
+                                </span>
+                            </t>
+                        </t>
+<!--                        <table style="border:2px solid black; padding:10px; width:100%;">-->
+<!--                            <tr>-->
+<!--                                <th style="border: 2px solid black; padding: 10px;">S.No.</th>-->
+<!--                                <th style="border: 2px solid black; padding: 10px;">Questions</th>-->
+<!--                                <th style="border: 2px solid black; padding: 10px;">Answer</th>-->
+<!--                                <th style="border: 2px solid black; padding: 10px;">Score</th>-->
+<!--                                <th style="border: 2px solid black; padding: 10px;">Findings</th>-->
+<!--                                <th style="border: 2px solid black; padding: 10px;">Explanation</th>-->
+<!--                                <th style="border: 2px solid black; padding: 10px;">Recommendations</th>-->
+<!--                            </tr>-->
+<!--                            <t t-set="counter" t-value="1"/>-->
+<!--                            <t t-foreach="answer.user_input_line_ids.filtered(lambda x: x.question_id.question_type == 'simple_choice')" t-as="rec">-->
+<!--                                <tr>-->
+<!--                                    <td style="border: 2px solid black; padding: 10px;"><t t-esc="counter"/> </td>-->
+<!--                                    <td style="border: 2px solid black; padding: 10px;">-->
+<!--                                        <t t-esc="rec.suggested_answer_id.question_id.title"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 2px solid black; padding: 10px;">-->
+<!--                                        <t t-esc="rec.suggested_answer_id.value"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 2px solid black; padding: 10px;">-->
+<!--                                        <t t-esc="rec.suggested_answer_id.answer_score"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 2px solid black; padding: 10px;">-->
+<!--                                        <span t-field="rec.suggested_answer_id.findings"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 2px solid black; padding: 10px;">-->
+<!--                                        <span t-field="rec.suggested_answer_id.explanation"/>-->
+<!--                                    </td>-->
+<!--                                    <td style="border: 2px solid black; padding: 10px;">-->
+<!--                                        <span t-field="rec.suggested_answer_id.recommendations"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <t t-set="counter" t-value="counter + 1"/>-->
+<!--                            </t>-->
+<!--                        </table>-->
+                    </div>
+<!--                    <br/>-->
+<!--                    <div>-->
+<!--                        <span>-->
+<!--                            <strong>-->
+<!--                                <h3>-->
+<!--                                    Total:-->
+<!--                                    <t t-esc="sum(line.suggested_answer_id.answer_score for line in answer.user_input_line_ids.filtered(lambda x: x.question_id.question_type == 'simple_choice'))"/>-->
+<!--                                </h3>-->
+<!--                            </strong>-->
+<!--                        </span>-->
+<!--                        <span>-->
+<!--                            <p>-->
+<!--                                This is a sample report. For detailed audit and recommendations contact Futurenet Technologies.-->
+<!--                            </p>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <t t-foreach="answer.user_input_line_ids" t-as="rec">-->
+<!--                            <t t-if="rec.question_id.is_important == True and rec.suggested_answer_id.value == 'No'">-->
+<!--                                <span>-->
+<!--                                    <strong style="color: red;">-->
+<!--                                        <span t-field="rec.question_id.important_msg"/>-->
+<!--                                    </strong>-->
+<!--                                    <br/>-->
+<!--                                </span>-->
+<!--                            </t>-->
+<!--                        </t>-->
+<!--                        <br/>-->
+<!--                        <table style="width: 100%;">-->
+<!--                            <td style="text-align: center; padding: 10px;">-->
+<!--                                <t t-if="survey.first_score"/>-->
+<!--                                <strong>-->
+<!--                                    <span t-field="survey.first_score"/>-->
+<!--                                </strong>-->
+<!--                            </td>-->
+<!--                            <td style="text-align: center; padding: 10px;">-->
+<!--                                <t t-if="survey.second_score"/>-->
+<!--                                <strong>-->
+<!--                                    <span t-field="survey.second_score"/>-->
+<!--                                </strong>-->
+<!--                            </td>-->
+<!--                            <td style="text-align: center; padding: 10px;">-->
+<!--                                <t t-if="survey.third_score"/>-->
+<!--                                <strong>-->
+<!--                                    <span t-field="survey.third_score"/>-->
+<!--                                </strong>-->
+<!--                            </td>-->
+<!--                        </table>-->
+<!--                    </div>-->
+                    <div style="border-top: 1px solid black;">
+                        <t t-if="survey.contact_details">
+                            <br/>
+                            <strong>
+                                Contact Details:
+                            </strong>
+                            <br/>
+                            <br/>
+                            <span t-field="survey.contact_details"/>
+                        </t>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+        <template id="survey_fill_form_done_inherited_doc">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="survey_fill_form_done_inherited"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

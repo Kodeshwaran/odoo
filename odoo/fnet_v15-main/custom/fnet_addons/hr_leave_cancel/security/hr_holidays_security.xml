@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="property_rule_holidays_cancel_employee" model="ir.rule">
+            <field name="name">Employee Holidays Cancel</field>
+            <field name="model_id" ref="model_hr_holidays_cancel"/>
+            <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+        </record>
+
+        <record id="hr_leave_rule_responsible_cancel" model="ir.rule">
+            <field name="name">Time Off Cancel Responsible create/write</field>
+            <field name="model_id" ref="model_hr_holidays_cancel"/>
+            <field name="domain_force">[
+                '|',
+                    '&amp;',
+                        ('employee_id.user_id', '=', user.id),
+                        ('state', '!=', 'validate'),
+                    ('employee_id.parent_id.user_id', '=', user.id),
+            ]</field>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(4, ref('hr_holidays.group_hr_holidays_responsible'))]"/>
+        </record>
+
+    </data>
+
+</odoo>

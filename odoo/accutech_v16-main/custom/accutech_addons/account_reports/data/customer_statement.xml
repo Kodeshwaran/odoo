@@ -1,0 +1,301 @@
+<odoo>
+<!--    <record id="custom_paperformat_customer_statement_report" model="report.paperformat">-->
+<!--        <field name="name">A4 Purchase report DOES</field>-->
+<!--        <field name="format">A4</field>-->
+<!--        <field name="page_height">0</field>-->
+<!--        <field name="page_width">0</field>-->
+<!--        <field name="orientation">Portrait</field>-->
+<!--        <field name="margin_top">55</field>-->
+<!--        <field name="margin_bottom">3</field>-->
+<!--        <field name="margin_left">3</field>-->
+<!--        <field name="margin_right">3</field>-->
+<!--        <field name="header_line" eval="False"/>-->
+<!--        <field name="header_spacing">0</field>-->
+<!--        <field name="dpi">90</field>-->
+<!--    </record>-->
+
+<!--    <record id="action_customer_report" model="ir.actions.report">-->
+<!--        <field name="name">Customer Statement</field>-->
+<!--&lt;!&ndash;        <field name="model">account.partner.ledger.report.handler</field>&ndash;&gt;-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">account_reports.report_customer_statement</field>-->
+<!--        <field name="report_file">account_reports.report_customer_statement</field>-->
+<!--        <field name="print_report_name">'Customer Statement- %s' % (object.name)</field>-->
+<!--&lt;!&ndash;        <field name="binding_model_id" ref="account_reports.model_account_partner_ledger_report_handler"/>&ndash;&gt;-->
+<!--        <field name="binding_type">report</field>-->
+<!--        <field name="paperformat_id" ref="account_reports.custom_paperformat_customer_statement_report"/>-->
+<!--    </record>-->
+
+
+    <template id="custom_customer_statement_header">
+        <t t-if="doc and 'company_id' in doc">
+            <t t-set="company" t-value="doc.company_id"/>
+        </t>
+        <t t-if="not doc or not 'company_id' in doc">
+            <t t-set="company" t-value="res_company"/>
+        </t>
+        <div class="header ">
+            <table style="width: 100%; font-size: 15px; border-collapse: collapse; padding-bottom: 20px;">
+                <tr style="vertical-align: top;">
+                    <td style="text-align: left; width: 50%;">
+                        <h2 style="font-size: 25px; margin: 0; font-weight: bold; font-family: Baskervville SC, serif; font-style: normal;">
+                            <span t-esc="doc.company_id.name"/>
+                        </h2>
+                        <t t-if="doc.company_id.street">
+                            <span t-field="doc.company_id.street"/>,
+                        </t>
+                        <t t-if="doc.company_id.street2">
+                            <span t-field="doc.company_id.street2"/>,
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.city">
+                            <span t-field="doc.company_id.city"/>,
+                        </t>
+                        <t t-if="doc.company_id.state_id">
+                            <span t-field="doc.company_id.state_id.name"/>,
+                        </t>
+                        <t t-if="doc.company_id.country_id">
+                            <span t-field="doc.company_id.country_id.name"/>
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.phone">
+                            Phone:
+                            <span t-field="doc.company_id.phone"/>
+                        </t>
+                        <br/>
+                        <t t-if="doc.company_id.email">
+                            Email:
+                            <span t-field="doc.company_id.email"/>
+                        </t>
+                        <br/>
+                    </td>
+                    <td style="max-width: 50%; text-align: right; padding: 5px;">
+                        <t t-if="doc.company_id.logo">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="max-height: 150px; max-width:150px;"
+                                 alt="Logo"/>
+                        </t>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <template id="report_customer_statement_report_main">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+
+                <t t-call="account_reports.custom_customer_statement_header"/>
+                 <style>
+
+        </style>
+                            <!-- Main content section -->
+             <div style="padding-bottom: 50px;">
+                <table>
+                        <tr style="border-top: 2px solid #4CA5E7;">
+                        </tr>
+                    </table>
+                    <table style="width: 100%;">
+                        <tr style="border-top: 2px solid #4CA5E7;">
+                            <td style="padding-top: 10px; padding-bottom: 10px; border-top: 2px solid #4CA5E7;">
+                                <strong style="border-left: 5px solid #FF0000; padding-left:6px;">CUSTOMER STATEMENT</strong>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="div" style="width:100%; border-collapse: collapse; ">
+                        <tr style="font-size:10px; font-weight: bold; padding-right:30px; background:#87CEFA; border-top: 2px solid #4CA5E7; border-bottom: 2px solid #4CA5E7; ">
+                            <td style="width:10%; padding-top:10px; padding-bottom:10px; text-align:left; ">Sl No.</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:10px; text-align:left; ">Type</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:10px; text-align:left; ">Doc Num</td>
+                            <td style="width:20%; padding-top:10px; padding-bottom:10px; text-align:left; ">Customer Refno</td>
+                            <td style="width:15%; padding-top:10px; padding-bottom:10px; text-align:left; ">Posting Date</td>
+                            <td style="width:15%; padding-top:10px; padding-bottom:10px; text-align:left;  ">Due Date</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:10px; text-align:left; ">Amount</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:10px; text-align:right;">Balance</td>
+                        </tr>
+
+
+                    </table>
+                    <table class="div" style="width:80%; border-collapse: collapse;">
+                    <t t-set="counter" t-value="1"/>
+                         <tr style="font-size:15px; width:100%;  ">
+
+                            <td colspan="4" style="padding:10px;">
+                                <strong >Customer Code: <span t-field="doc.name"/></strong>
+
+                            </td>
+                            <td colspan="4" style="padding:10px; ">
+
+                                <strong>Customer Name : <span t-field="doc.company_id"/></strong>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="div" style="width:100%; border-collapse: collapse;">
+
+                         <tr  style="font-size:10px; font-weight: none; padding-right:30px;  border-top: 1px solid #4CA5E7;">
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:left;">1</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:left; ">INV</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:left;">4550019823</td>
+                            <td style="width:20%; padding-top:10px; padding-bottom:27px; text-align:left;"> al masood PO_AMTRD_PO41854</td>
+                            <td style="width:15%; padding-top:10px; padding-bottom:27px; text-align:left;">24/10/2024</td>
+                            <td style="width:15%; padding-top:10px; padding-bottom:27px; text-align:left;">23/12/2024</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:left; ">AED 840.00</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:right; ">AED840.00</td>
+                        </tr>
+                        <tr style="font-size:10px; font-weight: none; padding-bottom:20px;">
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:left;">2</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:left;">INV</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:left;">4550019823</td>
+                            <td style="width:20%; padding-top:10px; padding-bottom:27px; text-align:left;"> al masood PO_AMTRD_PO41854</td>
+                            <td style="width:15%; padding-top:10px; padding-bottom:27px; text-align:left;">24/10/2024</td>
+                            <td style="width:15%; padding-top:10px; padding-bottom:27px; text-align:left; ">23/12/2024</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:left; ">AED 840.00</td>
+                            <td style="width:10%; padding-top:10px; padding-bottom:27px; text-align:right; ">AED840.00
+                            </td>
+                        </tr>
+             </table>
+
+
+                 <table class="div" style="width:100%; border-collapse: collapse;">
+                        <!-- Example data rows commented out for future use -->
+                        <tr style="font-size:12px; width:100%;   border-top: 1px solid #4CA5E7;">
+                            <td style="font-size: 12px; font-weight: bold; padding-top:10px; padding-bottom:27px; ">Total</td>
+                            <td colspan="7" style="text-align:right;  font-weight: bold; padding-top:10px; padding-bottom:27px;">
+                                <t t-if="doc.name">
+                                    <span t-field="doc.name"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+
+                     <table class="div" style="width:100%; border-collapse: collapse;">
+                        <tr style="font-size:10px;  font-weight: none; border-top: 1px solid #4CA5E7; border-bottom: 1px solid #4CA5E7;">
+                            <td style="width:10%; padding-top:10px;">Aging</td>
+                            <td style="width:20%; padding-top:10px;">90+ Days</td>
+                            <td style="width:20%; padding-top:10px;">61 to 90 days</td>
+                            <td style="width:20%; padding-top:10px;">30 to 60 days</td>
+                            <td style="width:10%; padding-top:10px;">0 to 30 Days</td>
+                            <td style="width:10%; padding-top:10px; text-align:right; ">Total</td>
+                        </tr>
+
+                         <tr style="font-size:10px;  font-weight: bold;" >
+                            <td style="width:10%; padding-top:10px;">Total(AED)</td>
+                            <td style="width:20%; padding-top:10px;">840.00</td>
+                            <td style="width:20%; padding-top:10px;">61 to 90 days days</td>
+                            <td style="width:20%; padding-top:10px;">30 to 60 days days</td>
+                            <td style="width:10%; padding-top:10px;">1,491.00</td>
+                            <td style="width:10%; padding-top:10px;  text-align:right;">AED 2,331.00</td>
+                        </tr>
+                        <tr style="font-size:10px;  font-weight: bold; ">
+                            <td style="width:10%; padding-top:10px;">Total(EUR)</td>
+                            <td style="width:20%; padding-top:10px;">840.00</td>
+                            <td style="width:20%; padding-top:10px; ">61 to 90 days days</td>
+                            <td style="width:20%; padding-top:10px;">30 to 60 days days</td>
+                            <td style="width:10%; padding-top:10px;">1,491.00</td>
+                            <td style="width:10%; padding-top:10px;  text-align:right;">AED 2,331.00</td>
+
+                        </tr>
+                        <tr style="font-size:10px;  font-weight: bold; ">
+                             <td style="width:10%; padding-top:10px;">Total(USD)</td>
+                            <td style="width:20%; padding-top:10px;">840.00</td>
+                            <td style="width:20%; padding-top:10px;">61 to 90 days days</td>
+                            <td style="width:20%; padding-top:10px;">30 to 60 days days</td>
+                            <td style="width:10%; padding-top:10px;">1,491.00</td>
+                            <td style="width:10%; padding-top:10px;  text-align:right; ">AED 2,331.00</td>
+                        </tr>
+                     </table>
+                   <div class="footer" style="margin-top:100px;" >
+                 <p style="font-size:13px; width:70%; border-bottom: 1px solid #4CA5E7;"> <span style="font-size:13px; font-weight:bold;">Note:    </span> Kindly process the above payments for various currency as below mention bank Details.</p>
+
+                   </div>
+                <style>
+    div.mycontainer {
+        width: 90%;
+        display: flex; /* Align child divs in a row */
+        justify-content: space-between; /* Space between the divs */
+    } div.mycontainer table {
+        width: 30%;
+       float:left;
+    }
+
+
+</style>
+
+<div class="mycontainer">
+
+    <div>
+        <table style="text-align:left; border-collapse: collapse;">
+            <tr style="font-size:10px; font-weight: bold;">
+                <th style="padding-top:0px; text-align:left; border-bottom: 1px solid #4CA5E7;">
+                    Bank Details
+                </th>
+            </tr>
+            <tr style="font-size:10px; font-weight: none;">
+                <td style="padding-top:10px; color:grey;">Bank Name:</td>
+                <td style="padding-top:10px;">Emirates NBD</td>
+            </tr>
+
+            <tr style="font-size:10px; text-align:left;">
+                <td style="padding-top:10px; color:grey;">Account Name:</td>
+                <td style="padding-top:10px;">Abdulla Bin Hamid trading LLC</td>
+            </tr>
+            <tr style="font-size:10px; text-align:left;">
+                <td style="width:10%; padding-top:10px; color:grey;">Branch:</td>
+                <td style="width:20%; padding-top:10px;">Union Square branch</td>
+            </tr>
+            <tr style="font-size:10px; text-align:left;">
+                <td style="padding-top:10px; color:grey;">Swift Code:</td>
+                <td style="padding-top:10px;">Abdulla Bin Hamid trading LLC</td>
+            </tr>
+        </table>
+
+        <table style="border-collapse: collapse; padding-left:20px;">
+            <tr style="font-size:10px; font-weight: bold;">
+                <th style="padding-top:0px; text-align:left; border-bottom: 1px solid #4CA5E7;">
+                    Account No's.:
+                </th>
+            </tr>
+            <tr style="font-size:10px; font-weight: none;">
+                <td style="width:5%; padding-top:10px; color:grey;">AED:</td>
+                <td style="width:20%; padding-top:10px;">102356454544</td>
+            </tr>
+
+            <tr style="font-size:10px;">
+                <td style="width:5%; padding-top:10px; color:grey;">IBAN(AED):</td>
+                <td style="width:20%; padding-top:10px;">1044234222333</td>
+            </tr>
+        </table>
+
+        <table style="text-align:left; border-collapse: collapse;padding-left:20px; ">
+            <tr style="font-size:10px; font-weight: bold; visibility:hidden;">
+                <th>
+                    the content
+                </th>
+            </tr>
+            <tr style="font-size:10px; font-weight: none;">
+                <td style="width:5%; padding-top:10px; color:grey;">IBAN(AED):</td>
+                <td style="width:20%; padding-top:10px;">AE829294758392003</td>
+            </tr>
+            <tr style="font-size:10px; text-align:left;">
+                <td style="width:5%; padding-top:10px; color:grey;">IBAN(EURO):</td>
+                <td style="width:20%; padding-top:10px;">AE10442DDDD34222333</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+             </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_customer_statement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="account_reports.report_customer_statement_report_main"/>
+            </t>
+        </t>
+    </template>
+</odoo>

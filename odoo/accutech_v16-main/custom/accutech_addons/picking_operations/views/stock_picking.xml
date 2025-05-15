@@ -1,0 +1,38 @@
+<odoo>
+    <record id="view_picking_tree_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.tree.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="picking_status"/>
+<!--                <field name="is_downloaded" invisible="1"/>-->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div/button[@name='action_picking_move_tree']" position="before">
+<!--                <div class="oe_button_box" name="button_box">-->
+                    <button name="action_open_quality_check" type="object" class="oe_stat_button" icon="fa-check-circle">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_text">QC</span>
+                        </div>
+                    </button>
+<!--                </div>-->
+            </xpath>
+
+<!--            <xpath expr="//header" position="inside">-->
+<!--                <button string="Quality Check" type="object" name="action_open_quality_check" class="oe_highlight" />-->
+<!--                <button name="update_downloaded_status" string="Stock Picking Report" type="object" class="oe_highlight"/>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+
+
+</odoo>

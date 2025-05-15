@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+
+        <record id="employee_budget_view_form" model="ir.ui.view">
+            <field name="name">Employee Budget Form View</field>
+            <field name="model">employee.budget</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="compute_employee_line" type="object" string="Compute Budget" class="oe_highlight" states="draft"/>
+                        <button name="reset_to_draft" type="object" string="Reset to Draft" states="budget_computed"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,budget_computed"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button class="oe_stat_button" name="view_employee_budget" icon="fa-book" type="object">Budget</button>
+                        </div>
+                        <h1>
+                            <div class="oe_title">
+                                <field name="name" placeholder="description"/>
+                            </div>
+                        </h1>
+                        <group col="4">
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="employee_ids" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_budget_view_tree" model="ir.ui.view">
+            <field name="name">Employee Budget Tree View</field>
+            <field name="model">employee.budget</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_employee_budget_window">
+            <field name="name">Employee Budget</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.budget</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Employee Budget Master" id="employee_budget_master_menu"
+                  parent="hr.menu_human_resources_configuration"
+                  action="action_employee_budget_window" sequence="2"/>
+
+    </data>
+</odoo>

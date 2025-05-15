@@ -1,0 +1,15 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="ir_cron_sale_order_delivery_alert" model="ir.cron">
+            <field name="name">Sale Delivery Alert</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.check_delivery_expiry()</field>
+            <field name="interval_number">7</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+</odoo>

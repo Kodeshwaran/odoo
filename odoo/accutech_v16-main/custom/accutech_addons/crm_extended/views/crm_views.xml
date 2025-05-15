@@ -1,0 +1,201 @@
+<odoo>
+    <data>
+        <record id="crm_lead_view_form_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet" position="inside">
+                    <field name="is_mark_bid" invisible="1"/>
+                    <field name="is_regret" invisible="1"/>
+                    <field name="mark_crm_as_sent" invisible="1"/>
+                    <field name="enable_quotation" invisible="1"/>
+                </xpath>
+                <!--                <xpath expr="//group[@name='opportunity_partner']" position="inside">-->
+                <!--                    <field name="customer_po_attachment"/>-->
+                <!--                </xpath>-->
+                <xpath expr="//widget[@name='web_ribbon'][1]" position="attributes">
+                    <attribute name="title">Cancelled</attribute>
+                </xpath>
+                <button name="action_view_sale_quotation" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+                <xpath expr="//field[@name='stage_id']" position="replace">
+                    <field name="state_revised" widget="statusbar" class="o_field_statusbar"/>
+                </xpath>
+                <button name="action_schedule_meeting" position="after">
+                    <button class="oe_stat_button" type="object" name="action_view_sale_quotation_custom"
+                            icon="fa-pencil-square-o" attrs="{'invisible': [('type', '=', 'lead')]}">
+                        <field name="quotation_count_custom" widget="statinfo" string="Quotations"/>
+                    </button>
+                </button>
+                <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="attributes">
+                    <attribute name="string">Business Partner Name</attribute>
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="after">
+                    <field name="bp_code"/>
+                    <field name="contact_person"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="total_amount_invoiced" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    <field name="bp_territory"/>
+                </xpath>
+                <button name="action_set_won_rainbowman" position="attributes">
+                    <attribute name="string">MARK BID</attribute>
+                    <attribute name="class">oe_highlight</attribute>
+                    <attribute name="attrs">{'invisible': [('is_mark_bid', '=', True)]}</attribute>
+                </button>
+                <button name="%(crm.crm_lead_lost_action)d" position="attributes">
+                    <attribute name="string">MARK NO BID</attribute>
+                    <attribute name="class">oe_highlight</attribute>
+                    <attribute name="attrs">{'invisible': [('is_mark_bid', '=', True)]}</attribute>
+                </button>
+                <xpath expr="//button[@name='%(crm.crm_lead_lost_action)d']" position="after">
+                    <button name="action_create_quotation" string="Create Quotation" class="oe_highlight" type="object"
+                            groups="sales_team.group_sale_salesman"
+                            attrs="{'invisible': ['|', ('is_mark_bid', '=', False), ('state_revised', 'not in', ['awaiting_customer_details', 'sales_quote_prep'])]}"/>
+                    <button name="action_opportunity_send" string="Send by Email" type="object"/>
+                </xpath>
+                <xpath expr="//h1" position="before">
+                    <h3>
+                        <field name="opportunity_no"/>
+                    </h3>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="before">
+                    <field name="quotation_status"/>
+                    <field name="create_date" string="Start Date" readonly="0"/>
+                </xpath>
+                <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="attributes">
+                    <attribute name="string">Closing Date</attribute>
+                </xpath>
+                <xpath expr="//page[@name='lead']" position="before">
+
+                    <page string="Potential" name="potential">
+                        <group col="3" colspan="2">
+                            <label for="predicted_closing_in"/>
+                            <div class="o_row">
+                                <field name="predicted_closing_in" style="width:10px;"/>
+                                <field name="closing_type" class="oe_inline"/>
+                            </div>
+                            <field name="predicted_closing_date"/>
+                            <field name="potential_amount"/>
+                            <field name="weighted_amount"/>
+                            <field name="gross_profit_perc" widget="percentage"/>
+                            <field name="gross_profit_total"/>
+                        </group>
+                    </page>
+                    <page string="Products" name="product">
+                        <field name="opportunity_order_line" widget="one2many_list">
+                            <tree editable="bottom">
+                                <field name="lead_id" invisible="1"/>
+                                <field name="product_id"/>
+                                <field name="parameter_1"/>
+                                <field name="quantity"/>
+                                <field name="unit_measure"/>
+                                <field name="unit_price" sum="Total" widget="monetary"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Stages" name="stages">
+                        <field name="quotation_stage_line" widget="one2many_list">
+                            <tree editable="bottom">
+                                <field name="lead_id" invisible="1"/>
+                                <field name="create_date" string="Start Date" readonly="0"/>
+                                <field name="closing_date"/>
+                                <field name="user_id" readonly="1"/>
+                                <field name="stage" readonly="1"/>
+                                <field name="show_bps_docs"/>
+                                <field name="document_type"/>
+                                <field name="document_id" readonly="1"/>
+                                <field name="revision"/>
+                                <field name="remarks"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="attributes">
+                    <attribute name="string">General</attribute>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="inside">
+                    <field name="manager_comments" placeholder="Add a manager description..."/>
+                </xpath>
+                <!--                <xpath expr="//page[@name='internal_notes']" position="after">-->
+                <!--                    <field name="quotation_stage_ids" widget="one2many_list">-->
+                <!--                            <tree editable="bottom">-->
+                <!--                            </tree>-->
+                <!--                        </field>-->
+                <!--                </xpath>-->
+                <!--                <xpath expr="//page[@name='lead']" position="after">-->
+                <!--                    <page string="Regrets" name="regrets">-->
+                <!--                        <group>-->
+                <!--                            <field name="regrets"/>-->
+                <!--                        </group>-->
+                <!--                    </page>-->
+                <!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="crm_stage_form_inherit_field" model="ir.ui.view">
+            <field name="name">crm.stage.form.inherit.field</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='team_id']" position="after">
+                    <field name="enable_quote"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_stage_lost_wizard_button_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.lost.form.inherit.field</field>
+            <field name="model">crm.lead.lost</field>
+            <field name="inherit_id" ref="crm.crm_lead_lost_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lost_reason_id']" position="before">
+                    <field name="opportunity_id" invisible="0"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_tree_view_inherit" model="ir.ui.view">
+            <field name="name">crm.tree.view.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="state_revised"/>
+                </xpath>
+
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-danger">state_revised == 'cancelled'</attribute>
+                    <attribute name="decoration-info">state_revised == 'waiting_for_approval'</attribute>
+                    <attribute name="decoration-warning">state_revised == 'quotation_sent'</attribute>
+                    <attribute name="decoration-success">state_revised == 'sales_order'</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!--        <record id="view_kanban_crm_stage_inherit" model="ir.ui.view">-->
+        <!--            <field name="name">view kanban crm stage inherit</field>-->
+        <!--            <field name="model">crm.lead</field>-->
+        <!--            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//kanban" position="attributes">-->
+        <!--                    <attribute name="default_group_by"></attribute>-->
+        <!--&lt;!&ndash;                    <attribute name="default_order">state_revised</attribute>&ndash;&gt;-->
+        <!--&lt;!&ndash;                    <attribute name="disable_sort_column">True</attribute>&ndash;&gt;-->
+        <!--&lt;!&ndash;                    <attribute name="records_draggable">False</attribute>&ndash;&gt;-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

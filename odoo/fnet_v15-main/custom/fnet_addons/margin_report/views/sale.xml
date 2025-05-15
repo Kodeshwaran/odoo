@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+
+        <record id="sale_type_lines_tree_view_inherited" model="ir.ui.view">
+            <field name="name">sale_type_lines_tree_view_inherited</field>
+            <field name="model">sale.type.line</field>
+            <field name="inherit_id" ref="mm_master.sale_type_lines_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="margin_percent"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

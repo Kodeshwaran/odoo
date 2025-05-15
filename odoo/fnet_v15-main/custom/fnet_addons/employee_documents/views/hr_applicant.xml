@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_hr_applicant_form_view" model="ir.ui.view">
+        <field name="name">hr.applicant</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='email_cc']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//group//field[@name='type_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="type_id"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='categ_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='medium_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='source_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_mobile']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_phone']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header//button[@name='create_employee_from_applicant']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+<!--            <xpath expr="//group//[@string='Contract']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+            <xpath expr="//header//button[@name='create_employee_from_applicant']" position="after">
+                <button name="action_quotation_send" string="Send Offer Letter" type="object"
+                        class="btn-danger" attrs="{'invisible':[('employment_type','=', 'internship')]}"/>
+                <button name="action_internship_letter" string="Internship Letter" type="object" class="btn-warning "
+                        attrs="{'invisible':[('employment_type','=', 'regular')]}"/>
+
+            </xpath>
+            <div class="oe_button_box" name="button_box">
+                <!-- Invoice stat button -->
+                <button name="action_open_employee_registered_documents" type="object" class="oe_stat_button"
+                        icon="fa-bars">
+                    <span>Documents</span>
+                </button>   
+                <button name="action_open_employee_master" type="object" class="oe_stat_button" icon="fa-bars">
+                    <span>Employee Master</span>
+                </button>
+            </div>
+            <xpath expr="//field[@name='email_from']" position="before">
+                <field name="employment_type"/>
+            </xpath>
+            <xpath expr="//field[@name='email_from']" position="replace">
+                <field name="email_from" widget="email" required="1"/>
+            </xpath>
+            <xpath expr="//field[@name='email_from']" position="after">
+                <field name="expected_joining_date" attrs="{'invisible':[('employment_type','=', 'internship')]}"/>
+                <field name="joining_date" invisible="1"/>
+                <field name="ctc_amount" attrs="{'invisible':[('employment_type','=', 'internship')]}"/>
+<!--                <field name="ctc_amount_in_word" />-->
+                <field name="ctc_stripend" attrs="{'invisible':[('employment_type','=', 'regular')]}"/>
+                <field name="effective_date" attrs="{'invisible':[('employment_type','=', 'regular')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

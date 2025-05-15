@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <record id="view_company_meeting_activity" model="ir.ui.view">-->
+<!--        <field name="name">company.meeting.activity</field>-->
+<!--        <field name="model">company.meeting</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <activity >-->
+<!--                <field name="employee_id"/>-->
+<!--                <field name="ref" display="full"/>-->
+<!--                <templates>-->
+<!--                    <div t-name="activity-box">-->
+<!--                        <img t-att-src="activity_image('company.employee',-->
+<!--                            'image', record.employee_id.raw_value)"-->
+<!--                             t-att-title="record.employee_id.value"-->
+<!--                             t-att-alt="record.employee_id.value"/>-->
+<!--                        <div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </templates>-->
+<!--            </activity>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+      <record id="view_meeting_activity" model="ir.ui.view">
+        <field name="name">meeting.activity.form</field>
+        <field name="model">company.meeting</field>
+        <field name="arch" type="xml">
+            <form  name="Meeting activity">
+                <field name="employee_id">Employee_id</field>
+                <field name="ref" display="full"/>
+                <templates>
+                    <div t-name="activity-box">
+                        <img t-att-src="activity_image('company.employee',
+                            'image', record.employee_id.raw_value)"
+                             t-att-title="record.employee_id.value"
+                             t-att-alt="record.employee_id.value"/>
+                        <div>
+                        </div>
+                    </div>
+                </templates>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_company_meeting_tree" model="ir.ui.view">
+        <field name="name">company.meeting.tree</field>
+        <field name="model">company.meeting</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state == 'done'"
+                  decoration-info="state == 'draft'"
+                  decoration-danger="state == 'cancel'"
+                  decoration-warning="state == 'in_consultation'">
+
+                <field name="employee_id"/>
+                <field name="gender" optional="hide"/>
+                 <field name="manager_id" widget="many2one_avatar_user" />
+                <field name="ref" optional="show"/>
+                <field name="meeting_time" optional="show"/>
+                <field name="attented_date"/>
+                <field name="activity_ids" widget="list_activity"/>
+
+                <field name="state"
+                       decoration-success="state == 'done'"
+                       decoration-info="state == 'draft'"
+                       decoration-danger="state == 'cancel'"
+                       decoration-warning="state == 'in_consultation'" widget="badge"/>
+<!--                <field name="product_id"/>-->
+<!--                <field name="price_unit"/>-->
+<!--                <field name="qty"/>-->
+            </tree>
+        </field>
+    </record>
+    <record id="view_company_meeting_form" model="ir.ui.view">
+        <field name="name">company.meeting.form</field>
+        <field name="model">company.meeting</field>
+        <field name="arch" type="xml">
+
+            <form >
+
+                <header>
+                     <button name="action_in_consultation" string="in_consultation"
+                            type="object" state="draft" class="oe_highlight" data-hotkey="H H H "/>
+
+                     <button name="action_done" string="Mark As Done"
+                            type="object" state="draft" class="oe_highlight"/>
+
+                     <button name="%(company.action_cancel_meeting)d" string='cancel'
+                            context="{'hide_employee_field': 1}"
+                             type="action" state="draft,in_consultation" class="oe_highlight"/>
+
+
+                     <button name="action_draft" string="reset to draft"
+                            type="object" state="cancel " class="oe_highlight"/>
+
+                    <field name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}"
+                    statusbar_visible="Draft , in_consultation"/>
+                </header>
+              <sheet>
+                  <sheet>
+                      <div>
+                          <h1>
+                              <field name="priority" widget="priority"/>
+                          </h1>
+                      </div>
+                      <group>
+                       <group>
+                      <field name="employee_id"/>
+                      <field name="gender"/>
+                      <field name="manager_id"/>
+                      <field name="ref"/>
+                      <field name="meeting_time"/>
+                  </group>
+                   <group>
+                       <field name="attented_date" help="Help for attendent date"/>
+                       <field name="hide_sales_price" groups="base.group_no_one"/>
+                       <button name="action_test" string="object  button" type="object" class="oe_highlight"/>
+                       <button name="%(company.action_company_employee)d"
+                               string="Action button" type="action" class="oe_highlight"
+                       confirm="Are you sure to navigate the page "
+                       help="on click the button you will navigate the another page"/>
+
+                   </group>
+</group>
+
+                  </sheet>
+
+                  <notebook>
+                         <page string="Prescription" name="Prescription">
+
+                      <field name="office_lines_ids">
+                          <tree editable=" bottom">
+                              <field name="product_id"/>
+                              <field name="price_unit"
+                                     attrs="{'column_invisible':[('parent.hide_sales_price','=',True)]}"/>
+
+                              <field name="qty"/>
+
+
+                          </tree>
+                          <form>
+
+                              <group>
+                                  <field name="product_id"/>
+                                  <field name="price_unit"
+                                         attrs="{'column_invisible':[('parent.hide_sales_price','=',True)]}"/>
+
+                                  <field name="qty"/>
+                              </group>
+
+                          </form>
+                      </field>
+                      </page>
+                      <page string="office" name="office">
+
+
+                      </page>
+                  </notebook>
+                  <notebook>
+                      <page string="Prescription" name="Prescription">
+                              <field name="prescription" placeholder="Enter your prescription"
+                              options="{'collaborative':true,'resizable':true ,'code view':true}"/>
+                      </page>
+                       <page string="office" name="office">
+                          <group>
+
+                          </group>
+                      </page>
+                  </notebook>
+              </sheet>
+                 <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+            </form>
+        </field>
+    </record>
+
+
+
+ <record id="action_company_meeting" model="ir.actions.act_window">
+     <field name="name">Meeting</field>
+     <field name="type">ir.actions.act_window</field>
+     <field name="res_model">company.meeting</field>
+     <field name="view_mode">tree,form,activity</field>
+     <field name="context">{}</field>
+     <field name="domain">[]</field>
+
+     <field name="help" type="html">
+         <p class="o_view_nocontent_smiling_face">
+             Create the first meeting for employee!
+         </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_meeting_employee"
+              parent="menu_employee_meeting"
+              name="Meetings"
+              action="action_company_meeting"
+              sequence="0"/>
+
+
+</odoo>
+
+
+

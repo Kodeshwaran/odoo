@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="custom_header">
+            <t t-if="doc and 'company_id' in doc">
+                <t t-set="company" t-value="doc.company_id"></t>
+            </t>
+            <t t-if="not doc or not 'company_id' in doc">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div class="header" height="35%">
+             <table style="font-size:25px;width:100%;font-family: 'Helvetica';">
+					  <tr style="border: 1px solid black;">
+						<td width="30%">
+						<div>
+                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 200px; max-width:150px;"
+                             alt="Logo"/>
+                    </div>
+						</td>
+						<td style="width:70%;padding-left:42px;">
+							<strong><div t-field="company.name" t-attf-style="white-space:nowrap;font-size:24px;"/></strong>
+						</td>
+					  </tr>
+				</table>
+                <div>
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+        </template>
+
+        <template id="final_settlement_template_report">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <t t-foreach="docs" t-as="docs">
+                        <t t-call="AG_final_settlement.custom_header"/>
+                        <div class="page">
+                            <table style="font-size:20px;width:100%;font-family: 'Helvetica'; height:15mm;">
+                                <tr style="border: 1px solid black;">
+                                    <td style="width:50%; border: 1px solid black;padding:15px; text-align:center">
+                                        <strong>FINAL SETTLEMENT CALCULATIONS</strong>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black;padding:15px; text-align:center">
+                                        <strong>Date:</strong>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black;padding:15px; text-align:center">
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="font-size:20px;width:100%;font-family: 'Helvetica';">
+                                <tr style="border: 1px solid black;">
+                                    <td style="width:30%; border: 1px solid black; text-align:left">
+                                        <strong>Emp ID:</strong>
+                                    </td>
+                                    <td style="width:20%; border: 1px solid black; text-align:center">
+                                        <span t-field="doc.employee_id.employeeid"/>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black; text-align:left">
+                                        <strong>Emp Name:</strong>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black; text-align:center">
+                                        <span t-field="doc.employee_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td style="width:30%; border: 1px solid black; text-align:left">
+                                        <strong>Location:</strong>
+                                    </td>
+                                    <td style="width:20%; border: 1px solid black; text-align:center">
+                                        <span t-field="doc.employee_id.work_location_id"/>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black; text-align:left">
+                                        <strong>Designation:</strong>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black; text-align:center">
+                                        <span t-field="doc.employee_id.job_id"/>
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td style="width:30%; border: 1px solid black; text-align:left">
+                                        <strong>Basic Salary:</strong>
+                                    </td>
+                                    <td style="width:20%; border: 1px solid black; text-align:center">
+                                        <span t-field="doc.basic"/>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black; text-align:left">
+                                        <strong>Other Allowance:</strong>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black; text-align:center">
+                                        <span t-field="doc.other_earnings"/>
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black;">
+                                    <td style="width:30%; border: 1px solid black; text-align:left">
+                                        <strong>Date of Joining:</strong>
+                                    </td>
+                                    <td style="width:20%; border: 1px solid black; text-align:center">
+                                        <span t-esc="datetime.datetime.strptime(str(doc.join_date), '%Y-%m-%d').strftime('%d %b %Y')"/>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black; text-align:left">
+                                        <strong>Last Working Date:</strong>
+                                    </td>
+                                    <td style="width:25%; border: 1px solid black; text-align:center">
+                                        <span t-esc="datetime.datetime.strptime(str(doc.resign_date), '%Y-%m-%d').strftime('%d %b %Y')"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_final_settlement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="AG_final_settlement.final_settlement_template_report"/>
+            </t>
+        </t>
+    </template>
+    </data>
+</odoo>

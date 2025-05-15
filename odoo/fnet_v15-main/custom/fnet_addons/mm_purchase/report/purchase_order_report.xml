@@ -1,0 +1,204 @@
+<odoo>
+    <template id="report_purchase_order_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="mm_purchase.report_purchase_order_pdf_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_purchase_order_pdf_document">
+        <t t-call="web.html_container">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+				<t t-if="doc and 'company_id' in doc">
+					<t t-set="company" t-value="doc.company_id"></t>
+				</t>
+				<t t-if="not doc or not 'company_id' in doc">
+					<t t-set="company" t-value="res_company"></t>
+				</t>
+                <div class="page">
+                    <div style="max-width:200px; max-height:200px;">
+                        <td>
+                            <span itemprop="image" t-field="company.logo" t-options='{"widget": "image"}'/>
+                        </td>
+                    </div>
+                    <br/>
+                    <div style="text-align:center;">
+                        <div t-field="company.name" style="font-size: 25px;"/>
+                        <span t-field="company.street"/>, <span t-field="company.street2"/>
+                        <div>
+                            <span t-field="company.city"/> - <span t-field="company.zip"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div style="text-align:left; font-size: 12px;">
+                        <span>PAN NO: <span/>AAACF1693F</span>
+                        <br/>
+                        <span>GST NO: <span t-field="company.vat"/></span>
+                    </div>
+                    <div class="row">
+                        <table style="width:100%;" align="center">
+                            <tr>
+                                <td style="width:40%;"></td>
+                                <td style="width:20%;text-align:center;valign:middle;"><p style="border-radius:15px;border:2px solid black;padding:35px;padding-top:5px;width:250px;height:10px;font-size:19px;"><b>Purchase Order</b></p></td>
+                                <td style="width:40%;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br/>
+                    <table class="table table-bordered table-inverse" style="border:1px solid black;font-size:15px;margin-top:-1.5%">
+                        <tr style="font-size:10px;border:1px solid black;">
+                            <td>
+                                <left><strong>Vendor Name and Address: </strong><span t-field="o.partner_id.name"/>
+                                    <br/>
+                                    <br/>
+                                    <span t-field="o.partner_id.street"/>
+                                    <span t-field="o.partner_id.street2"/>,
+                                    <br/>
+                                    <br/>
+                                    <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id"/>
+                                </left>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <left><strong>GST NO: </strong><span t-field="o.partner_id.vat"/></left>
+                            </td>
+                            <td>
+                                <br/>
+                                <br/>
+                                <center><strong>PO NO: </strong><span t-field="o.name"/></center>
+                                <br/>
+                                <br/>
+                                <center><strong>Date: </strong><span t-field="o.date_approve" t-options='{"format": "dd/MM/YYYY"}'/></center>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered" style="border:1px solid black;font-size:15px;margin-top:-1.5%">
+                        <tr style="font-size:10px;border:1px solid black;">
+                            <th>S.No</th>
+                            <th>Description of Goods</th>
+                            <th>HSN/SAC Code</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Taxes</th>
+                            <th>Net Price(₹)</th>
+                        </tr>
+                        <t t-set="counter" t-value="1"/>
+                        <tr t-foreach="o.order_line" t-as="doc" style="font-size:10px;border:1px solid black;">
+                            <t t-if="doc.product_id">
+                                <td style="text-align:center;"><t t-esc="counter"/><t t-set="counter" t-value="counter+1"/></td>
+                                <td style="padding-left:10px;"><span t-field="doc.name"/></td>
+                                <td style="padding-left:10px;"><span t-field="doc.product_id.l10n_in_hsn_code"/></td>
+                                <td style="padding-left:10px;text-align:right;"><span t-field="doc.product_qty"/></td>
+                                <td style="padding-left:10px;text-align:right;"><span t-field="doc.price_unit"/></td>
+                                <td style="padding-left:10px;text-align:right;"><span t-field="doc.taxes_id"/></td>
+                                <td style="padding-left:10px;text-align:right;"><span t-field="doc.price_subtotal"/></td>
+                            </t>
+                        </tr>
+                        <tr style="font-size:10px; text-align:right; border:1px solid black;">
+                            <t t-set="sum_qty" t-value="0"/>
+                            <t t-set="sum_subtotal" t-value="0"/>
+                            <t t-foreach="o.order_line" t-as="line">
+                                <t t-set="sum_qty" t-value="sum_qty + line.product_qty"/>
+                                <t t-set="sum_subtotal" t-value="sum_subtotal + line.price_subtotal"/>
+                            </t>
+                            <td colspan="3"><span><strong>Total Quantity: </strong></span></td>
+                            <td><t t-esc="sum_qty"/></td>
+                            <td colspan="2"><span><strong>Sub Total: </strong></span></td>
+                            <td><t t-esc="sum_subtotal"/></td>
+                        </tr>
+                        <tr style="font-size:10px; text-align:right; border:1px solid black;">
+                            <td colspan="6"><span><strong>Input Central GST - 9%: </strong></span></td>
+                            <td><span t-esc="sum_subtotal * 9/100" t-options="{'widget': 'integer'}"/></td>
+                        </tr>
+                        <tr style="font-size:10px; text-align:right; border:1px solid black;">
+                            <td colspan="6"><span><strong>Input State GST - 9%: </strong></span></td>
+                            <td><span t-esc="sum_subtotal * 9/100" t-options="{'widget': 'integer'}"/></td>
+                        </tr>
+                        <tr style="font-size:10px; text-align:right; border:1px solid black;">
+                            <t t-set="sum_total" t-value="sum_subtotal + ((sum_subtotal * 9/100) * 2)"/>
+                            <td colspan="6"><span><strong>TOTAL: </strong></span></td>
+                            <td><t t-esc="sum_total"/></td>
+                        </tr>
+                        <tr style="font-size:10px; text-align:right;">
+                            <td colspan="7" style="padding-left:10px;text-align:left;">Amount Chargeable (in words):<span t-esc="o.get_tax_amt(o, sum_total)"/></td>
+                        </tr>
+                    </table>
+                    <table class="table table-bordered" style="font-size:10px;margin-top:-1.5%">
+                        <tr style="padding-left:10px;text-align:center;font-size:10px;">
+                            <th rowspan="2">HSN/SAC Code</th>
+                            <th rowspan="2">Taxable ValuePrice(₹)</th>
+                            <th colspan="2">Central Tax</th>
+                            <th colspan="2">State Tax</th>
+                        </tr>
+                        <tr style="padding-left:10px;text-align:center;">
+                            <th>Rate(%)</th>
+                            <th>Amount</th>
+                            <th>Rate(%)</th>
+                            <th>Amount</th>
+                        </tr>
+                        <t t-set="counter" t-value="1"/>
+                        <tr t-foreach="o.order_line" t-as="doc" style="font-size:10px;border:1px solid black;">
+                            <t t-if="doc.product_id">
+                                <td style="padding-left:10px;text-align:right;"><span t-field="doc.product_id.l10n_in_hsn_code"/></td>
+                                <td style="padding-left:10px;text-align:right;"><span t-field="doc.price_subtotal"/></td>
+                                <td style="padding-left:10px;text-align:right;"><span>9</span></td>
+                                <td style="padding-left:10px;text-align:right;"><span t-esc="int(doc.price_subtotal) * 9/100"/></td>
+                                <td style="padding-left:10px;text-align:right;"><span>9</span></td>
+                                <td style="padding-left:10px;text-align:right;"><span t-esc="int(doc.price_subtotal) * 9/100"/></td>
+                            </t>
+                        </tr>
+                        <tr>
+                            <t t-set="sum_perctotal" t-value="0"/>
+                            <t t-set="sum_central_total" t-value="0"/>
+                            <t t-set="sum_state_total" t-value="0"/>
+                            <t t-foreach="o.order_line" t-as="line">
+                                <t t-set="sum_perctotal" t-value="sum_perctotal + line.price_subtotal"/>
+                                <t t-set="sum_central_total" t-value="sum_central_total + (int(line.price_subtotal) * 9/100)"/>
+                                <t t-set="sum_state_total" t-value="sum_state_total + (int(line.price_subtotal) * 9/100)"/>
+                            </t>
+                            <td colspan="1" style="padding-left:10px;text-align:right;"><span><strong>TOTAL: </strong></span></td>
+                            <td style="padding-left:10px;text-align:right;"><t t-esc="sum_perctotal"/></td>
+                            <td></td>
+                            <td style="padding-left:10px;text-align:right;"><t t-esc="sum_central_total"/></td>
+                            <td></td>
+                            <td style="padding-left:10px;text-align:right;"><t t-esc="sum_state_total"/></td>
+                        </tr>
+                        <tr style="font-size:10px;">
+                            <td colspan="7" style="padding-left:10px;text-align:left;">Total Amount (in words):<span t-esc="o.get_tax_amt(o, sum_central_total)"/></td>
+                        </tr>
+                        <tr style="text-align:left;">
+                            <td colspan="7"><span style="font-weight:bold;"><u>Declaration</u></span><br/>
+                                            <span>We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.</span></td>
+                        </tr>
+                        <tr style="font-size:10px;">
+                            <td colspan="2" style="padding-left:10px;text-align:right;">
+                                <br/>
+                                <br/>
+                                <center>PURCHASE EXECUTIVE</center></td>
+                            <td colspan="4" style="padding-left:10px;text-align:right;">
+                                <br/>
+                                <br/>
+                                <center>PURCHASE MANAGER</center></td>
+                        </tr>
+                        <tr style="text-align:left;">
+                            <td colspan="7"><span style="font-weight:bold;"><u>Terms and Conditions</u></span><br/>
+                                            <span>Payment Terms:-</span><br/>
+                                            <span>Delivery Terms:-</span><br/>
+                                            <span>PO Validity:-</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div>
+						<p style="width:100%;text-align:center;">
+							<i>This is a computer-generated document. Does not require a Signature</i>
+						</p>
+					</div>
+                </div>
+            </t>
+        </t>
+        </t>
+    </template>
+
+</odoo>

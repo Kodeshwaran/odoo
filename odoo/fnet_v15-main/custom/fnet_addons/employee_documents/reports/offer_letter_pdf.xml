@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="paperformat_offer_letter" model="report.paperformat">
+        <field name="name">A4 Offer Letter</field>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">20</field>
+        <field name="margin_bottom">70</field>
+        <field name="margin_left">11</field>
+        <field name="margin_right">14</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+    <record id="action_report_offer_letter" model="ir.actions.report">
+        <field name="name">Offer Letter</field>
+        <field name="model">hr.applicant</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_documents.offer_letter</field>
+        <field name="report_file">employee_documents.offer_letter</field>
+        <field name="binding_model_id" ref="model_employee_registration"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="employee_documents.paperformat_offer_letter"/>
+    </record>
+
+    <template id="custom_layout1">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+        <div class="header">
+
+        </div>
+        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+    </template>
+
+
+        <template id="offer_letter">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="employee_documents.custom_layout1">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <strong>
+                                    <p>Date :
+                                        <span t-field="o.report_date"/>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        TO,
+                                        <span t-field="o.name"/>
+                                    </p>
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:16px;">
+                            <div t-if="o.street">
+                                <span t-field="o.street"/>,
+                            </div>
+                            <div t-if="o.street2">
+                                <span t-field="o.street2"/>
+                                ,
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:16px;">
+                            <div t-if="o.city">
+                                <span t-field="o.city"/>
+                                ,
+                            </div>
+                            <div t-if="o.state_id">
+                                <span t-field="o.state_id.name"/>
+                                ,
+                            </div>
+                        </div>
+                        <div class="row" style="padding-left:16px;">
+                            <div t-if="o.country_id">
+                                <span t-field="o.country_id"/>
+                                ,
+                            </div>
+                            <div t-if="o.zip" t-esc="'%s' % str(o.zip).replace(',','')">
+                                <span t-field="o.zip" t-esc="'%s' % str(o.zip).replace(',','')"/>.
+                            </div>
+                        </div>
+                        <br/>
+                        <span>
+                            <strong>Dear Mr/Ms.
+                                <span t-field="o.name"/>
+                            </strong>
+                        </span>
+                        <br/>
+                        <br/>
+
+                        <span>
+                            <strong>Greetings from Futurenet Technologies!!!
+                            </strong>
+                        </span>
+                        <br/>
+                        <br/>
+                          Based on our discussion, we are pleased to offer you the position "<b><t t-out="o.job_id.name"></t></b>" and your CTC  will be Rs. "<b><t t-out="o.salary_proposed"></t></b>"- per month. We expect you to accept this offer and join on
+                            "<b><t t-out="o.expected_joining_date"></t></b>". Kindly acknowledge the same by today.
+                        <body>
+                        <p>
+<!--                            Based on our discussion, we are pleased to offer you the position "<b><t t-out="o.job_id.name"></t></b>" and your CTC  will be Rs. "<b><t t-out="object.ctc_amount"/></t></b>"- per month. We expect you to accept this offer and join on-->
+<!--                            "<b><t t-out="o.joining_date_proposed"></t></b>". Kindly acknowledge the same by today.-->
+
+                           <p> The Following Documents should be submitted on the Date of Joining &amp; kindly send the soft copies of the below documents in the acknowledgment mail.</p>
+
+
+
+                          <p>  1.Passport size Photograph-Soft Copy
+                              <br></br>
+                            2.Original and Copies of Educational / Professional qualifications and Experience certificates
+                              <br></br>
+                            3.Copy and original of Aadhar &amp; PAN
+                              <br></br>
+                            4.Relieving Letter of Previous Organization &amp; last 3 Months payslip.
+                              <br></br>
+                              <br></br>
+                              <br></br>
+                            We are happy to welcome you to our Futurenet family.</p>
+
+
+                        </p>
+                    </body>
+
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <strong>
+                                <p>Regards</p>
+                                <p>L Ashok</p>
+                                <p>Managing Director</p>
+                            </strong>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,41 @@
+<odoo>
+    <data>
+
+        <record id="stock_picking_form_view_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.view.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='other_infos']" position="after">
+                    <group name="package_info" string="Package Details">
+                        <field name="package_name"/>
+                        <field name="package_dimension"/>
+                        <field name="package_net"/>
+                        <field name="package_gross"/>
+                    </group>
+                    <group name="checklist_details" string="Checklist for Documents">
+                        <field name="invoice_checklist"/>
+                        <field name="packing_list_checklist"/>
+                        <field name="exit_bill_checklist"/>
+                        <field name="certificates_checklist"/>
+                        <field name="remarks_checklist"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="omega_trn_no"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="shipment_type"/>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='description_picking']" position="attributes">
+                    <attribute name="widget">Html</attribute>
+                </xpath>
+                <xpath expr="//button[8]" position="attributes">
+                    <attribute name="name">action_report_delivery</attribute>
+                    <attribute name="type">object</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
