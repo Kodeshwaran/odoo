@@ -39,7 +39,8 @@
             "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.scss",
             "/web_responsive/static/src/components/attachment_viewer/attachment_viewer.esm.js",
             "/web_responsive/static/src/components/hotkey/hotkey.scss",
-        ],
+        ]
+}
 }
 
 
